@@ -1,0 +1,2 @@
+﻿veca;1234;Vesna;Prica;Zenski;07-11-1998;0;Nepoznat;Kupac;False
+medic;1234;asa;fghgh;Zenski;12-12-2000;0;Nepoznat;Kupac;False

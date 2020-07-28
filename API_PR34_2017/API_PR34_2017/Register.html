@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <script src="Scripts/jquery-3.5.1.js"></script>
+    <title></title>
+    <script>
+
+        //function PassCheck() {
+        //    var password = document.getElementById('lozinka');
+
+        //    document.getElementById("btnReg").disabled = password.value.length === 0
+        //}
+
+        //PassCheck();--radi val
+
+        //$(function () {
+        //    validate();
+        //    $('input[type="text"]').keyup(validate); //you can use your multiple id selector instead of the attribute selector that i am using
+        //});
+
+        function validate() {
+            var inputvalue = $('input[type="text"]').filter(function (n) {
+                return this.value.length > 0;
+            })
+
+           // var passw = document.getElementById('lozinka');
+           
+   
+            if (inputvalue.length == $('input[type="text"]').length) {
+               // if (passw.value.length != 0)
+                $("input[type=submit]").prop("disabled", false);
+                
+            } else {
+                $("input[type=submit]").prop("disabled", true);
+            }
+        }
+
+        $('[type="submit"]').on('click', function () {
+            // this adds 'required' class to all the required inputs under the same <form> as the submit button
+            $(this)
+                .find('[required]')
+                .addClass('required');
+        });
+
+         $(document).ready(function () {
+
+          // $(function () {
+               validate();
+               $('input[type="text"]').keyup(validate); //you can use your multiple id selector instead of the attribute selector that i am using
+           //});
+
+           $("#btnReg").click(function () {
+               let k1 = document.getElementById("korisnickoime");
+               let k2 = document.getElementById("lozinka");
+               let k3 = document.getElementById("ime");
+               let k4 = document.getElementById("prezime");
+               let k5 = document.getElementById("datumrodjenja");
+              
+               if (!k1.checkValidity() || !k2.checkValidity() || !k3.checkValidity() || !k4.checkValidity() || !k5.checkValidity()) {
+                   alert("Molimo popunite sva polja na ispravan način.");
+               } else
+               {
+                   var korisnickoime = $("#korisnickoime").val();
+                   var lozinka = $("#lozinka").val();
+                   var ime = $("#ime").val();
+                   var prezime = $("#prezime").val();
+                   var pol = $("#polovi option:selected").val();//$("#pol").val();
+                   var datumrodjenja = $("#datumrodjenja").val();
+                   var obj = JSON.stringify({
+                       "korisnickoime": korisnickoime,
+                       "lozinka": lozinka,
+                       "ime": ime,
+                       "prezime": prezime,
+                       "pol": pol,
+                       "datumrodjenja": datumrodjenja
+
+                   });
+
+                   $.ajax({
+                       type: 'POST',
+                       url: '/api/Autentifikacija',
+                       data: obj,
+                       contentType: 'application/json; charset=utf-8',
+                       dataType: 'json',
+                       success: function (data) {
+                           if (data == 1) {
+                               alert('Uspesno ste registrovani.');
+                               $(location).attr('href', 'login.html');
+                           } else if (data == 2) {
+                               alert('Postoji korisnik sa tim korisnickim imenom.');
+                           } else {
+                               alert('Niste uneli ispravan datum rodjenja.');
+                           }
+                       }
+                   });
+
+               }
+           });
+         });
+
+        //function blurFunction() {
+        //    document.getElementById('lozinka').style.color = "blue";
+           
+
+        //}
+
+        //function FormValidation() {
+        //    //First Name Validation 
+        //    var fn = document.getElementById('korisnickoime').value;
+        //    var pass = document.getElementById('lozinka').value;
+        //    var name = document.getElementById('ime').value;
+        //    var lastname = document.getElementById('prezime').value;
+        //    var rodj = document.getElementById('datumrodjenja').value;
+        //    //if (pass === "") {
+        //    //    alert('Niste uneli korisnicko ime');
+        //    //    document.getElementById('korisnickoime').style.borderColor = "red";
+        //    //    return false;
+        //    //} else {
+        //    //    document.getElementById('korisnickoime').style.borderColor = "green";
+        //    //}
+        //    //if (pass === "") {
+        //    //    alert('Niste uneli sifru');
+        //    //    document.getElementById('lozinka').style.borderColor = "red";
+        //    //    return false;
+        //    //} else {
+        //    //    document.getElementById('lozinka').style.borderColor = "green";
+        //    //}
+        //    if (/^[0-9]+$/.test(document.getElementById("ime").value)) {
+        //        alert("Ime ne sme da sadrzi samo brojeve");
+        //        document.getElementById('ime').style.borderColor = "red";
+        //        return false;
+        //    } else {
+        //        document.getElementById('ime').style.borderColor = "green";
+        //    }
+        //    if (/^[0-9]+$/.test(document.getElementById("prezime").value)) {
+        //        alert("Prezime ne sme da sadrzi samo brojeve");
+        //        document.getElementById('prezime').style.borderColor = "red";
+        //        return false;
+        //    } else {
+        //        document.getElementById('prezime').style.borderColor = "green";
+        //    }
+        //    if (/^[0-9]+$/.test(document.getElementById("korisnickoime").value)) {
+        //        alert("Korisnicko ime ne sme da sadrzi samo brojeve");
+        //        document.getElementById('korisnickoime').style.borderColor = "red";
+        //        return false;
+        //    } else {
+        //        document.getElementById('korisnickoime').style.borderColor = "green";
+        //    }
+        //    if (fn.length <= 3) {
+        //        alert('Korinicko ime mora da ima 3 ili vise karaktera');
+        //        document.getElementById('korisnickoime').style.borderColor = "red";
+        //        return false;
+        //    } else {
+        //        document.getElementById('korisnickoime').style.borderColor = "green";
+        //    }
+        //    if (pass.length <= 4) {
+        //        alert('Sifra mora da ima 4 ili vise karaktera');
+        //        document.getElementById('lozinka').style.borderColor = "red";
+        //        return false;
+        //    } else {
+        //        document.getElementById('lozinka').style.borderColor = "green";
+        //    }
+        //    if (name.length <= 3) {
+        //        alert('Ime mora da ima 3 ili vise slova');
+        //        document.getElementById('ime').style.borderColor = "red";
+        //        return false;
+        //    } else {
+        //        document.getElementById('ime').style.borderColor = "green";
+        //    }
+        //    if (lastname.length <= 3) {
+        //        alert('Prezime mora da ima 3 ili vise slova');
+        //        document.getElementById('prezime').style.borderColor = "red";
+        //        return false;
+        //    } else {
+        //        document.getElementById('prezime').style.borderColor = "green";
+        //    }
+        //    //if (/((0[1-9]|[12]\d|3[01])-(0[1-9]|1[0-2])-[12]\d{3})/.test(document.getElementById("datumrodjenja").value)) {
+        //    //    alert("Datum rodjenja mora da bude unet u formatu DD-MM-YYYY");
+        //    //    document.getElementById('red').style.borderColor = "red";
+        //    //    return false;
+        //    //} else {
+        //    //    document.getElementById('datumrodjenja').style.borderColor = "green";
+        //    //}
+        //}
+    </script>
+    <style>
+        /* Add a black background color to the top navigation */
+        input.required:invalid {
+            color: red;
+            border-color:red;
+        }
+        .topnav {
+            /*background-color: #333;
+            */
+            background-color: rgba(51, 51, 51,1);
+            overflow: hidden;
+        }
+
+            /* Style the links inside the navigation bar */
+            .topnav a {
+                float: left;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+            }
+
+                /* Change the color of links on hover */
+                .topnav a:hover {
+                    background-color: #ddd;
+                    color: black;
+                }
+
+                /* Add a color to the active/current link */
+                .topnav a.active {
+                    /*background-color: #4CAF50;
+                    background-color: rgba(76, 175, 80, 1);*/
+                    background-color: rgba(251, 220, 65, 1);
+                    color: rgba(51, 51, 51, 1);
+                }
+
+
+        #tekst {
+            /*font-weight: bold;*/
+            color: #ffffff;
+            /*font-family: Arial;*/
+        }
+
+       
+
+        ::-webkit-input-placeholder {
+            color: #ffffff;
+        }
+
+       
+
+        html, table {
+            /*overflow: scroll;*/
+            overflow-y: scroll;
+        }
+
+        .header-img {
+            height: 3%;
+            width: 4%;
+        }
+
+        #DIVreg {
+            position: absolute;
+            top: 70.5%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            position: absolute;
+            width: 410px;
+            height: 580px;
+            box-sizing: border-box;
+            background: rgba(237, 214, 7,0.6);
+            /*background: rgba(51, 51, 51, 0.7);*/
+            padding: 40px;
+            
+        }
+
+            #DIVreg input, select {
+                margin-bottom: 20px;
+                width: 100%;
+            }
+
+            #DIVreg select {
+                margin-top: 20px;
+                padding: 10px 0;
+            }
+
+            #DIVreg input[type=text], #DIVreg input[type=password] {
+                border: none;
+                border-bottom: 1px solid #ffffff;
+                background-color: transparent;
+                outline: none;
+                height: 40px;
+                color: #ffffff;
+                
+            }
+        ::-webkit-input-placeholder {
+            color: #ffffff;
+        }
+
+        #DIVreg input[type=submit] {
+            border: none;
+            height: 40px;
+            outline: none;
+            color: #ffffff;
+            font-size: 15px;
+            background-color: tomato;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+
+            #DIVreg input[type=submit]:hover {
+                background-color: cyan;
+                color: #ffffff;
+            }
+
+            #DIVreg input[type=submit]:disabled {
+                background-color:gray;
+                color: #ffffff;
+                cursor:not-allowed;
+            }
+    </style>
+</head>
+<body style="background-image:url('slike/cover-1.jpg'); background-size: cover;
+  height: 100%;
+  overflow: hidden;">
+
+    <!--<h1 style="text-align:left;font-size: 40px;background-color: rgba(251, 220, 65, 1); color:rgba(51, 51, 51, 1) "><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>-->
+    <div id="stranica">
+        <div class="topnav">
+            <h1 style="text-align:left;font-size: 40px;background-color: rgba(51, 51, 51, 1) ; color:rgba(251, 220, 65, 1)"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
+
+            <a href="pocetna.html">Pocetna</a>
+            <a href="login.html">Prijava</a>
+            <a class="active" href="Register.html">Registracija</a>
+            <a href="logout.html">Odjava</a>
+
+        </div>
+    </div>
+    <div id="DIVreg">
+        <h2 style="color:#ffffff; font-weight:bold; font-family:Arial;text-align-last: center;">Registracija</h2>
+        <!--<form action="" method="post">-->
+            <table class="table">
+                <tr>
+                    <td id="tekst">Korisnicko ime:</td>
+                    <td>
+                        <input type="text" id="korisnickoime" name="korisnickoime" placeholder="od 3 karakera min" pattern="[0-9a-zA-Z]{3,}" required />
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td id="tekst">Lozinka:</td>
+                    <td>
+                        <input type="password" id="lozinka" name="lozinka"  placeholder="od 4 karaktera min" pattern="[0-9a-zA-Z]{4,}" required />
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td id="tekst">Ime:</td>
+                    <td>
+                        <input type="text" id="ime" name="ime" placeholder="od 3 karaktera min" pattern="[a-zA-Z]{3,}" required />
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td id="tekst">Prezime:</td>
+                    <td>
+                        <input type="text" id="prezime" name="prezime" placeholder="od 3 karaktera min" pattern="[a-zA-Z]{3,}" required />
+                    </td>
+
+                </tr>
+
+                <tr>
+                    <td id="tekst"><label for="pol">Pol:</label></td>
+                    <td>
+                        <select name="pol" id="polovi">
+                            <option id="polovi" value="Zenski">Zenski</option>
+                            <option id="polovi" value="Muski">Muski</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td id="tekst">Datum rodjenja:</td>
+                    <td>
+                        <input type="text" id="datumrodjenja" name="datumrodjenja" placeholder="DD-MM-YYYY" required pattern="\d{2}-\d{2}-\d{4}" />
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td colspan="2">
+                        <input id="btnReg" type="submit" value="Registruj se" disabled="disabled" />
+                    </td>
+                </tr>
+            </table>
+            
+        <!--</form>-->
+    </div>
+
+
+</body>
+</html>

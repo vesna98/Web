@@ -22,6 +22,67 @@
                 } else if (korisnik.Uloga == 2) {//kupac
                     $('#AdminView').hide();
                 }
+
+
+                $("#svi_korisnici").click(function () {
+                    $('#userPrikaz').show();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Korisnik/SviKorisnici',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                       
+                        success: function (data) {
+                            
+                            var lista = JSON.parse(data);
+                                alert("u json korisnci" + data);
+                                //var korisnici = JSON.stringify(data);
+                                //alert("korisnici" + korisnici);
+                            for (i = 0; i < lista.length; i++) {
+
+                                var uloga;
+                                if (lista[i].Uloga == 0) {
+                                    uloga = "Administrator";
+                                } else if (lista[i].Uloga == 1) {
+                                    uloga = "Prodavac";
+                                } else if (lista[i].Uloga == 2) {
+                                    uloga = "Kupac";
+                                }
+                                var pol;
+                                if (lista[i].Pol == 0) {
+                                    pol = 'Zenski';
+                                } else {
+                                    pol = 'Muski';
+                                }
+                                var obrisan;
+                                if (lista[i].Obrisan == false) {
+                                    obrisan ="";
+                                } else {
+                                    obrisan = 'OBRISAN';
+                                }
+
+                                // ImageUrl = poster;
+                                // alert("petlja..." + jsonObj[i]);
+                                var row = "<tr class=\"success\">";
+                                row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                row += "<td >" + lista[i].Ime + "</td>";
+                                row += "<td >" + lista[i].Prezime + "</td>";
+                                row += "<td >" + pol + "</td>";
+                                row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                                row += "<td >" + uloga + "</td>";
+                                row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                                row += "<td >" + obrisan + "</td>";
+                                $("#userTabela").append(row);
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
+
+                });
+
             }
 
         });

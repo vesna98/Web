@@ -17,19 +17,19 @@ namespace API_PR34_2017.Models
             bool izmeni = false;
             string nova = "";
 
-            //for (int i = 0; i < lines.Count(); i++)
-            //{
-            //    string[] tokens = lines[i].Split(';');
+            for (int i = 0; i < lines.Count(); i++)
+            {
+                string[] tokens = lines[i].Split(';');
 
-            //    if (tokens[1].Equals(p.Id.ToString()))//jednaki id
-            //    {
-            //        nova = p.ToString();
-            //        lines[i] = nova;
-            //        izmeni = true;
-            //        break;
-            //    }
+                if (tokens[0].Equals(p.Korisnickoime))//jednaki id
+                {
+                    nova = p.ToString();
+                    lines[i] = nova;
+                    izmeni = true;
+                    break;
+                }
 
-            //}
+            }
 
             if (izmeni)//menja postojeca
             {

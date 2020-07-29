@@ -2,13 +2,77 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <script src="Scripts/jquery-3.5.1.js"></script>
     <title></title>
+    <script type="text/javascript">
+        function validate() {
+            var inputvalue = $('input[type="text"]').filter(function (n) {
+                return this.value.length > 0;
+            })
+
+            // var passw = document.getElementById('lozinka');
+
+
+            if (inputvalue.length == $('input[type="text"]').length) {
+                // if (passw.value.length != 0)
+                $("input[type=submit]").prop("disabled", false);
+
+            } else {
+                $("input[type=submit]").prop("disabled", true);
+            }
+        }
+
+        $('[type="submit"]').on('click', function () {
+            // this adds 'required' class to all the required inputs under the same <form> as the submit button
+            $(this)
+                .find('[required]')
+                .addClass('required');
+        });
+        $(document).ready(function () {
+
+            alert("usao");
+
+            validate();
+            $('input[type="text"]').keyup(validate);
+
+            $("#btnLogin").click(function () {
+
+                var korisnickoime = $("#korisnickoime").val();
+                var lozinka = $("#lozinka").val();
+                var obj = JSON.stringify(
+                    {
+                        "korisnickoime": korisnickoime,
+                        "lozinka": lozinka
+                    });
+                $.ajax({
+                    method: 'POST',
+                    url: '/api/Login/Login',
+                    dataType: "json",        // 'json',//povratna
+                    contentType: "application/json",
+                    data: obj,
+
+                }).done(function (data) {
+                    if (data != null) {
+                        sessionStorage.setItem('logovan', JSON.stringify(data));
+                        alert("Uspesna prijava.")
+                        var korisnik = JSON.stringify(data);
+                        alert(korisnik);
+                        window.location.href = "pocetna.html";
+                    } else {
+                        alert("Niste uneli dobro korisnicko ime ili sifru.");
+                    }
+                });
+
+            });
+        });
+    </script>
     <style>
         /* Add a black background color to the top navigation */
         .topnav {
             /*background-color: #333;
             */
-            background-color: rgba(51, 51, 51,1);
+            background-color: rgba(41, 212, 255, 0.8);
+            
             overflow: hidden;
         }
 
@@ -20,6 +84,7 @@
                 padding: 14px 16px;
                 text-decoration: none;
                 font-size: 17px;
+                color:saddlebrown;
             }
 
                 /* Change the color of links on hover */
@@ -32,84 +97,9 @@
                 .topnav a.active {
                     /*background-color: #4CAF50;
                     background-color: rgba(76, 175, 80, 1);*/
-                    background-color: rgba(251, 220, 65, 1);
+                    background-color: #BC9862;
                     color: rgba(51, 51, 51, 1);
                 }
-
-        #dodajMani {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            width: 400px;
-            height: 500px;
-            box-sizing: border-box;
-            background: rgba(0,0,0,0.5);
-            padding: 40px;
-        }
-
-        #tekst {
-            /*font-weight: bold;*/
-            color: #ffffff;
-            /*font-family: Arial;*/
-        }
-
-        #dodajMani input[type=text], #DIVlogin input[type=password] {
-            border: none;
-            border-bottom: 1px solid #ffffff;
-            background-color: transparent;
-            outline: none;
-            height: 40px;
-            color: #ffffff;
-        }
-
-        ::-webkit-input-placeholder {
-            color: #ffffff;
-        }
-
-        #dodajMani input[type=submit] {
-            border: none;
-            height: 40px;
-            outline: none;
-            color: #ffffff;
-            font-size: 15px;
-            background-color: tomato;
-            cursor: pointer;
-            border-radius: 20px;
-        }
-
-            #dodajMani input[type=submit]:hover {
-                background-color: cyan;
-                color: #ffffff;
-            }
-
-        table {
-            z-index: 2;
-            /*left:50%;
-            top:50%;
-            transform:translate(-50%,-50%);
-            width:60%;*/
-            border-collapse: collapse;
-            border-spacing: 0;
-            border-radius: 12px 12px 0 0;
-            overflow: hidden;
-            background: #fafafa;
-            text-align: center;
-        }
-
-        th, td {
-            padding: 10px 15px;
-        }
-
-        th {
-            background: #ba68c8;
-            color: #fafafa;
-            text-transform: uppercase;
-        }
-
-        tr:nth-child(odd) {
-            background: #eeeeee;
-        }
 
         html, table {
             /*overflow: scroll;*/
@@ -120,24 +110,112 @@
             height: 3%;
             width: 4%;
         }
+
+        #DIVlogin {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            width: 400px;
+            height: 340px;
+            box-sizing: border-box;
+            background: rgba(237, 214, 7,0.5);
+            padding: 40px;
+        }
+
+            #DIVlogin input, select {
+                margin-bottom: 20px;
+                width: 100%;
+            }
+
+                #DIVlogin input[type=text], #DIVlogin input[type=password] {
+                    border: none;
+                    border-bottom: 1px solid #ffffff;
+                    background-color: transparent;
+                    outline: none;
+                    height: 40px;
+                    color: #ffffff;
+                }
+
+        ::-webkit-input-placeholder {
+            color: #ffffff;
+        }
+
+        #DIVlogin input[type=submit] {
+            border: none;
+            height: 40px;
+            outline: none;
+            color: #ffffff;
+            font-size: 15px;
+            background-color: tomato;
+            cursor: pointer;
+            border-radius: 20px;
+        }
+
+            #DIVlogin input[type=submit]:hover {
+                background-color: cyan;
+                color: #ffffff;
+            }
+
+        #tekst {
+            margin: 0;
+            padding: 0;
+            font-weight: bold;
+            color: #ffffff;
+            font-family: Arial;
+        }
+
+        #DIVlogin a {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        #DIVlogin input[type=submit]:disabled {
+            background-color: gray;
+            color: #ffffff;
+            cursor: not-allowed;
+        }
     </style>
 </head>
-<body style="background-image:url('slike/cover-1.jpg'); background-size: cover;
-  height: 100%;
-  overflow: hidden;">
+<body style="background-color:#6c553d">
 
     <!--<h1 style="text-align:left;font-size: 40px;background-color: rgba(251, 220, 65, 1); color:rgba(51, 51, 51, 1) "><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>-->
     <div id="stranica">
+            <h1 style="text-align:left;font-size: 40px ; color:#BC9862"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
         <div class="topnav">
-            <h1 style="text-align:left;font-size: 40px;background-color: rgba(51, 51, 51, 1) ; color:rgba(251, 220, 65, 1)"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
 
-            <a  href="pocetna.html">Pocetna</a>
+            <a href="pocetna.html">Pocetna</a>
             <a class="active" href="login.html">Prijava</a>
             <a href="Register.html">Registracija</a>
             <a href="logout.html">Odjava</a>
 
         </div>
     </div>
+    <div id="DIVlogin">
+        <h2 style="color:#ffffff; font-weight:bold; font-family:Arial;text-align-last: center;">Prijava</h2>
+        <table class="table">
 
+            <tr>
+                <td id="tekst">Korisnicko ime:</td>
+                <td>
+                    <input type="text" id="korisnickoime" name="korisnickoime" placeholder="unesite korisnicko ime" required />
+                </td>
+            </tr>
+            <tr>
+                <td id="tekst">Lozinka:</td>
+                <td>
+                    <input type="password" id="lozinka" name="lozinka" placeholder="unesite lozinku" required />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input type="submit" id="btnLogin" value="Prijavi se" />
+                </td>
+            </tr>
+        </table>
+        <!--<a href="pocetna.html">Nazad na pocetnu</a>-->
+    </div>
 </body>
 </html>

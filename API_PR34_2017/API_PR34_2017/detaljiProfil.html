@@ -44,6 +44,14 @@
                 document.getElementById('datumrodjenja').value = korisnik.Datumrodjenja;
                 //---------------------------------------------------------------------------------------
                 $("#btnReg").click(function () {
+                    var uloga;
+                    if (korisnik.Uloga == 0) { uloga = "Administrator"; } else if (korisnik.Uloga == 1) { uloga = "Prodavac"; } else { uloga = "Kupac"; }
+                    var tip ;
+                    if (korisnik.Tip == 0) { tip = "Zlatni"; } else if (korisnik.Tip == 1) { tip = "Srebrni"; } else if (korisnik.Tip == 2) { tip = "Bronzani"; } else { tip = "Nepoznat"; }
+                    var bodovi = korisnik.Sakupljenibodovi;
+                    var obr = korisnik.Obrisan;
+                    alert("uloga" + uloga + " tip" + tip + " bodovi" + bodovi);
+
                     let k1 = document.getElementById("korisnickoime");
                     let k2 = document.getElementById("lozinka");
                     let k3 = document.getElementById("ime");
@@ -53,6 +61,11 @@
                     if (!k1.checkValidity() || !k2.checkValidity() || !k3.checkValidity() || !k4.checkValidity() || !k5.checkValidity()) {
                         alert("Molimo popunite sva polja na ispravan način.");
                     } else {
+                        //var uloga = korisnik.Uloga;
+                        //var bodovi = korisnik.Sakupljenibodovi;
+                        //var tip = korisnik.Tip;
+                        //var obr = korisnik.Obrisan;
+                        //alert("uloga"+uloga+" tip"+tip);
                         var korisnickoime = $("#korisnickoime").val();
                         var lozinka = $("#lozinka").val();
                         var ime = $("#ime").val();
@@ -65,8 +78,11 @@
                             "ime": ime,
                             "prezime": prezime,
                             "pol": pol,
-                            "datumrodjenja": datumrodjenja
-
+                            "datumrodjenja": datumrodjenja,
+                            "uloga": uloga,
+                            "sakupljenibodovi": bodovi,
+                            "tip": tip,
+                            "obrisan": obr
                         });
 
                         $.ajax({

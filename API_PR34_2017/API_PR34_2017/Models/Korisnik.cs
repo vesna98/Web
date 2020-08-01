@@ -25,8 +25,8 @@ namespace API_PR34_2017.Models
         [Required]
         public string Datumrodjenja { get; set; }
         public UlogaType Uloga { get; set; }
-        List<string> Rezervisanekarte { get; set; } //ako je KUPAC sifra karte , bilo koji status
-        List<string> Manifestacije { get; set; } //ako je Prodavac, naziv manifestacije
+        public List<string> Rezervisanekarte { get; set; } //ako je KUPAC sifra karte , bilo koji status
+        public List<string> Manifestacije { get; set; } //ako je Prodavac, naziv manifestacije
         public int Sakupljenibodovi { get; set; }       //za KUPAC
         // public TipKorisnika Tip { get; set; }
         public TipIme Tip { get; set; }
@@ -34,12 +34,12 @@ namespace API_PR34_2017.Models
 
         public Korisnik()
         {
-            Rezervisanekarte = new List<string>();
-            Sakupljenibodovi = 0;
-            Obrisan = false;
-            // TipKorisnika tip = new TipKorisnika();
-            Tip = TipIme.Nepoznat;
-            Uloga = UlogaType.Kupac;
+            //Rezervisanekarte = new List<string>();
+            //Sakupljenibodovi = 0;
+            //Obrisan = false;
+            //// TipKorisnika tip = new TipKorisnika();
+            //Tip = TipIme.Nepoznat;
+            //Uloga = UlogaType.Kupac;
         }
 
         public Korisnik(string korisnickoime, string lozinka, string ime, string prezime, PolType pol, string datumrodjenja, int sakupljenibodovi, TipIme tip, UlogaType uloga, bool obrisan)

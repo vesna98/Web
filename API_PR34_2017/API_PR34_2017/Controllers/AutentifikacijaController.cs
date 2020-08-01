@@ -15,28 +15,15 @@ namespace API_PR34_2017.Controllers
     {
         public int Post([FromBody]Korisnik korisnik)
         {
-
-            // if (String.IsNullOrEmpty(korisnik.Korisnickoime) || String.IsNullOrEmpty(korisnik.Lozinka) ||
-            //   String.IsNullOrEmpty(korisnik.Ime) || String.IsNullOrEmpty(korisnik.Prezime) ||
-            //    String.IsNullOrEmpty(korisnik.Datumrodjenja))
-            // {
-            //     return false;
-            // }
-
-
-            // Regex r1 = new Regex("[0-9a-zA-Z]{3,}"); //korisnicko ime 
-            // Regex r2 = new Regex("[0-9a-zA-Z]{4,}");//lozinka
-            //// Regex r3 = new Regex("[0-9]{13}");//datum rodj
-            // Regex r3 = new Regex("[a-zA-Z]{3,}");//ime i prezime
-
-
-
-            // if (!r1.IsMatch(korisnik.Korisnickoime) || !r2.IsMatch(korisnik.Lozinka) || !r3.IsMatch(korisnik.Ime) || !r3.Match(korisnik.Prezime))
-            // {
-            //     return false;
-            // }
+            
             if (ModelState.IsValid)
             {
+                korisnik.Rezervisanekarte = new List<string>();
+                korisnik.Sakupljenibodovi = 0;
+                korisnik.Obrisan = false;
+                korisnik.Tip = TipIme.Nepoznat;
+                korisnik.Uloga = UlogaType.Kupac;
+
                 DateTime timestamp;
                 if(!DateTime.TryParseExact(korisnik.Datumrodjenja, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out timestamp))
                 {

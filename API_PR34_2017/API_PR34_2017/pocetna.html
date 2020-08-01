@@ -3,24 +3,84 @@
 <head>
     <meta charset="utf-8" />
     <script src="Scripts/jquery-3.5.1.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.1/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height: 400px;
+            width: 100%;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.1/build/ol.js"></script>
+    <script src="Scripts/jquery.js"></script>
     <script>
         $(document).ready(function () {
             let user = sessionStorage.getItem("logovan");
             alert('user ' + user);
-            var korisnik = $.parseJSON(user);;
+            var korisnik = $.parseJSON(user);
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/Korisnik/ListaManifestacije',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                //  data: JSON.stringify(korisnik),
+                success: function (data) {
+                    alert("success");
+
+                    alert("petlja...pocinje" + data);
+
+                    var jsonObj = JSON.parse(data);
+
+                    for (i = 0; i < jsonObj.length; i++) {
+
+                        var tip;
+                        if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                            tip = "Koncert";
+                        } else if (jsonObj[i].Tipmanifestacije == 1) {
+                            tip = "Festival";
+                        } else if (jsonObj[i].Tipmanifestacije == 2) {
+                            tip = "Pozoriste";
+                        }
+                        var poster = jsonObj[i].Poster;
+                        // ImageUrl = poster;
+                        // alert("petlja..." + jsonObj[i]);
+                        var row = "<tr class=\"success\">";
+                        row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                        row += "<td >" + tip + "</td>";
+                        row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                        row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                        row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                        row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                        row += "<td >" + jsonObj[i].Ocena + "</td>";
+
+                        $("#tabelaMani").append(row);
+
+                    }
+                },
+                error: function (data) {
+                    alert("Greska!");
+                }
+
+            });
+
             if (user == null) {
                 alert("nije prij");
                 $('#podaci').hide();
                 $('#AdminView').hide();
+                $('#ProView').hide();
             } else {
                 $('#podaci').show();
                 if (korisnik.Uloga == 0) {  //admin
                     $('#AdminView').show();
                     $('#userPrikaz').hide();
+                    $('#ProView').hide();
                 } else if (korisnik.Uloga == 1) {//prodavac
                     $('#AdminView').hide();
+                    $('#ProView').show();
+                    $('#novaMani').hide();
                 } else if (korisnik.Uloga == 2) {//kupac
                     $('#AdminView').hide();
+                    $('#ProView').hide();
                 }
 
 
@@ -31,13 +91,13 @@
                         url: '/api/Korisnik/SviKorisnici',
                         contentType: 'application/json; charset=utf-8',
                         dataType: 'json',
-                       
+
                         success: function (data) {
-                            
+
                             var lista = JSON.parse(data);
-                                alert("u json korisnci" + data);
-                                //var korisnici = JSON.stringify(data);
-                                //alert("korisnici" + korisnici);
+                            alert("u json korisnci" + data);
+                            //var korisnici = JSON.stringify(data);
+                            //alert("korisnici" + korisnici);
                             for (i = 0; i < lista.length; i++) {
 
                                 var uloga;
@@ -56,7 +116,7 @@
                                 }
                                 var obrisan;
                                 if (lista[i].Obrisan == false) {
-                                    obrisan ="";
+                                    obrisan = "";
                                 } else {
                                     obrisan = 'OBRISAN';
                                 }
@@ -83,46 +143,157 @@
 
                 });
 
+                $("#addFest").click(function () {
+                    $('#novaMani').show();
+                    $("#btnFest").click(function () {
+                        var naziv = $("#naziv").val();
+                        var tipmanifestacije = $("#tipovi option:selected").val();
+                        var brojmesta = $("#brojmesta").val();
+                        var vreme = $("#time").val();
+                        var datumivreme = $("#datumivreme").val();
+                        var cenaregular = $("#cenaregular").val();
+                        var ulicabroj = $("#ulicabroj").val();
+                        var grad = $("#grad").val();
+                        var postanskibroj = $("#postanskibroj").val();
+                        // var poster = $("#poster").val();
+
+                        var logoImg = $("#poster").get(0).files[0];
+                        var formData = new FormData();
+                        formData.append('poster', logoImg);
+
+                        //namestanje vremena da bude sa pm am
+                        t = document.getElementById('time').value
+                        var [h, m] = t.split(":");
+                       // datumivreme += " " + (h % 12 + 12 * (h % 12 == 0)) + ":" + m;//, h >= 12 ? 'PM' : 'AM';
+                        datumivreme += " " + (h % 12 + 12 * (h % 12 == 0)) + ":" + m;//, h >= 12 ? 'PM' : 'AM';
+                        if (h >= 12) {
+                            datumivreme += " PM";
+                        } else {
+                            datumivreme += " AM";
+                        }
+                        alert(datumivreme);
+
+                        formData.append('naziv', naziv);
+                        formData.append('tipmanifestacije', tipmanifestacije);
+                        formData.append('brojmesta', brojmesta);
+                        formData.append('datumivreme', datumivreme);
+                        formData.append('cenaregular', cenaregular);
+                        formData.append('ulicabroj', ulicabroj);
+                        formData.append('grad', grad);
+                        formData.append('postanskibroj', postanskibroj);
+                        formData.append('prodavac', korisnik.Korisnickoime);
+                        alert("tip->" + tipmanifestacije);
+
+
+                        $.ajax({
+
+                            type: "POST",
+                            url: 'api/Korisnik/DodajFest',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            cache: false,
+                            complete: function (data) {
+                                alert("success");
+                               // $("#tabelaMani").load("pocetna.html #tabelaMani");
+                               // $('#tabelaMani').DataTable().ajax.reload();
+                                // console.log(data.text());
+                        $('#novaMani').hide();
+                                $("#maniPrikaz").load("#tabelaMani");
+                                /*, function (responseTxt, statusTxt, xhr) {
+                                    if (statusTxt == "success")
+                                        alert("External content loaded successfully!");
+                                    if (statusTxt == "error")
+                                        alert("Error: " + xhr.status + ": " + xhr.statusText);
+                                });*/
+                            }
+                        });
+                        // function() {
+
+                        //$("#tabelaMani").load("pocetna.html #tabelaMani");      //osvezavanje
+                        // }
+                    });
+                });
+
+                //$('#btnFest').click(
+                //    function () {
+                //       // $('#news').load('news.html');
+                //        $("#tabelaMani").load("pocetna.html #tabelaMani");      //osvezavanje
+                //    }
+                //); //end click
             }
 
+            
         });
+        //setTimeout(function () {
+        //    $("#tabelaMani").load("pocetna.html #tabelaMani");
+        //}, 2000); //refresh every 2 seconds
+        //------------------------
+        //var inputEle = document.getElementById('timeInput');
+
+
+        //function onTimeChange() {
+        //    var timeSplit = inputEle.value.split(':'),
+        //        hours,
+        //        minutes,
+        //        meridian;
+        //    hours = timeSplit[0];
+        //    minutes = timeSplit[1];
+        //    if (hours > 12) {
+        //        meridian = 'PM';
+        //        hours -= 12;
+        //    } else if (hours < 12) {
+        //        meridian = 'AM';
+        //        if (hours == 0) {
+        //            hours = 12;
+        //        }
+        //    } else {
+        //        meridian = 'PM';
+        //    }
+        //    alert(hours + ':' + minutes + ' ' + meridian);
+        //}
+        function print() {
+            t = document.getElementById('time').value
+            var [h, m] = t.split(":");
+            console.log((h % 12 + 12 * (h % 12 == 0)) + ":" + m, h >= 12 ? 'PM' : 'AM');
+        }
     </script>
     <title></title>
     <style>
         /* Add a black background color to the top navigation */
-            .topnav {
-                /*background-color: #333;
-                */
-                background-color: rgba(41, 212, 255, 0.8);
-                overflow: hidden;
+        .topnav {
+            background-color: #333;
+             /*background-color: rgba(41, 212, 255, 0.8);*/
+            overflow: hidden;
+            border-radius:15px;
+        }
+
+            /* Style the links inside the navigation bar */
+            .topnav a {
+                float: left;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+                color: #ffffff;
             }
 
-                /* Style the links inside the navigation bar */
-                .topnav a {
-                    float: left;
-                    color: #f2f2f2;
-                    text-align: center;
-                    padding: 14px 16px;
-                    text-decoration: none;
-                    font-size: 17px;
-                    color: saddlebrown;
+                /* Change the color of links on hover */
+                .topnav a:hover {
+                    background-color: #ddd;
+                    color: black;
                 }
 
-                    /* Change the color of links on hover */
-                    .topnav a:hover {
-                        background-color: #ddd;
-                        color: black;
-                    }
+                /* Add a color to the active/current link */
+                .topnav a.active {
+                    background-color: #4CAF50;
+                    color:#ffffff;
+                    /*background-color: #BC9862;*/
+                    /*color: rgba(51, 51, 51, 1);*/
+                }
 
-                    /* Add a color to the active/current link */
-                    .topnav a.active {
-                        /*background-color: #4CAF50;
-                        background-color: rgba(76, 175, 80, 1);*/
-                        background-color: #BC9862;
-                        color: rgba(51, 51, 51, 1);
-                    }
-
-        #dodajMani {
+        /*#dodajMani {
             position: absolute;
             top: 50%;
             left: 50%;
@@ -132,7 +303,7 @@
             box-sizing: border-box;
             background: rgba(0,0,0,0.5);
             padding: 40px;
-        }
+        }*/
 
         #tekst {
             /*font-weight: bold;*/
@@ -140,20 +311,21 @@
             /*font-family: Arial;*/
         }
 
-        #dodajMani input[type=text], #DIVlogin input[type=password] {
+        /*#dodajMani input[type=text], #DIVlogin input[type=password] {
             border: none;
             border-bottom: 1px solid #ffffff;
             background-color: transparent;
             outline: none;
             height: 40px;
             color: #ffffff;
-        }
+        }*/
 
         ::-webkit-input-placeholder {
-            color: #ffffff;
+            /*color: #ffffff;*/
+            color: gray;
         }
 
-        #dodajMani input[type=submit] {
+        /*#dodajMani input[type=submit] {
             border: none;
             height: 40px;
             outline: none;
@@ -167,7 +339,7 @@
             #dodajMani input[type=submit]:hover {
                 background-color: cyan;
                 color: #ffffff;
-            }
+            }*/
 
         table {
             z-index: 2;
@@ -188,7 +360,8 @@
         }
 
         th {
-            background: #ba68c8;
+            /*background: #ba68c8;*/
+            background: rgba(51, 51, 51, 1);
             color: #fafafa;
             text-transform: uppercase;
         }
@@ -208,10 +381,10 @@
         }
     </style>
 </head>
-<body style="background-color:#6c553d">
+<body >
 
     <!--<h1 style="text-align:left;font-size: 40px;background-color: rgba(251, 220, 65, 1); color:rgba(51, 51, 51, 1) "><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>-->
-            <h1 style="text-align:left;font-size: 40px ; color:#BC9862"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
+    <h1 style="text-align:center;font-size: 40px ; color:#333"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
 
     <div id="stranica">
         <div class="topnav">
@@ -222,12 +395,12 @@
             <div id="podaci">
                 <a href="detaljiProfil.html">Moji podaci</a>
             </div>
-            
+
 
         </div>
     </div>
     <div id="AdminView">
-        <h3 style="color:white">Vase opcije</h3>
+        <h3 style="color:#333">Vase opcije</h3>
         <input type="submit" id="svi_korisnici" value="Prikaz svih korisnika" />
         <div id="userPrikaz" class="table-responsive">
             <table id="userTabela">
@@ -244,8 +417,73 @@
             </table>
         </div>
     </div>
+    <div id="ProView">
+        <h3 style="color:#333">Vase opcije</h3>
+        <input type="submit" id="addFest" value="Dodaj manifestaciju" />
+        <div id="novaMani">
+
+            <table>
+                <tr>
+                    <td id="tekst" style="color:black">Naziv:</td>
+                    <td><input type="text" name="naziv" id="naziv" placeholder="unesite naziv" required /></td>
+                </tr>
+                <tr>
+                    <td id="tekst" style="color:black">Tip manifestacije:</td>
+                    <td>
+                        <select name="tipm" id="tipovi">
+                            <option id="tipm" value="Koncert">Koncert</option>
+                            <option id="tipm" value="Festival">Festival</option>
+                            <option id="tipm" value="Pozoriste">Pozoriste</option>
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td id="tekst" style="color:black">Broj mesta:</td>
+                    <td><input type="number" name="brojmesta" id="brojmesta" placeholder="unesite broj mesta" required /></td>
+                </tr>
+                <tr>
+                    <td id="tekst" style="color:black">Datum odrzavanja:</td>
+                    <td><input type="text" name="datumivreme" id="datumivreme" placeholder="DD-MM-YYYY" pattern='(0[1-9]|[12][0-9]|3[0-1])\-(0[1-9]|1[0-2])\-([0-9]{4})' required /></td>
+                </tr>
+                <tr>
+                    <td id="tekst" style="color:black">Vreme odrzavanja:</td>
+                    <td><input type="time" id="time" required/></td>
+                </tr>
+                <tr>
+                    <td id="tekst" style="color:black">Cena:</td>
+                    <td><input type="number" name="cenaregular" id="cenaregular" placeholder="unesite cenu u evrima" required /></td>
+                </tr>
+                <tr>
+                    <td id="tekst" style="color:black">Ulica i broj</td>
+                    <td><input type="text" name="ulicabroj" id="ulicabroj" placeholder="unesite ulicu i broj" required /></td>
+                </tr>
+                <tr>
+                    <td id="tekst" style="color:black">Grad</td>
+                    <td><input type="text" name="grad" id="grad" placeholder="unesite grad" required /></td>
+
+                </tr>
+                <tr>
+                    <td id="tekst" style="color:black">Postanski broj</td>
+                    <td><input type="text" name="postanskibroj" id="postanskibroj" placeholder="unesite postanski broj" required /></td>
+
+                </tr>
+                <tr>
+                    <td id="tekst" style="color:black">Poster:</td>
+                    <td><input name="poster" type="file" id="poster" required /></td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input type="submit" onclick="print()" value="Dodaj" id="btnFest" />
+                    </td>
+                </tr>
+
+            </table>
+        </div>
+    </div>
     <div id="maniPrikaz" class="table-responsive">
-        <table id="tabelaMani">
+        <table id="tabelaMani" style="margin-left: auto;
+  margin-right: auto;">
             <tr>
                 <th>Naziv</th>
                 <th>Tip</th>
@@ -259,5 +497,21 @@
         </table>
     </div>
 
+    <!--<h2>My Map</h2>
+    <div id="map" class="map"></div>
+    <script type="text/javascript">
+        var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([37.41, 8.82]),
+                zoom: 4
+            })
+        });
+    </script>-->
 </body>
 </html>

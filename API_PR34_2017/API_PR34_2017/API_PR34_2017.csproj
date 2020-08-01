@@ -192,6 +192,11 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="detaljiProfil.html" />
     <Content Include="favicon.ico" />
+    <Content Include="Files\Berlin-Film-Festival.jpg" />
+    <Content Include="Files\cannes.jpg" />
+    <Content Include="Files\coachella.jpeg" />
+    <Content Include="Files\exitfest2021.jpg" />
+    <Content Include="Files\green.png" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="login.html" />
@@ -225,6 +230,7 @@
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
+    <Content Include="Scripts\jquery.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="slike\cover-1.jpg" />
     <Content Include="slike\odlican.png" />

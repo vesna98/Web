@@ -18,14 +18,16 @@ namespace API_PR34_2017.Models
         public string Poster { get; set; }     //SLIKA TIP
         public string Prodavac { get; set; }
         public int Kupljeno { get; set; }
+        public int Ocena { get; set; }
 
         public Manifestacija()
         {
             Status = StatusType.Neaktivno;
             Kupljeno = 0;
+            Ocena = 0;
         }
 
-        public Manifestacija(string prodavac, string naziv, TypeManifestacije tipmanifestacije, int brojmesta, string datumivreme, double cenaregular, Mesto mestoodrzavanja, string poster)
+        public Manifestacija(string prodavac, string naziv, TypeManifestacije tipmanifestacije, int brojmesta, string datumivreme, double cenaregular, Mesto mestoodrzavanja, string poster,int ocena)
         {
             Naziv = naziv;
             Tipmanifestacije = tipmanifestacije;
@@ -37,11 +39,12 @@ namespace API_PR34_2017.Models
             Prodavac = prodavac;
             Status = StatusType.Neaktivno;
             Kupljeno = 0;
+            Ocena = ocena;
         }
 
         public override string ToString()
         {
-            return Prodavac + ";" + Naziv + ";" + Tipmanifestacije.ToString() + ";" + Brojmesta.ToString() + ";" + Datumivreme + ";" + Cenaregular.ToString() + ";" + Mestoodrzavanja.Ulicabroj + ";" + Mestoodrzavanja.Grad + ";" + Mestoodrzavanja.Postanskibroj + ";" + Poster + ";" + Status.ToString() + ";" + Kupljeno;
+            return Prodavac + ";" + Naziv + ";" + Tipmanifestacije.ToString() + ";" + Brojmesta.ToString() + ";" + Datumivreme + ";" + Cenaregular.ToString() + ";" + Mestoodrzavanja.Ulicabroj + ";" + Mestoodrzavanja.Grad + ";" + Mestoodrzavanja.Postanskibroj + ";" + Poster + ";" + Status.ToString() + ";" + Kupljeno + ";" +Ocena.ToString();
         }
     }
     public enum TypeManifestacije

@@ -187,5 +187,122 @@ namespace API_PR34_2017.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, json);
             }
         }
+        [Route("TipoviFilter")]
+        public HttpResponseMessage TipoviFilter(JObject jsonResult)
+        {
+            string filter = (string)jsonResult["filter1"];
+
+            List<Manifestacija> svi = new List<Manifestacija>();
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            foreach (Manifestacija k in festovi)
+            {
+                svi.Add(k);
+            }
+
+            Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
+            for (int i = 0; i < svi.Count(); i++)
+            {
+                DateTime myDate;
+                Manifestacija temp = svi[i];
+                if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+
+                {
+                    if (filter.Equals("Sve"))               //dopunjeno za odgovarajuci filter i sve
+                    {
+                        recnik.Add(temp, myDate);
+                    }
+                    if (!filter.Equals("Sve") && temp.Tipmanifestacije.ToString().Equals(filter))
+                    {
+                        recnik.Add(temp, myDate);
+                    }
+                }
+            }
+
+            var dateTimesAscending = recnik.Values.OrderBy(d => d);
+            List<Manifestacija> konacna = new List<Manifestacija>();
+
+
+            foreach (var ii in dateTimesAscending)
+            {
+
+                foreach (Manifestacija m in recnik.Keys)
+                {
+                    DateTime myDate;
+                    Manifestacija temp = m;
+
+                    if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                    {
+
+                        if (myDate == ii)
+                        {
+                            konacna.Add(m);
+                        }
+                    }
+                }
+            }
+
+            var output = JsonConvert.SerializeObject(konacna);
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+
+        [Route("KarteFilter")]
+        public HttpResponseMessage KarteFilter(JObject jsonResult)
+        {
+            string filter = (string)jsonResult["filter2"];
+
+            List<Manifestacija> svi = new List<Manifestacija>();
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            foreach (Manifestacija k in festovi)
+            {
+                svi.Add(k);
+            }
+
+            Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
+            for (int i = 0; i < svi.Count(); i++)
+            {
+                DateTime myDate;
+                Manifestacija temp = svi[i];
+                if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+
+                {
+                    if (filter.Equals("Sve"))               //dopunjeno za odgovarajuci filter i sve
+                    {
+                        recnik.Add(temp, myDate);
+                    }
+                    else if(temp.Brojmesta-temp.Kupljeno>0) { 
+                    
+                        recnik.Add(temp, myDate);
+                    }
+                }
+            }
+
+            var dateTimesAscending = recnik.Values.OrderBy(d => d);
+            List<Manifestacija> konacna = new List<Manifestacija>();
+
+
+            foreach (var ii in dateTimesAscending)
+            {
+
+                foreach (Manifestacija m in recnik.Keys)
+                {
+                    DateTime myDate;
+                    Manifestacija temp = m;
+
+                    if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                    {
+
+                        if (myDate == ii)
+                        {
+                            konacna.Add(m);
+                        }
+                    }
+                }
+            }
+
+            var output = JsonConvert.SerializeObject(konacna);
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
     }
 }

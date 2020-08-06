@@ -48,7 +48,13 @@
                     row += "<tr ><th>Cena</th><td >" + jsonObj.Cenaregular + "</td ></tr>";
                     row += "<tr ><th>Cena vip</th><td >" + jsonObj.Cenavip + "</td ></tr>";
                     row += "<tr ><th>Cena fan pit</th><td >" + jsonObj.Cenafanpit + "</td ></tr>";
-                    row += "<tr ><th>Ocena</th><td >" + jsonObj.Ocena + "</td ></tr>";
+                    var ocena;
+                    if (jsonObj.Ocena == 0) {
+                        ocena = "Nije ocenjeno";
+                    } else {
+                        ocena = jsonObj.Ocena;
+                    }
+                    row += "<tr ><th>Ocena</th><td >" + ocena + "</td ></tr>";
                     var status;
                     if (jsonObj.Status == 0) {
                         status = "Aktivno";

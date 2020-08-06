@@ -54,7 +54,14 @@
                         row += "<td >" + jsonObj[i].Cenaregular + "</td>";
                         row += "<td >" + jsonObj[i].Cenavip + "</td>";
                         row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
-                        row += "<td >" + jsonObj[i].Ocena + "</td>";
+                        var ocena;
+                        if (jsonObj[i].Ocena == 0) {
+                            ocena = "";
+                        } else {
+                            ocena=jsonObj[i].Ocena;
+                        }
+
+                        row += "<td >" + ocena + "</td>";
                         var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
                         row += "<td><button type = \"button\" id=\"" + nazivdatum_id +"\" class=\"use-address\">Detaljniji prikaz</button></td>";
                         //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
@@ -70,7 +77,159 @@
                 }
 
             });
+            //*********
+                        //let filteri = sessionStorage.getItem("filteri");
+                        //alert('filteri ' + filteri);
+                        //var fil = $.parseJSON(filteri);
+                        //alert("fil" + fil);
+                        ////**********
+                        //if (filteri["manifestacija"] != null) {
+                        //    document.getElementById('polovi').value = filteri["manifestacija"];
+                        //}
+                        //if (filteri["karta"] != null) {
+                        //    document.getElementById('polovi').value = filteri["karta"];
+                        //}
            
+            
+            $("#filter_tip").click(function () {
+                var tipovi = $(".f_tip option:selected").val();
+              //  $("#tabelaMani").empty();
+                //$("#tabelaMani:not(:first)").remove();
+                var tabelica = document.getElementById('tabelaMani');
+                for (var i = 1; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+               // document.getElementById('tabelaMani') = tabelica;
+                alert(tipovi);
+                var obj = JSON.stringify({
+                    "filter1": tipovi
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Korisnik/TipoviFilter',
+                    data: obj,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (data) {
+                        alert("rez fitera tipa");
+                        var jsonObj = JSON.parse(data);
+
+                        for (i = 0; i < jsonObj.length; i++) {
+
+                            var tip;
+                            if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                tip = "Koncert";
+                            } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                tip = "Festival";
+                            } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                tip = "Pozoriste";
+                            }
+
+                            var poster = jsonObj[i].Poster;
+                            
+                            var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                            row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                            row += "<td >" + tip + "</td>";
+                            row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                            row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                            row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                            row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                            row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                            row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                            var ocena;
+                            if (jsonObj[i].Ocena == 0) {
+                                ocena = "";
+                            } else {
+                                ocena = jsonObj[i].Ocena;
+                            }
+
+                            row += "<td >" + ocena + "</td>";
+                            var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                           
+                            row += "</tr>";
+
+                            $("#tabelaMani").append(row);
+
+
+                        }
+                    },
+                    error: function (data) {
+                        alert("Greska!");
+                    }
+                });
+            });
+            //second filter na stranici
+            $("#filter_karta").click(function () {
+                var karte = $("#f_karta option:selected").val();
+                //  $("#tabelaMani").empty();
+                //$("#tabelaMani:not(:first)").remove();
+                var tabelica = document.getElementById('tabelaMani');
+                for (var i = 1; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                // document.getElementById('tabelaMani') = tabelica;
+                alert(karte);
+                var obj = JSON.stringify({
+                    "filter2": karte
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Korisnik/KarteFilter',
+                    data: obj,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (data) {
+                        alert("rez fitera tipa");
+                        var jsonObj = JSON.parse(data);
+
+                        for (i = 0; i < jsonObj.length; i++) {
+
+                            var tip;
+                            if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                tip = "Koncert";
+                            } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                tip = "Festival";
+                            } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                tip = "Pozoriste";
+                            }
+
+                            var poster = jsonObj[i].Poster;
+
+                            var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                            row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                            row += "<td >" + tip + "</td>";
+                            row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                            row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                            row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                            row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                            row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                            row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                            var ocena;
+                            if (jsonObj[i].Ocena == 0) {
+                                ocena = "";
+                            } else {
+                                ocena = jsonObj[i].Ocena;
+                            }
+
+                            row += "<td >" + ocena + "</td>";
+                            var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+
+                            row += "</tr>";
+
+                            $("#tabelaMani").append(row);
+
+
+                        }
+                    },
+                    error: function (data) {
+                        alert("Greska!");
+                    }
+                });
+            });
 
             //    var values = [];
             //    var count = 0;
@@ -398,7 +557,7 @@
         }
     </style>
 </head>
-<body >
+<body>
     <h1 style="text-align:center;font-size: 40px ; color:#333"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
 
     <div id="stranica">
@@ -414,6 +573,19 @@
 
         </div>
     </div>
+    <h4>Filtrirajte po tipu manifestacije</h4>
+    <select class="f_tip">
+        <option  value="Sve">Sve manifestacije</option>
+        <option  value="Koncert">Koncert</option>
+        <option  value="Festival">Festival</option>
+        <option  value="Pozoriste">Pozoriste</option>
+    </select><button type="button" id="filter_tip" >Filtriraj po tipu</button>
+    <h4>Filtrirajte po raspolozivosti karata</h4>
+    <select name="kartafilter" id="f_karta">
+        <option id="fkarta" value="Sve">Sve manifestacije</option>
+        <option id="fkarta" value="Nerasprodate">Nerasprodate</option>
+        
+    </select><button type="button" id="filter_karta">Filtriraj po raspolozivosti karte</button>
     <p id="#resultas" style="color:black"></p>
 
     <div id="AdminView">

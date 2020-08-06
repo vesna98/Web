@@ -15,7 +15,7 @@ pro123;Gazda Paja;Koncert;5463;04-02-2021 11:45 PM;43;Novosadski Sajam 87;Novi S
 pro123;EXIT;Festival;23242;14-07-2020 08:00 PM;5;Varadinska 44;Novi Sad;21000;exitfest2021.jpg;Neaktivno;0;0;4000;3400
 pro123;mMED;Koncert;442;10-02-2020 10:00 PM;22;Varadinska 44;Novi Sad;21000;markokutlic.jpg;Neaktivno;0;0;4000;3400
 pro123;mmm;Koncert;868;14-01-2020 11:00 AM;21;Varadinska 44;Novi Sad;21000;thumb-highxtar-coachella-508x381.jpg;Neaktivno;0;0;4000;3400
-pro123; hg;Koncert;4;10-01-2020 10:30 PM;3;Novosadski Sajam 87;Novi Sad;21000;thumb-highxtar-coachella-508x381.jpg;Neaktivno;0;0;4000;3400
+pro123;ahg;Koncert;4;10-01-2020 10:30 PM;3;Novosadski Sajam 87;Novi Sad;21000;thumb-highxtar-coachella-508x381.jpg;Neaktivno;0;0;4000;3400
 pro123;Zizela;Pozoriste;677;14-01-2020 08:45 PM;4;Varadinska 44;Novi Sad;21000;zizela_plakat.jpg;Neaktivno;0;0;4000;3400
 pro123;Zizela;Pozoriste;2;04-01-2020 10:10 PM;11;Varadinska 44;Novi Sad;21000;plakat_final.jpg;Neaktivno;0;0;4000;3400
 pro123;mMED;Koncert;3;14-01-2020 10:22 PM;5;Varadinska 44;Novi Sad;21000;Gogoland.jpg;Neaktivno;0;0;4000;3400

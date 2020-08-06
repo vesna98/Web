@@ -17,5 +17,10 @@ namespace API_PR34_2017.Models
         public string Ulicabroj { get; set; }
         public string Grad { get; set; }
         public string Postanskibroj { get; set; }
+
+        public override string ToString()
+        {
+            return Ulicabroj+" "+Grad+" "+Postanskibroj.ToString();
+        }
     }
 }

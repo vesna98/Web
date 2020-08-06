@@ -304,5 +304,162 @@ namespace API_PR34_2017.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, output);
         }
+
+        [Route("SortNazivAZ")]
+        public HttpResponseMessage SortNazivAZ()
+        {
+            List<Manifestacija> svi = new List<Manifestacija>();
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            foreach (Manifestacija k in festovi)
+            {
+                svi.Add(k);
+            }
+
+            var sortirano = svi.OrderBy(i => i.Naziv);
+
+            var output = JsonConvert.SerializeObject(sortirano);
+            
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+        [Route("SortNazivZA")]
+        public HttpResponseMessage SortNazivZA()
+        {
+            List<Manifestacija> svi = new List<Manifestacija>();
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            foreach (Manifestacija k in festovi)
+            {
+                svi.Add(k);
+            }
+
+            var sortirano = svi.OrderByDescending(i => i.Naziv);
+
+            var output = JsonConvert.SerializeObject(sortirano);
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+
+        [Route("DatumKasnije")]
+        public HttpResponseMessage DatumKasnije()//([FromBody]JToken jtoken)
+        {
+            List<Manifestacija> svi = new List<Manifestacija>();
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            foreach (Manifestacija k in festovi)
+            {
+                svi.Add(k);
+            }
+
+            Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
+            for (int i = 0; i < svi.Count(); i++)
+            {
+                DateTime myDate;
+                Manifestacija temp = svi[i];
+                if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                // //if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm.fff", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                {
+                    recnik.Add(temp, myDate);
+                }
+            }
+            //recnik.OrderBy(b => b.Value.Date).ThenBy(b => b.Value.TimeOfDay);//ne radi
+
+            var dateTimesAscending = recnik.Values.OrderByDescending(d => d);
+            List<Manifestacija> konacna = new List<Manifestacija>();
+
+
+            foreach (var ii in dateTimesAscending)
+            {
+
+                foreach (Manifestacija m in recnik.Keys)
+                {
+                    DateTime myDate;
+                    Manifestacija temp = m;
+                    //if (DateTime.TryParseExact(temp.Datumivreme, "dd/MM/yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                    if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                    {
+
+                        if (myDate == ii)
+                        {
+                            konacna.Add(m);
+                        }
+                    }
+                }
+            }
+
+            var output = JsonConvert.SerializeObject(konacna);
+            //var output = JsonConvert.SerializeObject(recnik.Keys.ToList());//ne radi
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+
+        [Route("SortMestoAZ")]
+        public HttpResponseMessage SortMestoAZ()
+        {
+            List<Manifestacija> svi = new List<Manifestacija>();
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            foreach (Manifestacija k in festovi)
+            {
+                svi.Add(k);
+            }
+
+            var sortirano = svi.OrderBy(i => i.Mestoodrzavanja.ToString());
+
+            var output = JsonConvert.SerializeObject(sortirano);
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+        [Route("SortMestoZA")]
+        public HttpResponseMessage SortMestoZA()
+        {
+            List<Manifestacija> svi = new List<Manifestacija>();
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            foreach (Manifestacija k in festovi)
+            {
+                svi.Add(k);
+            }
+
+            var sortirano = svi.OrderByDescending(i => i.Mestoodrzavanja.ToString());
+
+            var output = JsonConvert.SerializeObject(sortirano);
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+
+        [Route("SortCenaRastuce")]
+        public HttpResponseMessage SortCenaRastuce()
+        {
+            List<Manifestacija> svi = new List<Manifestacija>();
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            foreach (Manifestacija k in festovi)
+            {
+                svi.Add(k);
+            }
+
+            var sortirano = svi.OrderBy(i => i.Cenaregular);
+
+            var output = JsonConvert.SerializeObject(sortirano);
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+        [Route("SortCenaOpadajuce")]
+        public HttpResponseMessage SortCenaOpadajuce()
+        {
+            List<Manifestacija> svi = new List<Manifestacija>();
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            foreach (Manifestacija k in festovi)
+            {
+                svi.Add(k);
+            }
+
+            var sortirano = svi.OrderByDescending(i => i.Cenaregular);
+
+            var output = JsonConvert.SerializeObject(sortirano);
+
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
     }
 }

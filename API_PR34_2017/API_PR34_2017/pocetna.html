@@ -231,6 +231,512 @@
                 });
             });
 
+            $("#sort_nazAZ").click(function () {
+                var tabelica = document.getElementById('tabelaMani');
+                for (var i = 1; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Korisnik/SortNazivAZ',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    //  data: JSON.stringify(korisnik),
+                    success: function (data) {
+                        //alert("success");
+
+                        //alert("petlja...pocinje" + data);
+
+                        var jsonObj = JSON.parse(data);
+
+                        for (i = 0; i < jsonObj.length; i++) {
+
+                            var tip;
+                            if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                tip = "Koncert";
+                            } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                tip = "Festival";
+                            } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                tip = "Pozoriste";
+                            }
+
+                            var poster = jsonObj[i].Poster;
+                            
+                            var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                            row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                            row += "<td >" + tip + "</td>";
+                            row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                            row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                            row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                            row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                            row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                            row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                            var ocena;
+                            if (jsonObj[i].Ocena == 0) {
+                                ocena = "";
+                            } else {
+                                ocena = jsonObj[i].Ocena;
+                            }
+
+                            row += "<td >" + ocena + "</td>";
+                            var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            row += "</tr>";
+
+                            $("#tabelaMani").append(row);
+
+
+                        }
+                    },
+                    error: function (data) {
+                        alert("Greska!");
+                    }
+
+                });
+            });
+
+            $("#sort_nazZA").click(function () {
+                var tabelica = document.getElementById('tabelaMani');
+                for (var i = 1; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Korisnik/SortNazivZA',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    //  data: JSON.stringify(korisnik),
+                    success: function (data) {
+                        //alert("success");
+
+                        //alert("petlja...pocinje" + data);
+
+                        var jsonObj = JSON.parse(data);
+
+                        for (i = 0; i < jsonObj.length; i++) {
+
+                            var tip;
+                            if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                tip = "Koncert";
+                            } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                tip = "Festival";
+                            } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                tip = "Pozoriste";
+                            }
+
+                            var poster = jsonObj[i].Poster;
+
+                            var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                            row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                            row += "<td >" + tip + "</td>";
+                            row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                            row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                            row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                            row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                            row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                            row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                            var ocena;
+                            if (jsonObj[i].Ocena == 0) {
+                                ocena = "";
+                            } else {
+                                ocena = jsonObj[i].Ocena;
+                            }
+
+                            row += "<td >" + ocena + "</td>";
+                            var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            row += "</tr>";
+
+                            $("#tabelaMani").append(row);
+
+
+                        }
+                    },
+                    error: function (data) {
+                        alert("Greska!");
+                    }
+
+                });
+            });
+
+            $("#sort_datum1").click(function () {
+                var tabelica = document.getElementById('tabelaMani');
+                for (var i = 1; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Korisnik/ListaManifestacije',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    //  data: JSON.stringify(korisnik),
+                    success: function (data) {
+                        //alert("success");
+
+                        //alert("petlja...pocinje" + data);
+
+                        var jsonObj = JSON.parse(data);
+
+                        for (i = 0; i < jsonObj.length; i++) {
+
+                            var tip;
+                            if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                tip = "Koncert";
+                            } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                tip = "Festival";
+                            } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                tip = "Pozoriste";
+                            }
+
+                            var poster = jsonObj[i].Poster;
+
+                            var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                            row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                            row += "<td >" + tip + "</td>";
+                            row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                            row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                            row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                            row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                            row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                            row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                            var ocena;
+                            if (jsonObj[i].Ocena == 0) {
+                                ocena = "";
+                            } else {
+                                ocena = jsonObj[i].Ocena;
+                            }
+
+                            row += "<td >" + ocena + "</td>";
+                            var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            row += "</tr>";
+
+                            $("#tabelaMani").append(row);
+
+
+                        }
+                    },
+                    error: function (data) {
+                        alert("Greska!");
+                    }
+
+                });
+            });
+            $("#sort_datum2").click(function () {
+                var tabelica = document.getElementById('tabelaMani');
+                for (var i = 1; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Korisnik/DatumKasnije',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    //  data: JSON.stringify(korisnik),
+                    success: function (data) {
+                        //alert("success");
+
+                        //alert("petlja...pocinje" + data);
+
+                        var jsonObj = JSON.parse(data);
+
+                        for (i = 0; i < jsonObj.length; i++) {
+
+                            var tip;
+                            if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                tip = "Koncert";
+                            } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                tip = "Festival";
+                            } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                tip = "Pozoriste";
+                            }
+
+                            var poster = jsonObj[i].Poster;
+
+                            var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                            row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                            row += "<td >" + tip + "</td>";
+                            row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                            row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                            row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                            row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                            row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                            row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                            var ocena;
+                            if (jsonObj[i].Ocena == 0) {
+                                ocena = "";
+                            } else {
+                                ocena = jsonObj[i].Ocena;
+                            }
+
+                            row += "<td >" + ocena + "</td>";
+                            var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            row += "</tr>";
+
+                            $("#tabelaMani").append(row);
+
+
+                        }
+                    },
+                    error: function (data) {
+                        alert("Greska!");
+                    }
+
+                });
+            });
+            $("#sort_mestoAZ").click(function () {
+                var tabelica = document.getElementById('tabelaMani');
+                for (var i = 1; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Korisnik/SortMestoAZ',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    //  data: JSON.stringify(korisnik),
+                    success: function (data) {
+                        //alert("success");
+
+                        //alert("petlja...pocinje" + data);
+
+                        var jsonObj = JSON.parse(data);
+
+                        for (i = 0; i < jsonObj.length; i++) {
+
+                            var tip;
+                            if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                tip = "Koncert";
+                            } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                tip = "Festival";
+                            } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                tip = "Pozoriste";
+                            }
+
+                            var poster = jsonObj[i].Poster;
+
+                            var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                            row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                            row += "<td >" + tip + "</td>";
+                            row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                            row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                            row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                            row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                            row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                            row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                            var ocena;
+                            if (jsonObj[i].Ocena == 0) {
+                                ocena = "";
+                            } else {
+                                ocena = jsonObj[i].Ocena;
+                            }
+
+                            row += "<td >" + ocena + "</td>";
+                            var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            row += "</tr>";
+
+                            $("#tabelaMani").append(row);
+
+
+                        }
+                    },
+                    error: function (data) {
+                        alert("Greska!");
+                    }
+
+                });
+            });
+            $("#sort_mestoZA").click(function () {
+                var tabelica = document.getElementById('tabelaMani');
+                for (var i = 1; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Korisnik/SortMestoZA',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    //  data: JSON.stringify(korisnik),
+                    success: function (data) {
+                        //alert("success");
+
+                        //alert("petlja...pocinje" + data);
+
+                        var jsonObj = JSON.parse(data);
+
+                        for (i = 0; i < jsonObj.length; i++) {
+
+                            var tip;
+                            if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                tip = "Koncert";
+                            } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                tip = "Festival";
+                            } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                tip = "Pozoriste";
+                            }
+
+                            var poster = jsonObj[i].Poster;
+
+                            var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                            row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                            row += "<td >" + tip + "</td>";
+                            row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                            row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                            row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                            row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                            row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                            row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                            var ocena;
+                            if (jsonObj[i].Ocena == 0) {
+                                ocena = "";
+                            } else {
+                                ocena = jsonObj[i].Ocena;
+                            }
+
+                            row += "<td >" + ocena + "</td>";
+                            var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            row += "</tr>";
+
+                            $("#tabelaMani").append(row);
+
+
+                        }
+                    },
+                    error: function (data) {
+                        alert("Greska!");
+                    }
+
+                });
+            });
+            $("#sort_cenaR").click(function () {
+                var tabelica = document.getElementById('tabelaMani');
+                for (var i = 1; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Korisnik/SortCenaRastuce',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    //  data: JSON.stringify(korisnik),
+                    success: function (data) {
+                        //alert("success");
+
+                        //alert("petlja...pocinje" + data);
+
+                        var jsonObj = JSON.parse(data);
+
+                        for (i = 0; i < jsonObj.length; i++) {
+
+                            var tip;
+                            if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                tip = "Koncert";
+                            } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                tip = "Festival";
+                            } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                tip = "Pozoriste";
+                            }
+
+                            var poster = jsonObj[i].Poster;
+
+                            var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                            row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                            row += "<td >" + tip + "</td>";
+                            row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                            row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                            row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                            row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                            row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                            row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                            var ocena;
+                            if (jsonObj[i].Ocena == 0) {
+                                ocena = "";
+                            } else {
+                                ocena = jsonObj[i].Ocena;
+                            }
+
+                            row += "<td >" + ocena + "</td>";
+                            var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            row += "</tr>";
+
+                            $("#tabelaMani").append(row);
+
+
+                        }
+                    },
+                    error: function (data) {
+                        alert("Greska!");
+                    }
+
+                });
+            });
+            $("#sort_cenaO").click(function () {
+                var tabelica = document.getElementById('tabelaMani');
+                for (var i = 1; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Korisnik/SortCenaOpadajuce',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    //  data: JSON.stringify(korisnik),
+                    success: function (data) {
+                        //alert("success");
+
+                        //alert("petlja...pocinje" + data);
+
+                        var jsonObj = JSON.parse(data);
+
+                        for (i = 0; i < jsonObj.length; i++) {
+
+                            var tip;
+                            if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                tip = "Koncert";
+                            } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                tip = "Festival";
+                            } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                tip = "Pozoriste";
+                            }
+
+                            var poster = jsonObj[i].Poster;
+
+                            var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                            row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                            row += "<td >" + tip + "</td>";
+                            row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                            row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                            row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                            row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                            row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                            row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                            var ocena;
+                            if (jsonObj[i].Ocena == 0) {
+                                ocena = "";
+                            } else {
+                                ocena = jsonObj[i].Ocena;
+                            }
+
+                            row += "<td >" + ocena + "</td>";
+                            var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            row += "</tr>";
+
+                            $("#tabelaMani").append(row);
+
+
+                        }
+                    },
+                    error: function (data) {
+                        alert("Greska!");
+                    }
+
+                });
+            });
             //    var values = [];
             //    var count = 0;
             //$("#tabelaMani").on("click", "tbody tr", function (event) {
@@ -575,19 +1081,27 @@
     </div>
     <h4>Filtrirajte po tipu manifestacije</h4>
     <select class="f_tip">
-        <option  value="Sve">Sve manifestacije</option>
-        <option  value="Koncert">Koncert</option>
-        <option  value="Festival">Festival</option>
-        <option  value="Pozoriste">Pozoriste</option>
-    </select><button type="button" id="filter_tip" >Filtriraj po tipu</button>
+        <option value="Sve">Sve manifestacije</option>
+        <option value="Koncert">Koncert</option>
+        <option value="Festival">Festival</option>
+        <option value="Pozoriste">Pozoriste</option>
+    </select><button type="button" id="filter_tip">Filtriraj po tipu</button>
     <h4>Filtrirajte po raspolozivosti karata</h4>
     <select name="kartafilter" id="f_karta">
         <option id="fkarta" value="Sve">Sve manifestacije</option>
         <option id="fkarta" value="Nerasprodate">Nerasprodate</option>
-        
-    </select><button type="button" id="filter_karta">Filtriraj po raspolozivosti karte</button>
-    <p id="#resultas" style="color:black"></p>
 
+    </select><button type="button" id="filter_karta">Filtriraj po raspolozivosti karte</button>
+    <!--<p id="#resultas" style="color:black"></p>-->
+    <h4>Sortiranja</h4>
+    <button type="button" id="sort_nazAZ">Sortiraj po nazivu A-Z</button>
+    <button type="button" id="sort_nazZA">Sortiraj po nazivu Z-A</button>
+    <button type="button" id="sort_datum1">Sortiraj po datumu od najskorijeg</button>
+    <button type="button" id="sort_datum2">Sortiraj po datumu od najkasnijeg</button>
+    <button type="button" id="sort_cenaR">Sortiraj po regular ceni rastuce</button>
+    <button type="button" id="sort_cenaO">Sortiraj po regular ceni opadajuce</button>
+    <button type="button" id="sort_mestoAZ">Sortiraj po mestu A-Z</button>
+    <button type="button" id="sort_mestoZA">Sortiraj po mestu Z-A</button>
     <div id="AdminView">
         <h3 style="color:#333">Vase opcije</h3>
         <input type="submit" id="svi_korisnici" value="Prikaz svih korisnika" />
@@ -679,6 +1193,7 @@
         </div>
     </div>
     <div id="maniPrikaz" class="table-responsive">
+        <h2 style="text-align:center">Manifestacije</h2>
         <table id="tabelaMani" style="margin-left: auto;
   margin-right: auto;">
             <tr>

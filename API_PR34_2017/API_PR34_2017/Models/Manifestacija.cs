@@ -13,6 +13,8 @@ namespace API_PR34_2017.Models
         // public DateTime Datumivreme { get; set; }
         public string Datumivreme { get; set; }
         public double Cenaregular { get; set; }
+        public double Cenafanpit { get; set; }
+        public double Cenavip { get; set; }
         public StatusType Status { get; set; }
         public Mesto Mestoodrzavanja { get; set; }
         public string Poster { get; set; }     //SLIKA TIP
@@ -27,7 +29,7 @@ namespace API_PR34_2017.Models
             Ocena = 0;
         }
 
-        public Manifestacija(string prodavac, string naziv, TypeManifestacije tipmanifestacije, int brojmesta, string datumivreme, double cenaregular, Mesto mestoodrzavanja, string poster,int ocena)
+        public Manifestacija(string prodavac, string naziv, TypeManifestacije tipmanifestacije, int brojmesta, string datumivreme, double cenaregular, Mesto mestoodrzavanja, string poster,int ocena,double cenafanpit,double cenavip,int kupljeno)
         {
             Naziv = naziv;
             Tipmanifestacije = tipmanifestacije;
@@ -38,13 +40,15 @@ namespace API_PR34_2017.Models
             Poster = poster;
             Prodavac = prodavac;
             Status = StatusType.Neaktivno;
-            Kupljeno = 0;
+            Kupljeno = kupljeno;
             Ocena = ocena;
+            Cenafanpit = cenafanpit;
+            Cenavip = cenavip;
         }
 
         public override string ToString()
         {
-            return Prodavac + ";" + Naziv + ";" + Tipmanifestacije.ToString() + ";" + Brojmesta.ToString() + ";" + Datumivreme + ";" + Cenaregular.ToString() + ";" + Mestoodrzavanja.Ulicabroj + ";" + Mestoodrzavanja.Grad + ";" + Mestoodrzavanja.Postanskibroj + ";" + Poster + ";" + Status.ToString() + ";" + Kupljeno + ";" +Ocena.ToString();
+            return Prodavac + ";" + Naziv + ";" + Tipmanifestacije.ToString() + ";" + Brojmesta.ToString() + ";" + Datumivreme + ";" + Cenaregular.ToString() + ";" + Mestoodrzavanja.Ulicabroj + ";" + Mestoodrzavanja.Grad + ";" + Mestoodrzavanja.Postanskibroj + ";" + Poster + ";" + Status.ToString() + ";" + Kupljeno + ";" +Ocena.ToString()+";" + Cenafanpit.ToString() + ";" + Cenavip.ToString();
         }
     }
     public enum TypeManifestacije

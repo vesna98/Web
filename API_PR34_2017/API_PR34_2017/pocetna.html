@@ -41,19 +41,27 @@
                         } else if (jsonObj[i].Tipmanifestacije == 2) {
                             tip = "Pozoriste";
                         }
+                       
                         var poster = jsonObj[i].Poster;
                         // ImageUrl = poster;
                         // alert("petlja..." + jsonObj[i]);
-                        var row = "<tr class=\"success\">";
+                        var row = "<tr id=\"nesto"+i+"\"class=\"success\">";
                         row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
                         row += "<td >" + tip + "</td>";
                         row += "<td >" + jsonObj[i].Datumivreme + "</td>";
                         row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
                         row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
                         row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                        row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                        row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
                         row += "<td >" + jsonObj[i].Ocena + "</td>";
-
+                        var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                        row += "<td><button type = \"button\" id=\"" + nazivdatum_id +"\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                        //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
+                        row += "</tr>";
+                        
                         $("#tabelaMani").append(row);
+                       
 
                     }
                 },
@@ -62,9 +70,27 @@
                 }
 
             });
+           
+
+            //    var values = [];
+            //    var count = 0;
+            //$("#tabelaMani").on("click", "tbody tr", function (event) {
+            //    alert(values);
+            //    $(this).find("td").each(function () {
+            //        values[count] = $(this).text();
+            //        count++;
+            //    });
+            //    alert("kliiik");
+            //    for (i = 0; i < count; i++) {
+            //        alert("podatak " + values[i]);
+            //    }
+            //    values.pop();
+            //});
+            //*************************radi kao niz
+            
 
             if (user == null) {
-                alert("nije prij");
+                console.log("nije prij");
                 $('#podaci').hide();
                 $('#AdminView').hide();
                 $('#ProView').hide();
@@ -74,6 +100,7 @@
                     $('#AdminView').show();
                     $('#userPrikaz').hide();
                     $('#ProView').hide();
+                    $('#novaMani').hide();
                 } else if (korisnik.Uloga == 1) {//prodavac
                     $('#AdminView').hide();
                     $('#ProView').show();
@@ -81,8 +108,9 @@
                 } else if (korisnik.Uloga == 2) {//kupac
                     $('#AdminView').hide();
                     $('#ProView').hide();
+                    $('#novaMani').hide();
                 }
-
+                //detaljniji prikaz manifestacija
 
                 $("#svi_korisnici").click(function () {
                     $('#userPrikaz').show();
@@ -120,9 +148,7 @@
                                 } else {
                                     obrisan = 'OBRISAN';
                                 }
-
-                                // ImageUrl = poster;
-                                // alert("petlja..." + jsonObj[i]);
+                                
                                 var row = "<tr class=\"success\">";
                                 row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
                                 row += "<td >" + lista[i].Ime + "</td>";
@@ -152,6 +178,8 @@
                         var vreme = $("#time").val();
                         var datumivreme = $("#datumivreme").val();
                         var cenaregular = $("#cenaregular").val();
+                        var cenavip = $("#cenavip").val();
+                        var cenafanpit = $("#cenafanpit").val();
                         var ulicabroj = $("#ulicabroj").val();
                         var grad = $("#grad").val();
                         var postanskibroj = $("#postanskibroj").val();
@@ -178,6 +206,8 @@
                         formData.append('brojmesta', brojmesta);
                         formData.append('datumivreme', datumivreme);
                         formData.append('cenaregular', cenaregular);
+                        formData.append('cenavip', cenavip);
+                        formData.append('cenafanpit', cenafanpit);
                         formData.append('ulicabroj', ulicabroj);
                         formData.append('grad', grad);
                         formData.append('postanskibroj', postanskibroj);
@@ -198,7 +228,7 @@
                                // $("#tabelaMani").load("pocetna.html #tabelaMani");
                                // $('#tabelaMani').DataTable().ajax.reload();
                                 // console.log(data.text());
-                        $('#novaMani').hide();
+                                $('#novaMani').hide();
                                 $("#maniPrikaz").load("#tabelaMani");
                                 /*, function (responseTxt, statusTxt, xhr) {
                                     if (statusTxt == "success")
@@ -208,19 +238,10 @@
                                 });*/
                             }
                         });
-                        // function() {
-
-                        //$("#tabelaMani").load("pocetna.html #tabelaMani");      //osvezavanje
-                        // }
+                        
                     });
                 });
 
-                //$('#btnFest').click(
-                //    function () {
-                //       // $('#news').load('news.html');
-                //        $("#tabelaMani").load("pocetna.html #tabelaMani");      //osvezavanje
-                //    }
-                //); //end click
             }
 
             
@@ -252,12 +273,26 @@
         //    }
         //    alert(hours + ':' + minutes + ' ' + meridian);
         //}
-        function print() {
-            t = document.getElementById('time').value
-            var [h, m] = t.split(":");
-            console.log((h % 12 + 12 * (h % 12 == 0)) + ":" + m, h >= 12 ? 'PM' : 'AM');
-        }
+        //function print() {
+        //    t = document.getElementById('time').value
+        //    var [h, m] = t.split(":");
+        //    console.log((h % 12 + 12 * (h % 12 == 0)) + ":" + m, h >= 12 ? 'PM' : 'AM');
+        //}
+        $(document).on('click', '.use-address', function () {            // kada je button (čija je class = use-address) kliknut
+            alert("pokusaj klik");
+            var polja = (this.id).split('_');
+            console.log("nn" + polja[0] + "   xa" + polja);
+
+            var obj = JSON.stringify ({
+                "naziv": polja[0],
+                "datum":polja[1]
+            });
+            sessionStorage.setItem('dogadjaj', obj);        //cuvanje odabranog dogadjaja u sesiji i prelazak na njegov pregled
+            $(location).attr('href', 'ManifestacijaPage.html');
+
+        });
     </script>
+   
     <title></title>
     <style>
         /* Add a black background color to the top navigation */
@@ -289,54 +324,35 @@
                 .topnav a.active {
                     background-color: #4CAF50;
                     color:#ffffff;
-                    /*background-color: #BC9862;*/
-                    /*color: rgba(51, 51, 51, 1);*/
+                    
                 }
 
-        /*#dodajMani {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%,-50%);
-            width: 400px;
-            height: 500px;
-            box-sizing: border-box;
-            background: rgba(0,0,0,0.5);
-            padding: 40px;
-        }*/
-
         #tekst {
-            /*font-weight: bold;*/
             color: #ffffff;
-            /*font-family: Arial;*/
         }
 
-        /*#dodajMani input[type=text], #DIVlogin input[type=password] {
-            border: none;
-            border-bottom: 1px solid #ffffff;
-            background-color: transparent;
-            outline: none;
-            height: 40px;
-            color: #ffffff;
-        }*/
-
-        ::-webkit-input-placeholder {
-            /*color: #ffffff;*/
-            color: gray;
-        }
-
-        /*#dodajMani input[type=submit] {
+        button{
             border: none;
             height: 40px;
             outline: none;
             color: #ffffff;
             font-size: 15px;
-            background-color: tomato;
+            background-color: #333;
+            color:#ffffff;
             cursor: pointer;
             border-radius: 20px;
         }
 
-            #dodajMani input[type=submit]:hover {
+            button:hover {
+                background-color: #4CAF50;
+                color: #ffffff;
+            }
+        ::-webkit-input-placeholder {
+            /*color: #ffffff;*/
+            color: gray;
+        }
+
+            /*#dodajMani input[type=submit]:hover {
                 background-color: cyan;
                 color: #ffffff;
             }*/
@@ -365,6 +381,7 @@
             color: #fafafa;
             text-transform: uppercase;
         }
+       
 
         tr:nth-child(odd) {
             background: #eeeeee;
@@ -382,8 +399,6 @@
     </style>
 </head>
 <body >
-
-    <!--<h1 style="text-align:left;font-size: 40px;background-color: rgba(251, 220, 65, 1); color:rgba(51, 51, 51, 1) "><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>-->
     <h1 style="text-align:center;font-size: 40px ; color:#333"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
 
     <div id="stranica">
@@ -399,6 +414,8 @@
 
         </div>
     </div>
+    <p id="#resultas" style="color:black"></p>
+
     <div id="AdminView">
         <h3 style="color:#333">Vase opcije</h3>
         <input type="submit" id="svi_korisnici" value="Prikaz svih korisnika" />
@@ -448,11 +465,19 @@
                 </tr>
                 <tr>
                     <td id="tekst" style="color:black">Vreme odrzavanja:</td>
-                    <td><input type="time" id="time" required/></td>
+                    <td><input type="time" id="time" required /></td>
                 </tr>
                 <tr>
-                    <td id="tekst" style="color:black">Cena:</td>
+                    <td id="tekst" style="color:black">Cena regular:</td>
                     <td><input type="number" name="cenaregular" id="cenaregular" placeholder="unesite cenu u evrima" required /></td>
+                </tr>
+                <tr>
+                    <td id="tekst" style="color:black">Cena vip:</td>
+                    <td><input type="number" name="cenavip" id="cenavip" placeholder="unesite cenu u evrima" required /></td>
+                </tr>
+                <tr>
+                    <td id="tekst" style="color:black">Cena fan pit:</td>
+                    <td><input type="number" name="cenafanpit" id="cenafanpit" placeholder="unesite cenu u evrima" required /></td>
                 </tr>
                 <tr>
                     <td id="tekst" style="color:black">Ulica i broj</td>
@@ -490,7 +515,9 @@
                 <th>Datum i vreme</th>
                 <th>Mesto</th>
                 <th>Poster</th>
-                <th>Cena</th>
+                <th>Cena regular</th>
+                <th>Cena vip</th>
+                <th>Cena fan pit</th>
                 <th>Ocena</th>
                 <th>Detaljnije</th>
             </tr>

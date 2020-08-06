@@ -31,7 +31,7 @@
         $(document).ready(function () {
             let user = sessionStorage.getItem("logovan");
             var korisnik = $.parseJSON(user);
-            alert('user ' + korisnik.Ime);
+            console.log('user ' + korisnik.Ime);
             if (user == null) {
                 alert("nije prij");
                 $('#podaci').hide();
@@ -42,6 +42,13 @@
                 document.getElementById('ime').value = korisnik.Ime;
                 document.getElementById('prezime').value = korisnik.Prezime;
                 document.getElementById('datumrodjenja').value = korisnik.Datumrodjenja;
+                var kojipol;
+                if (korisnik.Pol==0) {
+                    kojipol = "Muski";
+                } else {
+                    kojipol = "Zenski";
+                }
+                document.getElementById('polovi').value = kojipol;//dodato
                 //---------------------------------------------------------------------------------------
                 $("#btnReg").click(function () {
                     var uloga;
@@ -50,7 +57,7 @@
                     if (korisnik.Tip == 0) { tip = "Zlatni"; } else if (korisnik.Tip == 1) { tip = "Srebrni"; } else if (korisnik.Tip == 2) { tip = "Bronzani"; } else { tip = "Nepoznat"; }
                     var bodovi = korisnik.Sakupljenibodovi;
                     var obr = korisnik.Obrisan;
-                    alert("uloga" + uloga + " tip" + tip + " bodovi" + bodovi);
+                    console.log("uloga" + uloga + " tip" + tip + " bodovi" + bodovi);
 
                     let k1 = document.getElementById("korisnickoime");
                     let k2 = document.getElementById("lozinka");
@@ -91,21 +98,28 @@
                             data: obj,
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'json',
-                        //    success: function (data) {
-                        //        if (data == 1) {
-                        //            alert('Uspesno ste izmenili podatke.');
+                            //    success: function (data) {
+                            //        if (data == 1) {
+                            //            alert('Uspesno ste izmenili podatke.');
 
-                        //        } else if (data == 0) {
-                        //            alert('Niste uneli ispravan datum rodjenja.');
-                        //        }
-                        //    }
-                        //});
-                        }).done(function () {
-                            alert('SUCCESS');
+                            //        } else if (data == 0) {
+                            //            alert('Niste uneli ispravan datum rodjenja.');
+                            //        }
+                            //    }
+                            //});
+                        }).done(function (data) {
+                            if (data != null) {
+                                console.log('SUCCESS');
+                                sessionStorage.removeItem('logovan');
+                                sessionStorage.setItem('logovan', JSON.stringify(data));
+                                console.log(JSON.stringify(data));
+                            } else {
+                                alert("Niste uneli ispravne podatke");//treba refresh sranice uraditi!!!---DOPUNI
+                            }
+                            window.location.reload(true);
+                            //alert("osvezilo");
                         }).fail(function (msg) {
-                            alert('FAIL');
-                        }).always(function (msg) {
-                            alert('ALWAYS');
+                            console.log('FAIL');
                         });
                     }
                 });
@@ -115,10 +129,9 @@
     </script>
     <style>
         .topnav {
-            /*background-color: #333;
-            */
-            background-color: rgba(41, 212, 255, 0.8);
+            background-color: #333;
             overflow: hidden;
+            border-radius: 15px;
         }
 
             /* Style the links inside the navigation bar */
@@ -129,7 +142,7 @@
                 padding: 14px 16px;
                 text-decoration: none;
                 font-size: 17px;
-                color: saddlebrown;
+                color: #ffffff;
             }
 
                 /* Change the color of links on hover */
@@ -140,10 +153,8 @@
 
                 /* Add a color to the active/current link */
                 .topnav a.active {
-                    /*background-color: #4CAF50;
-                    background-color: rgba(76, 175, 80, 1);*/
-                    background-color: #BC9862;
-                    color: rgba(51, 51, 51, 1);
+                    background-color: #4CAF50;
+                    color: #ffffff;
                 }
 
         html, table {
@@ -157,14 +168,14 @@
         }
         #DIVreg {
             position: absolute;
-            top: 62%;
+            top: 65%;
             left: 50%;
             transform: translate(-50%,-50%);
             position: absolute;
             width: 410px;
             height: 580px;
             box-sizing: border-box;
-            background: #BC9862;
+            background: rgba(51, 51, 51, 1);
             /*background: rgba(51, 51, 51, 0.7);*/
             padding: 40px;
         }
@@ -191,7 +202,9 @@
         ::-webkit-input-placeholder {
             color: #ffffff;
         }
-
+        #tekst {
+            color: #ffffff;
+        }
         #DIVreg input[type=submit] {
             border: none;
             height: 40px;
@@ -216,7 +229,7 @@
     </style>
 </head>
 <body>
-    <h1 style="text-align:left;font-size: 40px ; color:#BC9862"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
+    <h1 style="text-align:center;font-size: 40px ;color:#333"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
 
     <div id="stranica">
         <div class="topnav">

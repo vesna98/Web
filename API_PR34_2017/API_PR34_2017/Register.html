@@ -44,7 +44,15 @@
         });
 
          $(document).ready(function () {
-
+             let user = sessionStorage.getItem("logovan");
+             var korisnik = $.parseJSON(user);
+             alert('user ' + korisnik.Ime);
+             if (user == null) {
+                 alert("nije prij");
+                 $('#podaci').hide();
+             } else {
+                 $('#podaci').show();
+             }
           // $(function () {
                validate();
                $('input[type="text"]').keyup(validate); //you can use your multiple id selector instead of the attribute selector that i am using
@@ -191,10 +199,9 @@
             border-color:red;
         }
         .topnav {
-            /*background-color: #333;
-            */
-            background-color: rgba(41, 212, 255, 0.8);
+            background-color: #333;
             overflow: hidden;
+            border-radius: 15px;
         }
 
             /* Style the links inside the navigation bar */
@@ -205,7 +212,7 @@
                 padding: 14px 16px;
                 text-decoration: none;
                 font-size: 17px;
-                color:saddlebrown;
+                color: #ffffff;
             }
 
                 /* Change the color of links on hover */
@@ -216,19 +223,13 @@
 
                 /* Add a color to the active/current link */
                 .topnav a.active {
-                   
-                    background-color: #BC9862;
-                    color: rgba(51, 51, 51, 1);
+                    background-color: #4CAF50;
+                    color: #ffffff;
                 }
 
-
         #tekst {
-            /*font-weight: bold;*/
             color: #ffffff;
-            /*font-family: Arial;*/
         }
-
-       
 
         ::-webkit-input-placeholder {
             color: #ffffff;
@@ -248,17 +249,16 @@
 
         #DIVreg {
             position: absolute;
-            top: 70.5%;
+            top: 65%;
             left: 50%;
             transform: translate(-50%,-50%);
             position: absolute;
             width: 410px;
             height: 580px;
             box-sizing: border-box;
-            background: rgba(237, 214, 7,0.6);
+            background: rgba(51, 51, 51, 1);
             /*background: rgba(51, 51, 51, 0.7);*/
             padding: 40px;
-            
         }
 
             #DIVreg input, select {
@@ -307,8 +307,8 @@
             }
     </style>
 </head>
-<body style="background-color:#6c553d">
-            <h1 style="text-align:left;font-size: 40px; color:#BC9862"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
+<body>
+            <h1 style="text-align:center;font-size: 40px; color:#333"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
 
     <div id="stranica">
         <div class="topnav">
@@ -316,6 +316,9 @@
             <a href="login.html">Prijava</a>
             <a class="active" href="Register.html">Registracija</a>
             <a href="logout.html">Odjava</a>
+            <div id="podaci">
+                <a href="detaljiProfil.html">Moji podaci</a>
+            </div>
 
         </div>
     </div>

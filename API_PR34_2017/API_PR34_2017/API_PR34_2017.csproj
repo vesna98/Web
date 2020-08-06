@@ -201,6 +201,7 @@
     <Content Include="Global.asax" />
     <Content Include="login.html" />
     <Content Include="logout.html" />
+    <Content Include="ManifestacijaPage.html" />
     <Content Include="pocetna.html" />
     <Content Include="Register.html" />
     <Content Include="Scripts\bootstrap.js" />

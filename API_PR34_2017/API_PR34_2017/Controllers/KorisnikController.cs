@@ -1,5 +1,6 @@
 ﻿using API_PR34_2017.Models;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -20,7 +21,7 @@ namespace API_PR34_2017.Controllers
         {
             List<Korisnik> korisnici = new List<Korisnik>();
             Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
-            foreach(Korisnik u in recnik.Values)
+            foreach (Korisnik u in recnik.Values)
             {
                 korisnici.Add(u);
             }
@@ -33,7 +34,7 @@ namespace API_PR34_2017.Controllers
         public HttpResponseMessage ListaManifestacije()//([FromBody]JToken jtoken)
         {
             List<Manifestacija> svi = new List<Manifestacija>();
-            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");     
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
                 svi.Add(k);
@@ -45,7 +46,7 @@ namespace API_PR34_2017.Controllers
                 DateTime myDate;
                 Manifestacija temp = svi[i];
                 if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
-               // //if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm.fff", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                // //if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm.fff", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
                 {
                     recnik.Add(temp, myDate);
                 }
@@ -99,6 +100,8 @@ namespace API_PR34_2017.Controllers
 
             mani.Brojmesta = int.Parse(HttpContext.Current.Request.Form["brojmesta"]);
             mani.Cenaregular = Double.Parse(HttpContext.Current.Request.Form["cenaregular"]);
+            mani.Cenavip = Double.Parse(HttpContext.Current.Request.Form["cenavip"]);       //dodato za vip i fan pit cena
+            mani.Cenafanpit = Double.Parse(HttpContext.Current.Request.Form["cenafanpit"]);
             mani.Datumivreme = HttpContext.Current.Request.Form["datumivreme"];
             Mesto mjesto = new Mesto(HttpContext.Current.Request.Form["ulicabroj"], HttpContext.Current.Request.Form["grad"], HttpContext.Current.Request.Form["postanskibroj"]);
 
@@ -154,6 +157,35 @@ namespace API_PR34_2017.Controllers
             //}//
 
             // return Request.CreateResponse(HttpStatusCode.BadRequest);
+        }
+
+        [Route("NadjiManifestaciju")]
+        public HttpResponseMessage NadjiManifestaciju(JObject jsonResult)
+        {
+            //var obj = JsonConvert.DeserializeObject<dynamic>(jsonResult.ToString());
+            string naziv = (string)jsonResult["naziv"];
+            string datum = (string)jsonResult["datum"];
+
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            Manifestacija man =null;
+            foreach (Manifestacija k in festovi)
+            {
+                if(k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum))
+                {
+                    man = k;
+                }
+            }
+                var json = JsonConvert.SerializeObject(man);
+
+            if (man == null)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest,json);
+            }
+            else
+            {
+
+                return Request.CreateResponse(HttpStatusCode.OK, json);
+            }
         }
     }
 }

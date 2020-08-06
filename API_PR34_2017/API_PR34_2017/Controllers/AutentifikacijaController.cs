@@ -53,21 +53,21 @@ namespace API_PR34_2017.Controllers
 
         }
 
-        public int Put([FromBody]Korisnik korisnik)
+        public Korisnik Put([FromBody]Korisnik korisnik)
         {
             if (ModelState.IsValid)
             {
                 DateTime timestamp;
                 if (!DateTime.TryParseExact(korisnik.Datumrodjenja, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out timestamp))
                 {
-                    return 0;   //datum nije dobar
+                    return null;   //datum nije dobar
                                 // return false;
                 }
                 Data.SaveUser(korisnik);
                 //dodaje se ako postoji
-                return 1;
+                return korisnik;
             }
-            return 0;//nije validan unos
+            return null;//nije validan unos
         }
     }
 }

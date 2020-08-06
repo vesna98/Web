@@ -96,7 +96,7 @@ namespace API_PR34_2017.Models
                 //mjesto.Ulicabroj = ;
                 //mjesto.Grad = ;
                 //mjesto.Postanskibroj = ;
-                Manifestacija p = new Manifestacija(tokens[0], tokens[1], (TypeManifestacije)Enum.Parse(typeof(TypeManifestacije), tokens[2]), int.Parse(tokens[3]), tokens[4], Double.Parse(tokens[5]), mjesto, tokens[9], int.Parse(tokens[12]));
+                Manifestacija p = new Manifestacija(tokens[0], tokens[1], (TypeManifestacije)Enum.Parse(typeof(TypeManifestacije), tokens[2]), int.Parse(tokens[3]), tokens[4], Double.Parse(tokens[5]), mjesto, tokens[9], int.Parse(tokens[12]), Double.Parse(tokens[13]), Double.Parse(tokens[14]), int.Parse(tokens[11]));
                 fests.Add(p);//DODATI FESTIVAL
 
             }

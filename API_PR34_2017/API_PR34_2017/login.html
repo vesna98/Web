@@ -29,6 +29,15 @@
                 .addClass('required');
         });
         $(document).ready(function () {
+            let user = sessionStorage.getItem("logovan");
+            var korisnik = $.parseJSON(user);
+            //alert('user ' + korisnik.Ime);
+            if (user == null) {
+                alert("nije prij");
+                $('#podaci').hide();
+            } else {
+                $('#podaci').show();
+            }
 
             alert("usao");
 
@@ -69,11 +78,9 @@
     <style>
         /* Add a black background color to the top navigation */
         .topnav {
-            /*background-color: #333;
-            */
-            background-color: rgba(41, 212, 255, 0.8);
-            
+            background-color: #333;
             overflow: hidden;
+            border-radius: 15px;
         }
 
             /* Style the links inside the navigation bar */
@@ -84,7 +91,7 @@
                 padding: 14px 16px;
                 text-decoration: none;
                 font-size: 17px;
-                color:saddlebrown;
+                color: #ffffff;
             }
 
                 /* Change the color of links on hover */
@@ -95,10 +102,8 @@
 
                 /* Add a color to the active/current link */
                 .topnav a.active {
-                    /*background-color: #4CAF50;
-                    background-color: rgba(76, 175, 80, 1);*/
-                    background-color: #BC9862;
-                    color: rgba(51, 51, 51, 1);
+                    background-color: #4CAF50;
+                    color: #ffffff;
                 }
 
         html, table {
@@ -119,7 +124,7 @@
             width: 400px;
             height: 340px;
             box-sizing: border-box;
-            background: rgba(237, 214, 7,0.5);
+            background: rgba(51, 51, 51, 1);
             padding: 40px;
         }
 
@@ -179,17 +184,19 @@
         }
     </style>
 </head>
-<body style="background-color:#6c553d">
-
-    <!--<h1 style="text-align:left;font-size: 40px;background-color: rgba(251, 220, 65, 1); color:rgba(51, 51, 51, 1) "><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>-->
+<body>
+    <h1 style="text-align:center;font-size: 40px; color:#333"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
     <div id="stranica">
-            <h1 style="text-align:left;font-size: 40px ; color:#BC9862"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
+        
         <div class="topnav">
 
             <a href="pocetna.html">Pocetna</a>
             <a class="active" href="login.html">Prijava</a>
             <a href="Register.html">Registracija</a>
             <a href="logout.html">Odjava</a>
+            <div id="podaci">
+                <a href="detaljiProfil.html">Moji podaci</a>
+            </div>
 
         </div>
     </div>

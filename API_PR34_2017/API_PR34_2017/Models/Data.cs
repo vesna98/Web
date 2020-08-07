@@ -85,18 +85,17 @@ namespace API_PR34_2017.Models
             {
 
                 string[] tokens = line.Split(';');
-
-
-                bool obr;
-                bool.TryParse(tokens[9], out obr);
-
+                
                 //Prodavac+";"+ Naziv+";"+Tipmanifestacije.ToString() + ";" +Brojmesta.ToString() + ";" +Datumivreme.ToString() + ";" +Cenaregular.ToString() + ";" +Mestoodrzavanja.Unicabroj + ";" +Mestoodrzavanja.Grad + ";" +Mestoodrzavanja.Postanskibroj.ToString() + ";" +Poster;
 
                 Mesto mjesto = new Mesto(tokens[6], tokens[7], tokens[8]);
                 //mjesto.Ulicabroj = ;
                 //mjesto.Grad = ;
                 //mjesto.Postanskibroj = ;
-                Manifestacija p = new Manifestacija(tokens[0], tokens[1], (TypeManifestacije)Enum.Parse(typeof(TypeManifestacije), tokens[2]), int.Parse(tokens[3]), tokens[4], Double.Parse(tokens[5]), mjesto, tokens[9], int.Parse(tokens[12]), Double.Parse(tokens[13]), Double.Parse(tokens[14]), int.Parse(tokens[11]));
+                bool obr;
+                bool.TryParse(tokens[15], out obr);
+
+                Manifestacija p = new Manifestacija(tokens[0], tokens[1], (TypeManifestacije)Enum.Parse(typeof(TypeManifestacije), tokens[2]), int.Parse(tokens[3]), tokens[4], Double.Parse(tokens[5]), mjesto, tokens[9], int.Parse(tokens[12]), Double.Parse(tokens[13]), Double.Parse(tokens[14]), int.Parse(tokens[11]),obr);
                 fests.Add(p);//DODATI FESTIVAL
 
             }
@@ -115,19 +114,19 @@ namespace API_PR34_2017.Models
             bool izmeni = false;
             string nova = "";
 
-            //for (int i = 0; i < lines.Count(); i++)
-            //{
-            //    string[] tokens = lines[i].Split(';');
+            for (int i = 0; i < lines.Count(); i++)
+            {
+                string[] tokens = lines[i].Split(';');
 
-            //    if (tokens[1].Equals(p.Id.ToString()))//jednaki id
-            //    {
-            //        nova = p.ToString();
-            //        lines[i] = nova;
-            //        izmeni = true;
-            //        break;
-            //    }
+                if (tokens[1].Equals(p.Naziv) && tokens[4].Equals(p.Datumivreme))//jednaki id
+                {
+                    nova = p.ToString();
+                    lines[i] = nova;
+                    izmeni = true;
+                    break;
+                }
 
-            //}
+            }
 
             if (izmeni)//menja postojeca
             {

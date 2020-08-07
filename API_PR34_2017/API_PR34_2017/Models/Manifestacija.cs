@@ -21,15 +21,17 @@ namespace API_PR34_2017.Models
         public string Prodavac { get; set; }
         public int Kupljeno { get; set; }
         public int Ocena { get; set; }
+        public bool Obrisan { get; set; }
 
         public Manifestacija()
         {
             Status = StatusType.Neaktivno;
             Kupljeno = 0;
             Ocena = 0;
+            Obrisan = false;
         }
 
-        public Manifestacija(string prodavac, string naziv, TypeManifestacije tipmanifestacije, int brojmesta, string datumivreme, double cenaregular, Mesto mestoodrzavanja, string poster,int ocena,double cenafanpit,double cenavip,int kupljeno)
+        public Manifestacija(string prodavac, string naziv, TypeManifestacije tipmanifestacije, int brojmesta, string datumivreme, double cenaregular, Mesto mestoodrzavanja, string poster,int ocena,double cenafanpit,double cenavip,int kupljeno,bool obrisan)
         {
             Naziv = naziv;
             Tipmanifestacije = tipmanifestacije;
@@ -44,11 +46,12 @@ namespace API_PR34_2017.Models
             Ocena = ocena;
             Cenafanpit = cenafanpit;
             Cenavip = cenavip;
+            Obrisan = obrisan;
         }
 
         public override string ToString()
         {
-            return Prodavac + ";" + Naziv + ";" + Tipmanifestacije.ToString() + ";" + Brojmesta.ToString() + ";" + Datumivreme + ";" + Cenaregular.ToString() + ";" + Mestoodrzavanja.Ulicabroj + ";" + Mestoodrzavanja.Grad + ";" + Mestoodrzavanja.Postanskibroj + ";" + Poster + ";" + Status.ToString() + ";" + Kupljeno + ";" +Ocena.ToString()+";" + Cenafanpit.ToString() + ";" + Cenavip.ToString();
+            return Prodavac + ";" + Naziv + ";" + Tipmanifestacije.ToString() + ";" + Brojmesta.ToString() + ";" + Datumivreme + ";" + Cenaregular.ToString() + ";" + Mestoodrzavanja.Ulicabroj + ";" + Mestoodrzavanja.Grad + ";" + Mestoodrzavanja.Postanskibroj + ";" + Poster + ";" + Status.ToString() + ";" + Kupljeno + ";" +Ocena.ToString()+";" + Cenafanpit.ToString() + ";" + Cenavip.ToString() + ";" +Obrisan.ToString();
         }
     }
     public enum TypeManifestacije

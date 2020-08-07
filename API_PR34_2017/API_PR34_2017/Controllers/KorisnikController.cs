@@ -224,7 +224,8 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                svi.Add(k);
+                if(!k.Obrisan)
+                    svi.Add(k);
             }
 
             Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
@@ -357,7 +358,7 @@ namespace API_PR34_2017.Controllers
             Manifestacija man =null;
             foreach (Manifestacija k in festovi)
             {
-                if(k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum))
+                if(k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan)
                 {
                     man = k;
                 }
@@ -374,6 +375,74 @@ namespace API_PR34_2017.Controllers
                 return Request.CreateResponse(HttpStatusCode.OK, json);
             }
         }
+
+        [Route("ObrisiManifestaciju")]
+        public HttpResponseMessage ObrisiManifestaciju(JObject jsonResult)
+        {
+            //var obj = JsonConvert.DeserializeObject<dynamic>(jsonResult.ToString());
+            string naziv = (string)jsonResult["naziv"];
+            string datum = (string)jsonResult["datum"];
+
+            List<Manifestacija> festovi1 = Data.ReadFest("~/App_Data/manifestacije.txt");
+           // Manifestacija man = null;
+            foreach (Manifestacija k in festovi1)
+            {
+                if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan)
+                {
+                    k.Obrisan = true;
+                    Data.SaveFest(k);
+                }
+            }
+            List<Manifestacija> svi = new List<Manifestacija>();
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            foreach (Manifestacija k in festovi)
+            {
+                if (!k.Obrisan)
+                    svi.Add(k);
+            }
+
+            Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
+            for (int i = 0; i < svi.Count(); i++)
+            {
+                DateTime myDate;
+                Manifestacija temp = svi[i];
+                if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                // //if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm.fff", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                {
+                    recnik.Add(temp, myDate);
+                }
+            }
+            //recnik.OrderBy(b => b.Value.Date).ThenBy(b => b.Value.TimeOfDay);//ne radi
+
+            var dateTimesAscending = recnik.Values.OrderBy(d => d);
+            List<Manifestacija> konacna = new List<Manifestacija>();
+
+
+            foreach (var ii in dateTimesAscending)
+            {
+
+                foreach (Manifestacija m in recnik.Keys)
+                {
+                    DateTime myDate;
+                    Manifestacija temp = m;
+                    //if (DateTime.TryParseExact(temp.Datumivreme, "dd/MM/yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                    if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                    {
+
+                        if (myDate == ii)
+                        {
+                            konacna.Add(m);
+                        }
+                    }
+                }
+            }
+
+            var output = JsonConvert.SerializeObject(konacna);
+            //var output = JsonConvert.SerializeObject(recnik.Keys.ToList());//ne radi
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+
         [Route("TipoviFilter")]
         public HttpResponseMessage TipoviFilter(JObject jsonResult)
         {
@@ -383,7 +452,8 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                svi.Add(k);
+                if (!k.Obrisan)
+                    svi.Add(k);
             }
 
             Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
@@ -442,7 +512,8 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                svi.Add(k);
+                if (!k.Obrisan)
+                    svi.Add(k);
             }
 
             Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
@@ -499,7 +570,8 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                svi.Add(k);
+                if (!k.Obrisan)
+                    svi.Add(k);
             }
 
             var sortirano = svi.OrderBy(i => i.Naziv);
@@ -516,7 +588,8 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                svi.Add(k);
+                if (!k.Obrisan)
+                    svi.Add(k);
             }
 
             var sortirano = svi.OrderByDescending(i => i.Naziv);
@@ -534,7 +607,8 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                svi.Add(k);
+                if (!k.Obrisan)
+                    svi.Add(k);
             }
 
             Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
@@ -586,7 +660,8 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                svi.Add(k);
+                if (!k.Obrisan)
+                    svi.Add(k);
             }
 
             var sortirano = svi.OrderBy(i => i.Mestoodrzavanja.ToString());
@@ -603,7 +678,8 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                svi.Add(k);
+                if (!k.Obrisan)
+                    svi.Add(k);
             }
 
             var sortirano = svi.OrderByDescending(i => i.Mestoodrzavanja.ToString());
@@ -621,7 +697,8 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                svi.Add(k);
+                if (!k.Obrisan)
+                    svi.Add(k);
             }
 
             var sortirano = svi.OrderBy(i => i.Cenaregular);
@@ -638,7 +715,8 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                svi.Add(k);
+                if (!k.Obrisan)
+                    svi.Add(k);
             }
 
             var sortirano = svi.OrderByDescending(i => i.Cenaregular);

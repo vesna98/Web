@@ -63,7 +63,13 @@
 
                         row += "<td >" + ocena + "</td>";
                         var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                        row += "<td><button type = \"button\" id=\"" + nazivdatum_id +"\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                        var obrisidugme = "";
+                        if (korisnik != null) {
+                            if (korisnik.Uloga == 0) {
+                                obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                            }
+                        }
+                        row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
                         //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
                         row += "</tr>";
                         
@@ -146,7 +152,13 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            var obrisidugme = "";
+                            if (korisnik != null) {
+                                if (korisnik.Uloga == 0) {
+                                    obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                            }
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
                            
                             row += "</tr>";
 
@@ -216,8 +228,13 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
-
+                            var obrisidugme = "";
+                            if (korisnik != null) {
+                                if (korisnik.Uloga == 0) {
+                                    obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                            }
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
                             row += "</tr>";
 
                             $("#tabelaMani").append(row);
@@ -280,7 +297,13 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            var obrisidugme = "";
+                            if (korisnik != null) {
+                                if (korisnik.Uloga == 0) {
+                                    obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                            }
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
                             row += "</tr>";
 
                             $("#tabelaMani").append(row);
@@ -344,7 +367,13 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            var obrisidugme = "";
+                            if (korisnik != null) {
+                                if (korisnik.Uloga == 0) {
+                                    obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                            }
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
                             row += "</tr>";
 
                             $("#tabelaMani").append(row);
@@ -408,7 +437,13 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            var obrisidugme = "";
+                            if (korisnik != null) {
+                                if (korisnik.Uloga == 0) {
+                                    obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                            }
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
                             row += "</tr>";
 
                             $("#tabelaMani").append(row);
@@ -471,7 +506,13 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            var obrisidugme = "";
+                            if (korisnik != null) {
+                                if (korisnik.Uloga == 0) {
+                                    obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                            }
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
                             row += "</tr>";
 
                             $("#tabelaMani").append(row);
@@ -534,7 +575,13 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            var obrisidugme = "";
+                            if (korisnik != null) {
+                                if (korisnik.Uloga == 0) {
+                                    obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                            }
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
                             row += "</tr>";
 
                             $("#tabelaMani").append(row);
@@ -597,7 +644,13 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            var obrisidugme = "";
+                            if (korisnik != null) {
+                                if (korisnik.Uloga == 0) {
+                                    obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                            }
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
                             row += "</tr>";
 
                             $("#tabelaMani").append(row);
@@ -660,7 +713,13 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            var obrisidugme = "";
+                            if (korisnik != null) {
+                                if (korisnik.Uloga == 0) {
+                                    obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                            }
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
                             row += "</tr>";
 
                             $("#tabelaMani").append(row);
@@ -723,7 +782,13 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button></td>";
+                            var obrisidugme = "";
+                            if (korisnik != null) {
+                                if (korisnik.Uloga == 0) {
+                                    obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                            }
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
                             row += "</tr>";
 
                             $("#tabelaMani").append(row);
@@ -1664,6 +1729,93 @@
             $(location).attr('href', 'ManifestacijaPage.html');
 
         });
+
+        //brisanje manifestacije
+        $(document).on('click', '.use-obrisi', function () {            // kada je button (čija je class = use-address) kliknut
+
+            let user = sessionStorage.getItem("logovan");
+            var korisnik = $.parseJSON(user);
+
+            console.log("klik na obrisi");
+            var polja = (this.id).split('_');
+            console.log("nn" + polja[0] + "   xa" + polja);
+
+            var obj = JSON.stringify({
+                "naziv": polja[0],
+                "datum": polja[1]
+            });
+            //sessionStorage.setItem('dogadjaj', obj);        //cuvanje odabranog dogadjaja u sesiji i prelazak na njegov pregled
+            //$(location).attr('href', 'ManifestacijaPage.html');
+
+            var tabelica = document.getElementById('tabelaMani');
+            for (var i = 1; i < tabelica.rows.length;) {
+                tabelica.deleteRow(i);
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/Korisnik/ObrisiManifestaciju',
+                data: obj,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+                   
+                    var jsonObj = JSON.parse(data);
+
+                    for (i = 0; i < jsonObj.length; i++) {
+
+                        var tip;
+                        if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                            tip = "Koncert";
+                        } else if (jsonObj[i].Tipmanifestacije == 1) {
+                            tip = "Festival";
+                        } else if (jsonObj[i].Tipmanifestacije == 2) {
+                            tip = "Pozoriste";
+                        }
+
+                        var poster = jsonObj[i].Poster;
+
+                        var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                        row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                        row += "<td >" + tip + "</td>";
+                        row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                        row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                        row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                        row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                        row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                        row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                        var ocena;
+                        if (jsonObj[i].Ocena == 0) {
+                            ocena = "";
+                        } else {
+                            ocena = jsonObj[i].Ocena;
+                        }
+
+                        row += "<td >" + ocena + "</td>";
+                        var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                        var obrisidugme = "";
+                        if (korisnik != null) {
+                            if (korisnik.Uloga == 0) {
+                                obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                            }
+                        }
+                        row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
+                        row += "</tr>";
+
+                        $("#tabelaMani").append(row);
+
+
+                    }
+                },
+                error: function (data) {
+                    alert("Greska!");
+                }
+            });
+
+        });
+
+
+
         //za brisanje korisnika
         $(document).on('click', '.use-ime', function () {            // kada je button (čija je class = use-address) kliknut
             //alert("pokusaj klik");

@@ -194,6 +194,29 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
+        [Route("ObrisiKorisnika")]
+        public HttpResponseMessage ObrisiKorisnika(JObject jsonResult)
+        {
+            string filter = (string)jsonResult["korime"];
+
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                if (u.Korisnickoime.Equals(filter))
+                {
+                    u.Obrisan = true;
+                    Data.SaveUser(u);
+                }
+                    korisnici.Add(u);
+               
+            }
+
+            var json = JsonConvert.SerializeObject(korisnici);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+
         [Route("ListaManifestacije")]
         public HttpResponseMessage ListaManifestacije()//([FromBody]JToken jtoken)
         {

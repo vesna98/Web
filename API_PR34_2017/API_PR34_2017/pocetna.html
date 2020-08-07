@@ -815,13 +815,12 @@
                         success: function (data) {
 
                             var lista = JSON.parse(data);
-                            alert("u json korisnci" + data);
-                            //var korisnici = JSON.stringify(data);
-                            //alert("korisnici" + korisnici);
+                           // alert("u json korisnci" + data);
+                            
                             for (i = 0; i < lista.length; i++) {
 
                                 var uloga;
-                                if (lista[i].Uloga == 1) {
+                                if (lista[i].Uloga == 0) {
                                     uloga = "Administrator";
                                 } else if (lista[i].Uloga == 1) {
                                     uloga = "Prodavac";
@@ -842,7 +841,7 @@
                                 }
                                 
                                 var row = "<tr class=\"success\">";
-                                row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                row += "<td >" + lista[i].Korisnickoime + "</td>";
                                 row += "<td >" + lista[i].Ime + "</td>";
                                 row += "<td >" + lista[i].Prezime + "</td>";
                                 row += "<td >" + pol + "</td>";
@@ -850,6 +849,12 @@
                                 row += "<td >" + uloga + "</td>";
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
+                                if (obrisan == "" && uloga != "Administrator") {
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
+                                } else {
+                                    row += "<td></td>";
+                                }
+                                row += "</tr>";
                                 $("#userTabela").append(row);
 
                             }
@@ -911,6 +916,12 @@
                                 row += "<td >" + uloga + "</td>";
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
+                                if (obrisan == "" && uloga != "Administrator") {
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
+                                } else {
+                                    row += "<td></td>";
+                                }
+                                row += "</tr>";
                                 $("#userTabela").append(row);
 
                             }
@@ -972,6 +983,12 @@
                                 row += "<td >" + uloga + "</td>";
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
+                                if (obrisan == "" && uloga != "Administrator") {
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
+                                } else {
+                                    row += "<td></td>";
+                                }
+                                row += "</tr>";
                                 $("#userTabela").append(row);
 
                             }
@@ -1033,6 +1050,12 @@
                                 row += "<td >" + uloga + "</td>";
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
+                                if (obrisan == "" && uloga != "Administrator") {
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
+                                } else {
+                                    row += "<td></td>";
+                                }
+                                row += "</tr>";
                                 $("#userTabela").append(row);
 
                             }
@@ -1093,6 +1116,12 @@
                                 row += "<td >" + uloga + "</td>";
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
+                                if (obrisan == "" && uloga != "Administrator") {
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
+                                } else {
+                                    row += "<td></td>";
+                                }
+                                row += "</tr>";
                                 $("#userTabela").append(row);
 
                             }
@@ -1153,6 +1182,12 @@
                                 row += "<td >" + uloga + "</td>";
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
+                                if (obrisan == "" && uloga != "Administrator") {
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
+                                } else {
+                                    row += "<td></td>";
+                                }
+                                row += "</tr>";
                                 $("#userTabela").append(row);
 
                             }
@@ -1213,6 +1248,12 @@
                                 row += "<td >" + uloga + "</td>";
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
+                                if (obrisan == "" && uloga != "Administrator") {
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
+                                } else {
+                                    row += "<td></td>";
+                                }
+                                row += "</tr>";
                                 $("#userTabela").append(row);
 
                             }
@@ -1273,6 +1314,12 @@
                                 row += "<td >" + uloga + "</td>";
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
+                                if (obrisan == "" && uloga != "Administrator") {
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
+                                } else {
+                                    row += "<td></td>";
+                                }
+                                row += "</tr>";
                                 $("#userTabela").append(row);
 
                             }
@@ -1334,6 +1381,12 @@
                                 row += "<td >" + uloga + "</td>";
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
+                                if (obrisan == "" && uloga != "Administrator") {
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
+                                } else {
+                                    row += "<td></td>";
+                                }
+                                row += "</tr>";
                                 $("#userTabela").append(row);
 
                             }
@@ -1400,6 +1453,13 @@
                                 row += "<td >" + uloga + "</td>";
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
+                                if (obrisan == "" && uloga != "Administrator") {
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
+                                }
+                                else {
+                                    row += "<td></td>";
+                                }
+                                row += "</tr>";
                                 $("#userTabela").append(row);
 
                             }
@@ -1466,6 +1526,12 @@
                                 row += "<td >" + uloga + "</td>";
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
+                                if (obrisan == "" && uloga!="Administrator") {
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
+                                } else {
+                                    row += "<td></td>";
+                                }
+                                row += "</tr>";
                                 $("#userTabela").append(row);
 
                             }
@@ -1596,6 +1662,80 @@
             });
             sessionStorage.setItem('dogadjaj', obj);        //cuvanje odabranog dogadjaja u sesiji i prelazak na njegov pregled
             $(location).attr('href', 'ManifestacijaPage.html');
+
+        });
+        //za brisanje korisnika
+        $(document).on('click', '.use-ime', function () {            // kada je button (čija je class = use-address) kliknut
+            //alert("pokusaj klik");
+            var polje = this.id;
+            console.log("korisnik koji je odabran" + polje);
+
+            var obj = JSON.stringify({
+                "korime": polje
+            });
+            //sessionStorage.setItem('dogadjaj', obj);        //cuvanje odabranog dogadjaja u sesiji i prelazak na njegov pregled
+            //$(location).attr('href', 'ManifestacijaPage.html');
+
+            var tabelica = document.getElementById('userTabela');
+            for (var i = 1; i < tabelica.rows.length;) {
+                tabelica.deleteRow(i);
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/Korisnik/ObrisiKorisnika',
+                data: obj,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+                    var lista = JSON.parse(data);
+                   
+                    for (i = 0; i < lista.length; i++) {
+
+                        var uloga;
+                        if (lista[i].Uloga == 0) {
+                            uloga = "Administrator";
+                        } else if (lista[i].Uloga == 1) {
+                            uloga = "Prodavac";
+                        } else if (lista[i].Uloga == 2) {
+                            uloga = "Kupac";
+                        }
+                        var pol;
+                        if (lista[i].Pol == 1) {
+                            pol = 'Zenski';
+                        } else {
+                            pol = 'Muski';
+                        }
+                        var obrisan;
+                        if (lista[i].Obrisan == false) {
+                            obrisan = "";
+                        } else {
+                            obrisan = 'OBRISAN';
+                        }
+
+                        var row = "<tr class=\"success\">";
+                        row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                        row += "<td >" + lista[i].Ime + "</td>";
+                        row += "<td >" + lista[i].Prezime + "</td>";
+                        row += "<td >" + pol + "</td>";
+                        row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                        row += "<td >" + uloga + "</td>";
+                        row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                        row += "<td >" + obrisan + "</td>";
+                        if (obrisan == "" && uloga != "Administrator") {
+                            row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
+                        } else {
+                            row += "<td></td>";
+                        }
+                        row += "</tr>";
+                        $("#userTabela").append(row);
+
+                    }
+                },
+                error: function (data) {
+                    alert("Greska!");
+                }
+            });
 
         });
 
@@ -1750,6 +1890,7 @@
                     <th>Uloga</th>
                     <th>Sakupljeni poeni</th>
                     <th>Obrisan</th>
+                    <th>Opcije</th>
                 </tr>
             </table>
             <ul style=" display: inline-block;list-style-type:none;">

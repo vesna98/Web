@@ -737,6 +737,29 @@
 
                 });
             });
+
+            //****************date picket za pretragu
+            //    var minDate = new Date();
+            //$("#datum1").datepicker({
+            //    showAnim: 'drop',
+            //    numberOfMonth: 1,
+            //    minDate: minDate,
+            //    dateFormat: 'dd-mm-yyyy',
+            //    onClose: function (selectedDate) {
+            //        $("datum2").datepicker("option", "minDate", selectedDate);
+            //    }
+            //});
+
+            //$("#datum1").datepicker({
+            //    showAnim: 'drop',
+            //    numberOfMonth: 1,
+            //    minDate: minDate,
+            //    dateFormat: 'dd-mm-yyyy',
+            //    onClose: function (selectedDate) {
+            //        $("datum2").datepicker("option", "minDate", selectedDate);
+            //    }
+            //});
+
             //    var values = [];
             //    var count = 0;
             //$("#tabelaMani").on("click", "tbody tr", function (event) {
@@ -779,6 +802,10 @@
 
                 $("#svi_korisnici").click(function () {
                     $('#userPrikaz').show();
+                    var tabelica = document.getElementById('userTabela');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
                     $.ajax({
                         type: 'POST',
                         url: '/api/Korisnik/SviKorisnici',
@@ -794,7 +821,7 @@
                             for (i = 0; i < lista.length; i++) {
 
                                 var uloga;
-                                if (lista[i].Uloga == 0) {
+                                if (lista[i].Uloga == 1) {
                                     uloga = "Administrator";
                                 } else if (lista[i].Uloga == 1) {
                                     uloga = "Prodavac";
@@ -802,7 +829,7 @@
                                     uloga = "Kupac";
                                 }
                                 var pol;
-                                if (lista[i].Pol == 0) {
+                                if (lista[i].Pol == 1) {
                                     pol = 'Zenski';
                                 } else {
                                     pol = 'Muski';
@@ -832,6 +859,621 @@
                         }
                     });
 
+                });
+
+                $("#ime_AZ").click(function () {
+                    $('#userPrikaz').show();
+                    var tabelica = document.getElementById('userTabela');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Korisnik/KorisniciImeAZ',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+
+                        success: function (data) {
+
+                            var lista = JSON.parse(data);
+                            alert("u json korisnci" + data);
+                            //var korisnici = JSON.stringify(data);
+                            //alert("korisnici" + korisnici);
+                            for (i = 0; i < lista.length; i++) {
+
+                                var uloga;
+                                if (lista[i].Uloga == 0) {
+                                    uloga = "Administrator";
+                                } else if (lista[i].Uloga == 1) {
+                                    uloga = "Prodavac";
+                                } else if (lista[i].Uloga == 2) {
+                                    uloga = "Kupac";
+                                }
+                                var pol;
+                                if (lista[i].Pol == 1) {
+                                    pol = 'Zenski';
+                                } else {
+                                    pol = 'Muski';
+                                }
+                                var obrisan;
+                                if (lista[i].Obrisan == false) {
+                                    obrisan = "";
+                                } else {
+                                    obrisan = 'OBRISAN';
+                                }
+
+                                var row = "<tr class=\"success\">";
+                                row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                row += "<td >" + lista[i].Ime + "</td>";
+                                row += "<td >" + lista[i].Prezime + "</td>";
+                                row += "<td >" + pol + "</td>";
+                                row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                                row += "<td >" + uloga + "</td>";
+                                row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                                row += "<td >" + obrisan + "</td>";
+                                $("#userTabela").append(row);
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
+
+                });
+
+                $("#ime_ZA").click(function () {
+                    $('#userPrikaz').show();
+                    var tabelica = document.getElementById('userTabela');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Korisnik/KorisniciImeZA',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+
+                        success: function (data) {
+
+                            var lista = JSON.parse(data);
+                            alert("u json korisnci" + data);
+                            //var korisnici = JSON.stringify(data);
+                            //alert("korisnici" + korisnici);
+                            for (i = 0; i < lista.length; i++) {
+
+                                var uloga;
+                                if (lista[i].Uloga == 0) {
+                                    uloga = "Administrator";
+                                } else if (lista[i].Uloga == 1) {
+                                    uloga = "Prodavac";
+                                } else if (lista[i].Uloga == 2) {
+                                    uloga = "Kupac";
+                                }
+                                var pol;
+                                if (lista[i].Pol == 1) {
+                                    pol = 'Zenski';
+                                } else {
+                                    pol = 'Muski';
+                                }
+                                var obrisan;
+                                if (lista[i].Obrisan == false) {
+                                    obrisan = "";
+                                } else {
+                                    obrisan = 'OBRISAN';
+                                }
+
+                                var row = "<tr class=\"success\">";
+                                row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                row += "<td >" + lista[i].Ime + "</td>";
+                                row += "<td >" + lista[i].Prezime + "</td>";
+                                row += "<td >" + pol + "</td>";
+                                row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                                row += "<td >" + uloga + "</td>";
+                                row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                                row += "<td >" + obrisan + "</td>";
+                                $("#userTabela").append(row);
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
+
+                });
+
+                $("#prz_AZ").click(function () {
+                    $('#userPrikaz').show();
+                    var tabelica = document.getElementById('userTabela');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Korisnik/KorisniciPrzAZ',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+
+                        success: function (data) {
+
+                            var lista = JSON.parse(data);
+                            alert("u json korisnci" + data);
+                            //var korisnici = JSON.stringify(data);
+                            //alert("korisnici" + korisnici);
+                            for (i = 0; i < lista.length; i++) {
+
+                                var uloga;
+                                if (lista[i].Uloga == 0) {
+                                    uloga = "Administrator";
+                                } else if (lista[i].Uloga == 1) {
+                                    uloga = "Prodavac";
+                                } else if (lista[i].Uloga == 2) {
+                                    uloga = "Kupac";
+                                }
+                                var pol;
+                                if (lista[i].Pol == 1) {
+                                    pol = 'Zenski';
+                                } else {
+                                    pol = 'Muski';
+                                }
+                                var obrisan;
+                                if (lista[i].Obrisan == false) {
+                                    obrisan = "";
+                                } else {
+                                    obrisan = 'OBRISAN';
+                                }
+
+                                var row = "<tr class=\"success\">";
+                                row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                row += "<td >" + lista[i].Ime + "</td>";
+                                row += "<td >" + lista[i].Prezime + "</td>";
+                                row += "<td >" + pol + "</td>";
+                                row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                                row += "<td >" + uloga + "</td>";
+                                row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                                row += "<td >" + obrisan + "</td>";
+                                $("#userTabela").append(row);
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
+
+                });
+                $("#prz_ZA").click(function () {
+                    $('#userPrikaz').show();
+                    var tabelica = document.getElementById('userTabela');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Korisnik/KorisniciPrzZA',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+
+                        success: function (data) {
+
+                            var lista = JSON.parse(data);
+                            alert("u json korisnci" + data);
+                            //var korisnici = JSON.stringify(data);
+                            //alert("korisnici" + korisnici);
+                            for (i = 0; i < lista.length; i++) {
+
+                                var uloga;
+                                if (lista[i].Uloga == 0) {
+                                    uloga = "Administrator";
+                                } else if (lista[i].Uloga == 1) {
+                                    uloga = "Prodavac";
+                                } else if (lista[i].Uloga == 2) {
+                                    uloga = "Kupac";
+                                }
+                                var pol;
+                                if (lista[i].Pol == 1) {
+                                    pol = 'Zenski';
+                                } else {
+                                    pol = 'Muski';
+                                }
+                                var obrisan;
+                                if (lista[i].Obrisan == false) {
+                                    obrisan = "";
+                                } else {
+                                    obrisan = 'OBRISAN';
+                                }
+
+                                var row = "<tr class=\"success\">";
+                                row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                row += "<td >" + lista[i].Ime + "</td>";
+                                row += "<td >" + lista[i].Prezime + "</td>";
+                                row += "<td >" + pol + "</td>";
+                                row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                                row += "<td >" + uloga + "</td>";
+                                row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                                row += "<td >" + obrisan + "</td>";
+                                $("#userTabela").append(row);
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
+
+                });
+                $("#korime_AZ").click(function () {
+                    $('#userPrikaz').show();
+                    var tabelica = document.getElementById('userTabela');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Korisnik/KorisniciKorImeAZ',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+
+                        success: function (data) {
+
+                            var lista = JSON.parse(data);
+                            alert("u json korisnci" + data);
+                            //var korisnici = JSON.stringify(data);
+                            //alert("korisnici" + korisnici);
+                            for (i = 0; i < lista.length; i++) {
+
+                                var uloga;
+                                if (lista[i].Uloga == 0) {
+                                    uloga = "Administrator";
+                                } else if (lista[i].Uloga == 1) {
+                                    uloga = "Prodavac";
+                                } else if (lista[i].Uloga == 2) {
+                                    uloga = "Kupac";
+                                }
+                                var pol;
+                                if (lista[i].Pol == 1) {
+                                    pol = 'Zenski';
+                                } else {
+                                    pol = 'Muski';
+                                }
+                                var obrisan;
+                                if (lista[i].Obrisan == false) {
+                                    obrisan = "";
+                                } else {
+                                    obrisan = 'OBRISAN';
+                                }
+
+                                var row = "<tr class=\"success\">";
+                                row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                row += "<td >" + lista[i].Ime + "</td>";
+                                row += "<td >" + lista[i].Prezime + "</td>";
+                                row += "<td >" + pol + "</td>";
+                                row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                                row += "<td >" + uloga + "</td>";
+                                row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                                row += "<td >" + obrisan + "</td>";
+                                $("#userTabela").append(row);
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
+
+                });
+                $("#korime_ZA").click(function () {
+                    $('#userPrikaz').show();
+                    var tabelica = document.getElementById('userTabela');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Korisnik/KorisniciKorImeZA',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+
+                        success: function (data) {
+
+                            var lista = JSON.parse(data);
+                            alert("u json korisnci" + data);
+                            //var korisnici = JSON.stringify(data);
+                            //alert("korisnici" + korisnici);
+                            for (i = 0; i < lista.length; i++) {
+
+                                var uloga;
+                                if (lista[i].Uloga == 0) {
+                                    uloga = "Administrator";
+                                } else if (lista[i].Uloga == 1) {
+                                    uloga = "Prodavac";
+                                } else if (lista[i].Uloga == 2) {
+                                    uloga = "Kupac";
+                                }
+                                var pol;
+                                if (lista[i].Pol == 1) {
+                                    pol = 'Zenski';
+                                } else {
+                                    pol = 'Muski';
+                                }
+                                var obrisan;
+                                if (lista[i].Obrisan == false) {
+                                    obrisan = "";
+                                } else {
+                                    obrisan = 'OBRISAN';
+                                }
+
+                                var row = "<tr class=\"success\">";
+                                row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                row += "<td >" + lista[i].Ime + "</td>";
+                                row += "<td >" + lista[i].Prezime + "</td>";
+                                row += "<td >" + pol + "</td>";
+                                row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                                row += "<td >" + uloga + "</td>";
+                                row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                                row += "<td >" + obrisan + "</td>";
+                                $("#userTabela").append(row);
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
+
+                });
+                $("#bodoviR").click(function () {
+                    $('#userPrikaz').show();
+                    var tabelica = document.getElementById('userTabela');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Korisnik/KorisniciBodoviRastuce',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+
+                        success: function (data) {
+
+                            var lista = JSON.parse(data);
+                            alert("u json korisnci" + data);
+                            //var korisnici = JSON.stringify(data);
+                            //alert("korisnici" + korisnici);
+                            for (i = 0; i < lista.length; i++) {
+
+                                var uloga;
+                                if (lista[i].Uloga == 0) {
+                                    uloga = "Administrator";
+                                } else if (lista[i].Uloga == 1) {
+                                    uloga = "Prodavac";
+                                } else if (lista[i].Uloga == 2) {
+                                    uloga = "Kupac";
+                                }
+                                var pol;
+                                if (lista[i].Pol == 1) {
+                                    pol = 'Zenski';
+                                } else {
+                                    pol = 'Muski';
+                                }
+                                var obrisan;
+                                if (lista[i].Obrisan == false) {
+                                    obrisan = "";
+                                } else {
+                                    obrisan = 'OBRISAN';
+                                }
+
+                                var row = "<tr class=\"success\">";
+                                row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                row += "<td >" + lista[i].Ime + "</td>";
+                                row += "<td >" + lista[i].Prezime + "</td>";
+                                row += "<td >" + pol + "</td>";
+                                row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                                row += "<td >" + uloga + "</td>";
+                                row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                                row += "<td >" + obrisan + "</td>";
+                                $("#userTabela").append(row);
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
+
+                });
+
+                $("#bodoviO").click(function () {
+                    $('#userPrikaz').show();
+                    var tabelica = document.getElementById('userTabela');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Korisnik/KorisniciBodoviOpadajuce',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+
+                        success: function (data) {
+
+                            var lista = JSON.parse(data);
+                            alert("u json korisnci" + data);
+                            //var korisnici = JSON.stringify(data);
+                            //alert("korisnici" + korisnici);
+                            for (i = 0; i < lista.length; i++) {
+
+                                var uloga;
+                                if (lista[i].Uloga == 0) {
+                                    uloga = "Administrator";
+                                } else if (lista[i].Uloga == 1) {
+                                    uloga = "Prodavac";
+                                } else if (lista[i].Uloga == 2) {
+                                    uloga = "Kupac";
+                                }
+                                var pol;
+                                if (lista[i].Pol == 1) {
+                                    pol = 'Zenski';
+                                } else {
+                                    pol = 'Muski';
+                                }
+                                var obrisan;
+                                if (lista[i].Obrisan == false) {
+                                    obrisan = "";
+                                } else {
+                                    obrisan = 'OBRISAN';
+                                }
+
+                                var row = "<tr class=\"success\">";
+                                row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                row += "<td >" + lista[i].Ime + "</td>";
+                                row += "<td >" + lista[i].Prezime + "</td>";
+                                row += "<td >" + pol + "</td>";
+                                row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                                row += "<td >" + uloga + "</td>";
+                                row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                                row += "<td >" + obrisan + "</td>";
+                                $("#userTabela").append(row);
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
+
+                });
+                $("#k_filter_tip").click(function () {
+                    var tipovi = $(".k_tip option:selected").val();
+                  
+                    var tabelica = document.getElementById('userTabela');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
+                    // document.getElementById('tabelaMani') = tabelica;
+                    alert(tipovi);
+                    var obj = JSON.stringify({
+                        "filter1": tipovi
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Korisnik/TipoviKorisnikaFilter',
+                        data: obj,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        success: function (data) {
+                            var lista = JSON.parse(data);
+                            alert("u json korisnci" + data);
+                            //var korisnici = JSON.stringify(data);
+                            //alert("korisnici" + korisnici);
+                            for (i = 0; i < lista.length; i++) {
+
+                                var uloga;
+                                if (lista[i].Uloga == 0) {
+                                    uloga = "Administrator";
+                                } else if (lista[i].Uloga == 1) {
+                                    uloga = "Prodavac";
+                                } else if (lista[i].Uloga == 2) {
+                                    uloga = "Kupac";
+                                }
+                                var pol;
+                                if (lista[i].Pol == 1) {
+                                    pol = 'Zenski';
+                                } else {
+                                    pol = 'Muski';
+                                }
+                                var obrisan;
+                                if (lista[i].Obrisan == false) {
+                                    obrisan = "";
+                                } else {
+                                    obrisan = 'OBRISAN';
+                                }
+
+                                var row = "<tr class=\"success\">";
+                                row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                row += "<td >" + lista[i].Ime + "</td>";
+                                row += "<td >" + lista[i].Prezime + "</td>";
+                                row += "<td >" + pol + "</td>";
+                                row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                                row += "<td >" + uloga + "</td>";
+                                row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                                row += "<td >" + obrisan + "</td>";
+                                $("#userTabela").append(row);
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
+                });
+
+                $("#k_filter_uloga").click(function () {
+                    var tipovi = $(".k_uloga option:selected").val();
+
+                    var tabelica = document.getElementById('userTabela');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
+                    // document.getElementById('tabelaMani') = tabelica;
+                    alert(tipovi);
+                    var obj = JSON.stringify({
+                        "filter1": tipovi
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Korisnik/UlogaKorisnikaFilter',
+                        data: obj,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        success: function (data) {
+                            var lista = JSON.parse(data);
+                            alert("u json korisnci" + data);
+                            //var korisnici = JSON.stringify(data);
+                            //alert("korisnici" + korisnici);
+                            for (i = 0; i < lista.length; i++) {
+
+                                var uloga;
+                                if (lista[i].Uloga == 0) {
+                                    uloga = "Administrator";
+                                } else if (lista[i].Uloga == 1) {
+                                    uloga = "Prodavac";
+                                } else if (lista[i].Uloga == 2) {
+                                    uloga = "Kupac";
+                                }
+                                var pol;
+                                if (lista[i].Pol == 1) {
+                                    pol = 'Zenski';
+                                } else {
+                                    pol = 'Muski';
+                                }
+                                var obrisan;
+                                if (lista[i].Obrisan == false) {
+                                    obrisan = "";
+                                } else {
+                                    obrisan = 'OBRISAN';
+                                }
+
+                                var row = "<tr class=\"success\">";
+                                row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                row += "<td >" + lista[i].Ime + "</td>";
+                                row += "<td >" + lista[i].Prezime + "</td>";
+                                row += "<td >" + pol + "</td>";
+                                row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                                row += "<td >" + uloga + "</td>";
+                                row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                                row += "<td >" + obrisan + "</td>";
+                                $("#userTabela").append(row);
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
                 });
 
                 $("#addFest").click(function () {
@@ -956,6 +1598,14 @@
             $(location).attr('href', 'ManifestacijaPage.html');
 
         });
+
+//        $('#sandbox-container .input-daterange').datepicker({
+//    format: "dd-mm-yyyy",
+//    startDate: "20-08-2020",
+//    forceParse: false,
+//    datesDisabled: ['08/06/2020', '08/21/2020']
+//});
+
     </script>
    
     <title></title>
@@ -1061,6 +1711,8 @@
             height: 3%;
             width: 4%;
         }
+
+
     </style>
 </head>
 <body>
@@ -1079,34 +1731,16 @@
 
         </div>
     </div>
-    <h4>Filtrirajte po tipu manifestacije</h4>
-    <select class="f_tip">
-        <option value="Sve">Sve manifestacije</option>
-        <option value="Koncert">Koncert</option>
-        <option value="Festival">Festival</option>
-        <option value="Pozoriste">Pozoriste</option>
-    </select><button type="button" id="filter_tip">Filtriraj po tipu</button>
-    <h4>Filtrirajte po raspolozivosti karata</h4>
-    <select name="kartafilter" id="f_karta">
-        <option id="fkarta" value="Sve">Sve manifestacije</option>
-        <option id="fkarta" value="Nerasprodate">Nerasprodate</option>
 
-    </select><button type="button" id="filter_karta">Filtriraj po raspolozivosti karte</button>
-    <!--<p id="#resultas" style="color:black"></p>-->
-    <h4>Sortiranja</h4>
-    <button type="button" id="sort_nazAZ">Sortiraj po nazivu A-Z</button>
-    <button type="button" id="sort_nazZA">Sortiraj po nazivu Z-A</button>
-    <button type="button" id="sort_datum1">Sortiraj po datumu od najskorijeg</button>
-    <button type="button" id="sort_datum2">Sortiraj po datumu od najkasnijeg</button>
-    <button type="button" id="sort_cenaR">Sortiraj po regular ceni rastuce</button>
-    <button type="button" id="sort_cenaO">Sortiraj po regular ceni opadajuce</button>
-    <button type="button" id="sort_mestoAZ">Sortiraj po mestu A-Z</button>
-    <button type="button" id="sort_mestoZA">Sortiraj po mestu Z-A</button>
+
+
     <div id="AdminView">
         <h3 style="color:#333">Vase opcije</h3>
         <input type="submit" id="svi_korisnici" value="Prikaz svih korisnika" />
+        
         <div id="userPrikaz" class="table-responsive">
-            <table id="userTabela">
+
+            <table id="userTabela" style=" display: inline-block;">
                 <tr>
                     <th>Korisnicko ime</th>
                     <th>Ime</th>
@@ -1118,6 +1752,33 @@
                     <th>Obrisan</th>
                 </tr>
             </table>
+            <ul style=" display: inline-block;list-style-type:none;">
+                <li><h4>Sortiranja za korisnike</h4></li>
+                <li style="margin-top: 5px;"><button id="ime_AZ">Sortiraj po imenu A-Z</button></li>
+                <li style="margin-top: 5px;"><button id="ime_ZA">Sortiraj po imenu Z-A</button></li>
+                <li style="margin-top: 5px;"><button id="prz_AZ">Sortiraj po prezimenu A-Z</button></li>
+                <li style="margin-top: 5px;"><button id="prz_ZA">Sortiraj po prezimenu Z-A</button></li>
+                <li style="margin-top: 5px;"><button id="korime_AZ">Sortiraj po korisnickom imenu A-Z</button></li>
+                <li style="margin-top: 5px;"><button id="korime_ZA">Sortiraj po korisnickom imenu Z-A</button></li>
+                <li style="margin-top: 5px;"><button id="bodoviR">Sortiraj po broju bodova rastuce</button></li>
+                <li style="margin-top: 5px;"><button id="bodoviO">Sortiraj po broju bodova opadajuce</button></li>
+            </ul>
+            <h4>Filtrirajte po tipu korisnike</h4>
+            <select class="k_tip">
+                <option value="Sve">Svi tipovi</option>
+                <option value="Zlatni">Zlatni</option>
+                <option value="Srebrni">Srebrni</option>
+                <option value="Bronzani">Bronzani</option>
+                <option value="Nepoznat">Nepoznat</option>
+            </select><button type="button" id="k_filter_tip">Filtriraj po tipu korisnike</button>
+            <h4>Filtrirajte po ulozi</h4>
+            <select class="k_uloga">
+                <option value="Sve">Sve uloge</option>
+                <option value="Administrator">Administrator</option>
+                <option value="Kupac">Kupac</option>
+                <option value="Prodavac">Prodavac</option>
+                
+            </select><button type="button" id="k_filter_uloga">Filtriraj po ulozi korisnike</button>
         </div>
     </div>
     <div id="ProView">
@@ -1191,6 +1852,58 @@
 
             </table>
         </div>
+    </div>
+    <h4>Filtrirajte po tipu manifestacije</h4>
+    <select class="f_tip">
+        <option value="Sve">Sve manifestacije</option>
+        <option value="Koncert">Koncert</option>
+        <option value="Festival">Festival</option>
+        <option value="Pozoriste">Pozoriste</option>
+    </select><button type="button" id="filter_tip">Filtriraj po tipu</button>
+    <h4>Filtrirajte po raspolozivosti karata</h4>
+    <select name="kartafilter" id="f_karta">
+        <option id="fkarta" value="Sve">Sve manifestacije</option>
+        <option id="fkarta" value="Nerasprodate">Nerasprodate</option>
+
+    </select><button type="button" id="filter_karta">Filtriraj po raspolozivosti karte</button>
+    <!--<p id="#resultas" style="color:black"></p>-->
+    <h4>Sortiranja</h4>
+    <button type="button" id="sort_nazAZ">Sortiraj po nazivu A-Z</button>
+    <button type="button" id="sort_nazZA">Sortiraj po nazivu Z-A</button>
+    <button type="button" id="sort_datum1">Sortiraj po datumu od najskorijeg</button>
+    <button type="button" id="sort_datum2">Sortiraj po datumu od najkasnijeg</button>
+    <button type="button" id="sort_cenaR">Sortiraj po regular ceni rastuce</button>
+    <button type="button" id="sort_cenaO">Sortiraj po regular ceni opadajuce</button>
+    <button type="button" id="sort_mestoAZ">Sortiraj po mestu A-Z</button>
+    <button type="button" id="sort_mestoZA">Sortiraj po mestu Z-A</button>
+    <h4>Pretraga</h4>
+    <div class="container">
+        <form>
+
+            <div class="wrapper">
+
+                <div class="search-container">
+                    <input type="text" id="find_naziv" placeholder="naziv manifestacije" />
+                    <input type="text" id="find_mesto" placeholder="mesto odrzavanja" />
+                    <input type="text" id="find_datumOD" placeholder="od datum dd-mm-yyyy" />
+                    <input type="text" id="find_datumDO" placeholder="do datum dd-mm-yyyy" />
+                    <input type="text" id="find_cenaOD" placeholder="cena regular od" />
+                    <input type="text" id="find_cenaDO" placeholder="cena regular do" />
+
+
+                    <!--<div class="input-daterange input-group" id="datepicker">
+                        <input type="text" class="input-sm form-control" name="start" />
+                        <span class="input-group-addon">to</span>
+                        <input type="text" class="input-sm form-control" name="end" />
+                    </div>-->
+                    <button type="button" id="pretraga">Pretrazi</button>
+                </div>
+            </div>
+
+
+        </form>
+
+
     </div>
     <div id="maniPrikaz" class="table-responsive">
         <h2 style="text-align:center">Manifestacije</h2>

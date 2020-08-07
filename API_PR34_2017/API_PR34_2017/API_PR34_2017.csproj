@@ -232,6 +232,8 @@
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery.js" />
+    <Content Include="Scripts\jq_11_3.js" />
+    <Content Include="Scripts\jq_ui.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="slike\cover-1.jpg" />
     <Content Include="slike\odlican.png" />

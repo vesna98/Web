@@ -29,6 +29,170 @@ namespace API_PR34_2017.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
+        [Route("KorisniciImeAZ")]
+        public HttpResponseMessage KorisniciImeAZ()
+        {
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                korisnici.Add(u);
+            }
+            var sortirano = korisnici.OrderBy(i => i.Ime);
+            
+            var json = JsonConvert.SerializeObject(sortirano);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+        [Route("KorisniciImeZA")]
+        public HttpResponseMessage KorisniciImeZA()
+        {
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                korisnici.Add(u);
+            }
+            var sortirano = korisnici.OrderByDescending(i => i.Ime);
+
+            var json = JsonConvert.SerializeObject(sortirano);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+        [Route("KorisniciPrzAZ")]
+        public HttpResponseMessage KorisniciPrzAZ()
+        {
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                korisnici.Add(u);
+            }
+            var sortirano = korisnici.OrderBy(i => i.Prezime);
+
+            var json = JsonConvert.SerializeObject(sortirano);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+        [Route("KorisniciPrzZA")]
+        public HttpResponseMessage KorisniciPrzZA()
+        {
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                korisnici.Add(u);
+            }
+            var sortirano = korisnici.OrderByDescending(i => i.Prezime);
+
+            var json = JsonConvert.SerializeObject(sortirano);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+
+        [Route("KorisniciKorImeAZ")]
+        public HttpResponseMessage KorisniciKorImeAZ()
+        {
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                korisnici.Add(u);
+            }
+            var sortirano = korisnici.OrderBy(i => i.Korisnickoime);
+
+            var json = JsonConvert.SerializeObject(sortirano);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+        [Route("KorisniciKorImeZA")]
+        public HttpResponseMessage KorisniciKorImeZA()
+        {
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                korisnici.Add(u);
+            }
+            var sortirano = korisnici.OrderByDescending(i => i.Korisnickoime);
+
+            var json = JsonConvert.SerializeObject(sortirano);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+        [Route("KorisniciBodoviRastuce")]
+        public HttpResponseMessage KorisniciBodoviRastuce()
+        {
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                korisnici.Add(u);
+            }
+            var sortirano = korisnici.OrderBy(i => i.Sakupljenibodovi);
+
+            var json = JsonConvert.SerializeObject(sortirano);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+        [Route("KorisniciBodoviOpadajuce")]
+        public HttpResponseMessage KorisniciBodoviOpadajuce()
+        {
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                korisnici.Add(u);
+            }
+            var sortirano = korisnici.OrderByDescending(i => i.Sakupljenibodovi);
+
+            var json = JsonConvert.SerializeObject(sortirano);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+
+        [Route("TipoviKorisnikaFilter")]
+        public HttpResponseMessage TipoviKorisnikaFilter(JObject jsonResult)
+        {
+            string filter = (string)jsonResult["filter1"];
+
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                if(u.Tip.ToString().Equals(filter) && !filter.Equals("Sve"))
+                    korisnici.Add(u);
+                if (filter.Equals("Sve"))
+                {
+                    korisnici.Add(u);
+                }
+            }
+            
+            var json = JsonConvert.SerializeObject(korisnici);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+        [Route("UlogaKorisnikaFilter")]
+        public HttpResponseMessage UlogaKorisnikaFilter(JObject jsonResult)
+        {
+            string filter = (string)jsonResult["filter1"];
+
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                if (u.Uloga.ToString().Equals(filter) && !filter.Equals("Sve"))
+                    korisnici.Add(u);
+                if (filter.Equals("Sve"))
+                {
+                    korisnici.Add(u);
+                }
+            }
+
+            var json = JsonConvert.SerializeObject(korisnici);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
 
         [Route("ListaManifestacije")]
         public HttpResponseMessage ListaManifestacije()//([FromBody]JToken jtoken)

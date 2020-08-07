@@ -33,6 +33,7 @@
 
                     for (i = 0; i < jsonObj.length; i++) {
 
+                        
                         var tip;
                         if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
                             tip = "Koncert";
@@ -43,8 +44,9 @@
                         }
                        
                         var poster = jsonObj[i].Poster;
-                        // ImageUrl = poster;
-                        // alert("petlja..." + jsonObj[i]);
+
+
+
                         var row = "<tr id=\"nesto"+i+"\"class=\"success\">";
                         row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
                         row += "<td >" + tip + "</td>";

@@ -31,7 +31,7 @@ namespace API_PR34_2017.Models
             Obrisan = false;
         }
 
-        public Manifestacija(string prodavac, string naziv, TypeManifestacije tipmanifestacije, int brojmesta, string datumivreme, double cenaregular, Mesto mestoodrzavanja, string poster,int ocena,double cenafanpit,double cenavip,int kupljeno,bool obrisan)
+        public Manifestacija(string prodavac, string naziv, TypeManifestacije tipmanifestacije, int brojmesta, string datumivreme, double cenaregular, Mesto mestoodrzavanja, string poster,int ocena,double cenafanpit,double cenavip,int kupljeno,bool obrisan,StatusType statusm)
         {
             Naziv = naziv;
             Tipmanifestacije = tipmanifestacije;
@@ -41,7 +41,7 @@ namespace API_PR34_2017.Models
             Mestoodrzavanja = mestoodrzavanja;
             Poster = poster;
             Prodavac = prodavac;
-            Status = StatusType.Neaktivno;
+            Status = statusm;
             Kupljeno = kupljeno;
             Ocena = ocena;
             Cenafanpit = cenafanpit;

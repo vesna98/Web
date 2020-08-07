@@ -224,7 +224,7 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if(!k.Obrisan)
+                if(!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                     svi.Add(k);
             }
 
@@ -358,7 +358,7 @@ namespace API_PR34_2017.Controllers
             Manifestacija man =null;
             foreach (Manifestacija k in festovi)
             {
-                if(k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan)
+                if(k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                 {
                     man = k;
                 }
@@ -387,7 +387,7 @@ namespace API_PR34_2017.Controllers
            // Manifestacija man = null;
             foreach (Manifestacija k in festovi1)
             {
-                if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan)
+                if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan)     //da li mora biti aktivna da bi se obrisala???????
                 {
                     k.Obrisan = true;
                     Data.SaveFest(k);
@@ -397,7 +397,7 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan)
+                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                     svi.Add(k);
             }
 
@@ -452,7 +452,7 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan)
+                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                     svi.Add(k);
             }
 
@@ -512,7 +512,7 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan)
+                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                     svi.Add(k);
             }
 
@@ -570,7 +570,7 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan)
+                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                     svi.Add(k);
             }
 
@@ -588,7 +588,7 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan)
+                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                     svi.Add(k);
             }
 
@@ -607,7 +607,7 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan)
+                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                     svi.Add(k);
             }
 
@@ -660,7 +660,7 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan)
+                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                     svi.Add(k);
             }
 
@@ -678,7 +678,7 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan)
+                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                     svi.Add(k);
             }
 
@@ -697,7 +697,7 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan)
+                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                     svi.Add(k);
             }
 
@@ -715,7 +715,7 @@ namespace API_PR34_2017.Controllers
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan)
+                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                     svi.Add(k);
             }
 

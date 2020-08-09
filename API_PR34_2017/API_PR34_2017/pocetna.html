@@ -97,7 +97,87 @@
                         //if (filteri["karta"] != null) {
                         //    document.getElementById('polovi').value = filteri["karta"];
                         //}
-           
+
+            $("#pretraga").click(function () {
+                var tabelica = document.getElementById('tabelaMani');
+                for (var i = 1; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                var mesto = $("#find_mesto").val();
+                var naziv = $("#find_naziv").val();
+                var datumOD = $("#find_datumOD").val();
+                var datumDO = $("#find_datumDO").val();
+                var cenaOD = $("#find_cenaOD").val();
+                var cenaDO = $("#find_cenaDO").val();
+                var obj = JSON.stringify({
+                    "mesto": mesto,
+                    "naziv": naziv,
+                    "datumOD": datumOD,
+                    "datumDO": datumDO,
+                    "cenaOD": cenaOD.toString(),
+                    "cenaDO": cenaDO.toString()
+                });
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Korisnik/Pretraga',
+                    data: obj,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (data) {
+
+                        var jsonObj = JSON.parse(data);
+
+                        for (i = 0; i < jsonObj.length; i++) {
+
+                            var tip;
+                            if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                tip = "Koncert";
+                            } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                tip = "Festival";
+                            } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                tip = "Pozoriste";
+                            }
+
+                            var poster = jsonObj[i].Poster;
+
+                            var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                            row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                            row += "<td >" + tip + "</td>";
+                            row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                            row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                            row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                            row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                            row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                            row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                            var ocena;
+                            if (jsonObj[i].Ocena == 0) {
+                                ocena = "";
+                            } else {
+                                ocena = jsonObj[i].Ocena;
+                            }
+
+                            row += "<td >" + ocena + "</td>";
+                            var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            var obrisidugme = "";
+                            if (korisnik != null) {
+                                if (korisnik.Uloga == 0) {
+                                    obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                            }
+                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
+                            row += "</tr>";
+
+                            $("#tabelaMani").append(row);
+
+
+                        }
+                    },
+                    error: function (data) {
+                        alert("Greska!");
+                    }
+                });
+            });
             
             $("#filter_tip").click(function () {
                 var tipovi = $(".f_tip option:selected").val();
@@ -2179,11 +2259,11 @@
 
                 <div class="search-container">
                     <input type="text" id="find_naziv" placeholder="naziv manifestacije" />
-                    <input type="text" id="find_mesto" placeholder="mesto odrzavanja" />
+                    <input type="text" id="find_mesto" placeholder="mesto(drzava ili grad)" />
                     <input type="text" id="find_datumOD" placeholder="od datum dd-mm-yyyy" />
                     <input type="text" id="find_datumDO" placeholder="do datum dd-mm-yyyy" />
-                    <input type="text" id="find_cenaOD" placeholder="cena regular od" />
-                    <input type="text" id="find_cenaDO" placeholder="cena regular do" />
+                    <input type="number" min="0" id="find_cenaOD" placeholder="cena regular od" pattern="[0-9]+" oninput="validity.valid||(value='');"/>
+                    <input type="number" min="0" id="find_cenaDO" placeholder="cena regular do"pattern="[0-9]+" oninput="validity.valid||(value='');"/>
 
 
                     <!--<div class="input-daterange input-group" id="datepicker">

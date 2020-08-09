@@ -442,7 +442,148 @@ namespace API_PR34_2017.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, output);
         }
+        [Route("Pretraga")]
+        [HttpPost]
+        public HttpResponseMessage Pretraga(JObject jsonResult)
+        {
+            string naziv = (string)jsonResult["naziv"];
+            string mesto = (string)jsonResult["mesto"];
+            string datumOD = (string)jsonResult["datumOD"];
+            string datumDO = (string)jsonResult["datumDO"];
+            int cenaOD;
+                bool cena1=Int32.TryParse((string)jsonResult["cenaOD"],out cenaOD);
+            int cenaDO;
+            bool cena2=Int32.TryParse((string)jsonResult["cenaDO"],out cenaDO);
 
+            DateTime datOD;
+            DateTime datDO;
+            bool dat1 = false;
+            bool dat2 = false;
+            if (DateTime.TryParseExact(datumOD, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out datOD))
+            {
+                dat1 = true;
+            }
+            if (DateTime.TryParseExact(datumDO, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out datDO))
+            {
+                dat2 = true;
+            }
+
+            bool oba = false;
+            if (dat1 && dat2)
+                oba = true;
+            
+            List<Manifestacija> svi = new List<Manifestacija>();
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            foreach (Manifestacija k in festovi)
+            {
+                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                    svi.Add(k);
+            }
+
+           int treba = 0;
+            if(cena1 && !cena2)
+            {
+                svi = svi.Where(u => u.Cenaregular>=cenaOD).ToList();
+            }
+            else if(!cena1 && cena2)
+            {
+                svi = svi.Where(u => u.Cenaregular<=cenaDO).ToList();
+            }
+            else if(cena1 && cena2)
+            {
+                svi = svi.Where(u => u.Cenaregular >= cenaOD).ToList();
+                svi = svi.Where(u => u.Cenaregular <= cenaDO).ToList();
+            }
+
+            //datum
+            if (oba)
+            {
+                int result = DateTime.Compare(datOD, datDO);
+
+                if (result < 0) //NE MOZE,NIJE DOBRO UNETO relationship = "is earlier than";
+                {
+                    svi = svi.FindAll(u => treba <= DateTime.Compare(DateTime.ParseExact(u.Datumivreme.Split(' ')[0], "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), datOD));
+                    svi = svi.FindAll(u => treba >= DateTime.Compare(DateTime.ParseExact(u.Datumivreme.Split(' ')[0], "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), datDO));
+
+                }
+
+                else if (result == 0)  //OKEJ,JEDNAKO SU DATUMI,ONDA SAMO TOG DANA STO JE relationship = "is the same time as";
+                {
+                   // int treba = 0;
+                    svi = svi.FindAll(u => treba==DateTime.Compare(DateTime.ParseExact(u.Datumivreme.Split(' ')[0], "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), datOD));
+                }
+                else//RADIMO ONDA POREDJENJA DA BUDU POSLE PRVOG I PRE DRUGOG relationship = "is later than";
+                {
+                    //int treba = 0;
+                    //svi = svi.FindAll(u => treba <= DateTime.Compare(DateTime.ParseExact(u.Datumivreme.Split(' ')[0], "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), datOD));
+                    //svi = svi.FindAll(u => treba >= DateTime.Compare(DateTime.ParseExact(u.Datumivreme.Split(' ')[0], "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), datDO));
+                    
+                   /* (0 < DateTime.Compare(DateTime.ParseExact(u.Datumivreme.Split(' ')[0], "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), datOD)))*/
+                }
+               
+            }
+
+               // int treba = 0;
+            if (dat1)
+            {
+                svi = svi.FindAll(u => treba <= DateTime.Compare(DateTime.ParseExact(u.Datumivreme.Split(' ')[0], "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), datOD));
+            }
+
+            if (dat2)
+            {
+                svi = svi.FindAll(u => treba >= DateTime.Compare(DateTime.ParseExact(u.Datumivreme.Split(' ')[0], "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None), datDO));
+            }
+            // var filteredSvi = new List<Manifestacija>();
+            if (!string.IsNullOrWhiteSpace(naziv.Trim()))
+                svi = svi.Where(u => u.Naziv.ToUpper().Contains(naziv.ToUpper())).ToList();
+            if (!string.IsNullOrWhiteSpace(mesto.Trim())) //&& !string.IsNullOrWhiteSpace(naziv.Trim()))//ima mesto i naziv
+            {
+                svi = svi.FindAll(u => u.Mestoodrzavanja.Grad.ToUpper().Contains(mesto.ToUpper()));
+            }
+            //else if(!string.IsNullOrWhiteSpace(mesto.Trim()) && string.IsNullOrWhiteSpace(naziv.Trim()))//ima mesto nema naziv
+            //{
+            //    filteredSvi =svi.FindAll(u => u.Mestoodrzavanja.Grad.ToUpper().Contains(mesto.ToUpper()));
+            //}
+
+            Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
+            for (int i = 0; i < svi.Count(); i++)
+            {
+                DateTime myDate;
+                Manifestacija temp = svi[i];
+                if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                {
+                    recnik.Add(temp, myDate);
+                }
+            }
+            
+            var dateTimesAscending = recnik.Values.OrderBy(d => d);
+            List<Manifestacija> konacna = new List<Manifestacija>();
+
+
+            foreach (var ii in dateTimesAscending)
+            {
+
+                foreach (Manifestacija m in recnik.Keys)
+                {
+                    DateTime myDate;
+                    Manifestacija temp = m;
+                    
+                    if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                    {
+
+                        if (myDate == ii)
+                        {
+                            konacna.Add(m);
+                        }
+                    }
+                }
+            }
+
+            var output = JsonConvert.SerializeObject(konacna);
+            //var output = JsonConvert.SerializeObject(recnik.Keys.ToList());//ne radi
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
         [Route("TipoviFilter")]
         public HttpResponseMessage TipoviFilter(JObject jsonResult)
         {

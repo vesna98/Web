@@ -98,85 +98,107 @@
                         //    document.getElementById('polovi').value = filteri["karta"];
                         //}
 
+                                                                                    //PRETRAGA
             $("#pretraga").click(function () {
-                var tabelica = document.getElementById('tabelaMani');
-                for (var i = 1; i < tabelica.rows.length;) {
-                    tabelica.deleteRow(i);
+                let dat1 = document.getElementById('find_datumOD');
+                let dat2 = document.getElementById('find_datumDO');
+                let k2 = document.getElementById('find_mesto');
+                let k1 = document.getElementById('find_naziv');
+
+                
+
+                if (!dat1.checkValidity() || !dat2.checkValidity())
+                {
+                    alert("Unesite datum u naznacenom formatu dd-mm-yyyy");
+                } else if (!k2.checkValidity()) {
+
+                    alert("Unesite samo slova u polje za pretragu po mestu");//,bez suvisnih razmaka na pocetku i kraju");
+                } //za naziv ne treba jer moze da sadrzi slova i cifre
+                else if (!k1.checkValidity())
+                {
+                    alert("Mozete uneti samo slova i cifre prilikom pretrage po nazivu");//,bez suvisnih razmaka na pocetku i kraju");
                 }
-                var mesto = $("#find_mesto").val();
-                var naziv = $("#find_naziv").val();
-                var datumOD = $("#find_datumOD").val();
-                var datumDO = $("#find_datumDO").val();
-                var cenaOD = $("#find_cenaOD").val();
-                var cenaDO = $("#find_cenaDO").val();
-                var obj = JSON.stringify({
-                    "mesto": mesto,
-                    "naziv": naziv,
-                    "datumOD": datumOD,
-                    "datumDO": datumDO,
-                    "cenaOD": cenaOD.toString(),
-                    "cenaDO": cenaDO.toString()
-                });
-
-                $.ajax({
-                    type: 'POST',
-                    url: '/api/Korisnik/Pretraga',
-                    data: obj,
-                    contentType: 'application/json; charset=utf-8',
-                    dataType: 'json',
-                    success: function (data) {
-
-                        var jsonObj = JSON.parse(data);
-
-                        for (i = 0; i < jsonObj.length; i++) {
-
-                            var tip;
-                            if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
-                                tip = "Koncert";
-                            } else if (jsonObj[i].Tipmanifestacije == 1) {
-                                tip = "Festival";
-                            } else if (jsonObj[i].Tipmanifestacije == 2) {
-                                tip = "Pozoriste";
-                            }
-
-                            var poster = jsonObj[i].Poster;
-
-                            var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
-                            row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
-                            row += "<td >" + tip + "</td>";
-                            row += "<td >" + jsonObj[i].Datumivreme + "</td>";
-                            row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
-                            row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
-                            row += "<td >" + jsonObj[i].Cenaregular + "</td>";
-                            row += "<td >" + jsonObj[i].Cenavip + "</td>";
-                            row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
-                            var ocena;
-                            if (jsonObj[i].Ocena == 0) {
-                                ocena = "";
-                            } else {
-                                ocena = jsonObj[i].Ocena;
-                            }
-
-                            row += "<td >" + ocena + "</td>";
-                            var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                            var obrisidugme = "";
-                            if (korisnik != null) {
-                                if (korisnik.Uloga == 0) {
-                                    obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
-                                }
-                            }
-                            row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
-                            row += "</tr>";
-
-                            $("#tabelaMani").append(row);
-
-
-                        }
-                    },
-                    error: function (data) {
-                        alert("Greska!");
+                else
+                {
+                    var tabelica = document.getElementById('tabelaMani');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
                     }
-                });
+                    var mesto = $("#find_mesto").val();
+                    var naziv = $("#find_naziv").val();
+                    var datumOD = $("#find_datumOD").val();
+                    var datumDO = $("#find_datumDO").val();
+                    var cenaOD = $("#find_cenaOD").val();
+                    var cenaDO = $("#find_cenaDO").val();
+                    var obj = JSON.stringify({
+                        "mesto": mesto,
+                        "naziv": naziv,
+                        "datumOD": datumOD,
+                        "datumDO": datumDO,
+                        "cenaOD": cenaOD.toString(),
+                        "cenaDO": cenaDO.toString()
+                    });
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Korisnik/Pretraga',
+                        data: obj,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        success: function (data) {
+
+                            var jsonObj = JSON.parse(data);
+
+                            for (i = 0; i < jsonObj.length; i++) {
+
+                                var tip;
+                                if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                    tip = "Koncert";
+                                } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                    tip = "Festival";
+                                } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                    tip = "Pozoriste";
+                                }
+
+                                var poster = jsonObj[i].Poster;
+
+                                var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                                row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                                row += "<td >" + tip + "</td>";
+                                row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                                row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                                row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                                row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                                row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                                row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                                var ocena;
+                                if (jsonObj[i].Ocena == 0) {
+                                    ocena = "";
+                                } else {
+                                    ocena = jsonObj[i].Ocena;
+                                }
+
+                                row += "<td >" + ocena + "</td>";
+                                var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                                var obrisidugme = "";
+                                if (korisnik != null) {
+                                    if (korisnik.Uloga == 0) {
+                                        obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                    }
+                                }
+                                row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
+                                row += "</tr>";
+
+                                $("#tabelaMani").append(row);
+
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
+                }
             });
             
             $("#filter_tip").click(function () {
@@ -1692,72 +1714,109 @@
                 $("#addFest").click(function () {
                     $('#novaMani').show();
                     $("#btnFest").click(function () {
-                        var naziv = $("#naziv").val();
-                        var tipmanifestacije = $("#tipovi option:selected").val();
-                        var brojmesta = $("#brojmesta").val();
-                        var vreme = $("#time").val();
-                        var datumivreme = $("#datumivreme").val();
-                        var cenaregular = $("#cenaregular").val();
-                        var cenavip = $("#cenavip").val();
-                        var cenafanpit = $("#cenafanpit").val();
-                        var ulicabroj = $("#ulicabroj").val();
-                        var grad = $("#grad").val();
-                        var postanskibroj = $("#postanskibroj").val();
-                        // var poster = $("#poster").val();
-
-                        var logoImg = $("#poster").get(0).files[0];
-                        var formData = new FormData();
-                        formData.append('poster', logoImg);
-
-                        //namestanje vremena da bude sa pm am
-                        t = document.getElementById('time').value
-                        var [h, m] = t.split(":");
-                       // datumivreme += " " + (h % 12 + 12 * (h % 12 == 0)) + ":" + m;//, h >= 12 ? 'PM' : 'AM';
-                        datumivreme += " " + (h % 12 + 12 * (h % 12 == 0)) + ":" + m;//, h >= 12 ? 'PM' : 'AM';
-                        if (h >= 12) {
-                            datumivreme += " PM";
-                        } else {
-                            datumivreme += " AM";
+                        let k1 = document.getElementById('naziv');
+                        let k2 = document.getElementById('datumivreme');
+                        let k3 = document.getElementById('ulicabroj');
+                        let k4 = document.getElementById('grad');
+                        let k5 = document.getElementById('postanskibroj');
+                        let k6 = document.getElementById('brojmesta');
+                        let k7 = document.getElementById('vreme');
+                        let k8 = document.getElementById('cenaregular');
+                        
+                        if (!k1.checkValidity())
+                        {
+                            alert("Ponovo unesite naziv. Naziv sme da sadrzi slova i cifre.")
+                        } else if ($("#brojmesta").val() == '') {
+                            alert('Unesite broj mesta.');
+                        }else if (!k2.checkValidity())
+                        {
+                            alert('Datum mora biti u formatu DD-MM-YYYY');
+                        }  else if ($("#time").val() == '') {
+                            alert('Unesite vreme.');
+                        } else if ($("#cenaregular").val() == '') {
+                            alert('Uneiste cenu karte.');
                         }
-                        alert(datumivreme);
+                        else if (!k3.checkValidity()) {
+                            alert("Unesite ispravno ulicu i broj.");
+                        } else if (!k4.checkValidity()) {
+                            alert('Ponovo unesite grad/drzavu. Dozvoljena su samo slova.');
+                        } else if (!k5.checkValidity()) {
+                            alert("Postanski broj mora da bude petocifreni broj");
+                        } else if (!$('#poster').val()) {
+                            alert("Odaberite sliku za poster");
+                        } 
+                        else {
+                            var naziv = $("#naziv").val();
+                            var tipmanifestacije = $("#tipovi option:selected").val();
+                            var brojmesta = $("#brojmesta").val();
+                            var vreme = $("#time").val();
+                            var datumivreme = $("#datumivreme").val();
+                            var cenaregular = $("#cenaregular").val();
+                            //var cenavip = $("#cenavip").val();
+                            //var cenafanpit = $("#cenafanpit").val();
+                            var ulicabroj = $("#ulicabroj").val();
+                            var grad = $("#grad").val();
+                            var postanskibroj = $("#postanskibroj").val();
+                            // var poster = $("#poster").val();
 
-                        formData.append('naziv', naziv);
-                        formData.append('tipmanifestacije', tipmanifestacije);
-                        formData.append('brojmesta', brojmesta);
-                        formData.append('datumivreme', datumivreme);
-                        formData.append('cenaregular', cenaregular);
-                        formData.append('cenavip', cenavip);
-                        formData.append('cenafanpit', cenafanpit);
-                        formData.append('ulicabroj', ulicabroj);
-                        formData.append('grad', grad);
-                        formData.append('postanskibroj', postanskibroj);
-                        formData.append('prodavac', korisnik.Korisnickoime);
-                        alert("tip->" + tipmanifestacije);
+                            var logoImg = $("#poster").get(0).files[0];
+                            var formData = new FormData();
+                            formData.append('poster', logoImg);
 
-
-                        $.ajax({
-
-                            type: "POST",
-                            url: 'api/Korisnik/DodajFest',
-                            data: formData,
-                            contentType: false,
-                            processData: false,
-                            cache: false,
-                            complete: function (data) {
-                                alert("success");
-                               // $("#tabelaMani").load("pocetna.html #tabelaMani");
-                               // $('#tabelaMani').DataTable().ajax.reload();
-                                // console.log(data.text());
-                                $('#novaMani').hide();
-                                $("#maniPrikaz").load("#tabelaMani");
-                                /*, function (responseTxt, statusTxt, xhr) {
-                                    if (statusTxt == "success")
-                                        alert("External content loaded successfully!");
-                                    if (statusTxt == "error")
-                                        alert("Error: " + xhr.status + ": " + xhr.statusText);
-                                });*/
+                            //namestanje vremena da bude sa pm am
+                            t = document.getElementById('time').value
+                            var [h, m] = t.split(":");
+            
+                            // datumivreme += " " + (h % 12 + 12 * (h % 12 == 0)) + ":" + m;//, h >= 12 ? 'PM' : 'AM';
+                            datumivreme += " " + (h % 12 + 12 * (h % 12 == 0)) + ":" + m;//, h >= 12 ? 'PM' : 'AM';
+                            if (h >= 12) {
+                                datumivreme += " PM";
+                            } else {
+                                datumivreme += " AM";
                             }
-                        });
+                            alert(datumivreme);
+
+                            formData.append('naziv', naziv);
+                            formData.append('tipmanifestacije', tipmanifestacije);
+                            formData.append('brojmesta', brojmesta);
+                            formData.append('datumivreme', datumivreme);
+                            formData.append('cenaregular', cenaregular);
+                            //formData.append('cenavip', cenavip);
+                            //formData.append('cenafanpit', cenafanpit);
+                            formData.append('ulicabroj', ulicabroj);
+                            formData.append('grad', grad);
+                            formData.append('postanskibroj', postanskibroj);
+                            formData.append('prodavac', korisnik.Korisnickoime);
+                            alert("tip->" + tipmanifestacije);
+
+
+                            $.ajax({
+
+                                type: "POST",
+                                url: 'api/Korisnik/DodajFest',
+                                data: formData,
+                                contentType: false,
+                                processData: false,
+                                cache: false,
+                                complete: function (data) {
+                                    alert("success");
+                                    // $("#tabelaMani").load("pocetna.html #tabelaMani");
+                                    // $('#tabelaMani').DataTable().ajax.reload();
+                                    // console.log(data.text());
+                                    $('#novaMani').hide();
+                                   // $("#maniPrikaz").load("#tabelaMani");              //zakomentarisno,pre je bilo!!!!!!!!!!!!!!!!!!
+
+
+
+                                    /*, function (responseTxt, statusTxt, xhr) {
+                                        if (statusTxt == "success")
+                                            alert("External content loaded successfully!");
+                                        if (statusTxt == "error")
+                                            alert("Error: " + xhr.status + ": " + xhr.statusText);
+                                    });*/
+                                }
+                            });
+                        }
                         
                     });
                 });
@@ -2164,7 +2223,7 @@
             <table>
                 <tr>
                     <td id="tekst" style="color:black">Naziv:</td>
-                    <td><input type="text" name="naziv" id="naziv" placeholder="unesite naziv" required /></td>
+                    <td><input type="text" name="naziv" id="naziv" placeholder="unesite naziv" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" required /></td>
                 </tr>
                 <tr>
                     <td id="tekst" style="color:black">Tip manifestacije:</td>
@@ -2179,11 +2238,11 @@
 
                 <tr>
                     <td id="tekst" style="color:black">Broj mesta:</td>
-                    <td><input type="number" name="brojmesta" id="brojmesta" placeholder="unesite broj mesta" required /></td>
+                    <td><input type="number" name="brojmesta" min="0" id="brojmesta" placeholder="unesite broj mesta" oninput="validity.valid||(value='');"  required /></td>
                 </tr>
                 <tr>
                     <td id="tekst" style="color:black">Datum odrzavanja:</td>
-                    <td><input type="text" name="datumivreme" id="datumivreme" placeholder="DD-MM-YYYY" pattern='(0[1-9]|[12][0-9]|3[0-1])\-(0[1-9]|1[0-2])\-([0-9]{4})' required /></td>
+                    <td><input type="text" name="datumivreme" id="datumivreme" placeholder="DD-MM-YYYY" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" required /></td>
                 </tr>
                 <tr>
                     <td id="tekst" style="color:black">Vreme odrzavanja:</td>
@@ -2191,28 +2250,28 @@
                 </tr>
                 <tr>
                     <td id="tekst" style="color:black">Cena regular:</td>
-                    <td><input type="number" name="cenaregular" id="cenaregular" placeholder="unesite cenu u evrima" required /></td>
+                    <td><input type="number" name="cenaregular" min="0" id="cenaregular" placeholder="unesite cenu u evrima" oninput="validity.valid||(value='');" required /></td>
                 </tr>
-                <tr>
+                <!--<tr>
                     <td id="tekst" style="color:black">Cena vip:</td>
                     <td><input type="number" name="cenavip" id="cenavip" placeholder="unesite cenu u evrima" required /></td>
                 </tr>
                 <tr>
                     <td id="tekst" style="color:black">Cena fan pit:</td>
                     <td><input type="number" name="cenafanpit" id="cenafanpit" placeholder="unesite cenu u evrima" required /></td>
-                </tr>
+                </tr>-->
                 <tr>
                     <td id="tekst" style="color:black">Ulica i broj</td>
-                    <td><input type="text" name="ulicabroj" id="ulicabroj" placeholder="unesite ulicu i broj" required /></td>
+                    <td><input type="text" name="ulicabroj" id="ulicabroj" placeholder="unesite ulicu i broj" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" required /></td>
                 </tr>
                 <tr>
                     <td id="tekst" style="color:black">Grad</td>
-                    <td><input type="text" name="grad" id="grad" placeholder="unesite grad" required /></td>
+                    <td><input type="text" name="grad" id="grad" placeholder="unesite grad" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" required /></td>
 
                 </tr>
                 <tr>
                     <td id="tekst" style="color:black">Postanski broj</td>
-                    <td><input type="text" name="postanskibroj" id="postanskibroj" placeholder="unesite postanski broj" required /></td>
+                    <td><input type="text" name="postanskibroj" id="postanskibroj" placeholder="unesite postanski broj" pattern="[0-9]{5}" required /></td>
 
                 </tr>
                 <tr>
@@ -2221,7 +2280,8 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <input type="submit" onclick="print()" value="Dodaj" id="btnFest" />
+                        <input type="submit" value="Dodaj" id="btnFest" />
+                        <!--<input type="submit" onclick="print()" value="Dodaj" id="btnFest" />-->
                     </td>
                 </tr>
 
@@ -2258,9 +2318,9 @@
             <div class="wrapper">
 
                 <div class="search-container">
-                    <input type="text" id="find_naziv" placeholder="naziv manifestacije" />
-                    <input type="text" id="find_mesto" placeholder="mesto(drzava ili grad)" />
-                    <input type="text" id="find_datumOD" placeholder="od datum dd-mm-yyyy" />
+                    <input type="text" id="find_naziv" placeholder="naziv manifestacije" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$"/>
+                    <input type="text" id="find_mesto" placeholder="mesto(drzava ili grad)" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" />
+                    <input type="text" id="find_datumOD" placeholder="od datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
                     <input type="text" id="find_datumDO" placeholder="do datum dd-mm-yyyy" />
                     <input type="number" min="0" id="find_cenaOD" placeholder="cena regular od" pattern="[0-9]+" oninput="validity.valid||(value='');"/>
                     <input type="number" min="0" id="find_cenaDO" placeholder="cena regular do"pattern="[0-9]+" oninput="validity.valid||(value='');"/>

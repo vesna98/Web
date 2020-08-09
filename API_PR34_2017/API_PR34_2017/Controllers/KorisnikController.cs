@@ -288,14 +288,32 @@ namespace API_PR34_2017.Controllers
 
             mani.Brojmesta = int.Parse(HttpContext.Current.Request.Form["brojmesta"]);
             mani.Cenaregular = Double.Parse(HttpContext.Current.Request.Form["cenaregular"]);
-            mani.Cenavip = Double.Parse(HttpContext.Current.Request.Form["cenavip"]);       //dodato za vip i fan pit cena
-            mani.Cenafanpit = Double.Parse(HttpContext.Current.Request.Form["cenafanpit"]);
+            mani.Cenavip = 4 * mani.Cenaregular; /*Double.Parse(HttpContext.Current.Request.Form["cenavip"]); */      //dodato za vip i fan pit cena
+            mani.Cenafanpit = 2 * mani.Cenaregular;/* Double.Parse(HttpContext.Current.Request.Form["cenafanpit"]);*/
             mani.Datumivreme = HttpContext.Current.Request.Form["datumivreme"];
             Mesto mjesto = new Mesto(HttpContext.Current.Request.Form["ulicabroj"], HttpContext.Current.Request.Form["grad"], HttpContext.Current.Request.Form["postanskibroj"]);
 
             mani.Mestoodrzavanja = mjesto;
 
-            string fileSavePath = string.Empty;
+            string datumVreme = mani.Datumivreme;
+            string vreme = datumVreme.Split(' ')[1];
+            string sati = vreme.Split(':')[0];
+
+            if (sati.Length == 1)
+            {
+                datumVreme = datumVreme.Split(' ')[0] + " 0" + sati + ":" + vreme.Split(':')[1]+" "+ datumVreme.Split(' ')[2];
+                mani.Datumivreme = datumVreme;
+            }
+
+            //provera da li je validan datum sa tim vremenom
+            DateTime myDate;
+            
+            if (!DateTime.TryParseExact(mani.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest);
+            }
+
+                string fileSavePath = string.Empty;
             //string virtualDirectoryImg = "Files";
             string fileName = string.Empty;
 

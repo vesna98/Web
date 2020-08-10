@@ -1367,6 +1367,87 @@
                     });
 
                 });
+                $("#a_pretraga").click(function () {
+                    $('#userPrikaz').show();//da li treba????
+                    var kor = $('#a_korime').val();
+                    var ime = $('#a_ime').val();
+                    var prz = $('#a_prz').val();
+                    var tabelica = document.getElementById('userTabela');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
+                   
+                    var obj = JSON.stringify({
+                        "korime": kor,
+                        "ime": ime,
+                        "prezime":prz
+                    });
+                    if (!(document.getElementById('a_ime')).checkValidity()) {
+                        alert("Ime mora da sadrzi samo slova,bez suvisnih razmaka na pocetku i kraju.");
+                    } else if (!(document.getElementById('a_prz')).checkValidity()) {
+                        alert("Prezime mora da sadrzi samo slova,bez suvisnih razmaka na pocetku i kraju.");
+                    } else if (!(document.getElementById('a_korime')).checkValidity()) {
+                        alert("Korisnicko ime moze da sadrzi samo slova i cifre.");
+                    } else {
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/Korisnik/PretragaKorisnika',
+                            data: obj,
+                            contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            success: function (data) {
+                                var lista = JSON.parse(data);
+                                //alert("u json korisnci" + data);
+                                
+                                for (i = 0; i < lista.length; i++) {
+
+                                    var uloga;
+                                    if (lista[i].Uloga == 0) {
+                                        uloga = "Administrator";
+                                    } else if (lista[i].Uloga == 1) {
+                                        uloga = "Prodavac";
+                                    } else if (lista[i].Uloga == 2) {
+                                        uloga = "Kupac";
+                                    }
+                                    var pol;
+                                    if (lista[i].Pol == 1) {
+                                        pol = 'Zenski';
+                                    } else {
+                                        pol = 'Muski';
+                                    }
+                                    var obrisan;
+                                    if (lista[i].Obrisan == false) {
+                                        obrisan = "";
+                                    } else {
+                                        obrisan = 'OBRISAN';
+                                    }
+
+                                    var row = "<tr class=\"success\">";
+                                    row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                    row += "<td >" + lista[i].Ime + "</td>";
+                                    row += "<td >" + lista[i].Prezime + "</td>";
+                                    row += "<td >" + pol + "</td>";
+                                    row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                                    row += "<td >" + uloga + "</td>";
+                                    row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                                    row += "<td >" + obrisan + "</td>";
+                                    if (obrisan == "" && uloga != "Administrator") {
+                                        row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
+                                    }
+                                    else {
+                                        row += "<td></td>";
+                                    }
+                                    row += "</tr>";
+                                    $("#userTabela").append(row);
+
+                                }
+                            },
+                            error: function (data) {
+                                alert("Greska!");
+                            }
+                        });
+                    }
+                });
                 $("#korime_ZA").click(function () {
                     $('#userPrikaz').show();
                     var tabelica = document.getElementById('userTabela');
@@ -2173,6 +2254,26 @@
         
         <div id="userPrikaz" class="table-responsive">
 
+            <h4>Filtrirajte po tipu korisnike</h4>
+            <select class="k_tip">
+                <option value="Sve">Svi tipovi</option>
+                <option value="Zlatni">Zlatni</option>
+                <option value="Srebrni">Srebrni</option>
+                <option value="Bronzani">Bronzani</option>
+                <option value="Nepoznat">Nepoznat</option>
+            </select><button type="button" id="k_filter_tip">Filtriraj po tipu korisnike</button>
+            <h4>Filtrirajte po ulozi</h4>
+            <select class="k_uloga">
+                <option value="Sve">Sve uloge</option>
+                <option value="Administrator">Administrator</option>
+                <option value="Kupac">Kupac</option>
+                <option value="Prodavac">Prodavac</option>
+
+            </select><button type="button" id="k_filter_uloga">Filtriraj po ulozi korisnike</button>
+            <h4>Pretraga korisnika</h4>
+            <input id="a_ime" type="text" placeholder="unesite ime" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" />
+            <input id="a_prz" type="text" placeholder="unesite prezime" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" />
+            <input id="a_korime" type="text" placeholder="unesite korisnicko ime" pattern="[0-9a-zA-Z]+" /><button type="button" id="a_pretraga">Pretrazi korisnike</button>
             <table id="userTabela" style=" display: inline-block;">
                 <tr>
                     <th>Korisnicko ime</th>
@@ -2197,22 +2298,6 @@
                 <li style="margin-top: 5px;"><button id="bodoviR">Sortiraj po broju bodova rastuce</button></li>
                 <li style="margin-top: 5px;"><button id="bodoviO">Sortiraj po broju bodova opadajuce</button></li>
             </ul>
-            <h4>Filtrirajte po tipu korisnike</h4>
-            <select class="k_tip">
-                <option value="Sve">Svi tipovi</option>
-                <option value="Zlatni">Zlatni</option>
-                <option value="Srebrni">Srebrni</option>
-                <option value="Bronzani">Bronzani</option>
-                <option value="Nepoznat">Nepoznat</option>
-            </select><button type="button" id="k_filter_tip">Filtriraj po tipu korisnike</button>
-            <h4>Filtrirajte po ulozi</h4>
-            <select class="k_uloga">
-                <option value="Sve">Sve uloge</option>
-                <option value="Administrator">Administrator</option>
-                <option value="Kupac">Kupac</option>
-                <option value="Prodavac">Prodavac</option>
-                
-            </select><button type="button" id="k_filter_uloga">Filtriraj po ulozi korisnike</button>
         </div>
     </div>
     <div id="ProView">

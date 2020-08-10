@@ -17,6 +17,7 @@ namespace API_PR34_2017.Controllers
     public class KorisnikController : ApiController
     {
         [Route("SviKorisnici")]
+        [HttpPost]
         public HttpResponseMessage SviKorisnici()
         {
             List<Korisnik> korisnici = new List<Korisnik>();
@@ -30,6 +31,7 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
         [Route("KorisniciImeAZ")]
+        [HttpPost]
         public HttpResponseMessage KorisniciImeAZ()
         {
             List<Korisnik> korisnici = new List<Korisnik>();
@@ -45,6 +47,7 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
         [Route("KorisniciImeZA")]
+        [HttpPost]
         public HttpResponseMessage KorisniciImeZA()
         {
             List<Korisnik> korisnici = new List<Korisnik>();
@@ -60,6 +63,7 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
         [Route("KorisniciPrzAZ")]
+        [HttpPost]
         public HttpResponseMessage KorisniciPrzAZ()
         {
             List<Korisnik> korisnici = new List<Korisnik>();
@@ -75,6 +79,7 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
         [Route("KorisniciPrzZA")]
+        [HttpPost]
         public HttpResponseMessage KorisniciPrzZA()
         {
             List<Korisnik> korisnici = new List<Korisnik>();
@@ -91,6 +96,7 @@ namespace API_PR34_2017.Controllers
         }
 
         [Route("KorisniciKorImeAZ")]
+        [HttpPost]
         public HttpResponseMessage KorisniciKorImeAZ()
         {
             List<Korisnik> korisnici = new List<Korisnik>();
@@ -106,6 +112,7 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
         [Route("KorisniciKorImeZA")]
+        [HttpPost]
         public HttpResponseMessage KorisniciKorImeZA()
         {
             List<Korisnik> korisnici = new List<Korisnik>();
@@ -121,6 +128,7 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
         [Route("KorisniciBodoviRastuce")]
+        [HttpPost]
         public HttpResponseMessage KorisniciBodoviRastuce()
         {
             List<Korisnik> korisnici = new List<Korisnik>();
@@ -136,6 +144,7 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
         [Route("KorisniciBodoviOpadajuce")]
+        [HttpPost]
         public HttpResponseMessage KorisniciBodoviOpadajuce()
         {
             List<Korisnik> korisnici = new List<Korisnik>();
@@ -152,6 +161,7 @@ namespace API_PR34_2017.Controllers
         }
 
         [Route("TipoviKorisnikaFilter")]
+        [HttpPost]
         public HttpResponseMessage TipoviKorisnikaFilter(JObject jsonResult)
         {
             string filter = (string)jsonResult["filter1"];
@@ -173,6 +183,7 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
         [Route("UlogaKorisnikaFilter")]
+        [HttpPost]
         public HttpResponseMessage UlogaKorisnikaFilter(JObject jsonResult)
         {
             string filter = (string)jsonResult["filter1"];
@@ -194,7 +205,40 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, json);
         }
 
+        [Route("PretragaKorisnika")]
+        [HttpPost]
+        public HttpResponseMessage PretragaKorisnika(JObject jsonResult)
+        {
+            string korime = (string)jsonResult["korime"];
+            string ime = (string)jsonResult["ime"];
+            string prz = (string)jsonResult["prezime"];
+
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                //if (u.Uloga.ToString().Equals(filter) && !filter.Equals("Sve"))
+                //    korisnici.Add(u);
+                //if (filter.Equals("Sve"))
+                //{
+                    korisnici.Add(u);
+               // }
+            }
+
+            if (!string.IsNullOrWhiteSpace(korime))
+                korisnici = korisnici.FindAll(u => u.Korisnickoime.ToUpper().Contains(korime.ToUpper()));
+            if (!string.IsNullOrWhiteSpace(ime))
+                korisnici = korisnici.FindAll(u => u.Ime.ToUpper().Contains(ime.ToUpper()));
+            if (!string.IsNullOrWhiteSpace(prz))
+                korisnici = korisnici.FindAll(u => u.Prezime.ToUpper().Contains(prz.ToUpper()));
+
+            var json = JsonConvert.SerializeObject(korisnici);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+
         [Route("ObrisiKorisnika")]
+        [HttpPost]
         public HttpResponseMessage ObrisiKorisnika(JObject jsonResult)
         {
             string filter = (string)jsonResult["korime"];
@@ -218,6 +262,7 @@ namespace API_PR34_2017.Controllers
         }
 
         [Route("ListaManifestacije")]
+        [HttpPost]
         public HttpResponseMessage ListaManifestacije()//([FromBody]JToken jtoken)
         {
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -366,6 +411,7 @@ namespace API_PR34_2017.Controllers
         }
 
         [Route("NadjiManifestaciju")]
+        [HttpPost]
         public HttpResponseMessage NadjiManifestaciju(JObject jsonResult)
         {
             //var obj = JsonConvert.DeserializeObject<dynamic>(jsonResult.ToString());
@@ -395,6 +441,7 @@ namespace API_PR34_2017.Controllers
         }
 
         [Route("ObrisiManifestaciju")]
+        [HttpPost]
         public HttpResponseMessage ObrisiManifestaciju(JObject jsonResult)
         {
             //var obj = JsonConvert.DeserializeObject<dynamic>(jsonResult.ToString());
@@ -603,6 +650,7 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, output);
         }
         [Route("TipoviFilter")]
+        [HttpPost]
         public HttpResponseMessage TipoviFilter(JObject jsonResult)
         {
             string filter = (string)jsonResult["filter1"];
@@ -663,6 +711,7 @@ namespace API_PR34_2017.Controllers
         }
 
         [Route("KarteFilter")]
+        [HttpPost]
         public HttpResponseMessage KarteFilter(JObject jsonResult)
         {
             string filter = (string)jsonResult["filter2"];
@@ -723,6 +772,7 @@ namespace API_PR34_2017.Controllers
         }
 
         [Route("SortNazivAZ")]
+        [HttpPost]
         public HttpResponseMessage SortNazivAZ()
         {
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -741,6 +791,7 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, output);
         }
         [Route("SortNazivZA")]
+        [HttpPost]
         public HttpResponseMessage SortNazivZA()
         {
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -760,6 +811,7 @@ namespace API_PR34_2017.Controllers
         }
 
         [Route("DatumKasnije")]
+        [HttpPost]
         public HttpResponseMessage DatumKasnije()//([FromBody]JToken jtoken)
         {
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -813,6 +865,7 @@ namespace API_PR34_2017.Controllers
         }
 
         [Route("SortMestoAZ")]
+        [HttpPost]
         public HttpResponseMessage SortMestoAZ()
         {
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -831,6 +884,7 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, output);
         }
         [Route("SortMestoZA")]
+        [HttpPost]
         public HttpResponseMessage SortMestoZA()
         {
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -850,6 +904,7 @@ namespace API_PR34_2017.Controllers
         }
 
         [Route("SortCenaRastuce")]
+        [HttpPost]
         public HttpResponseMessage SortCenaRastuce()
         {
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -868,6 +923,7 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, output);
         }
         [Route("SortCenaOpadajuce")]
+        [HttpPost]
         public HttpResponseMessage SortCenaOpadajuce()
         {
             List<Manifestacija> svi = new List<Manifestacija>();

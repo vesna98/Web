@@ -65,10 +65,14 @@
 
                         row += "<td >" + ocena + "</td>";
                         var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                        var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                         var obrisidugme = "";
                         if (korisnik != null) {
                             if (korisnik.Uloga == 0) {
                                 obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                            }
+                            if (korisnik.Uloga == 2) {//ako je kupac
+                                obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                             }
                         }
                         row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
@@ -180,10 +184,14 @@
 
                                 row += "<td >" + ocena + "</td>";
                                 var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                                var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                                 var obrisidugme = "";
                                 if (korisnik != null) {
                                     if (korisnik.Uloga == 0) {
                                         obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                    }
+                                    if (korisnik.Uloga == 2) {//ako je kupac
+                                        obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                                     }
                                 }
                                 row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
@@ -256,10 +264,14 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                             var obrisidugme = "";
                             if (korisnik != null) {
                                 if (korisnik.Uloga == 0) {
                                     obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                                if (korisnik.Uloga == 2) {//ako je kupac
+                                    obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                                 }
                             }
                             row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
@@ -332,10 +344,14 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                             var obrisidugme = "";
                             if (korisnik != null) {
                                 if (korisnik.Uloga == 0) {
                                     obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                                if (korisnik.Uloga == 2) {//ako je kupac
+                                    obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                                 }
                             }
                             row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
@@ -401,10 +417,14 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                             var obrisidugme = "";
                             if (korisnik != null) {
                                 if (korisnik.Uloga == 0) {
                                     obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                                if (korisnik.Uloga == 2) {//ako je kupac
+                                    obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                                 }
                             }
                             row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
@@ -471,10 +491,14 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                             var obrisidugme = "";
                             if (korisnik != null) {
                                 if (korisnik.Uloga == 0) {
                                     obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                                if (korisnik.Uloga == 2) {//ako je kupac
+                                    obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                                 }
                             }
                             row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
@@ -541,10 +565,14 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                             var obrisidugme = "";
                             if (korisnik != null) {
                                 if (korisnik.Uloga == 0) {
                                     obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                                if (korisnik.Uloga == 2) {//ako je kupac
+                                    obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                                 }
                             }
                             row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
@@ -610,10 +638,14 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                             var obrisidugme = "";
                             if (korisnik != null) {
                                 if (korisnik.Uloga == 0) {
                                     obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                                if (korisnik.Uloga == 2) {//ako je kupac
+                                    obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                                 }
                             }
                             row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
@@ -679,10 +711,14 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                             var obrisidugme = "";
                             if (korisnik != null) {
                                 if (korisnik.Uloga == 0) {
                                     obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                                if (korisnik.Uloga == 2) {//ako je kupac
+                                    obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                                 }
                             }
                             row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
@@ -748,10 +784,14 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                             var obrisidugme = "";
                             if (korisnik != null) {
                                 if (korisnik.Uloga == 0) {
                                     obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                                if (korisnik.Uloga == 2) {//ako je kupac
+                                    obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                                 }
                             }
                             row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
@@ -817,10 +857,14 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                             var obrisidugme = "";
                             if (korisnik != null) {
                                 if (korisnik.Uloga == 0) {
                                     obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                                if (korisnik.Uloga == 2) {//ako je kupac
+                                    obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                                 }
                             }
                             row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
@@ -886,10 +930,14 @@
 
                             row += "<td >" + ocena + "</td>";
                             var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                            var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                             var obrisidugme = "";
                             if (korisnik != null) {
                                 if (korisnik.Uloga == 0) {
                                     obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                }
+                                if (korisnik.Uloga == 2) {//ako je kupac
+                                    obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                                 }
                             }
                             row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
@@ -1951,6 +1999,21 @@
             $(location).attr('href', 'ManifestacijaPage.html');
 
         });
+        //----------------------
+        $(document).on('click', '.use-rez', function () {            // kada je button (čija je class = use-rez) kliknut
+            alert("pokusaj klik");
+            var polja = (this.id).split('_');
+            console.log("nn" + polja[0] + "   xa" + polja);
+
+            var obj = JSON.stringify({
+                "naziv": polja[0],
+                "datum": polja[1],
+                "cena": polja[2]
+            });
+            sessionStorage.setItem('rez', obj);        //cuvanje odabranog dogadjaja u sesiji i prelazak na njegov pregled
+            $(location).attr('href', 'RezervacijaKarte.html');
+
+        });
 
         //brisanje manifestacije
         $(document).on('click', '.use-obrisi', function () {            // kada je button (čija je class = use-address) kliknut
@@ -2015,10 +2078,14 @@
 
                         row += "<td >" + ocena + "</td>";
                         var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                        var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                         var obrisidugme = "";
                         if (korisnik != null) {
                             if (korisnik.Uloga == 0) {
                                 obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                            }
+                            if (korisnik.Uloga == 2) {//ako je kupac
+                                obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                             }
                         }
                         row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";

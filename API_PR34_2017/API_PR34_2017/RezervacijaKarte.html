@@ -1,0 +1,433 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="Scripts/jquery-3.5.1.js"></script>
+    <meta charset="utf-8" />
+    <title></title>
+    <script>
+        $(document).ready(function () {
+            let obj = sessionStorage.getItem("rez");
+            let user = sessionStorage.getItem("logovan");
+            console.log('user ' + user);
+            var korisnik = $.parseJSON(user);
+            console.log("tip korisnika: " + korisnik.Tip);
+            console.log('rez is storage-a ' + obj);
+            var dogadjaj = $.parseJSON(obj);
+
+            document.getElementById('naslov').innerHTML = "<h2 style=\"text-align:center; font-size:20px; color:#4CAF50 ;\">" + dogadjaj.naziv + "</h2>";
+            var cenaKarte = 0;
+
+            var slobodno = 0;
+            $('#rasp').hide();
+            $.ajax({
+                type: 'POST',
+                url: '/api/Korisnik/DobaviJednuManifestaciju',
+                data: obj,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+
+                    //if (data == null) {
+                    //    alert("rasprodato");
+                    //    $('#rasp').show();
+                    //    $('#oksve').hide();
+                    //}
+                    var jsonObj = JSON.parse(data);
+                    if (jsonObj == null) {
+                        console.log("rasprodato");
+                        $("#lista").hide();
+                        $('#rasp').show();
+                        $('#oksve').hide();
+                        //console.log('prvi zapravo');
+                    } else {
+                        console.log('moze se rezervisati');
+                        console.log('kupljeno=' + jsonObj.Kupljeno + "   br mesta=" + jsonObj.Brojmesta);
+                        slobodno = parseInt(jsonObj.Brojmesta) - parseInt(jsonObj.Kupljeno);
+                        console.log("slobodno: " + slobodno);
+                        cenaKarte = parseFloat(jsonObj.Cenaregular);
+                        console.log("cena reg:" + cenaKarte);
+
+                    }
+
+                },
+                error: function (data) {
+                    alert("Greska!");
+                }
+            });
+            $(document).on('click', '.potvrda', function () {     //klikom na dugme Rezervisi(class .korpa) prikazace se koliko je karapa odabrano i cena
+                //potvrdjuje rezervaciju
+                var polja = (this.id).split('_');
+                console.log("reg:" + polja[0] + "vip:" + polja[1] + "fan:" + polja[2]);
+                let user = sessionStorage.getItem("logovan");
+                var korisnik = $.parseJSON(user);
+                let dog = sessionStorage.getItem("rez");
+                var dogadjaj = $.parseJSON(dog);
+
+                document.getElementById('reg').value = '';
+                document.getElementById('vip').value = '';
+                document.getElementById('fan').value = '';
+
+                slobodno -= +(polja[0]);
+                slobodno -= +(polja[1]);
+                slobodno -= +(polja[2]);
+
+              //  alert("novo slobodno" + slobodno);
+
+
+
+                var obj = JSON.stringify({
+                    "reg": polja[0],
+                    "vip": polja[1],
+                    "fan": polja[2],
+                    "korime": korisnik.Korisnickoime,
+                    //"ime": korisnik.Ime,
+                    //"prz": korisnik.Prezime,
+                    "naziv": dogadjaj.naziv,
+                    "datum": dogadjaj.datum,
+                    "cena": dogadjaj.cena
+                });
+                $("#lista").hide();
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Korisnik/RezervisiKarte',
+                    data: obj,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (data) {
+
+                        //$("#lista").hide();
+                        var jsonObj = JSON.parse(data);
+                        if (jsonObj == -1) {
+                            alert("Greska")
+                        } else if (jsonObj == 2) {
+                            alert("Ne postoji mogucnost rezervisanja za odabranu manifestaciju");
+                        } else {
+                            if (polja[0] == "") {
+                                polja[0] = 0;
+                            }
+                            if (polja[1] == "") {
+                                polja[1] = 0;
+                            }
+                            if (polja[2] == "") {
+                                polja[2] = 0;
+                            }
+                            alert("Uspesno rezervisano.\n  Regularnih: " + polja[0] + "\n  Vip: " + polja[1] + "\n  Fan pit: " + polja[2]);
+                        }
+                        // $("#lista").hide();
+                    },
+                    error: function (data) {
+                        $("#lista").hide();
+                        alert("Greska!");
+                    }
+                });
+
+
+                if (slobodno == 0) {
+                    $('#rasp').show();
+                    $('#oksve').hide();
+                }
+                // location.reload();
+            });
+            //document.getElementById("reg").max = "\"" + slobodno + "\"";
+            //document.getElementById("vip").max = "\"" + slobodno + "\"";
+            //document.getElementById("fan").max = "\"" + slobodno + "\"";
+            //console.log("max " + document.getElementById("reg").max);
+
+            var reg = 0;
+            var vip = 0;
+            var fan = 0;
+            $("#rezBTN").click(function () {
+                var popust;
+                reg = ($('#reg').val());
+                vip = ($('#vip').val());
+                fan = ($('#fan').val());
+                console.log(reg + vip + " da li je string");
+                if (korisnik.Tip == 0) {//zlatni    5000 i 5%
+                    popust = 0.05;
+                } else if (korisnik.Tip == 1) {//srebrni        4000 4%
+                    popust = 0.04;
+                } else if (korisnik.Tip == 2) {//bronyani       3000 3%
+                    popust = 0.03;
+                } else if (korisnik.Tip == 3) {//nepoynat
+                    popust = 0;
+                }
+                var ukupanbroj = +reg + +vip + +fan;
+                console.log("zeli toliko da rezervise: " + ukupanbroj);
+                // var ukupnacena = reg * parseInt(dogadjaj.cena) + vip * (4 * parseInt(dogadjaj.cena)) + fan * (2 * parseInt(dogadjaj.cena));
+                var ukupnacena = reg * cenaKarte + +vip * (4 * cenaKarte) + +fan * (2 * cenaKarte);
+                console.log('cena bez popusta:' + ukupnacena);
+                ukupnacena = ukupnacena - (ukupnacena * popust);
+                console.log("sa popustom ako ga je bilo: " + ukupnacena);
+
+                //document.getElementById('reg').value = '';
+                //document.getElementById('vip').value = '';
+                //document.getElementById('fan').value = '';
+
+                //**
+                let obj2 = sessionStorage.getItem("rez");
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Korisnik/DobaviJednuManifestaciju',
+                    data: obj2,
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    success: function (data) {
+
+                        //if (data == null) {
+                        //    alert("rasprodato");
+                        //    $('#rasp').show();
+                        //    $('#oksve').hide();
+                        //}
+                        var jsonObj = JSON.parse(data);
+                        if (jsonObj == null) {
+                            console.log("rasprodato");
+                            $('#rasp').show();
+                            $('#oksve').hide();
+                            $("#lista").hide();
+                        } else {
+                            console.log('moze se rezervisati');
+                            console.log('kupljeno=' + jsonObj.Kupljeno + "   br mesta=" + jsonObj.Brojmesta);
+                            slobodno = parseInt(jsonObj.Brojmesta) - parseInt(jsonObj.Kupljeno);
+                            console.log("slobodno: " + slobodno);
+                            cenaKarte = parseFloat(jsonObj.Cenaregular);
+                            console.log("cena reg:" + cenaKarte);
+
+                        }
+
+                    },
+                    error: function (data) {
+                        alert("Greska!");
+                    }
+                });
+                //**
+
+                if (slobodno - ukupanbroj < 0) {
+                    $("#lista").hide();
+                    alert("Ne mozete da rezervisete, molimo Vas smanjite. Na stanju [ " + slobodno + " ]");
+                } else if (ukupanbroj == 0) {
+                    $("#lista").hide();
+                    alert("Niste uneli kolicinu karata za rezervaciju.");
+                }
+                else {
+                    //prikazuje se korpa cenom i opcijama DA / NE rezervise
+                    id_br = reg + "_" + vip + "_" + fan;
+                    if (reg == "") { reg = 0;}
+                    if (vip == "") { vip = 0;}
+                    if (fan == "") { fan = 0;}
+                    var lista = "<ul><li>Broj regularnih karata: " + reg + "</li><li>Broj vip karata: " + vip + "</li><li>Broj fan pit karata: " + fan + "</li><li><b>Ukupna cena: " + ukupnacena + "</b></li></ul>";
+                    lista += "<button class=\"potvrda\" id=\"" + id_br + "\" style=\"margin-left: 5px;border-radius: 20px;\">Potvrdi</button>"
+                    lista += "<button class=\"nece\" style=\"margin-left: 5px;border-radius: 20px;\">Odbaci</button>"
+                    document.getElementById('lista').innerHTML = lista;
+
+                    $("#lista").show();
+                }
+            });
+
+            //$("#potvrda").click(function () {
+            //    alert("odlicno");
+            //});
+
+            $("input").focus(function () {
+                $(this).css("background-color", "#cccccc");
+                $(this).css("placeholder", "#ffffff");
+            });
+
+            $("input").focusout(function () {
+                $(this).css("background-color", "#ffffff");
+                $(this).css("placeholder", "#cccccc");
+            });
+
+        });
+
+        $(document).on('click', '.use-address', function () {            // kada je button (čija je class = use-address) kliknut
+            console.log("pokusaj klik");
+
+            sessionStorage.removeItem('rez');  //brisanje dogadjaja iz sesije i povratak na pocetnu stranu
+            $(location).attr('href', 'pocetna.html');
+
+        });
+        $(document).on('click', '.nece', function () {     //klikom na dugme Rezervisi(class .korpa) prikazace se koliko je karapa odabrano i cena
+            //odbija rezervaciju
+            document.getElementById('reg').value = '';
+            document.getElementById('vip').value = '';
+            document.getElementById('fan').value = '';
+            location.reload();
+            $("#lista").hide();
+        });
+        //$(document).on('click', '.potvrda', function () {     //klikom na dugme Rezervisi(class .korpa) prikazace se koliko je karapa odabrano i cena
+        //    //potvrdjuje rezervaciju
+        //    var polja = (this.id).split('_');
+        //    console.log("reg:" + polja[0] + "vip:" + polja[1] + "fan:" + polja[2]);
+        //    let user = sessionStorage.getItem("logovan");
+        //    var korisnik = $.parseJSON(user);
+        //    let dog = sessionStorage.getItem("rez");
+        //    var dogadjaj = $.parseJSON(dog);
+
+        //    document.getElementById('reg').value = '';
+        //    document.getElementById('vip').value = '';
+        //    document.getElementById('fan').value = '';
+
+        //    var obj = JSON.stringify({
+        //        "reg": polja[0],
+        //        "vip": polja[1],
+        //        "fan": polja[2],
+        //        "korime": korisnik.Korisnickoime,
+        //        //"ime": korisnik.Ime,
+        //        //"prz": korisnik.Prezime,
+        //        "naziv": dogadjaj.naziv,
+        //        "datum": dogadjaj.datum,
+        //        "cena": dogadjaj.cena
+        //    });
+
+        //    $.ajax({
+        //        type: 'POST',
+        //        url: '/api/Korisnik/RezervisiKarte',
+        //        data: obj,
+        //        contentType: 'application/json; charset=utf-8',
+        //        dataType: 'json',
+        //        success: function (data) {
+
+        //            var jsonObj = JSON.parse(data);
+        //            if (jsonObj == -1) {
+        //                alert("Greska")
+        //            } else if (jsonObj==2)
+        //            {
+        //                alert("Ne postoji mogucnost rezervisanja za odabranu manifestaciju");
+        //            } else {
+
+        //                alert("Uspesno rezervisano.");
+        //            }
+        //            $("#lista").hide();
+        //        },
+        //        error: function (data) {
+        //            alert("Greska!");
+        //            $("#lista").hide();
+        //        }
+        //    });
+
+        //    location.reload();
+        //});
+    </script>
+
+    <style>
+        /* Add a black background color to the top navigation */
+        .topnav {
+            background-color: #333;
+            overflow: hidden;
+            border-radius: 15px;
+        }
+
+            /* Style the links inside the navigation bar */
+            .topnav a {
+                float: left;
+                color: #f2f2f2;
+                text-align: center;
+                padding: 14px 16px;
+                text-decoration: none;
+                font-size: 17px;
+                color: #ffffff;
+            }
+
+            /* Change the color of links on hover */
+            .topnav button:hover {
+                background-color: #4CAF50;
+                color: #ffffff;
+            }
+
+            /* Add a color to the active/current link */
+            .topnav a.active {
+                background-color: #4CAF50;
+                color: #ffffff;
+            }
+
+        #tekst {
+            /*font-weight: bold;*/
+            color: #ffffff;
+            /*font-family: Arial;*/
+        }
+
+        ::-webkit-input-placeholder {
+            color: gray;
+        }
+
+        table {
+            z-index: 2;
+            /*left:50%;
+            top:50%;
+            transform:translate(-50%,-50%);
+            width:60%;*/
+            border-collapse: collapse;
+            border-spacing: 0;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            background: #fafafa;
+            text-align: center;
+        }
+        /*tr {
+            border: 2px solid #333;
+            border-radius: 15px;
+        }*/
+
+        th, td {
+            padding: 10px 15px;
+        }
+
+        th {
+            /*background: #ba68c8;*/
+            background-color: #333;
+            color: #fafafa;
+            text-transform: uppercase;
+        }
+
+        tr:nth-child(odd) {
+            background: #eeeeee;
+        }
+
+        html, table {
+            /*overflow: scroll;*/
+            overflow-y: scroll;
+        }
+
+        .header-img {
+            height: 3%;
+            width: 4%;
+        }
+
+        button {
+            border: none;
+            height: 40px;
+            outline: none;
+            color: #ffffff;
+            font-size: 15px;
+            background-color: #333;
+            color: #ffffff;
+            cursor: pointer;
+            /*border-radius: 20px;*/
+        }
+
+            button:hover {
+                background-color: #4CAF50;
+                color: #ffffff;
+            }
+    </style>
+</head>
+<body>
+    <h1 style="text-align:center;font-size: 40px ; color:#333"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
+
+    <div class="topnav">
+        <button type="button" class="use-address"><i class="fa fa-fw fa-home"></i>Nazad na pocetnu</button>
+    </div>
+    <h3 style="text-align:center;font-size: 20px ; color:#333">Rezervacija</h3>
+    <div id="naslov"></div>
+    <!--<table id="results" style="margin-left: auto;
+  margin-right: auto;"></table>-->
+    <div id="rasp"><h3 style="text-align:center;font-size: 20px ; color:red">Rasprodato</h3></div>
+    <div id="oksve" style="width: 40%; background-color: #333;margin-left: 5px; border-radius:15px">
+    <input style="margin-left: 10px;" id="reg" type="number" min="0" placeholder="regular" pattern="[0-9]+" oninput="validity.valid||(value='');"/>
+    <input id="vip" type="number" min="0" placeholder="vip" pattern="[0-9]+" oninput="validity.valid||(value='');"/>
+    <input id="fan" type="number" min="0" placeholder="fan pit" pattern="[0-9]+" oninput="validity.valid||(value='');"/><button style="margin-left: 5px;border-radius: 20px;" type="button" class="korpa" id="rezBTN">Rezervisi</button>
+    </div>
+    <div id="lista"></div>
+</body>
+    </html >

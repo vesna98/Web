@@ -440,6 +440,37 @@ namespace API_PR34_2017.Controllers
             }
         }
 
+        [Route("DobaviJednuManifestaciju")]
+        [HttpPost]
+        public HttpResponseMessage DobaviJednuManifestaciju(JObject jsonResult)
+        {
+            //var obj = JsonConvert.DeserializeObject<dynamic>(jsonResult.ToString());
+            string naziv = (string)jsonResult["naziv"];
+            string datum = (string)jsonResult["datum"];
+
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            Manifestacija man = null;
+            foreach (Manifestacija k in festovi)
+            {
+                if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                {
+                    if (k.Brojmesta - k.Kupljeno > 0) //samo ako ima slobosnih mesta prosledi
+                        man = k;
+                }
+            }
+            var json = JsonConvert.SerializeObject(man);
+
+            //if (man == null)
+            //{
+            //    return Request.CreateResponse(HttpStatusCode.BadRequest, json);
+            //}
+            //else
+            //{
+
+                return Request.CreateResponse(HttpStatusCode.OK, json);
+           // }
+        }
+
         [Route("ObrisiManifestaciju")]
         [HttpPost]
         public HttpResponseMessage ObrisiManifestaciju(JObject jsonResult)
@@ -940,6 +971,95 @@ namespace API_PR34_2017.Controllers
 
 
             return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+
+        [Route("RezervisiKarte")]
+        [HttpPost]
+        public int RezervisiKarte(JObject jsonResult)
+        {
+            string reg = (string)jsonResult["reg"];
+            string vip = (string)jsonResult["vip"];
+            string fan = (string)jsonResult["fan"];
+            string korime = (string)jsonResult["korime"];
+            //string ime = (string)jsonResult["ime"];
+            //string prz = (string)jsonResult["prz"];
+            string manifestacija = (string)jsonResult["naziv"];
+            string datum = (string)jsonResult["datum"];
+            string cenareg = (string)jsonResult["cena"];
+
+            if(string.IsNullOrWhiteSpace(korime) && string.IsNullOrWhiteSpace(manifestacija) && string.IsNullOrWhiteSpace(datum) && string.IsNullOrWhiteSpace(cenareg))
+            {
+                return 1;
+            }
+            //broj_bodova = cena_jedne_karte/1000 * 133
+            //string ime;
+            //string prezime;
+            Korisnik kupac = new Korisnik();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                if (u.Korisnickoime.Equals(korime))
+                {
+                    kupac = u;
+                    //ime = u.Ime;
+                    //prezime = u.Prezime;
+                }
+            }
+
+            int ukupanBrojRez = 0;
+            //nazivmanifestacije, string datummanifestacije, double cena, string kupac, string korisnikid, StatusKarte status, TypeKarte tipkarte
+            if (!string.IsNullOrWhiteSpace(reg) && !reg.Equals("0"))
+            {
+                int brojreg = Int32.Parse(reg);
+                ukupanBrojRez += brojreg;
+                for(int i = 0; i < brojreg; i++)
+                {
+                    Data.SaveKartu(new Karta(manifestacija,datum,double.Parse(cenareg),kupac.Ime+" "+kupac.Prezime,kupac.Korisnickoime,StatusKarte.Odustanak,TypeKarte.REGULAR));
+                    kupac.Sakupljenibodovi +=(double.Parse(cenareg) / 1000 * 133);
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(vip) && !vip.Equals("0"))
+            {
+                int brojvip = Int32.Parse(vip);
+                ukupanBrojRez += brojvip;
+                for (int i = 0; i < brojvip; i++)
+                {
+                    Data.SaveKartu(new Karta(manifestacija, datum, 4*double.Parse(cenareg), kupac.Ime + " " + kupac.Prezime, kupac.Korisnickoime, StatusKarte.Odustanak, TypeKarte.VIP));
+                    kupac.Sakupljenibodovi += (4*double.Parse(cenareg) / 1000 * 133);
+                }
+            }
+            if (!string.IsNullOrWhiteSpace(fan) && !fan.Equals("0"))
+            {
+                int brojfan = Int32.Parse(fan);
+                ukupanBrojRez += brojfan;
+                for (int i = 0; i < brojfan; i++)
+                {
+                    Data.SaveKartu(new Karta(manifestacija, datum, 2*double.Parse(cenareg), kupac.Ime + " " + kupac.Prezime, kupac.Korisnickoime, StatusKarte.Odustanak, TypeKarte.FANPIT));
+                    kupac.Sakupljenibodovi += (2*double.Parse(cenareg) / 1000 * 133);
+                }
+            }
+            //povecati broj kupljenih karata!!!!!
+            Manifestacija m = new Manifestacija();
+            m = null;
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            foreach (Manifestacija k in festovi)
+            {
+                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno") && k.Datumivreme.Equals(datum) && k.Naziv.Equals(manifestacija))
+                {
+                    m = k;
+                    break;
+                }
+            }
+            if (m == null)
+            {
+                return 2;//tad ce prijaviti gresku da nema manifestacije
+            }
+
+            m.Kupljeno += ukupanBrojRez;
+            Data.SaveFest(m);
+            //cuva se podatak o kupcu
+            Data.SaveUser(kupac);
+            return 0;
         }
     }
 }

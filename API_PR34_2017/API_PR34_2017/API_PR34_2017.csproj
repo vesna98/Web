@@ -183,6 +183,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\karte.txt" />
     <Content Include="App_Data\korisnici.txt" />
     <Content Include="App_Data\manifestacije.txt" />
     <Content Include="Areas\HelpPage\HelpPage.css" />
@@ -204,6 +205,7 @@
     <Content Include="ManifestacijaPage.html" />
     <Content Include="pocetna.html" />
     <Content Include="Register.html" />
+    <Content Include="RezervacijaKarte.html" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\HelpPage\Views\Web.config" />

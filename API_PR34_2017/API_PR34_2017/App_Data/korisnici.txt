@@ -1,4 +1,4 @@
-veca;1234;Vesna;Prica;Zenski;08-11-1998;1113243,46;Zlatni;Kupac;True
+veca;1234;Vesna;Prica;Zenski;08-11-1998;1115916,76;Zlatni;Kupac;True
 medic;1234;Lana;Aleksic;Zenski;12-12-2000;4670;Srebrni;Kupac;True
 admin123;1234;asa;fghgh;Zenski;12-12-2000;1230;Nepoznat;Administrator;False
 admin;1234;Aleksandra;Nikolic;Zenski;12-12-2000;0;Nepoznat;Administrator;False

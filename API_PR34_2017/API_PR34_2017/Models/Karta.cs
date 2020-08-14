@@ -8,7 +8,7 @@ namespace API_PR34_2017.Models
 {
     public class Karta
     {
-        public Karta(string nazivmanifestacije, string datummanifestacije, double cena, string kupac, string korisnikid, StatusKarte status, TypeKarte tipkarte)
+        public Karta(string nazivmanifestacije, string datummanifestacije, double cena, string kupac, string korisnikid, StatusKarte status, TypeKarte tipkarte,string idkarta, bool obrisan, bool mogucodustanak)
         {
             Nazivmanifestacije = nazivmanifestacije;
             Datummanifestacije = datummanifestacije;
@@ -17,21 +17,25 @@ namespace API_PR34_2017.Models
             Korisnikid = korisnikid;
             Status = status;
             Tipkarte = tipkarte;
-            Obrisana = false;
-            Idkarte = GetRandomString(10);
+            //Obrisana = false;
+            Obrisana = obrisan;
+            //Idkarte = GetRandomString(10);
+            Idkarte = idkarta;
+//            MogucOdustanak = false;
+            MogucOdustanak = mogucodustanak;
         }
 
-        internal static string GetRandomString(int stringLength)
-        {
-            StringBuilder sb = new StringBuilder();
-            int numGuidsToConcat = (((stringLength - 1) / 32) + 1);
-            for (int i = 1; i <= numGuidsToConcat; i++)
-            {
-                sb.Append(Guid.NewGuid().ToString("N"));
-            }
+        //internal static string GetRandomString(int stringLength)
+        //{
+        //    StringBuilder sb = new StringBuilder();
+        //    int numGuidsToConcat = (((stringLength - 1) / 32) + 1);
+        //    for (int i = 1; i <= numGuidsToConcat; i++)
+        //    {
+        //        sb.Append(Guid.NewGuid().ToString("N"));
+        //    }
 
-            return sb.ToString(0, stringLength);
-        }
+        //    return sb.ToString(0, stringLength);
+        //}
 
         public string Idkarte { get; set; }
         public string Nazivmanifestacije { get; set; }  //manifestacija za koju je rez
@@ -42,11 +46,12 @@ namespace API_PR34_2017.Models
         public StatusKarte Status { get; set; }
         public TypeKarte Tipkarte { get; set; }
         public bool Obrisana { get; set; }
+        public bool MogucOdustanak { get; set; }
 
 
         public override string ToString()
         {
-            return Idkarte+";"+Korisnikid+";"+Tipkarte.ToString()+";"+Status.ToString()+";"+Cena.ToString()+";"+Nazivmanifestacije+";"+Datummanifestacije+";"+Obrisana.ToString();
+            return Idkarte+";"+Korisnikid+";"+Tipkarte.ToString()+";"+Status.ToString()+";"+Cena.ToString()+";"+Nazivmanifestacije+";"+Datummanifestacije+";"+Obrisana.ToString()+";"+Kupac+";"+MogucOdustanak.ToString();
         }
     }
     public enum StatusKarte

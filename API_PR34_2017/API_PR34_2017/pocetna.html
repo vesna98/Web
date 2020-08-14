@@ -2293,32 +2293,66 @@
             width: 4%;
         }
 
+/*header skrol*/
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            width: 100%;
+            background-color: #ffffff;
+        }
 
+        /* The progress container (grey background) */
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: #ccc;
+        }
+
+        /* The progress bar (scroll indicator) */
+        .progress-bar {
+            height: 8px;
+            background: #4caf50;
+            width: 0%;
+        }
+        /*.content {
+            padding: 100px 0;
+            margin: 50px auto 0 auto;
+            width: 80%;
+        }*/
     </style>
 </head>
 <body>
-    <h1 style="text-align:center;font-size: 40px ; color:#333"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
+    <div class="header">
+        <!--<h2>Scroll Indicator</h2>-->
+        <h1 style="text-align:center;font-size: 40px ; color:#333"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
+        <div id="stranica">
+            <div class="topnav">
+                <a class="active" href="pocetna.html">Pocetna</a>
+                <a href="login.html">Prijava</a>
+                <a href="Register.html">Registracija</a>
+                <a href="logout.html">Odjava</a>
+                <div id="podaci">
+                    <a href="detaljiProfil.html">Moji podaci</a>
+                </div>
 
-    <div id="stranica">
-        <div class="topnav">
-            <a class="active" href="pocetna.html">Pocetna</a>
-            <a href="login.html">Prijava</a>
-            <a href="Register.html">Registracija</a>
-            <a href="logout.html">Odjava</a>
-            <div id="podaci">
-                <a href="detaljiProfil.html">Moji podaci</a>
+
             </div>
-
-
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="myBar"></div>
         </div>
     </div>
+    
+
+    
 
 
 
     <div id="AdminView">
         <h3 style="color:#333">Vase opcije</h3>
         <input type="submit" id="svi_korisnici" value="Prikaz svih korisnika" />
-        
+
         <div id="userPrikaz" class="table-responsive">
 
             <h4>Filtrirajte po tipu korisnike</h4>
@@ -2390,7 +2424,7 @@
 
                 <tr>
                     <td id="tekst" style="color:black">Broj mesta:</td>
-                    <td><input type="number" name="brojmesta" min="0" id="brojmesta" placeholder="unesite broj mesta" oninput="validity.valid||(value='');"  required /></td>
+                    <td><input type="number" name="brojmesta" min="0" id="brojmesta" placeholder="unesite broj mesta" oninput="validity.valid||(value='');" required /></td>
                 </tr>
                 <tr>
                     <td id="tekst" style="color:black">Datum odrzavanja:</td>
@@ -2470,12 +2504,12 @@
             <div class="wrapper">
 
                 <div class="search-container">
-                    <input type="text" id="find_naziv" placeholder="naziv manifestacije" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$"/>
+                    <input type="text" id="find_naziv" placeholder="naziv manifestacije" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" />
                     <input type="text" id="find_mesto" placeholder="mesto(drzava ili grad)" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" />
                     <input type="text" id="find_datumOD" placeholder="od datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
-                    <input type="text" id="find_datumDO" placeholder="do datum dd-mm-yyyy" />
-                    <input type="number" min="0" id="find_cenaOD" placeholder="cena regular od" pattern="[0-9]+" oninput="validity.valid||(value='');"/>
-                    <input type="number" min="0" id="find_cenaDO" placeholder="cena regular do"pattern="[0-9]+" oninput="validity.valid||(value='');"/>
+                    <input type="text" id="find_datumDO" placeholder="do datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$"/>
+                    <input type="number" min="0" id="find_cenaOD" placeholder="cena regular od" pattern="[0-9]+" oninput="validity.valid||(value='');" />
+                    <input type="number" min="0" id="find_cenaDO" placeholder="cena regular do" pattern="[0-9]+" oninput="validity.valid||(value='');" />
 
 
                     <!--<div class="input-daterange input-group" id="datepicker">
@@ -2527,5 +2561,14 @@
             })
         });
     </script>-->
+
+    <script>window.onscroll = function () { myFunction() };
+
+        function myFunction() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        }</script>
 </body>
 </html>

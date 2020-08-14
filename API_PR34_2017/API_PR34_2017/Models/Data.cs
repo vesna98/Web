@@ -209,10 +209,16 @@ namespace API_PR34_2017.Models
 
                 string[] tokens = line.Split(';');
                 //string nazivmanifestacije, string datummanifestacije, double cena, string kupac, string korisnikid, StatusKarte status, TypeKarte tipkarte
-                //bool obr;
-                //bool.TryParse(tokens[7], out obr);
-                                //Idkarte+";"+Korisnikid+";"+Tipkarte.ToString()+";"+Status.ToString()+";"+Cena.ToString()+";"+Nazivmanifestacije+";"+Datummanifestacije+";"+Obrisana.ToString();
-                Karta p = new Karta(tokens[5], tokens[6], double.Parse(tokens[4]),tokens[8], tokens[1], (StatusKarte)Enum.Parse(typeof(StatusKarte), tokens[3]), (TypeKarte)Enum.Parse(typeof(TypeKarte), tokens[2]));
+                bool obr;
+                bool.TryParse(tokens[7], out obr);
+
+                bool odustanak;
+                bool.TryParse(tokens[9], out odustanak);
+
+
+                //string nazivmanifestacije, string datummanifestacije, double cena, string kupac, string korisnikid, StatusKarte status, TypeKarte tipkarte
+
+                Karta p = new Karta(tokens[5], tokens[6], double.Parse(tokens[4]), tokens[8], tokens[1], (StatusKarte)Enum.Parse(typeof(StatusKarte), tokens[3]), (TypeKarte)Enum.Parse(typeof(TypeKarte), tokens[2]), tokens[0],obr,odustanak);
                 fests.Add(p);//dodaje karta
 
             }

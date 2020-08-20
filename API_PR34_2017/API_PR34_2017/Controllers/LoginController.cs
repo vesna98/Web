@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace API_PR34_2017.Controllers
@@ -40,6 +41,9 @@ namespace API_PR34_2017.Controllers
             {
                 if (user.Korisnickoime.Equals(username) && user.Lozinka.Equals(password))
                 {
+                    user.Loggedin = true;
+                    HttpContext.Current.Session["user"] = user;
+                    //HttpContext.Current.Session.IsReadOnly("user", user);
                     return user;//postoji,pamti se da je ulogovan
 
                 }
@@ -47,6 +51,22 @@ namespace API_PR34_2017.Controllers
 
             return null;
 
+        }
+
+        [Route("Logout")]
+        public string Logout()
+        {
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+            if (user != null)
+            {
+                user.Loggedin = false;
+                HttpContext.Current.Session["user"] = null;
+                return user.Korisnickoime;
+            }
+            else
+            {
+                return "nije ulogovan";
+            }
         }
     }
 }

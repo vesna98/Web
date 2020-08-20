@@ -227,5 +227,68 @@ namespace API_PR34_2017.Models
 
             return fests;
         }
+        public static void SaveKomentar(Komentar p)
+        {
+            string putanja = HostingEnvironment.MapPath("~/App_Data/komentari.txt");
+            string[] lines = System.IO.File.ReadAllLines(putanja);
+
+            bool izmeni = false;
+            string nova = "";
+
+            for (int i = 0; i < lines.Count(); i++)
+            {
+                string[] tokens = lines[i].Split(';');
+
+                if (tokens[0].Equals(p.Id))//jednaki id
+                {
+                    nova = p.ToString();
+                    lines[i] = nova;
+                    izmeni = true;
+                    break;
+                }
+
+            }
+
+            if (izmeni)//menja postojeca
+            {
+                System.IO.File.WriteAllLines(putanja, lines);
+            }
+            else
+            {
+                //dopisuje
+                FileStream fs = new FileStream(putanja, FileMode.Append, FileAccess.Write);
+                StreamWriter sw = new StreamWriter(fs);
+                string str = p.ToString();
+                sw.WriteLine(str);
+                sw.Close();
+                fs.Close();
+            }
+        }
+        public static List<Komentar> ReadKomentar(string path)
+        {
+            List<Komentar> comments = new List<Komentar>();
+            path = HostingEnvironment.MapPath(path);
+            FileStream stream = new FileStream(path, FileMode.Open);
+            StreamReader sr = new StreamReader(stream);
+            string line = "";
+            while ((line = sr.ReadLine()) != null)
+            {
+
+                string[] tokens = line.Split(';');
+                
+                bool obr;
+                bool.TryParse(tokens[5], out obr);
+
+                //string manifestacija, string kupacid, string tekst, int ocena, bool odobren,string id
+                //Id+";"+Manifestacija+";"+Kupacid+";"+Tekst+";"+Ocena+";"+Odobren.ToString()
+                Komentar p = new Komentar(tokens[1],tokens[2],tokens[3],int.Parse(tokens[4]),obr,tokens[0]);
+                comments.Add(p);//dodaje karta
+
+            }
+            sr.Close();
+            stream.Close();
+
+            return comments;
+        }
     }
 }

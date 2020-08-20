@@ -7,6 +7,7 @@ using System.Globalization;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Web.Http;
 
 namespace API_PR34_2017.Controllers
@@ -29,7 +30,7 @@ namespace API_PR34_2017.Controllers
             foreach (Karta k in karte)
             {
                 DateTime datum = DateTime.ParseExact(k.Datummanifestacije, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None);
-                
+
                 result = DateTime.Compare(datum, sad);
                 if (result < 0)
                 {
@@ -152,6 +153,140 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, output);
         }
 
+        [Route("SveKarte")]
+        [HttpPost]
+        public HttpResponseMessage SveKarte(JObject jsonResult)
+        {
+            //string filter = (string)jsonResult["filter"];
+            string korisnik = (string)jsonResult["korisnik"];       //SESIJA
+
+            List<Karta> odabrane = new List<Karta>();
+            List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
+
+            DateTime sad = DateTime.Now;
+            int result;
+            foreach (Karta k in karte)
+            {
+                DateTime datum = DateTime.ParseExact(k.Datummanifestacije, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
+                result = DateTime.Compare(datum, sad);
+                if (result < 0)
+                {
+                    //prosla
+                    if (!k.Status.ToString().Equals("Rezervisana"))
+                    {
+                        k.Status = StatusKarte.Rezervisana;
+                        Data.SaveKartu(k);
+                    }
+
+                }
+                else if (result > 0)
+                {
+                    //slede tek, moguce je odustati
+                    double preostaliDani = datum.Subtract(DateTime.Today).TotalDays;        //racuna dane,da li ima 7 ili vise da bi se moglo odustati
+                    if (preostaliDani >= 7)
+                    {
+                        if (!k.MogucOdustanak && !k.Obrisana)
+                        {
+                            k.MogucOdustanak = true;
+                            Data.SaveKartu(k);
+                        }
+                    }
+                }
+
+
+                if (!k.Obrisana && k.Korisnikid.Equals(korisnik))
+                {
+                    odabrane.Add(k);
+                }
+
+            }
+
+            var output = JsonConvert.SerializeObject(odabrane);
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+
+        [Route("KomentarOcena")]
+        [HttpPost]
+        public HttpResponseMessage KomentarOcena(JObject jsonResult)
+        {
+            string ocena = (string)jsonResult["ocena"];
+            string manifestacija = (string)jsonResult["mani"];
+            string komentar = (string)jsonResult["comm"];
+            string korisnik = (string)jsonResult["korisnik"];       //SESIJA
+            //manifestacija
+            string mani = manifestacija.Split(';')[0];
+            string dat = manifestacija.Split(';')[1];
+
+            //List<Karta> odabrane = new List<Karta>();
+            List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
+
+            DateTime sad = DateTime.Now;
+            int result;
+            foreach (Karta k in karte)
+            {
+                DateTime datum = DateTime.ParseExact(k.Datummanifestacije, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None);
+
+                result = DateTime.Compare(datum, sad);
+                if (result < 0)
+                {
+                    //prosla
+                    if (!k.Status.ToString().Equals("Rezervisana"))
+                    {
+                        k.Status = StatusKarte.Rezervisana;
+                        Data.SaveKartu(k);
+                    }
+
+                }
+                else if (result > 0)
+                {
+                    //slede tek, moguce je odustati
+                    double preostaliDani = datum.Subtract(DateTime.Today).TotalDays;        //racuna dane,da li ima 7 ili vise da bi se moglo odustati
+                    if (preostaliDani >= 7)
+                    {
+                        if (!k.MogucOdustanak && !k.Obrisana)
+                        {
+                            k.MogucOdustanak = true;
+                            Data.SaveKartu(k);
+                        }
+                    }
+                }
+                //if (!k.Obrisana && k.Korisnikid.Equals(korisnik))
+                //{
+                //    odabrane.Add(k);
+                //}
+            }
+            var odgovor = "Uspesno zabelezeno.";
+            if ((string.IsNullOrWhiteSpace(komentar.Trim()) || string.IsNullOrEmpty(komentar.Trim())) && ocena.Equals("0"))
+            {
+                odgovor = "Niste uneli komentar,ni ocenili";
+            } else if (komentar.Contains(';'))
+            {
+                odgovor = "Komentar ne sme da sadrzi ';'";
+            }
+            else
+            {
+                Komentar komentarObj = new Komentar(manifestacija, korisnik, komentar, int.Parse(ocena), false,GetRandomString(5));
+                Data.SaveKomentar(komentarObj);
+            }
+
+            var output = JsonConvert.SerializeObject(odgovor);
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+        private static string GetRandomString(int stringLength)
+        {
+            StringBuilder sb = new StringBuilder();
+            int numGuidsToConcat = (((stringLength - 1) / 32) + 1);
+            for (int i = 1; i <= numGuidsToConcat; i++)
+            {
+                sb.Append(Guid.NewGuid().ToString("N"));
+            }
+
+            return sb.ToString(0, stringLength);
+        }
+
         [Route("ObrisiKartu")]
         [HttpPost]
         public HttpResponseMessage ObrisiKartu(JObject jsonResult)
@@ -160,6 +295,8 @@ namespace API_PR34_2017.Controllers
             string filter = (string)jsonResult["filter"];
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA
 
+            double cenaKarte=0;
+
             List<Karta> odabrane = new List<Karta>();
             List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
             foreach(Karta k in karte)
@@ -167,11 +304,25 @@ namespace API_PR34_2017.Controllers
                 if (k.Idkarte.Equals(ID))
                 {
                     k.Obrisana = true;
+                    cenaKarte = k.Cena;
                     k.MogucOdustanak = true;
                     Data.SaveKartu(k);
                     break;
                 }
             }
+            //broj_izgubljenih_bodova = cena_jedne_karte/1000 * 133 * 4
+            double brojIzgubljenihBodova = cenaKarte / 1000 * 133 * 4;
+            Korisnik kupac = new Korisnik();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                if (u.Korisnickoime.Equals(korisnik))
+                {
+                    kupac = u;
+                }
+            }
+            kupac.Sakupljenibodovi = kupac.Sakupljenibodovi - brojIzgubljenihBodova;
+            Data.SaveUser(kupac);
 
             ///kopirano od gore
             DateTime sad = DateTime.Now;
@@ -215,84 +366,6 @@ namespace API_PR34_2017.Controllers
                 {
                     odabrane.Add(k);
                 }
-
-                //if (filter.Equals("Sve"))
-                //{
-                //    if (result < 0)
-                //    {
-                //        //prosla manifestacija
-                //        if (!k.Status.ToString().Equals("Rezervisana") && !k.Obrisana)
-                //        {
-                //            k.Status = StatusKarte.Rezervisana;
-                //            Data.SaveKartu(k);
-                //        }
-                //    }
-                //    else if (result > 0)
-                //    {
-                //        double preostaliDani = datum.Subtract(DateTime.Today).TotalDays;        //racuna dane,da li ima 7 ili vise da bi se moglo odustati
-                //        if (preostaliDani >= 7)
-                //        {
-                //            if (k.MogucOdustanak.ToString().Equals("False") && !k.Obrisana)
-                //            {
-                //                k.MogucOdustanak = true;
-                //                Data.SaveKartu(k);
-                //            }
-                //        }
-                //        else
-                //        {
-                //            if (!k.MogucOdustanak.ToString().Equals("False") && !k.Obrisana)
-                //            {
-                //                k.MogucOdustanak = false;
-                //                Data.SaveKartu(k);
-                //            }
-                //        }
-                //    }
-                //    //Data.SaveKartu(k);
-                //    odabrane.Add(k);
-                //}
-                //if (result < 0 && !filter.Equals("Sve"))
-                //{
-                //    if (!k.Status.ToString().Equals("Rezervisana") && !k.Obrisana)//stavlja na rezervisano ako nije
-                //    {
-                //        k.Status = StatusKarte.Rezervisana;
-                //        Data.SaveKartu(k);
-                //    }
-
-                //    if (filter.Equals(k.Status.ToString()) && !k.Obrisana)  //tog statusa i da nije obrisana
-                //    {
-                //        // Data.SaveKartu(k);
-                //        odabrane.Add(k);
-                //    }
-
-                //}
-                //else if (result > 0 && !filter.Equals("Sve"))
-                //{
-                //    //treba da bude
-
-                //    double preostaliDani = datum.Subtract(DateTime.Today).TotalDays;        //racuna dane,da li ima 7 ili vise da bi se moglo odustati
-                //    if (preostaliDani >= 7)
-                //    {
-                //        if (k.MogucOdustanak.ToString().Equals("False") && !k.Obrisana)
-                //        {
-                //            k.MogucOdustanak = true;
-                //            Data.SaveKartu(k);
-                //        }
-                //    }
-                //    else
-                //    {
-                //        if (!k.MogucOdustanak.ToString().Equals("False") && !k.Obrisana)
-                //        {
-                //            k.MogucOdustanak = false;
-                //            Data.SaveKartu(k);
-                //        }
-                //    }
-
-                //    if (filter.Equals(k.Status.ToString()) && !k.Obrisana)  //tog statusa i da nije obrisana
-                //    {
-
-                //        odabrane.Add(k);
-                //    }
-                //}
             }
 
             var output = JsonConvert.SerializeObject(odabrane);

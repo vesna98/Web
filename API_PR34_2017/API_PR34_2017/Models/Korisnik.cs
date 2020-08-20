@@ -31,6 +31,7 @@ namespace API_PR34_2017.Models
         // public TipKorisnika Tip { get; set; }
         public TipIme Tip { get; set; }
         public bool Obrisan { get; set; }
+        public bool Loggedin { get; set; }
 
         public Korisnik()
         {
@@ -40,6 +41,8 @@ namespace API_PR34_2017.Models
             //// TipKorisnika tip = new TipKorisnika();
             //Tip = TipIme.Nepoznat;
             //Uloga = UlogaType.Kupac;
+            Loggedin = false;
+
         }
 
         public Korisnik(string korisnickoime, string lozinka, string ime, string prezime, PolType pol, string datumrodjenja, double sakupljenibodovi, TipIme tip, UlogaType uloga, bool obrisan)
@@ -54,6 +57,7 @@ namespace API_PR34_2017.Models
             Sakupljenibodovi = sakupljenibodovi;
             Tip = tip;
             Obrisan = obrisan;
+            Loggedin = false;
         }
 
         public override string ToString()

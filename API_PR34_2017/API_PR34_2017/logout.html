@@ -2,18 +2,45 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="Scripts/jquery-3.5.1.js"></script>
     <title></title>
     <script>
         $(document).ready(function () {
             let user = sessionStorage.getItem("logovan");
             var korisnik = $.parseJSON(user);
-            alert('user ' + korisnik.Ime);
+            if (user != null)
+                console.log('user ' + korisnik.Korisnickoime);
+
+            $("#btnLogout").click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '/api/Login/Logout',
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    //  data: JSON.stringify(korisnik),
+                    success: function (data) {
+                        console.log("success :" + data);
+                        sessionStorage.removeItem('logovan');
+                        alert("Uspesno ste se odjavili.");
+                        $(location).attr('href', 'pocetna.html');
+
+                    },
+                    error: function (data) {
+                        alert("Greska!");
+                    }
+
+                });
+            });
             if (user == null) {
-                alert("nije prij");
+                console.log("nije prijavljen");
                 $('#podaci').hide();
+                $('#dugme').hide();
+                $('#nijelog').show();
             } else {
                 $('#podaci').show();
+                $('#dugme').show();
+                $('#nijelog').hide();
             }
         });
     </script>
@@ -103,7 +130,7 @@
 
     <div id="stranica">
         <div class="topnav">
-            <a href="pocetna.html">Pocetna</a>
+            <a href="pocetna.html"><i class="fa fa-fw fa-home"></i>Pocetna</a>
             <a href="login.html">Prijava</a>
             <a href="Register.html">Registracija</a>
             <a class="active" href="logout.html">Odjava</a>
@@ -113,6 +140,7 @@
 
         </div>
     </div>
-
+    <div id="nijelog" style="text-align:center;color:red"><h2>Niste ulogovani</h2></div>
+    <div id="dugme"><button id="btnLogout">Odjavi se</button></div>
 </body>
 </html>

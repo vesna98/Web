@@ -1,0 +1,9 @@
+﻿90848;mMED;10-02-2020 10:00 PM;veca;Odlicno;3;False
+1efc0;mMED;10-02-2020 10:00 PM;veca;Super;0;False
+bd098;mMED;10-02-2020 10:00 PM;veca;Ekstra je bilo;5;False
+f05c2;mMED;10-02-2020 10:00 PM;veca;super je bilo,odlicna organizacija;3;False
+b9406;mMED;10-02-2020 10:00 PM;veca;Najbolji koncert;0;False
+6c6e9;mMED;10-02-2020 10:00 PM;veca;fuul;2;False
+167a1;mMED;10-02-2020 10:00 PM;veca;odlicno;4;False
+de67d;mMED;10-02-2020 10:00 PM;veca;moglo je bolje vreme da bude,ali super;3;False
+9613d;mMED;10-02-2020 10:00 PM;veca;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy;1;False

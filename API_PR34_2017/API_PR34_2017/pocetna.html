@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="Scripts/jquery-3.5.1.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.1/css/ol.css" type="text/css">
     <style>
@@ -33,7 +34,7 @@
 
                     for (i = 0; i < jsonObj.length; i++) {
 
-                        
+
                         var tip;
                         if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
                             tip = "Koncert";
@@ -42,12 +43,12 @@
                         } else if (jsonObj[i].Tipmanifestacije == 2) {
                             tip = "Pozoriste";
                         }
-                       
+
                         var poster = jsonObj[i].Poster;
 
 
 
-                        var row = "<tr id=\"nesto"+i+"\"class=\"success\">";
+                        var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
                         row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
                         row += "<td >" + tip + "</td>";
                         row += "<td >" + jsonObj[i].Datumivreme + "</td>";
@@ -60,7 +61,7 @@
                         if (jsonObj[i].Ocena == 0) {
                             ocena = "";
                         } else {
-                            ocena=jsonObj[i].Ocena;
+                            ocena = jsonObj[i].Ocena;
                         }
 
                         row += "<td >" + ocena + "</td>";
@@ -78,9 +79,9 @@
                         row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
                         //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
                         row += "</tr>";
-                        
+
                         $("#tabelaMani").append(row);
-                       
+
 
                     }
                 },
@@ -90,40 +91,37 @@
 
             });
             //*********
-                        //let filteri = sessionStorage.getItem("filteri");
-                        //alert('filteri ' + filteri);
-                        //var fil = $.parseJSON(filteri);
-                        //alert("fil" + fil);
-                        ////**********
-                        //if (filteri["manifestacija"] != null) {
-                        //    document.getElementById('polovi').value = filteri["manifestacija"];
-                        //}
-                        //if (filteri["karta"] != null) {
-                        //    document.getElementById('polovi').value = filteri["karta"];
-                        //}
+            //let filteri = sessionStorage.getItem("filteri");
+            //alert('filteri ' + filteri);
+            //var fil = $.parseJSON(filteri);
+            //alert("fil" + fil);
+            ////**********
+            //if (filteri["manifestacija"] != null) {
+            //    document.getElementById('polovi').value = filteri["manifestacija"];
+            //}
+            //if (filteri["karta"] != null) {
+            //    document.getElementById('polovi').value = filteri["karta"];
+            //}
 
-                                                                                    //PRETRAGA
+            //PRETRAGA
             $("#pretraga").click(function () {
                 let dat1 = document.getElementById('find_datumOD');
                 let dat2 = document.getElementById('find_datumDO');
                 let k2 = document.getElementById('find_mesto');
                 let k1 = document.getElementById('find_naziv');
 
-                
 
-                if (!dat1.checkValidity() || !dat2.checkValidity())
-                {
+
+                if (!dat1.checkValidity() || !dat2.checkValidity()) {
                     alert("Unesite datum u naznacenom formatu dd-mm-yyyy");
                 } else if (!k2.checkValidity()) {
 
                     alert("Unesite samo slova u polje za pretragu po mestu");//,bez suvisnih razmaka na pocetku i kraju");
                 } //za naziv ne treba jer moze da sadrzi slova i cifre
-                else if (!k1.checkValidity())
-                {
+                else if (!k1.checkValidity()) {
                     alert("Mozete uneti samo slova i cifre prilikom pretrage po nazivu");//,bez suvisnih razmaka na pocetku i kraju");
                 }
-                else
-                {
+                else {
                     var tabelica = document.getElementById('tabelaMani');
                     for (var i = 1; i < tabelica.rows.length;) {
                         tabelica.deleteRow(i);
@@ -208,16 +206,16 @@
                     });
                 }
             });
-            
+
             $("#filter_tip").click(function () {
                 var tipovi = $(".f_tip option:selected").val();
-              //  $("#tabelaMani").empty();
+                //  $("#tabelaMani").empty();
                 //$("#tabelaMani:not(:first)").remove();
                 var tabelica = document.getElementById('tabelaMani');
                 for (var i = 1; i < tabelica.rows.length;) {
                     tabelica.deleteRow(i);
                 }
-               // document.getElementById('tabelaMani') = tabelica;
+                // document.getElementById('tabelaMani') = tabelica;
                 alert(tipovi);
                 var obj = JSON.stringify({
                     "filter1": tipovi
@@ -245,7 +243,7 @@
                             }
 
                             var poster = jsonObj[i].Poster;
-                            
+
                             var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
                             row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
                             row += "<td >" + tip + "</td>";
@@ -275,7 +273,7 @@
                                 }
                             }
                             row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button>" + obrisidugme + "</td>";
-                           
+
                             row += "</tr>";
 
                             $("#tabelaMani").append(row);
@@ -398,7 +396,7 @@
                             }
 
                             var poster = jsonObj[i].Poster;
-                            
+
                             var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
                             row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
                             row += "<td >" + tip + "</td>";
@@ -992,7 +990,7 @@
             //    values.pop();
             //});
             //*************************radi kao niz
-            
+
 
             if (user == null) {
                 console.log("nije prij");
@@ -1032,8 +1030,8 @@
                         success: function (data) {
 
                             var lista = JSON.parse(data);
-                           // alert("u json korisnci" + data);
-                            
+                            // alert("u json korisnci" + data);
+
                             for (i = 0; i < lista.length; i++) {
 
                                 var uloga;
@@ -1056,7 +1054,7 @@
                                 } else {
                                     obrisan = 'OBRISAN';
                                 }
-                                
+
                                 var row = "<tr class=\"success\">";
                                 row += "<td >" + lista[i].Korisnickoime + "</td>";
                                 row += "<td >" + lista[i].Ime + "</td>";
@@ -1424,11 +1422,11 @@
                     for (var i = 1; i < tabelica.rows.length;) {
                         tabelica.deleteRow(i);
                     }
-                   
+
                     var obj = JSON.stringify({
                         "korime": kor,
                         "ime": ime,
-                        "prezime":prz
+                        "prezime": prz
                     });
                     if (!(document.getElementById('a_ime')).checkValidity()) {
                         alert("Ime mora da sadrzi samo slova,bez suvisnih razmaka na pocetku i kraju.");
@@ -1446,7 +1444,7 @@
                             success: function (data) {
                                 var lista = JSON.parse(data);
                                 //alert("u json korisnci" + data);
-                                
+
                                 for (i = 0; i < lista.length; i++) {
 
                                     var uloga;
@@ -1697,7 +1695,7 @@
                 });
                 $("#k_filter_tip").click(function () {
                     var tipovi = $(".k_tip option:selected").val();
-                  
+
                     var tabelica = document.getElementById('userTabela');
                     for (var i = 1; i < tabelica.rows.length;) {
                         tabelica.deleteRow(i);
@@ -1824,7 +1822,7 @@
                                 row += "<td >" + uloga + "</td>";
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
-                                if (obrisan == "" && uloga!="Administrator") {
+                                if (obrisan == "" && uloga != "Administrator") {
                                     row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button></td>";
                                 } else {
                                     row += "<td></td>";
@@ -1851,16 +1849,14 @@
                         let k6 = document.getElementById('brojmesta');
                         let k7 = document.getElementById('vreme');
                         let k8 = document.getElementById('cenaregular');
-                        
-                        if (!k1.checkValidity())
-                        {
+
+                        if (!k1.checkValidity()) {
                             alert("Ponovo unesite naziv. Naziv sme da sadrzi slova i cifre.")
                         } else if ($("#brojmesta").val() == '') {
                             alert('Unesite broj mesta.');
-                        }else if (!k2.checkValidity())
-                        {
+                        } else if (!k2.checkValidity()) {
                             alert('Datum mora biti u formatu DD-MM-YYYY');
-                        }  else if ($("#time").val() == '') {
+                        } else if ($("#time").val() == '') {
                             alert('Unesite vreme.');
                         } else if ($("#cenaregular").val() == '') {
                             alert('Uneiste cenu karte.');
@@ -1873,7 +1869,7 @@
                             alert("Postanski broj mora da bude petocifreni broj");
                         } else if (!$('#poster').val()) {
                             alert("Odaberite sliku za poster");
-                        } 
+                        }
                         else {
                             var naziv = $("#naziv").val();
                             var tipmanifestacije = $("#tipovi option:selected").val();
@@ -1895,7 +1891,7 @@
                             //namestanje vremena da bude sa pm am
                             t = document.getElementById('time').value
                             var [h, m] = t.split(":");
-            
+
                             // datumivreme += " " + (h % 12 + 12 * (h % 12 == 0)) + ":" + m;//, h >= 12 ? 'PM' : 'AM';
                             datumivreme += " " + (h % 12 + 12 * (h % 12 == 0)) + ":" + m;//, h >= 12 ? 'PM' : 'AM';
                             if (h >= 12) {
@@ -1933,7 +1929,7 @@
                                     // $('#tabelaMani').DataTable().ajax.reload();
                                     // console.log(data.text());
                                     $('#novaMani').hide();
-                                   // $("#maniPrikaz").load("#tabelaMani");              //zakomentarisno,pre je bilo!!!!!!!!!!!!!!!!!!
+                                    // $("#maniPrikaz").load("#tabelaMani");              //zakomentarisno,pre je bilo!!!!!!!!!!!!!!!!!!
 
 
 
@@ -1946,13 +1942,15 @@
                                 }
                             });
                         }
-                        
+
                     });
                 });
 
             }
+            //document.getElementById('map').addEventListener("tap", event => {
+            //    console.log(event);
+            //});
 
-            
         });
         //setTimeout(function () {
         //    $("#tabelaMani").load("pocetna.html #tabelaMani");
@@ -1991,9 +1989,9 @@
             var polja = (this.id).split('_');
             console.log("nn" + polja[0] + "   xa" + polja);
 
-            var obj = JSON.stringify ({
+            var obj = JSON.stringify({
                 "naziv": polja[0],
-                "datum":polja[1]
+                "datum": polja[1]
             });
             sessionStorage.setItem('dogadjaj', obj);        //cuvanje odabranog dogadjaja u sesiji i prelazak na njegov pregled
             $(location).attr('href', 'ManifestacijaPage.html');
@@ -2044,7 +2042,7 @@
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
                 success: function (data) {
-                   
+
                     var jsonObj = JSON.parse(data);
 
                     for (i = 0; i < jsonObj.length; i++) {
@@ -2130,7 +2128,7 @@
                 dataType: 'json',
                 success: function (data) {
                     var lista = JSON.parse(data);
-                   
+
                     for (i = 0; i < lista.length; i++) {
 
                         var uloga;
@@ -2180,23 +2178,23 @@
 
         });
 
-//        $('#sandbox-container .input-daterange').datepicker({
-//    format: "dd-mm-yyyy",
-//    startDate: "20-08-2020",
-//    forceParse: false,
-//    datesDisabled: ['08/06/2020', '08/21/2020']
-//});
+        //        $('#sandbox-container .input-daterange').datepicker({
+        //    format: "dd-mm-yyyy",
+        //    startDate: "20-08-2020",
+        //    forceParse: false,
+        //    datesDisabled: ['08/06/2020', '08/21/2020']
+        //});
 
     </script>
-   
+
     <title></title>
     <style>
         /* Add a black background color to the top navigation */
         .topnav {
             background-color: #333;
-             /*background-color: rgba(41, 212, 255, 0.8);*/
+            /*background-color: rgba(41, 212, 255, 0.8);*/
             overflow: hidden;
-            border-radius:15px;
+            border-radius: 15px;
         }
 
             /* Style the links inside the navigation bar */
@@ -2219,22 +2217,21 @@
                 /* Add a color to the active/current link */
                 .topnav a.active {
                     background-color: #4CAF50;
-                    color:#ffffff;
-                    
+                    color: #ffffff;
                 }
 
         #tekst {
             color: #ffffff;
         }
 
-        button{
+        button {
             border: none;
             height: 40px;
             outline: none;
             color: #ffffff;
             font-size: 15px;
             background-color: #333;
-            color:#ffffff;
+            color: #ffffff;
             cursor: pointer;
             border-radius: 20px;
         }
@@ -2243,12 +2240,13 @@
                 background-color: #4CAF50;
                 color: #ffffff;
             }
+
         ::-webkit-input-placeholder {
             /*color: #ffffff;*/
             color: gray;
         }
 
-            /*#dodajMani input[type=submit]:hover {
+        /*#dodajMani input[type=submit]:hover {
                 background-color: cyan;
                 color: #ffffff;
             }*/
@@ -2277,7 +2275,7 @@
             color: #fafafa;
             text-transform: uppercase;
         }
-       
+
 
         tr:nth-child(odd) {
             background: #eeeeee;
@@ -2293,7 +2291,7 @@
             width: 4%;
         }
 
-/*header skrol*/
+        /*header skrol*/
         .header {
             position: sticky;
             top: 0;
@@ -2328,7 +2326,7 @@
         <h1 style="text-align:center;font-size: 40px ; color:#333"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
         <div id="stranica">
             <div class="topnav">
-                <a class="active" href="pocetna.html">Pocetna</a>
+                <a class="active" href="pocetna.html"><i class="fa fa-fw fa-home"></i>Pocetna</a>
                 <a href="login.html">Prijava</a>
                 <a href="Register.html">Registracija</a>
                 <a href="logout.html">Odjava</a>
@@ -2343,9 +2341,9 @@
             <div class="progress-bar" id="myBar"></div>
         </div>
     </div>
-    
 
-    
+
+
 
 
 
@@ -2507,7 +2505,7 @@
                     <input type="text" id="find_naziv" placeholder="naziv manifestacije" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" />
                     <input type="text" id="find_mesto" placeholder="mesto(drzava ili grad)" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" />
                     <input type="text" id="find_datumOD" placeholder="od datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
-                    <input type="text" id="find_datumDO" placeholder="do datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$"/>
+                    <input type="text" id="find_datumDO" placeholder="do datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
                     <input type="number" min="0" id="find_cenaOD" placeholder="cena regular od" pattern="[0-9]+" oninput="validity.valid||(value='');" />
                     <input type="number" min="0" id="find_cenaDO" placeholder="cena regular do" pattern="[0-9]+" oninput="validity.valid||(value='');" />
 
@@ -2546,7 +2544,8 @@
     </div>
 
     <!--<h2>My Map</h2>
-    <div id="map" class="map"></div>
+    <div id="map" class="map"></div>-->
+    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
     <script type="text/javascript">
         var map = new ol.Map({
             target: 'map',
@@ -2559,10 +2558,137 @@
                 center: ol.proj.fromLonLat([37.41, 8.82]),
                 zoom: 4
             })
-        });
-    </script>-->
+        });     //radilo
 
-    <script>window.onscroll = function () { myFunction() };
+        //var baseMapLayer = new ol.layer.Tile({
+        //    source: new ol.source.OSM()
+        //});
+        //var map = new ol.Map({
+        //    target: 'map',
+        //    layers: [baseMapLayer],
+        //    view: new ol.View({
+        //        center: ol.proj.fromLonLat([-74.0061, 40.712]),
+        //        zoom: 7 //Initial Zoom Level
+        //    })
+        //});
+        ////Adding a marker on the map
+        //var marker = new ol.Feature({
+        //    geometry: new ol.geom.Point(
+        //        ol.proj.fromLonLat([-74.006, 40.7127])
+        //    ),  // Cordinates of New York's Town Hall
+        //});
+        //var vectorSource = new ol.source.Vector({
+        //    features: [marker]
+        //});
+        //var markerVectorLayer = new ol.layer.Vector({
+        //    source: vectorSource,
+        //});
+        //map.addLayer(markerVectorLayer);
+        self.map.on("singleclick", function (evt) {
+            setPinOnMap(evt);
+        })
+
+
+        function setPinOnMap(evt) {
+            var self = this;
+
+            var latLong = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
+            var lat = latLong[1];
+            var long = latLong[0];
+
+            self.params.options.mapClick({ lat: lat, long: long });
+
+            if (self.dinamicPinLayer !== undefined) {
+                console.log("moove")
+                self.iconGeometry.setCoordinates(evt.coordinate);
+                //or create another pin  
+            } else {
+                self.iconGeometry = new ol.geom.Point(evt.coordinate);
+                var iconFeature = new ol.Feature({
+                    geometry: self.iconGeometry,
+                    name: 'Null Island',
+                    population: 4000,
+                    rainfall: 500
+                });
+                var iconStyle = new ol.style.Style({
+                    image: new ol.style.Icon(({
+                        anchor: [0.5, 46],
+                        anchorXUnits: 'fraction',
+                        anchorYUnits: 'pixels',
+                        size: [48, 48],
+                        opacity: 1,
+                        src: '/resources/cloud/controls/cloudMap/img/redmarker_small.png'
+                    }))
+                });
+
+                iconFeature.setStyle(iconStyle);
+
+                var vectorSource = new ol.source.Vector({
+                    features: [iconFeature]
+                });
+                self.dinamicPinLayer = new ol.layer.Vector({
+                    source: vectorSource
+                });
+                self.map.addLayer(self.dinamicPinLayer);
+            }
+
+
+        }
+        //map = new OpenLayers.Map("map");
+        //map.addLayer(new OpenLayers.Layer.OSM());
+
+        //var lonLat = new OpenLayers.LonLat(-0.1279688, 51.5077286)
+        //    .transform(
+        //        new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+        //        map.getProjectionObject() // to Spherical Mercator Projection
+        //    );
+
+        //var zoom = 16;
+
+        //var markers = new OpenLayers.Layer.Markers("Markers");
+        //map.addLayer(markers);
+
+        //markers.addMarker(new OpenLayers.Marker(lonLat));
+
+        //map.setCenter(lonLat, zoom);
+
+        //var newLonLat = new OpenLayers.LonLat(lon, lat);
+        //var newPx = map.getLayerPxFromLonLat(newLonLat);
+        //markers.moveTo(newPx);
+        //jhjh
+
+
+        //var marker = new ol.Feature({
+        //    geometry: new ol.geom.Point(
+        //        ol.proj.fromLonLat([-74.006, 40.7127])
+        //    ),  // Cordinates of New York's Town Hall
+        //});
+
+        //var vectorSource = new ol.source.Vector({
+        //    features: [marker]
+        //});
+
+        //var markerVectorLayer = new ol.layer.Vector({
+        //    source: vectorSource,
+        //});
+        //map.addLayer(markerVectorLayer);
+        //var layer = new ol.layer.Vector({
+        //    source: new ol.source.Vector({
+        //        features: [
+        //            new ol.Feature({
+        //                geometry: new ol.geom.Point(ol.proj.fromLonLat([4.35247, 50.84673]))
+        //            })
+        //        ]
+        //    })
+        //});
+        //map.addLayer(layer);
+        //map.addEventListener("tap", event => {
+        //    console.log(event);
+        //});
+    </script>
+
+    <script>
+    window.onscroll = function () { myFunction() };
 
         function myFunction() {
             var winScroll = document.body.scrollTop || document.documentElement.scrollTop;

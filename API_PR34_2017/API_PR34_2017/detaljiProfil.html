@@ -52,6 +52,58 @@
                 {//kupac
                     $('#karte').show();
                     $('#korisnikKarte').show();
+                    //-------------------------------------------prikaz svih rez karata
+                    var obj2 = JSON.stringify({
+                        "korisnik": korisnik.Korisnickoime
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Karte/SveKarte',
+                        data: obj2,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        success: function (data) {
+
+                            //alert(data);
+                            var jsonObj = JSON.parse(data);
+                            for (i = 0; i < jsonObj.length; i++) {
+                                var lista = "<tr>"
+                                lista += "<td>" + jsonObj[i].Nazivmanifestacije + "</td>";
+                                lista += "<td>" + jsonObj[i].Datummanifestacije + "</td>";
+                                lista += " <td>" + jsonObj[i].Cena + "</td>";
+
+                                if (jsonObj[i].Tipkarte == 0)//vip
+                                {
+                                    lista += "<td>" + " VIP " + "</td>";
+                                } else if (jsonObj[i].Tipkarte == 1) {//regular
+                                    lista += "<td>" + " REGULAR " + "</td>";
+                                } else {
+                                    lista += "<td>" + " FAN PIT " + "</td>";
+                                }
+
+                                if (jsonObj[i].Status == 0) {
+                                    lista += "<td> Rezervisana </td>";
+                                    var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                    lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                } else {
+                                    if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
+                                        lista += "<td> Odustanak </td>";
+                                        lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                    }
+                                }
+
+                                lista += "</tr>";
+                                $("#tabelaKarte").append(lista);
+                                //lista += "</td>"
+                            }
+
+                            //        document.getElementById('lista').innerHTML = lista;
+
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
 
                     $("#pretraga").click(function () {
 
@@ -120,7 +172,8 @@
 
                                         if (jsonObj[i].Status == 0) {
                                             lista += "<td> Rezervisana </td>";
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                         } else {
                                             if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                                 lista += "<td> Odustanak </td>";
@@ -183,7 +236,8 @@
 
                                     if (jsonObj[i].Status == 0) {
                                         lista += "<td> Rezervisana </td>";
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                     } else {
                                         if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                             lista += "<td> Odustanak </td>";
@@ -244,7 +298,8 @@
 
                                     if (jsonObj[i].Status == 0) {
                                         lista += "<td> Rezervisana </td>";
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                     } else {
                                         if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                             lista += "<td> Odustanak </td>";
@@ -305,7 +360,8 @@
 
                                     if (jsonObj[i].Status == 0) {
                                         lista += "<td> Rezervisana </td>";
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                     } else {
                                         if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                             lista += "<td> Odustanak </td>";
@@ -367,7 +423,8 @@
 
                                     if (jsonObj[i].Status == 0) {
                                         lista += "<td> Rezervisana </td>";
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                     } else {
                                         if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                             lista += "<td> Odustanak </td>";
@@ -429,7 +486,8 @@
 
                                     if (jsonObj[i].Status == 0) {
                                         lista += "<td> Rezervisana </td>";
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                     } else {
                                         if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                             lista += "<td> Odustanak </td>";
@@ -490,7 +548,8 @@
 
                                     if (jsonObj[i].Status == 0) {
                                         lista += "<td> Rezervisana </td>";
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                     } else {
                                         if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                             lista += "<td> Odustanak </td>";
@@ -552,7 +611,8 @@
 
                                     if (jsonObj[i].Status == 0) {
                                         lista += "<td> Rezervisana </td>";
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                     } else {
                                         if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                             lista += "<td> Odustanak </td>";
@@ -617,7 +677,8 @@
 
                                     if (jsonObj[i].Status == 0) {
                                         lista += "<td> Rezervisana </td>";
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                     } else {
                                         if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                             lista += "<td> Odustanak </td>";
@@ -683,7 +744,8 @@
 
                                 if (jsonObj[i].Status == 0) {
                                     lista += "<td> Rezervisana </td>";
-                                    lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                    var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                    lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                 } else {
                                     if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                         lista += "<td> Odustanak </td>";
@@ -704,6 +766,69 @@
                     });
 
                 });
+
+                var kojaMANIFESTACIJA;
+                $(document).on('click', '.use-address', function () {
+                    alert("komensar");
+                    kojaMANIFESTACIJA = this.id;
+                    var span = document.getElementsByClassName("close")[0];
+                    var modal = document.getElementById("myModal");
+                    // When the user clicks on the button, open the modal
+                   // btn.onclick = function() {
+                      modal.style.display = "block";
+                    //}
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function() {
+                      modal.style.display = "none";
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function(event) {
+                      if (event.target == modal) {
+                        modal.style.display = "none";
+                      }
+                    }
+                });
+                //------------prosledjivanje komenatra i ocena
+                $("#unetComm").click(function () {
+                    var ocena = $("#k_ocena option:selected").val();
+                    var kom = $("#comments").val();
+                    
+                    //alert("kom: " + kom + "\nocena: " + ocena + " koja mani: " + kojaMANIFESTACIJA);
+                    
+                    var obj2 = JSON.stringify({
+                        "ocena": ocena,
+                        "korisnik": korisnik.Korisnickoime,
+                        "comm": kom,
+                        "mani": kojaMANIFESTACIJA
+                    });
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Karte/KomentarOcena',
+                        data: obj2,
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+                        success: function (data) {
+
+                            //console.log(data);
+                            var jsonObj = JSON.parse(data);
+                            alert(jsonObj);
+                            if (jsonObj == "Uspesno zabelezeno.") {
+                                var modal = document.getElementById("myModal");
+                                modal.style.display = "none";
+                                $('#k_ocena option:selected').remove();
+                                $('textarea#comments').val("");
+                            } else {
+                                $('textarea#comments').val("");
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
+                });
+                //-------------------
 
                 $('#podaci').show();
                 document.getElementById('korisnickoime').value = korisnik.Korisnickoime;
@@ -798,6 +923,10 @@
     </script>
     
     <style>
+        ::-webkit-input-placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+            color: grey;
+            opacity: 1; /* Firefox */
+        }
         .topnav {
             background-color: #333;
             overflow: hidden;
@@ -872,7 +1001,7 @@
                 color: #ffffff;
             }
 
-        ::-webkit-input-placeholder {
+       #DIVreg ::-webkit-input-placeholder {
             color: #ffffff;
         }
         #tekst {
@@ -1012,6 +1141,54 @@
             /*overflow: scroll;*/
             overflow-y: scroll;
         }
+
+        /*iskacuci prozor*/
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%; /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            /*modal dugme za komentar*/
+         input[type=submit] {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
@@ -1030,7 +1207,7 @@
         </div>
     </div>
 
-    <div id="DIVreg" >
+    <div id="DIVreg">
         <h2 style="color:#ffffff; font-weight:bold; font-family:Arial;text-align-last: center;">Osnovni podaci</h2>
         <!--<form action="" method="post">-->
         <table class="table">
@@ -1123,7 +1300,7 @@
 
         <input type="text" id="find_naziv" placeholder="naziv manifestacije" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" />
         <input type="text" id="find_datumOD" placeholder="od datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
-        <input type="text" id="find_datumDO" placeholder="do datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$"/>
+        <input type="text" id="find_datumDO" placeholder="do datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
         <input type="number" min="0" id="find_cenaOD" placeholder="cena regular od" pattern="[0-9]+" oninput="validity.valid||(value='');" />
         <input type="number" min="0" id="find_cenaDO" placeholder="cena regular do" pattern="[0-9]+" oninput="validity.valid||(value='');" />
 
@@ -1141,10 +1318,31 @@
 
         </table>
     </div>
-     
 
 
-    
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content" style="text-align:center">
+            <span class="close">&times;</span>
+            <h2>Ostavite komentar i ocenu</h2>
+
+            <select id="k_ocena" style="width: 150px;text-align:center">
+                <option value="0" disabled selected>Ocenite</option>
+                <option value="0">Bez ocene</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select><br>
+            <textarea name="comments" id="comments" maxlength="50"  placeholder="max 50 karaktera" style="font-family:sans-serif;font-size:0.8em;resize:none;height: 10em;"></textarea>
+            <br><input type="submit" id="unetComm" value="Prosledi" />
+            <p>Hvala Vam na saradnji</p>
+        </div>
+
+    </div>
+
 
 
     <!--<script>

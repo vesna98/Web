@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text.RegularExpressions;
+using System.Web;
 using System.Web.Http;
 
 namespace API_PR34_2017.Controllers
@@ -45,6 +46,11 @@ namespace API_PR34_2017.Controllers
                 {
                     Data.SaveUser(korisnik);
                     //dodaje se ako postoji
+
+                    //Korisnik user = new Korisnik();
+                    //HttpContext.Current.Session["user"] = korisnik;         //SESIJA
+                    //Session["user"] = user;
+
                     return 1;                   //USPESNO UPISAN 1
                 }
                 return 2;

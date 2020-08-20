@@ -1,12 +1,13 @@
 33ef58da14;veca;REGULAR;Odustanak;12;Labudovo jezero;10-04-2022 09:10 PM;True;Vesna Prica;True
-604648e596;veca;REGULAR;Odustanak;12;Labudovo jezero;10-04-2022 09:10 PM;False;Vesna Prica;True
+604648e596;veca;REGULAR;Odustanak;12;Labudovo jezero;10-04-2022 09:10 PM;True;Vesna Prica;True
 00193da17b;veca;REGULAR;Odustanak;12;Labudovo jezero;10-04-2022 09:10 PM;False;Vesna Prica;True
 f2cb6d5893;veca;VIP;Odustanak;48;Labudovo jezero;10-04-2022 09:10 PM;True;Vesna Prica;True
-39ff244cac;veca;FANPIT;Odustanak;24;Labudovo jezero;10-04-2022 09:10 PM;False;Vesna Prica;True
-02cc4b7915;veca;FANPIT;Odustanak;24;Labudovo jezero;10-04-2022 09:10 PM;False;Vesna Prica;True
+39ff244cac;veca;FANPIT;Odustanak;24;Labudovo jezero;10-04-2022 09:10 PM;True;Vesna Prica;True
+02cc4b7915;veca;FANPIT;Odustanak;24;Labudovo jezero;10-04-2022 09:10 PM;True;Vesna Prica;True
 3074356ca2;veca;REGULAR;Rezervisana;22;mMED;10-02-2020 10:00 PM;False;Vesna Prica;False
 bde3888e1f;veca;REGULAR;Rezervisana;22;mMED;10-02-2020 10:00 PM;False;Vesna Prica;False
 823b4fb288;veca;REGULAR;Rezervisana;22;mMED;10-02-2020 10:00 PM;False;Vesna Prica;False
 67214b947a;veca;FANPIT;Rezervisana;44;mMED;10-02-2020 10:00 PM;False;Vesna Prica;False
 6e0f0d341b;veca;REGULAR;Odustanak;12;Labudovo jezero;10-04-2022 09:10 PM;False;Vesna Prica;True
-88968b8e7c;veca;VIP;Odustanak;20000;EXIT 2021;12-07-2021 10:00 PM;False;Vesna Prica;True
+88968b8e7c;veca;VIP;Odustanak;20000;EXIT 2021;12-07-2021 10:00 PM;True;Vesna Prica;True
+37f1b83392;veca;FANPIT;Odustanak;10000;EXIT 2021;12-07-2021 10:00 PM;False;Vesna Prica;True

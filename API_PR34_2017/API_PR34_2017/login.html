@@ -2,6 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="Scripts/jquery-3.5.1.js"></script>
     <title></title>
     <script type="text/javascript">
@@ -29,17 +30,21 @@
                 .addClass('required');
         });
         $(document).ready(function () {
+
             let user = sessionStorage.getItem("logovan");
             var korisnik = $.parseJSON(user);
             //alert('user ' + korisnik.Ime);
             if (user == null) {
-                alert("nije prij");
+                console.log("nije prijavljen");
                 $('#podaci').hide();
+                $('#DIVlogin').show();
             } else {
                 $('#podaci').show();
+                $('#DIVlogin').hide();
+                alert("Vec ste prijavljeni");
             }
 
-            alert("usao");
+            //alert("usao");
 
             validate();
             $('input[type="text"]').keyup(validate);
@@ -190,7 +195,7 @@
         
         <div class="topnav">
 
-            <a href="pocetna.html">Pocetna</a>
+            <a href="pocetna.html"><i class="fa fa-fw fa-home"></i>Pocetna</a>
             <a class="active" href="login.html">Prijava</a>
             <a href="Register.html">Registracija</a>
             <a href="logout.html">Odjava</a>

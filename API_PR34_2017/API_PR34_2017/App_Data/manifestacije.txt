@@ -1,5 +1,5 @@
 pro123;Green Love;Festival;1200;25-06-2021 09:00 PM;2300;Ulica Novosadskog Sajma 56;Novi Sad;21000;green.png;Neaktivno;1200;0;4000;4400;False
-pro123;EXIT 2021;Koncert;421;12-07-2021 10:00 PM;5000;Varadinska 419;Petrovaradin;21000;exitfest2021.jpg;Aktivno;1;0;6000;6400;False
+pro123;EXIT 2021;Koncert;421;12-07-2021 10:00 PM;5000;Varadinska 419;Petrovaradin;21000;exitfest2021.jpg;Aktivno;2;0;6000;6400;False
 pro123;Cannes film festival;Koncert;1241;24-07-2021 08:00 PM;3244;Batist 335;Kan;32221;cannes.jpg;Neaktivno;10;5;3000;3400;False
 pro123;Berlin film Festival;Koncert;34252;23-02-2021 09:30 PM;3142;Potzdama Platz;Berlin;10574;Berlin-Film-Festival.jpg;Neaktivno;0;4;4000;3400;True
 pro123;coachella;Festival;34212;11-04-2022 02:00 PM;242422;81-800 Avenue 51;Indio CA;92201;coachella.jpeg;Neaktivno;0;3;4000;3400;False

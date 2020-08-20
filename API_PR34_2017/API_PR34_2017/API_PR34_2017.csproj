@@ -185,6 +185,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\karte.txt" />
+    <Content Include="App_Data\komentari.txt" />
     <Content Include="App_Data\korisnici.txt" />
     <Content Include="App_Data\manifestacije.txt" />
     <Content Include="Areas\HelpPage\HelpPage.css" />

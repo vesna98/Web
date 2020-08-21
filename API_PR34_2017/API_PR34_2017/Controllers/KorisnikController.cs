@@ -25,7 +25,8 @@ namespace API_PR34_2017.Controllers
             Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
             foreach (Korisnik u in recnik.Values)
             {
-                korisnici.Add(u);
+                //if (!u.Uloga.ToString().Equals("Administrator"))        //svi korisnici sem administratora
+                    korisnici.Add(u);
             }
             var json = JsonConvert.SerializeObject(korisnici);
 
@@ -266,12 +267,23 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage ListaManifestacije()//([FromBody]JToken jtoken)
         {
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+            
             List<Manifestacija> svi = new List<Manifestacija>();
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if(!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                    svi.Add(k);
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
+                {
+                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                        svi.Add(k);
+                }
+                else
+                {
+                    //ako je administartor dodaju se samo oni koji nisu obrisani  status AKTIVNO I NEAKTIVNO
+                    if (!k.Obrisan)
+                        svi.Add(k);
+                }
             }
 
             Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
@@ -419,13 +431,27 @@ namespace API_PR34_2017.Controllers
             string naziv = (string)jsonResult["naziv"];
             string datum = (string)jsonResult["datum"];
 
+            //da se pronadju manifestacije i koje nisu aktivne zbog admina,da imaju detaljan prikaz
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+            //-----------------------------------------------------------------
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             Manifestacija man =null;
             foreach (Manifestacija k in festovi)
             {
-                if(k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))
                 {
-                    man = k;
+                    if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                    {
+                        man = k;
+                    }
+                }
+                else
+                {//kad je admin,posto on vidi i neaktivno i aktivne         //da li moze?????????????
+                    if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan)
+                    {
+                        man = k;
+                    }
+
                 }
             }
                 var json = JsonConvert.SerializeObject(man);
@@ -490,12 +516,30 @@ namespace API_PR34_2017.Controllers
                     Data.SaveFest(k);
                 }
             }
+            //List<Manifestacija> svi = new List<Manifestacija>();
+            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            //foreach (Manifestacija k in festovi)
+            //{
+            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+            //        svi.Add(k);
+            //}
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
             List<Manifestacija> svi = new List<Manifestacija>();
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                    svi.Add(k);
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
+                {
+                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                        svi.Add(k);
+                }
+                else
+                {
+                    //ako je administartor dodaju se samo oni koji nisu obrisani  status AKTIVNO I NEAKTIVNO
+                    if (!k.Obrisan)
+                        svi.Add(k);
+                }
             }
 
             Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
@@ -539,6 +583,88 @@ namespace API_PR34_2017.Controllers
 
             return Request.CreateResponse(HttpStatusCode.OK, output);
         }
+
+        [Route("AktivirajManifestaciju")]
+        [HttpPost]
+        public HttpResponseMessage AktivirajManifestaciju(JObject jsonResult)
+        {
+            //var obj = JsonConvert.DeserializeObject<dynamic>(jsonResult.ToString());
+            string naziv = (string)jsonResult["naziv"];
+            string datum = (string)jsonResult["datum"];
+
+            List<Manifestacija> festovi1 = Data.ReadFest("~/App_Data/manifestacije.txt");
+            // Manifestacija man = null;
+            foreach (Manifestacija k in festovi1)
+            {
+                if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Neaktivno"))     //neaktivna i da nije obrisana
+                {
+                    //k.Obrisan = true;
+                    k.Status = StatusType.Aktivno;
+                    Data.SaveFest(k);
+                }
+            }
+            
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
+            List<Manifestacija> svi = new List<Manifestacija>();
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            foreach (Manifestacija k in festovi)
+            {
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
+                {
+                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                        svi.Add(k);
+                }
+                else
+                {
+                    //ako je administartor dodaju se samo oni koji nisu obrisani  status AKTIVNO I NEAKTIVNO
+                    if (!k.Obrisan)
+                        svi.Add(k);
+                }
+            }
+
+            Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
+            for (int i = 0; i < svi.Count(); i++)
+            {
+                DateTime myDate;
+                Manifestacija temp = svi[i];
+                if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                // //if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm.fff", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                {
+                    recnik.Add(temp, myDate);
+                }
+            }
+            //recnik.OrderBy(b => b.Value.Date).ThenBy(b => b.Value.TimeOfDay);//ne radi
+
+            var dateTimesAscending = recnik.Values.OrderBy(d => d);
+            List<Manifestacija> konacna = new List<Manifestacija>();
+
+
+            foreach (var ii in dateTimesAscending)
+            {
+
+                foreach (Manifestacija m in recnik.Keys)
+                {
+                    DateTime myDate;
+                    Manifestacija temp = m;
+                    //if (DateTime.TryParseExact(temp.Datumivreme, "dd/MM/yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                    if (DateTime.TryParseExact(temp.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+                    {
+
+                        if (myDate == ii)
+                        {
+                            konacna.Add(m);
+                        }
+                    }
+                }
+            }
+
+            var output = JsonConvert.SerializeObject(konacna);
+            //var output = JsonConvert.SerializeObject(recnik.Keys.ToList());//ne radi
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+
         [Route("Pretraga")]
         [HttpPost]
         public HttpResponseMessage Pretraga(JObject jsonResult)
@@ -568,16 +694,34 @@ namespace API_PR34_2017.Controllers
             bool oba = false;
             if (dat1 && dat2)
                 oba = true;
-            
+
+            //List<Manifestacija> svi = new List<Manifestacija>();
+            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            //foreach (Manifestacija k in festovi)
+            //{
+            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+            //        svi.Add(k);
+            //}
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
             List<Manifestacija> svi = new List<Manifestacija>();
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                    svi.Add(k);
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
+                {
+                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                        svi.Add(k);
+                }
+                else
+                {
+                    //ako je administartor dodaju se samo oni koji nisu obrisani  status AKTIVNO I NEAKTIVNO
+                    if (!k.Obrisan)
+                        svi.Add(k);
+                }
             }
 
-           int treba = 0;
+            int treba = 0;
             if(cena1 && !cena2)
             {
                 svi = svi.Where(u => u.Cenaregular>=cenaOD).ToList();
@@ -687,12 +831,30 @@ namespace API_PR34_2017.Controllers
         {
             string filter = (string)jsonResult["filter1"];
 
+            //List<Manifestacija> svi = new List<Manifestacija>();
+            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            //foreach (Manifestacija k in festovi)
+            //{
+            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+            //        svi.Add(k);
+            //}
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
             List<Manifestacija> svi = new List<Manifestacija>();
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                    svi.Add(k);
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
+                {
+                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                        svi.Add(k);
+                }
+                else
+                {
+                    //ako je administartor dodaju se samo oni koji nisu obrisani  status AKTIVNO I NEAKTIVNO
+                    if (!k.Obrisan)
+                        svi.Add(k);
+                }
             }
 
             Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
@@ -748,12 +910,30 @@ namespace API_PR34_2017.Controllers
         {
             string filter = (string)jsonResult["filter2"];
 
+            //List<Manifestacija> svi = new List<Manifestacija>();
+            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            //foreach (Manifestacija k in festovi)
+            //{
+            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+            //        svi.Add(k);
+            //}
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
             List<Manifestacija> svi = new List<Manifestacija>();
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                    svi.Add(k);
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
+                {
+                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                        svi.Add(k);
+                }
+                else
+                {
+                    //ako je administartor dodaju se samo oni koji nisu obrisani  status AKTIVNO I NEAKTIVNO
+                    if (!k.Obrisan)
+                        svi.Add(k);
+                }
             }
 
             Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
@@ -807,12 +987,30 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage SortNazivAZ()
         {
+            //List<Manifestacija> svi = new List<Manifestacija>();
+            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            //foreach (Manifestacija k in festovi)
+            //{
+            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+            //        svi.Add(k);
+            //}
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
             List<Manifestacija> svi = new List<Manifestacija>();
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                    svi.Add(k);
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
+                {
+                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                        svi.Add(k);
+                }
+                else
+                {
+                    //ako je administartor dodaju se samo oni koji nisu obrisani  status AKTIVNO I NEAKTIVNO
+                    if (!k.Obrisan)
+                        svi.Add(k);
+                }
             }
 
             var sortirano = svi.OrderBy(i => i.Naziv);
@@ -826,12 +1024,30 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage SortNazivZA()
         {
+            //List<Manifestacija> svi = new List<Manifestacija>();
+            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            //foreach (Manifestacija k in festovi)
+            //{
+            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+            //        svi.Add(k);
+            //}
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
             List<Manifestacija> svi = new List<Manifestacija>();
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                    svi.Add(k);
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
+                {
+                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                        svi.Add(k);
+                }
+                else
+                {
+                    //ako je administartor dodaju se samo oni koji nisu obrisani  status AKTIVNO I NEAKTIVNO
+                    if (!k.Obrisan)
+                        svi.Add(k);
+                }
             }
 
             var sortirano = svi.OrderByDescending(i => i.Naziv);
@@ -846,12 +1062,30 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage DatumKasnije()//([FromBody]JToken jtoken)
         {
+            //List<Manifestacija> svi = new List<Manifestacija>();
+            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            //foreach (Manifestacija k in festovi)
+            //{
+            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+            //        svi.Add(k);
+            //}
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
             List<Manifestacija> svi = new List<Manifestacija>();
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                    svi.Add(k);
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
+                {
+                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                        svi.Add(k);
+                }
+                else
+                {
+                    //ako je administartor dodaju se samo oni koji nisu obrisani  status AKTIVNO I NEAKTIVNO
+                    if (!k.Obrisan)
+                        svi.Add(k);
+                }
             }
 
             Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
@@ -900,12 +1134,30 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage SortMestoAZ()
         {
+            //List<Manifestacija> svi = new List<Manifestacija>();
+            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            //foreach (Manifestacija k in festovi)
+            //{
+            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+            //        svi.Add(k);
+            //}
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
             List<Manifestacija> svi = new List<Manifestacija>();
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                    svi.Add(k);
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
+                {
+                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                        svi.Add(k);
+                }
+                else
+                {
+                    //ako je administartor dodaju se samo oni koji nisu obrisani  status AKTIVNO I NEAKTIVNO
+                    if (!k.Obrisan)
+                        svi.Add(k);
+                }
             }
 
             var sortirano = svi.OrderBy(i => i.Mestoodrzavanja.ToString());
@@ -919,12 +1171,30 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage SortMestoZA()
         {
+            //List<Manifestacija> svi = new List<Manifestacija>();
+            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            //foreach (Manifestacija k in festovi)
+            //{
+            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+            //        svi.Add(k);
+            //}
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
             List<Manifestacija> svi = new List<Manifestacija>();
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                    svi.Add(k);
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
+                {
+                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                        svi.Add(k);
+                }
+                else
+                {
+                    //ako je administartor dodaju se samo oni koji nisu obrisani  status AKTIVNO I NEAKTIVNO
+                    if (!k.Obrisan)
+                        svi.Add(k);
+                }
             }
 
             var sortirano = svi.OrderByDescending(i => i.Mestoodrzavanja.ToString());
@@ -939,12 +1209,30 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage SortCenaRastuce()
         {
+            //List<Manifestacija> svi = new List<Manifestacija>();
+            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            //foreach (Manifestacija k in festovi)
+            //{
+            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+            //        svi.Add(k);
+            //}
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
             List<Manifestacija> svi = new List<Manifestacija>();
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                    svi.Add(k);
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
+                {
+                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                        svi.Add(k);
+                }
+                else
+                {
+                    //ako je administartor dodaju se samo oni koji nisu obrisani  status AKTIVNO I NEAKTIVNO
+                    if (!k.Obrisan)
+                        svi.Add(k);
+                }
             }
 
             var sortirano = svi.OrderBy(i => i.Cenaregular);
@@ -958,12 +1246,30 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage SortCenaOpadajuce()
         {
+            //List<Manifestacija> svi = new List<Manifestacija>();
+            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            //foreach (Manifestacija k in festovi)
+            //{
+            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+            //        svi.Add(k);
+            //}
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
             List<Manifestacija> svi = new List<Manifestacija>();
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             foreach (Manifestacija k in festovi)
             {
-                if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                    svi.Add(k);
+                if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
+                {
+                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                        svi.Add(k);
+                }
+                else
+                {
+                    //ako je administartor dodaju se samo oni koji nisu obrisani  status AKTIVNO I NEAKTIVNO
+                    if (!k.Obrisan)
+                        svi.Add(k);
+                }
             }
 
             var sortirano = svi.OrderByDescending(i => i.Cenaregular);

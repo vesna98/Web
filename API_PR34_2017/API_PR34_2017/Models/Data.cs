@@ -110,7 +110,7 @@ namespace API_PR34_2017.Models
                 bool obr;
                 bool.TryParse(tokens[15], out obr);
 
-                Manifestacija p = new Manifestacija(tokens[0], tokens[1], (TypeManifestacije)Enum.Parse(typeof(TypeManifestacije), tokens[2]), int.Parse(tokens[3]), tokens[4], Double.Parse(tokens[5]), mjesto, tokens[9], int.Parse(tokens[12]), Double.Parse(tokens[13]), Double.Parse(tokens[14]), int.Parse(tokens[11]),obr, (StatusType)Enum.Parse(typeof(StatusType), tokens[10]));
+                Manifestacija p = new Manifestacija(tokens[0], tokens[1], (TypeManifestacije)Enum.Parse(typeof(TypeManifestacije), tokens[2]), int.Parse(tokens[3]), tokens[4], Double.Parse(tokens[5]), mjesto, tokens[9], double.Parse(tokens[12]), Double.Parse(tokens[13]), Double.Parse(tokens[14]), int.Parse(tokens[11]),obr, (StatusType)Enum.Parse(typeof(StatusType), tokens[10]));
                 fests.Add(p);//DODATI FESTIVAL
 
             }
@@ -120,6 +120,29 @@ namespace API_PR34_2017.Models
             return fests;
         }
 
+        public static double GetOcena(string naziv,string datum)
+        {
+            int ocenaCnt = 0;
+            int ocenaSum = 0;
+            List<Komentar> komentari = Data.ReadKomentar("~/App_Data/komentari.txt");
+            foreach (Komentar kom in komentari )
+            {
+                if((kom.Manifestacija.Split(';')[0]).Equals(naziv)  && (kom.Manifestacija.Split(';')[1]).Equals(datum) && !kom.Obrisi)
+                {
+                    if (kom.Ocena != 0)
+                    {
+                        ocenaCnt++;
+                        ocenaSum += kom.Ocena;
+                    }
+                }
+            }
+
+            double konacnaocena =0;
+            if(ocenaCnt!=0 && ocenaSum!=0)
+                konacnaocena =(ocenaSum / ocenaCnt);
+
+            return konacnaocena;
+        }
 
         public static void SaveFest(Manifestacija p)
         {
@@ -129,6 +152,9 @@ namespace API_PR34_2017.Models
             bool izmeni = false;
             string nova = "";
 
+            //---------ocena upis
+            p.Ocena =GetOcena(p.Naziv,p.Datumivreme);
+            //---------------------
             for (int i = 0; i < lines.Count(); i++)
             {
                 string[] tokens = lines[i].Split(';');
@@ -208,18 +234,17 @@ namespace API_PR34_2017.Models
             {
 
                 string[] tokens = line.Split(';');
-                //string nazivmanifestacije, string datummanifestacije, double cena, string kupac, string korisnikid, StatusKarte status, TypeKarte tipkarte
+               
                 bool obr;
                 bool.TryParse(tokens[7], out obr);
 
                 bool odustanak;
                 bool.TryParse(tokens[9], out odustanak);
-
-
+                
                 //string nazivmanifestacije, string datummanifestacije, double cena, string kupac, string korisnikid, StatusKarte status, TypeKarte tipkarte
 
                 Karta p = new Karta(tokens[5], tokens[6], double.Parse(tokens[4]), tokens[8], tokens[1], (StatusKarte)Enum.Parse(typeof(StatusKarte), tokens[3]), (TypeKarte)Enum.Parse(typeof(TypeKarte), tokens[2]), tokens[0],obr,odustanak);
-                fests.Add(p);//dodaje karta
+                fests.Add(p);
 
             }
             sr.Close();

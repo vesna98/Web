@@ -20,7 +20,7 @@ namespace API_PR34_2017.Models
         public string Poster { get; set; }     //SLIKA TIP
         public string Prodavac { get; set; }
         public int Kupljeno { get; set; }
-        public int Ocena { get; set; }
+        public double Ocena { get; set; }
         public bool Obrisan { get; set; }
 
         public Manifestacija()
@@ -31,7 +31,7 @@ namespace API_PR34_2017.Models
             Obrisan = false;
         }
 
-        public Manifestacija(string prodavac, string naziv, TypeManifestacije tipmanifestacije, int brojmesta, string datumivreme, double cenaregular, Mesto mestoodrzavanja, string poster,int ocena,double cenafanpit,double cenavip,int kupljeno,bool obrisan,StatusType statusm)
+        public Manifestacija(string prodavac, string naziv, TypeManifestacije tipmanifestacije, int brojmesta, string datumivreme, double cenaregular, Mesto mestoodrzavanja, string poster,double ocena,double cenafanpit,double cenavip,int kupljeno,bool obrisan,StatusType statusm)
         {
             Naziv = naziv;
             Tipmanifestacije = tipmanifestacije;
@@ -43,7 +43,8 @@ namespace API_PR34_2017.Models
             Prodavac = prodavac;
             Status = statusm;
             Kupljeno = kupljeno;
-            Ocena = ocena;
+            //Ocena = ocena;
+            Ocena = Data.GetOcena(naziv, datumivreme);
             Cenafanpit = cenafanpit;
             Cenavip = cenavip;
             Obrisan = obrisan;

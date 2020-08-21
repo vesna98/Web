@@ -1,9 +1,28 @@
-﻿90848;mMED;10-02-2020 10:00 PM;veca;Odlicno;3;False
-1efc0;mMED;10-02-2020 10:00 PM;veca;Super;0;False
-bd098;mMED;10-02-2020 10:00 PM;veca;Ekstra je bilo;5;False
-f05c2;mMED;10-02-2020 10:00 PM;veca;super je bilo,odlicna organizacija;3;False
-b9406;mMED;10-02-2020 10:00 PM;veca;Najbolji koncert;0;False
-6c6e9;mMED;10-02-2020 10:00 PM;veca;fuul;2;False
-167a1;mMED;10-02-2020 10:00 PM;veca;odlicno;4;False
-de67d;mMED;10-02-2020 10:00 PM;veca;moglo je bolje vreme da bude,ali super;3;False
-9613d;mMED;10-02-2020 10:00 PM;veca;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy;1;False
+90848;mMED;10-02-2020 10:00 PM;veca;Odlicno;3;True;False
+1efc0;mMED;10-02-2020 10:00 PM;veca;Super;0;True;False
+bd098;mMED;10-02-2020 10:00 PM;veca;Ekstra je bilo;5;True;False
+f05c2;mMED;10-02-2020 10:00 PM;veca;super je bilo,odlicna organizacija;3;False;True
+b9406;mMED;10-02-2020 10:00 PM;veca;Najbolji koncert;0;True;False
+6c6e9;mMED;10-02-2020 10:00 PM;veca;fuul;2;True;False
+167a1;mMED;10-02-2020 10:00 PM;veca;odlicno;4;True;False
+de67d;mMED;10-02-2020 10:00 PM;veca;moglo je bolje vreme da bude,ali super;3;True;False
+9613d;mMED;10-02-2020 10:00 PM;veca;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy;1;False;True
+209d4;mMED;10-02-2020 10:00 PM;veca;ekstraaaa 10+;4;True;False
+40b4f;mMED;10-02-2020 10:00 PM;veca;sve POOOHVALE;5;True;False
+07015;mMED;10-02-2020 10:00 PM;veca;soooolidno;2;True;False
+794d1;mMED;10-02-2020 10:00 PM;veca;ok;3;True;False
+9b129;mMED;10-02-2020 10:00 PM;veca;ful;5;True;False
+c8152;mMED;10-02-2020 10:00 PM;veca;FUUULLL;5;True;False
+6346a;mMED;10-02-2020 10:00 PM;veca;meeeeh;1;False;True
+c0941;mMED;10-02-2020 10:00 PM;veca;fulara;5;True;False
+8dba0;mMED;10-02-2020 10:00 PM;veca;njfgdsgse;2;False;True
+70352;mMED;10-02-2020 10:00 PM;veca;sfsese;0;False;True
+9bd27;mMED;10-02-2020 10:00 PM;veca;sdsa;5;False;True
+746b2;mMED;10-02-2020 10:00 PM;veca;odlicnoo 10+++;0;True;False
+f95ed;mMED;10-02-2020 10:00 PM;veca;vreme lose,nastup VRH;4;True;False
+e37a4;mMED;10-02-2020 10:00 PM;veca;komsi komsa;2;True;False
+d2e4e;mMED;10-02-2020 10:00 PM;veca;rrrrr;4;False;True
+ff815;mMED;10-02-2020 10:00 PM;veca;gvhffjhj;2;False;True
+67587;mMED;10-02-2020 10:00 PM;veca;sfsadfae;0;False;True
+a4613;mMED;10-02-2020 10:00 PM;veca;aesgfa;0;False;True
+b7388;mMED;10-02-2020 10:00 PM;veca;fdzfsd;1;False;True

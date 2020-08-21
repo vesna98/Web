@@ -769,7 +769,7 @@
 
                 var kojaMANIFESTACIJA;
                 $(document).on('click', '.use-address', function () {
-                    alert("komensar");
+                    console.log("komentar");
                     kojaMANIFESTACIJA = this.id;
                     var span = document.getElementsByClassName("close")[0];
                     var modal = document.getElementById("myModal");
@@ -817,7 +817,8 @@
                             if (jsonObj == "Uspesno zabelezeno.") {
                                 var modal = document.getElementById("myModal");
                                 modal.style.display = "none";
-                                $('#k_ocena option:selected').remove();
+                               // $('#k_ocena option:selected').val("0");
+                                document.getElementById('k_ocena').selectedIndex = 0;
                                 $('textarea#comments').val("");
                             } else {
                                 $('textarea#comments').val("");

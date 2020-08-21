@@ -277,11 +277,13 @@ namespace API_PR34_2017.Models
                 string[] tokens = line.Split(';');
                 
                 bool obr;
-                bool.TryParse(tokens[5], out obr);
+                bool.TryParse(tokens[6], out obr);
+                bool obrisan;
+                bool.TryParse(tokens[7], out obrisan);
 
                 //string manifestacija, string kupacid, string tekst, int ocena, bool odobren,string id
                 //Id+";"+Manifestacija+";"+Kupacid+";"+Tekst+";"+Ocena+";"+Odobren.ToString()
-                Komentar p = new Komentar(tokens[1],tokens[2],tokens[3],int.Parse(tokens[4]),obr,tokens[0]);
+                Komentar p = new Komentar(tokens[1] + ";" + tokens[2] , tokens[3],tokens[4],int.Parse(tokens[5]),obr,tokens[0],obrisan);
                 comments.Add(p);//dodaje karta
 
             }

@@ -20,6 +20,6 @@ pro123;Zizela;Pozoriste;677;14-01-2020 08:45 PM;4;Varadinska 44;Novi Sad;21000;z
 pro123;Zizela;Pozoriste;2;04-01-2020 10:10 PM;11;Varadinska 44;Novi Sad;21000;plakat_final.jpg;Neaktivno;0;0;4000;3400;False
 pro123;mMED;Koncert;3;14-01-2020 10:22 PM;5;Varadinska 44;Novi Sad;21000;Gogoland.jpg;Neaktivno;0;0;4000;3400;True
 pro123;Sting;Koncert;1200;11-08-2023 10:00 PM;12;Novosadski Sajam 87;Novi Sad;21000;sting.jpg;Neaktivno;0;0;24;20;False
-pro123;Labudovo jezero;Pozoriste;600;10-04-2022 09:10 PM;12;Varadinska 44;Novi Sad;21000;plakat_final.jpg;Aktivno;20;0;20;14;False
+pro123;Labudovo jezero;Pozoriste;600;10-04-2022 09:10 PM;12;Varadinska 44;Novi Sad;21000;plakat_final.jpg;Aktivno;21;0;20;14;False
 pro123;MEDforyou;Pozoriste;4;14-07-2020 03:10 PM;690;Novosadski Sajam 87;Novi Sad;21000;zizela_plakat.jpg;Neaktivno;0;0;1380;2760;False
 pro123;mmmmmm;Pozoriste;4;14-01-2020 03:20 PM;500;Novosadski Sajam 87;Novi Sad;21000;plava.jpg;Neaktivno;0;0;1000;2000;False

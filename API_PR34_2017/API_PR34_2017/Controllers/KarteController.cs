@@ -267,11 +267,33 @@ namespace API_PR34_2017.Controllers
             }
             else
             {
-                Komentar komentarObj = new Komentar(manifestacija, korisnik, komentar, int.Parse(ocena), false,GetRandomString(5));
+                Komentar komentarObj = new Komentar(manifestacija, korisnik, komentar, int.Parse(ocena), false,GetRandomString(5),false);
                 Data.SaveKomentar(komentarObj);
             }
 
             var output = JsonConvert.SerializeObject(odgovor);
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+        [Route("PrikaziKomentar")]
+        [HttpPost]
+        public HttpResponseMessage PrikaziKomenter(JObject jsonResult)
+        {
+                string naziv = (string)jsonResult["naziv"];
+                string datum = (string)jsonResult["datum"];
+            
+            string nazivIdatum = naziv + ";" + datum;
+            List<Komentar> komentari = Data.ReadKomentar("~/App_Data/komentari.txt");
+            List<string> odabrani = new List<string>();
+            foreach(Komentar commnent in komentari)
+            {
+                if (commnent.Manifestacija.Equals(nazivIdatum) && commnent.Odobren)//dodati da je odobren
+                {
+                    odabrani.Add(commnent.Tekst);
+                }
+            }
+
+            var output = JsonConvert.SerializeObject(odabrani);
 
             return Request.CreateResponse(HttpStatusCode.OK, output);
         }
@@ -285,6 +307,93 @@ namespace API_PR34_2017.Controllers
             }
 
             return sb.ToString(0, stringLength);
+        }
+        [Route("KomentariCekanje")]
+        [HttpPost]
+        public HttpResponseMessage KomentariCekanje(JObject jsonResult)
+        {
+            string naziv = (string)jsonResult["naziv"];
+            string datum = (string)jsonResult["datum"];
+            
+            string nazivIdatum = naziv + ";" + datum;
+            List<Komentar> komentari = Data.ReadKomentar("~/App_Data/komentari.txt");
+            List<Komentar> odabrani = new List<Komentar>();
+            foreach (Komentar commnent in komentari)
+            {
+                if (commnent.Manifestacija.Equals(nazivIdatum) && !commnent.Odobren)//dodati koji NIJE odobren
+                {
+                    if (!commnent.Obrisi)
+                        odabrani.Add(commnent);
+                }
+            }
+
+            var output = JsonConvert.SerializeObject(odabrani);
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+        [Route("KomentariObrisan")]
+        [HttpPost]
+        public HttpResponseMessage KomentariObrisan(JObject jsonResult)
+        {
+            string naziv = (string)jsonResult["naziv"];
+            string datum = (string)jsonResult["datum"];
+            string komID = (string)jsonResult["comm"];
+  
+            string nazivIdatum = naziv + ";" + datum;
+            List<Komentar> komentari = Data.ReadKomentar("~/App_Data/komentari.txt");
+            List<Komentar> odabrani = new List<Komentar>();
+            foreach (Komentar commnent in komentari)
+            {
+                if (commnent.Manifestacija.Equals(nazivIdatum) && !commnent.Odobren)//dodati koji NIJE odobren
+                {
+                    if (commnent.Id.Equals(komID))
+                    {
+                        commnent.Obrisi = true;         //BRISANJE
+                        Data.SaveKomentar(commnent);
+                    }
+
+                    if (!commnent.Obrisi && !commnent.Odobren)            //KOJI NISUUU OBRISANI
+                        odabrani.Add(commnent);
+                    
+                }
+            }
+
+            var output = JsonConvert.SerializeObject(odabrani);
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+
+        [Route("KomentariPrihvati")]
+        [HttpPost]
+        public HttpResponseMessage KomentariPrihvati(JObject jsonResult)
+        {
+            string naziv = (string)jsonResult["naziv"];
+            string datum = (string)jsonResult["datum"];
+            string komID = (string)jsonResult["comm"];
+
+            string nazivIdatum = naziv + ";" + datum;
+            List<Komentar> komentari = Data.ReadKomentar("~/App_Data/komentari.txt");
+            List<Komentar> odabrani = new List<Komentar>();
+            foreach (Komentar commnent in komentari)
+            {
+                if (commnent.Manifestacija.Equals(nazivIdatum) && !commnent.Odobren)//dodati koji NIJE odobren
+                {
+                    //-----
+                    if (commnent.Id.Equals(komID))
+                    {
+                        commnent.Odobren = true;         //ODOBRAVANJE
+                        Data.SaveKomentar(commnent);
+                        //continue;
+                    }
+
+                    if (!commnent.Obrisi && !commnent.Odobren)            //KOJI NISUUU OBRISANI
+                        odabrani.Add(commnent);
+                }
+            }
+
+            var output = JsonConvert.SerializeObject(odabrani);
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
         }
 
         [Route("ObrisiKartu")]

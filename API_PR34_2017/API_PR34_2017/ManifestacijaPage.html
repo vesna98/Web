@@ -8,7 +8,9 @@
     <script>
         $(document).ready(function () {
             let obj = sessionStorage.getItem("dogadjaj");
-            alert('dogadjaj ' + obj);
+
+            let korisnik = sessionStorage.getItem("logovan");
+            console.log('dogadjaj ' + obj);
             var jsonObj;
             $.ajax({
 
@@ -19,7 +21,7 @@
                 contentType: "application/json; charset=utf-8",
                 // async: false,
                 success: function (data) {
-                    alert("success" + data);
+                    console.log("success" + data);
 
                     // alert('dogadjaj obrisan' + obj);
 
@@ -86,6 +88,249 @@
                     console.log("ERROR : ", data);
                 }
             });
+
+            //setTimeout(prikazkom, 2000);        //osvezavanje svake dve sekunde??????
+            //function prikazkom() {
+                $("#comm").click(function () {
+                    var span = document.getElementsByClassName("close")[0];
+                    var modal = document.getElementById("myModal");
+                    // When the user clicks on the button, open the modal
+                    // btn.onclick = function() {
+                    modal.style.display = "block";
+                    //}
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function (event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+
+                    //---------------------------------------------
+                    let obj = sessionStorage.getItem("dogadjaj");
+                    var jsonObj;
+                    var tabelica = document.getElementById('komentari');
+                    for (var i = 0; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
+                    $.ajax({
+
+                        type: "POST",
+                        url: 'api/Karte/PrikaziKomentar',
+                        dataType: "json",
+                        data: obj,
+                        contentType: "application/json; charset=utf-8",
+                        // async: false,
+                        success: function (data) {
+                            //alert("success" + data);
+
+
+                            jsonObj = JSON.parse(data);
+                            for (i = 0; i < jsonObj.length; i++) {
+
+                                var row = "<tr ><td>" + jsonObj[i] + "</td></tr>";
+                                $("#komentari").append(row);
+                            }
+                            if (jsonObj.length == 0) {
+                                //nema komentara
+                                document.getElementById('nema').innerHTML = '<p style=\"color:red;\">Nema komentara</p>';
+                                $("#nema").show();
+                            } else {
+                                $("#nema").hide();
+                            }
+
+                        },
+                        error: function (data) {
+                            console.log("ERROR : ", data);
+                        }
+                    });
+                });
+                //});
+
+           // }
+            var user = JSON.parse(korisnik);
+            //ako su prodavni ili admini
+            if (user == null) {
+                $("#divnacekanju").hide();
+            } else {
+                if (user.Uloga == 0 || user.Uloga == 1) {
+                    $("#divnacekanju").show();
+                } else {
+                    //ako su kupci 
+                    $("#divnacekanju").hide();
+                }
+            }
+
+
+            $("#nacekanju").click(function () {
+                var span = document.getElementsByClassName("close")[1];
+                var modal = document.getElementById("myModal2");
+                
+                modal.style.display = "block";
+                
+                span.onclick = function () {
+                    modal.style.display = "none";
+                }
+
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+                //---------------------------------------
+                let obj = sessionStorage.getItem("dogadjaj");
+                var jsonObj;
+                var tabelica = document.getElementById('komentari2');
+                for (var i = 0; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                $.ajax({
+
+                    type: "POST",
+                    url: 'api/Karte/KomentariCekanje',
+                    dataType: "json",
+                    data: obj,
+                    contentType: "application/json; charset=utf-8",
+                    // async: false,
+                    success: function (data) {
+                        //alert("success" + data);
+
+                        //MORA SE VRATITI CEO KOMENTAR ZBOG IDA ZA ODBIJANJE
+
+                        jsonObj = JSON.parse(data);
+                        for (i = 0; i < jsonObj.length; i++) {
+                            var dugme = "";
+                            if (user.Uloga == 1) {
+                                dugme = "<td><button style=\"border-radius: 25px;\" class=\"prihvati\" id=" + "\"" + jsonObj[i].Id + "\"" + ">Prihvati</button></td>";
+                                dugme += "<td><button style=\"border-radius: 25px;\" class=\"odbij\" id=" + "\"" + jsonObj[i].Id+ "\"" + ">Odbaci</button></td>";
+                            }
+                            var row = "<tr ><td>" + jsonObj[i].Tekst + "</td>" + dugme + "</tr>";
+                            
+                            $("#komentari2").append(row);
+                        }
+                        if (jsonObj.length == 0) {
+                            //nema komentara
+                            document.getElementById('nema2').innerHTML = '<p style=\"color:red;\">Nema komentara</p>';
+                            $("#nema2").show();
+                        } else {
+                            $("#nema2").hide();
+                        }
+
+                    },
+                    error: function (data) {
+                        console.log("ERROR : ", data);
+                    }
+                });
+            //});
+            });
+
+            $(document).on('click', '.prihvati', function () {
+                console.log("prihvacen");
+                let kojiKOMENTAR = this.id;
+                let DOG = sessionStorage.getItem("dogadjaj");
+                var dogadjaj = JSON.parse(DOG);
+                var obj2 = JSON.stringify({
+                    "comm": kojiKOMENTAR,
+                    "naziv": dogadjaj.naziv,
+                    "datum": dogadjaj.datum
+                });
+
+                var tabelica = document.getElementById('komentari2');
+                for (var i = 0; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                $.ajax({
+
+                    type: "POST",
+                    url: 'api/Karte/KomentariPrihvati',
+                    dataType: "json",
+                    data: obj2,
+                    contentType: "application/json; charset=utf-8",
+                    // async: false,
+                    success: function (data) {
+                        
+                        jsonObj = JSON.parse(data);
+                        for (i = 0; i < jsonObj.length; i++) {
+                            var dugme = "";
+                            if (user.Uloga == 1) {
+                                dugme = "<td><button style=\"border-radius: 25px;\" class=\"prihvati\" id=" + "\"" + jsonObj[i].Id + "\"" + ">Prihvati</button></td>";
+                                dugme += "<td><button style=\"border-radius: 25px;\" class=\"odbij\" id=" + "\"" + jsonObj[i].Id + "\"" + ">Odbaci</button></td>";
+                            }
+                            var row = "<tr ><td>" + jsonObj[i].Tekst + "</td>" + dugme + "</tr>";
+
+                            $("#komentari2").append(row);
+                        }
+                        if (jsonObj.length == 0) {
+                            //nema komentara
+                            document.getElementById('nema2').innerHTML = '<p style=\"color:red;\">Nema komentara</p>';
+                            $("#nema2").show();
+                        } else {
+                            $("#nema2").hide();
+                        }
+                        
+                        //setTimeout(prikazkom, 2000);
+
+                    },
+                    error: function (data) {
+                        console.log("ERROR : ", data);
+                    }
+                });
+            });
+            $(document).on('click', '.odbij', function () {
+                console.log("odbijen");
+                let kojiKOMENTAR = this.id;
+                let DOG = sessionStorage.getItem("dogadjaj");
+                var dogadjaj = JSON.parse(DOG);
+                var obj2 = JSON.stringify({
+                    "comm": kojiKOMENTAR,
+                    "naziv": dogadjaj.naziv,
+                    "datum": dogadjaj.datum
+                });
+
+                var tabelica = document.getElementById('komentari2');
+                for (var i = 0; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                $.ajax({
+
+                    type: "POST",
+                    url: 'api/Karte/KomentariObrisan',
+                    dataType: "json",
+                    data: obj2,
+                    contentType: "application/json; charset=utf-8",
+                    // async: false,
+                    success: function (data) {
+                  
+                        jsonObj = JSON.parse(data);
+                        for (i = 0; i < jsonObj.length; i++) {
+                            var dugme = "";
+                            if (user.Uloga == 1) {
+                                dugme = "<td><button style=\"border-radius: 25px;\" class=\"prihvati\" id=" + "\"" + jsonObj[i].Id + "\"" + ">Prihvati</button></td>";
+                                dugme += "<td><button style=\"border-radius: 25px;\" class=\"odbij\" id=" + "\"" + jsonObj[i].Id + "\"" + ">Odbaci</button></td>";
+                            }
+                            var row = "<tr ><td>" + jsonObj[i].Tekst + "</td>" + dugme + "</tr>";
+
+                            $("#komentari2").append(row);
+                        }
+                        if (jsonObj.length == 0) {
+                            //nema komentara
+                            document.getElementById('nema2').innerHTML = '<p style=\"color:red;\">Nema komentara</p>';
+                            $("#nema2").show();
+                        } else {
+                            $("#nema2").hide();
+                        }
+
+                    },
+                    error: function (data) {
+                        console.log("ERROR : ", data);
+                    }
+                });
+            });
         });
         $(document).on('click', '.use-address', function () {            // kada je button (čija je class = use-address) kliknut
             console.log("pokusaj klik");
@@ -125,6 +370,10 @@
                 background-color: #4CAF50;
                 color: #ffffff;
             }
+         button:hover {
+            background-color: #4CAF50;
+            color: #ffffff;
+        }
 
         #tekst {
             /*font-weight: bold;*/
@@ -164,6 +413,19 @@
             color: #fafafa;
             text-transform: uppercase;
         }
+        #komentari {
+            border-radius: 25px;
+            
+        }
+        #komentari tr:nth-child(odd) {
+            background: grey;
+            color: white;
+        }
+        #komentari tr:nth-child(even) {
+            background: #ffffff;
+            color: black;
+        }
+
 
         tr:nth-child(odd) {
             background: #eeeeee;
@@ -207,6 +469,43 @@
             .zoom:hover {
                 transform: scale(1.2); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
             }
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%; /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
     </style>
 </head>
 <body>
@@ -225,9 +524,38 @@
     </div>-->
     <div class="topnav">
         <button type="button" class="use-address"><i class="fa fa-fw fa-home"></i>Nazad na pocetnu</button>
-        </div>
-        <h3 style="text-align:center;font-size: 20px ; color:#333">Vasa odabrana manifestacija</h3>
-        <table id="results" style="margin-left: auto;
+    </div>
+    <h3 style="text-align:center;font-size: 20px ; color:#333">Vasa odabrana manifestacija</h3>
+    <button id="comm" style="border-radius:25px;">Prikazi komentare</button>
+    <div id="divnacekanju"><button id="nacekanju" style="border-radius:25px;margin-top: 5px;margin-bottom: 5px;">Prikazi komentare na cekanju</button></div>
+    <table id="results" style="margin-left: auto;
   margin-right: auto;"></table>
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content" style="text-align:center">
+            <span class="close">&times;</span>
+            <h2 style="text-align:center; color:#333">Komentari</h2>
+            <table id="komentari" style="margin-left: auto;
+  margin-right: auto;"></table>
+            <div id="nema"></div>
+            <!--<p>Hvala Vam na poverenju</p>-->
+        </div>
+
+    </div>
+    <div id="myModal2" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content" style="text-align:center">
+            <span class="close">&times;</span>
+            <h2 style="text-align:center; color:#333">Komentari na cekanju</h2>
+            <table id="komentari2" style="margin-left: auto;
+  margin-right: auto;"></table>
+            <div id="nema2"></div>
+            <!--<p>Hvala Vam na poverenju</p>-->
+        </div>
+
+    </div>
+
 </body>
 </html>

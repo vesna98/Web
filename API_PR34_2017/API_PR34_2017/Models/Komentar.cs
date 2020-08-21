@@ -13,12 +13,13 @@ namespace API_PR34_2017.Models
         public string Tekst { get; set; }
         public int Ocena { get; set; }
         public bool Odobren { get; set; }
+        public bool Obrisi { get; set; }
         public Komentar()
         {
 
         }
 
-        public Komentar( string manifestacija, string kupacid, string tekst, int ocena, bool odobren,string id)
+        public Komentar( string manifestacija, string kupacid, string tekst, int ocena, bool odobren,string id,bool obrisi)
         {
             Kupacid = kupacid;
             Manifestacija = manifestacija;
@@ -26,11 +27,12 @@ namespace API_PR34_2017.Models
             Ocena = ocena;
             Odobren = odobren;
             Id = id;
+            Obrisi = obrisi;
         }
 
         public override string ToString()
         {
-            return Id+";"+Manifestacija+";"+Kupacid+";"+Tekst+";"+Ocena+";"+Odobren.ToString();
+            return Id+";"+Manifestacija+";"+Kupacid+";"+Tekst+";"+Ocena+";"+Odobren.ToString()+";"+Obrisi.ToString();
         }
     }
 }

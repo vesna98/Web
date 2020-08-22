@@ -15,13 +15,18 @@ bde3888e1f;veca;REGULAR;Rezervisana;22;mMED;10-02-2020 10:00 PM;False;Vesna Pric
 8b5ce4feb4;veca;VIP;Odustanak;20000;EXIT 2021;12-07-2021 10:00 PM;False;Vesna Prica;True
 8abdee9b1e;veca;FANPIT;Odustanak;10000;EXIT 2021;12-07-2021 10:00 PM;False;Vesna Prica;True
 85952ffaca;veca;FANPIT;Odustanak;10000;EXIT 2021;12-07-2021 10:00 PM;False;Vesna Prica;True
-b56a69862c;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
+b56a69862c;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
 87646ae75e;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
-f1660702d3;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
-0e7b1b2731;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
-740dc7ad23;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
-28d062b770;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
-f2faf09209;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
-665d5e3e8f;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
-c686afed74;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
+f1660702d3;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
+0e7b1b2731;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
+740dc7ad23;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
+28d062b770;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
+f2faf09209;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
+665d5e3e8f;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
+c686afed74;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
 67a1ee997b;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
+2f5cb6ef83;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
+9eca5bc21d;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
+81dbcee655;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
+d3efeb8d28;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
+f71802fca6;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True

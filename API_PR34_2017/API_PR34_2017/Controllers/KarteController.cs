@@ -385,6 +385,18 @@ namespace API_PR34_2017.Controllers
                     k.Obrisana = true;
                     cenaKarte = k.Cena;
                     k.MogucOdustanak = true;
+
+                    //treba smanjiti broj kupljenih 
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach(Manifestacija fest in festovi)
+                    {
+                        if(fest.Naziv.Equals(k.Nazivmanifestacije) && fest.Datumivreme.Equals(k.Datummanifestacije))
+                        {
+                            fest.Kupljeno -= 1;
+                            Data.SaveFest(fest);
+                        }
+                    }
+                    //----------------------------
                     Data.SaveKartu(k);
                     break;
                 }

@@ -1060,6 +1060,7 @@
                 $('#podaci').hide();
                 $('#AdminView').hide();
                 $('#ProView').hide();
+
             } else {
                 $('#podaci').show();
                 if (korisnik.Uloga == 0) {  //admin
@@ -2001,7 +2002,22 @@
                 });
 
                 $("#addFest").click(function () {
-                    $('#novaMani').show();
+                   // $('#novaMani').show();
+                    var span = document.getElementsByClassName("close")[1];
+                    var modal = document.getElementById("myModal2");
+
+                    modal.style.display = "block";
+
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+
+                    window.onclick = function (event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+                //---------------------------------------
                     $("#btnFest").click(function () {
                         let k1 = document.getElementById('naziv');
                         let k2 = document.getElementById('datumivreme');
@@ -2493,8 +2509,20 @@
                 background-color: cyan;
                 color: #ffffff;
             }*/
-
-        table {
+        #userPrikaz {
+            z-index: 2;
+            /*left:50%;
+            top:50%;
+            transform:translate(-50%,-50%);
+            width:60%;*/
+            border-collapse: collapse;
+            border-spacing: 0;
+            border-radius: 12px 12px 0 0;
+            overflow: hidden;
+            background: #fafafa;
+            text-align: center;
+        }
+        #tabelaMani{
             z-index: 2;
             /*left:50%;
             top:50%;
@@ -2512,15 +2540,23 @@
             padding: 10px 15px;
         }
 
-        th {
+        #tabelaMani th {
+            /*background: #ba68c8;*/
+            background: rgba(51, 51, 51, 1);
+            color: #fafafa;
+            text-transform: uppercase;
+        }
+        #userPrikaz th {
             /*background: #ba68c8;*/
             background: rgba(51, 51, 51, 1);
             color: #fafafa;
             text-transform: uppercase;
         }
 
-
-        tr:nth-child(odd) {
+        #tabelaMani tr:nth-child(odd) {
+            background: #eeeeee;
+        }
+        #userPrikaz tr:nth-child(odd) {
             background: #eeeeee;
         }
 
@@ -2643,7 +2679,7 @@
                         <table class="table" style="margin-left: auto;
   margin-right: auto;">
                             <tr>
-                                <td id="tekst" style="color:black">Korisnicko ime:</td>
+                                <td id="tekst" style="color:white;text-align:right;">Korisnicko ime:</td>
                                 <td>
                                     <input type="text" id="korisnickoime" name="korisnickoime" placeholder="od 3 karakera min" pattern="[0-9a-zA-Z]{3,}" required />
                                 </td>
@@ -2651,7 +2687,7 @@
                             </tr>
 
                             <tr>
-                                <td id="tekst" style="color:black">Lozinka:</td>
+                                <td id="tekst" style="color:white;text-align:right;">Lozinka:</td>
                                 <td>
                                     <input type="password" id="lozinka" name="lozinka" placeholder="od 4 karaktera min" pattern="[0-9a-zA-Z]{4,}" required />
                                 </td>
@@ -2659,7 +2695,7 @@
                             </tr>
 
                             <tr>
-                                <td id="tekst" style="color:black">Ime:</td>
+                                <td id="tekst" style="color:white;text-align:right;">Ime:</td>
                                 <td>
                                     <input type="text" id="ime" name="ime" placeholder="od 3 karaktera min" pattern="[a-zA-Z]{3,}" required />
                                 </td>
@@ -2667,7 +2703,7 @@
                             </tr>
 
                             <tr>
-                                <td id="tekst" style="color:black">Prezime:</td>
+                                <td id="tekst" style="color:white;text-align:right;">Prezime:</td>
                                 <td>
                                     <input type="text" id="prezime" name="prezime" placeholder="od 3 karaktera min" pattern="[a-zA-Z]{3,}" required />
                                 </td>
@@ -2675,7 +2711,7 @@
                             </tr>
 
                             <tr>
-                                <td id="tekst" style="color:black"><label for="pol">Pol:</label></td>
+                                <td id="tekst" style="color:white;text-align:right;"><label for="pol">Pol:</label></td>
                                 <td>
                                     <select name="pol" id="polovi">
                                         <option id="polovi" value="Zenski">Zenski</option>
@@ -2685,7 +2721,7 @@
                             </tr>
 
                             <tr>
-                                <td id="tekst" style="color:black">Datum rodjenja:</td>
+                                <td id="tekst" style="color:white;text-align:right;">Datum rodjenja:</td>
                                 <td>
                                     <input type="text" id="datumrodjenja" name="datumrodjenja" placeholder="DD-MM-YYYY" required pattern="\d{2}-\d{2}-\d{4}" />
                                 </td>
@@ -2695,7 +2731,7 @@
                             <tr>
 
                                 <td colspan="2">
-                                    <button id="btnReg" >Dodaj</button>
+                                    <button id="btnReg">Dodaj</button>
                                 </td>
                             </tr>
                         </table>
@@ -2704,7 +2740,7 @@
                 </div>
 
             </div>
-           
+
         </div>
         <div id="userPrikaz" class="table-responsive">
             <div style=" display: inline-block;vertical-align: top;">
@@ -2764,299 +2800,306 @@
     <div id="ProView">
         <h3 style="color:#333">Vase opcije</h3>
         <input type="submit" id="addFest" value="Dodaj manifestaciju" />
-        <div id="novaMani">
+        <div id="myModal2" class="modal">
 
-            <table>
-                <tr>
-                    <td id="tekst" style="color:black">Naziv:</td>
-                    <td><input type="text" name="naziv" id="naziv" placeholder="unesite naziv" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" required /></td>
-                </tr>
-                <tr>
-                    <td id="tekst" style="color:black">Tip manifestacije:</td>
-                    <td>
-                        <select name="tipm" id="tipovi">
-                            <option id="tipm" value="Koncert">Koncert</option>
-                            <option id="tipm" value="Festival">Festival</option>
-                            <option id="tipm" value="Pozoriste">Pozoriste</option>
-                        </select>
-                    </td>
-                </tr>
+            <!-- Modal content -->
+            <div class="modal-content" style="text-align:center">
+                <span class="close">&times;</span>
+                <!--<div id="novaMani">-->
+                <h2 style="text-align:center;color:white">Dodavanje manifestacije</h2>
+                <table style="margin-left: auto;margin-right: auto;">
+                    <tr style="background:none">
+                        <td id="tekst" style="color:white;text-align:right;">Naziv:</td>
+                        <td><input type="text" name="naziv" id="naziv" placeholder="unesite naziv" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" required /></td>
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Tip manifestacije:</td>
+                        <td>
+                            <select name="tipm" id="tipovi">
+                                <option id="tipm" value="Koncert">Koncert</option>
+                                <option id="tipm" value="Festival">Festival</option>
+                                <option id="tipm" value="Pozoriste">Pozoriste</option>
+                            </select>
+                        </td>
+                    </tr>
 
-                <tr>
-                    <td id="tekst" style="color:black">Broj mesta:</td>
-                    <td><input type="number" name="brojmesta" min="0" id="brojmesta" placeholder="unesite broj mesta" oninput="validity.valid||(value='');" required /></td>
-                </tr>
-                <tr>
-                    <td id="tekst" style="color:black">Datum odrzavanja:</td>
-                    <td><input type="text" name="datumivreme" id="datumivreme" placeholder="DD-MM-YYYY" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" required /></td>
-                </tr>
-                <tr>
-                    <td id="tekst" style="color:black">Vreme odrzavanja:</td>
-                    <td><input type="time" id="time" required /></td>
-                </tr>
-                <tr>
-                    <td id="tekst" style="color:black">Cena regular:</td>
-                    <td><input type="number" name="cenaregular" min="0" id="cenaregular" placeholder="unesite cenu u evrima" oninput="validity.valid||(value='');" required /></td>
-                </tr>
-                <!--<tr>
-                    <td id="tekst" style="color:black">Cena vip:</td>
-                    <td><input type="number" name="cenavip" id="cenavip" placeholder="unesite cenu u evrima" required /></td>
-                </tr>
-                <tr>
-                    <td id="tekst" style="color:black">Cena fan pit:</td>
-                    <td><input type="number" name="cenafanpit" id="cenafanpit" placeholder="unesite cenu u evrima" required /></td>
-                </tr>-->
-                <tr>
-                    <td id="tekst" style="color:black">Ulica i broj</td>
-                    <td><input type="text" name="ulicabroj" id="ulicabroj" placeholder="unesite ulicu i broj" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" required /></td>
-                </tr>
-                <tr>
-                    <td id="tekst" style="color:black">Grad</td>
-                    <td><input type="text" name="grad" id="grad" placeholder="unesite grad" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" required /></td>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Broj mesta:</td>
+                        <td><input type="number" name="brojmesta" min="0" id="brojmesta" placeholder="unesite broj mesta" oninput="validity.valid||(value='');" required /></td>
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Datum odrzavanja:</td>
+                        <td><input type="text" name="datumivreme" id="datumivreme" placeholder="DD-MM-YYYY" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" required /></td>
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Vreme odrzavanja:</td>
+                        <td><input type="time" id="time" required /></td>
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Cena regular:</td>
+                        <td><input type="number" name="cenaregular" min="0" id="cenaregular" placeholder="unesite cenu" oninput="validity.valid||(value='');" required /></td>
+                    </tr>
 
-                </tr>
-                <tr>
-                    <td id="tekst" style="color:black">Postanski broj</td>
-                    <td><input type="text" name="postanskibroj" id="postanskibroj" placeholder="unesite postanski broj" pattern="[0-9]{5}" required /></td>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Ulica i broj:</td>
+                        <td><input type="text" name="ulicabroj" id="ulicabroj" placeholder="unesite ulicu i broj" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" required /></td>
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Grad:</td>
+                        <td><input type="text" name="grad" id="grad" placeholder="unesite grad" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" required /></td>
 
-                </tr>
-                <tr>
-                    <td id="tekst" style="color:black">Poster:</td>
-                    <td><input name="poster" type="file" id="poster" required /></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <input type="submit" value="Dodaj" id="btnFest" />
-                        <!--<input type="submit" onclick="print()" value="Dodaj" id="btnFest" />-->
-                    </td>
-                </tr>
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Postanski broj:</td>
+                        <td><input type="text" name="postanskibroj" id="postanskibroj" placeholder="unesite postanski broj" pattern="[0-9]{5}" required /></td>
 
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Poster:</td>
+                        <td ><input name="poster" type="file" id="poster" required style="color:white;align-content:center"/></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <button id="btnFest">Dodaj</button>
+                            <!--<input type="submit" onclick="print()" value="Dodaj" id="btnFest" />-->
+                        </td>
+                    </tr>
+
+                </table>
+                <!--</div>-->
+            </div>
+        </div>
+
+    </div>
+       
+        
+    <div style=" display: inline-block;vertical-align: top;">
+        <h4>Filtrirajte po tipu manifestacije</h4>
+        <select class="f_tip">
+            <option value="Sve">Sve manifestacije</option>
+            <option value="Koncert">Koncert</option>
+            <option value="Festival">Festival</option>
+            <option value="Pozoriste">Pozoriste</option>
+        </select><button type="button" id="filter_tip">Filtriraj po tipu</button>
+    </div>
+    <div style=" display: inline-block;vertical-align: top;">
+        <h4>Filtrirajte po raspolozivosti karata</h4>
+        <select name="kartafilter" id="f_karta">
+            <option id="fkarta" value="Sve">Sve manifestacije</option>
+            <option id="fkarta" value="Nerasprodate">Nerasprodate</option>
+
+        </select><button type="button" id="filter_karta">Filtriraj po raspolozivosti karte</button>
+        </div>
+        <!--<p id="#resultas" style="color:black"></p>-->
+        <h4>Sortiranja</h4>
+        <button type="button" id="sort_nazAZ" style="margin-bottom:5px">Sortiraj po nazivu A-Z</button>
+        <button type="button" id="sort_nazZA" style="margin-bottom:5px">Sortiraj po nazivu Z-A</button>
+        <button type="button" id="sort_datum1" style="margin-bottom:5px">Sortiraj po datumu od najskorijeg</button>
+        <button type="button" id="sort_datum2" style="margin-bottom:5px">Sortiraj po datumu od najkasnijeg</button>
+        <button type="button" id="sort_cenaR" style="margin-bottom:5px">Sortiraj po ceni rastuce</button>
+        <button type="button" id="sort_cenaO" style="margin-bottom:5px">Sortiraj po ceni opadajuce</button>
+        <button type="button" id="sort_mestoAZ" style="margin-bottom:5px">Sortiraj po mestu A-Z</button>
+        <button type="button" id="sort_mestoZA" style="margin-bottom:5px">Sortiraj po mestu Z-A</button>
+        <h4>Pretraga</h4>
+        <div class="container">
+            <form>
+
+                <div class="wrapper">
+
+                    <div class="search-container">
+                        <input type="text" id="find_naziv" placeholder="naziv manifestacije" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" />
+                        <input type="text" id="find_mesto" placeholder="mesto(drzava ili grad)" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" />
+                        <input type="text" id="find_datumOD" placeholder="od datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
+                        <input type="text" id="find_datumDO" placeholder="do datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
+                        <input type="number" min="0" id="find_cenaOD" placeholder="cena regular od" pattern="[0-9]+" oninput="validity.valid||(value='');" />
+                        <input type="number" min="0" id="find_cenaDO" placeholder="cena regular do" pattern="[0-9]+" oninput="validity.valid||(value='');" />
+
+
+                        <!--<div class="input-daterange input-group" id="datepicker">
+                            <input type="text" class="input-sm form-control" name="start" />
+                            <span class="input-group-addon">to</span>
+                            <input type="text" class="input-sm form-control" name="end" />
+                        </div>-->
+                        <button type="button" id="pretraga">Pretrazi</button>
+                    </div>
+                </div>
+
+
+            </form>
+
+
+        </div>
+        <div id="maniPrikaz" class="table-responsive">
+            <h2 style="text-align:center">Manifestacije</h2>
+            <table id="tabelaMani" style="margin-left: auto;
+  margin-right: auto;">
+                <tr>
+                    <th>Naziv</th>
+                    <th>Tip</th>
+                    <th>Datum i vreme</th>
+                    <th>Mesto</th>
+                    <th>Poster</th>
+                    <th>Cena regular</th>
+                    <th>Cena vip</th>
+                    <th>Cena fan pit</th>
+                    <th>Ocena</th>
+                    <th>Detaljnije</th>
+                </tr>
             </table>
         </div>
-    </div>
-    <h4>Filtrirajte po tipu manifestacije</h4>
-    <select class="f_tip">
-        <option value="Sve">Sve manifestacije</option>
-        <option value="Koncert">Koncert</option>
-        <option value="Festival">Festival</option>
-        <option value="Pozoriste">Pozoriste</option>
-    </select><button type="button" id="filter_tip">Filtriraj po tipu</button>
-    <h4>Filtrirajte po raspolozivosti karata</h4>
-    <select name="kartafilter" id="f_karta">
-        <option id="fkarta" value="Sve">Sve manifestacije</option>
-        <option id="fkarta" value="Nerasprodate">Nerasprodate</option>
 
-    </select><button type="button" id="filter_karta">Filtriraj po raspolozivosti karte</button>
-    <!--<p id="#resultas" style="color:black"></p>-->
-    <h4>Sortiranja</h4>
-    <button type="button" id="sort_nazAZ">Sortiraj po nazivu A-Z</button>
-    <button type="button" id="sort_nazZA">Sortiraj po nazivu Z-A</button>
-    <button type="button" id="sort_datum1">Sortiraj po datumu od najskorijeg</button>
-    <button type="button" id="sort_datum2">Sortiraj po datumu od najkasnijeg</button>
-    <button type="button" id="sort_cenaR">Sortiraj po regular ceni rastuce</button>
-    <button type="button" id="sort_cenaO">Sortiraj po regular ceni opadajuce</button>
-    <button type="button" id="sort_mestoAZ">Sortiraj po mestu A-Z</button>
-    <button type="button" id="sort_mestoZA">Sortiraj po mestu Z-A</button>
-    <h4>Pretraga</h4>
-    <div class="container">
-        <form>
-
-            <div class="wrapper">
-
-                <div class="search-container">
-                    <input type="text" id="find_naziv" placeholder="naziv manifestacije" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" />
-                    <input type="text" id="find_mesto" placeholder="mesto(drzava ili grad)" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" />
-                    <input type="text" id="find_datumOD" placeholder="od datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
-                    <input type="text" id="find_datumDO" placeholder="do datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
-                    <input type="number" min="0" id="find_cenaOD" placeholder="cena regular od" pattern="[0-9]+" oninput="validity.valid||(value='');" />
-                    <input type="number" min="0" id="find_cenaDO" placeholder="cena regular do" pattern="[0-9]+" oninput="validity.valid||(value='');" />
-
-
-                    <!--<div class="input-daterange input-group" id="datepicker">
-                        <input type="text" class="input-sm form-control" name="start" />
-                        <span class="input-group-addon">to</span>
-                        <input type="text" class="input-sm form-control" name="end" />
-                    </div>-->
-                    <button type="button" id="pretraga">Pretrazi</button>
-                </div>
-            </div>
-
-
-        </form>
-
-
-    </div>
-    <div id="maniPrikaz" class="table-responsive">
-        <h2 style="text-align:center">Manifestacije</h2>
-        <table id="tabelaMani" style="margin-left: auto;
-  margin-right: auto;">
-            <tr>
-                <th>Naziv</th>
-                <th>Tip</th>
-                <th>Datum i vreme</th>
-                <th>Mesto</th>
-                <th>Poster</th>
-                <th>Cena regular</th>
-                <th>Cena vip</th>
-                <th>Cena fan pit</th>
-                <th>Ocena</th>
-                <th>Detaljnije</th>
-            </tr>
-        </table>
-    </div>
-
-    <!--<h2>My Map</h2>
-    <div id="map" class="map"></div>-->
-    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-    <script type="text/javascript">
-        var map = new ol.Map({
-            target: 'map',
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
+        <!--<h2>My Map</h2>
+        <div id="map" class="map"></div>-->
+        <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+        <script type="text/javascript">
+            var map = new ol.Map({
+                target: 'map',
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    })
+                ],
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([37.41, 8.82]),
+                    zoom: 4
                 })
-            ],
-            view: new ol.View({
-                center: ol.proj.fromLonLat([37.41, 8.82]),
-                zoom: 4
+            });     //radilo
+
+            //var baseMapLayer = new ol.layer.Tile({
+            //    source: new ol.source.OSM()
+            //});
+            //var map = new ol.Map({
+            //    target: 'map',
+            //    layers: [baseMapLayer],
+            //    view: new ol.View({
+            //        center: ol.proj.fromLonLat([-74.0061, 40.712]),
+            //        zoom: 7 //Initial Zoom Level
+            //    })
+            //});
+            ////Adding a marker on the map
+            //var marker = new ol.Feature({
+            //    geometry: new ol.geom.Point(
+            //        ol.proj.fromLonLat([-74.006, 40.7127])
+            //    ),  // Cordinates of New York's Town Hall
+            //});
+            //var vectorSource = new ol.source.Vector({
+            //    features: [marker]
+            //});
+            //var markerVectorLayer = new ol.layer.Vector({
+            //    source: vectorSource,
+            //});
+            //map.addLayer(markerVectorLayer);
+            self.map.on("singleclick", function (evt) {
+                setPinOnMap(evt);
             })
-        });     //radilo
-
-        //var baseMapLayer = new ol.layer.Tile({
-        //    source: new ol.source.OSM()
-        //});
-        //var map = new ol.Map({
-        //    target: 'map',
-        //    layers: [baseMapLayer],
-        //    view: new ol.View({
-        //        center: ol.proj.fromLonLat([-74.0061, 40.712]),
-        //        zoom: 7 //Initial Zoom Level
-        //    })
-        //});
-        ////Adding a marker on the map
-        //var marker = new ol.Feature({
-        //    geometry: new ol.geom.Point(
-        //        ol.proj.fromLonLat([-74.006, 40.7127])
-        //    ),  // Cordinates of New York's Town Hall
-        //});
-        //var vectorSource = new ol.source.Vector({
-        //    features: [marker]
-        //});
-        //var markerVectorLayer = new ol.layer.Vector({
-        //    source: vectorSource,
-        //});
-        //map.addLayer(markerVectorLayer);
-        self.map.on("singleclick", function (evt) {
-            setPinOnMap(evt);
-        })
 
 
-        function setPinOnMap(evt) {
-            var self = this;
+            function setPinOnMap(evt) {
+                var self = this;
 
-            var latLong = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
-            var lat = latLong[1];
-            var long = latLong[0];
+                var latLong = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
+                var lat = latLong[1];
+                var long = latLong[0];
 
-            self.params.options.mapClick({ lat: lat, long: long });
+                self.params.options.mapClick({ lat: lat, long: long });
 
-            if (self.dinamicPinLayer !== undefined) {
-                console.log("moove")
-                self.iconGeometry.setCoordinates(evt.coordinate);
-                //or create another pin  
-            } else {
-                self.iconGeometry = new ol.geom.Point(evt.coordinate);
-                var iconFeature = new ol.Feature({
-                    geometry: self.iconGeometry,
-                    name: 'Null Island',
-                    population: 4000,
-                    rainfall: 500
-                });
-                var iconStyle = new ol.style.Style({
-                    image: new ol.style.Icon(({
-                        anchor: [0.5, 46],
-                        anchorXUnits: 'fraction',
-                        anchorYUnits: 'pixels',
-                        size: [48, 48],
-                        opacity: 1,
-                        src: '/resources/cloud/controls/cloudMap/img/redmarker_small.png'
-                    }))
-                });
+                if (self.dinamicPinLayer !== undefined) {
+                    console.log("moove")
+                    self.iconGeometry.setCoordinates(evt.coordinate);
+                    //or create another pin
+                } else {
+                    self.iconGeometry = new ol.geom.Point(evt.coordinate);
+                    var iconFeature = new ol.Feature({
+                        geometry: self.iconGeometry,
+                        name: 'Null Island',
+                        population: 4000,
+                        rainfall: 500
+                    });
+                    var iconStyle = new ol.style.Style({
+                        image: new ol.style.Icon(({
+                            anchor: [0.5, 46],
+                            anchorXUnits: 'fraction',
+                            anchorYUnits: 'pixels',
+                            size: [48, 48],
+                            opacity: 1,
+                            src: '/resources/cloud/controls/cloudMap/img/redmarker_small.png'
+                        }))
+                    });
 
-                iconFeature.setStyle(iconStyle);
+                    iconFeature.setStyle(iconStyle);
 
-                var vectorSource = new ol.source.Vector({
-                    features: [iconFeature]
-                });
-                self.dinamicPinLayer = new ol.layer.Vector({
-                    source: vectorSource
-                });
-                self.map.addLayer(self.dinamicPinLayer);
+                    var vectorSource = new ol.source.Vector({
+                        features: [iconFeature]
+                    });
+                    self.dinamicPinLayer = new ol.layer.Vector({
+                        source: vectorSource
+                    });
+                    self.map.addLayer(self.dinamicPinLayer);
+                }
+
+
             }
+            //map = new OpenLayers.Map("map");
+            //map.addLayer(new OpenLayers.Layer.OSM());
+
+            //var lonLat = new OpenLayers.LonLat(-0.1279688, 51.5077286)
+            //    .transform(
+            //        new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+            //        map.getProjectionObject() // to Spherical Mercator Projection
+            //    );
+
+            //var zoom = 16;
+
+            //var markers = new OpenLayers.Layer.Markers("Markers");
+            //map.addLayer(markers);
+
+            //markers.addMarker(new OpenLayers.Marker(lonLat));
+
+            //map.setCenter(lonLat, zoom);
+
+            //var newLonLat = new OpenLayers.LonLat(lon, lat);
+            //var newPx = map.getLayerPxFromLonLat(newLonLat);
+            //markers.moveTo(newPx);
+            //jhjh
 
 
-        }
-        //map = new OpenLayers.Map("map");
-        //map.addLayer(new OpenLayers.Layer.OSM());
+            //var marker = new ol.Feature({
+            //    geometry: new ol.geom.Point(
+            //        ol.proj.fromLonLat([-74.006, 40.7127])
+            //    ),  // Cordinates of New York's Town Hall
+            //});
 
-        //var lonLat = new OpenLayers.LonLat(-0.1279688, 51.5077286)
-        //    .transform(
-        //        new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-        //        map.getProjectionObject() // to Spherical Mercator Projection
-        //    );
+            //var vectorSource = new ol.source.Vector({
+            //    features: [marker]
+            //});
 
-        //var zoom = 16;
+            //var markerVectorLayer = new ol.layer.Vector({
+            //    source: vectorSource,
+            //});
+            //map.addLayer(markerVectorLayer);
+            //var layer = new ol.layer.Vector({
+            //    source: new ol.source.Vector({
+            //        features: [
+            //            new ol.Feature({
+            //                geometry: new ol.geom.Point(ol.proj.fromLonLat([4.35247, 50.84673]))
+            //            })
+            //        ]
+            //    })
+            //});
+            //map.addLayer(layer);
+            //map.addEventListener("tap", event => {
+            //    console.log(event);
+            //});
+        </script>
 
-        //var markers = new OpenLayers.Layer.Markers("Markers");
-        //map.addLayer(markers);
+        <script>
+            window.onscroll = function () { myFunction() };
 
-        //markers.addMarker(new OpenLayers.Marker(lonLat));
-
-        //map.setCenter(lonLat, zoom);
-
-        //var newLonLat = new OpenLayers.LonLat(lon, lat);
-        //var newPx = map.getLayerPxFromLonLat(newLonLat);
-        //markers.moveTo(newPx);
-        //jhjh
-
-
-        //var marker = new ol.Feature({
-        //    geometry: new ol.geom.Point(
-        //        ol.proj.fromLonLat([-74.006, 40.7127])
-        //    ),  // Cordinates of New York's Town Hall
-        //});
-
-        //var vectorSource = new ol.source.Vector({
-        //    features: [marker]
-        //});
-
-        //var markerVectorLayer = new ol.layer.Vector({
-        //    source: vectorSource,
-        //});
-        //map.addLayer(markerVectorLayer);
-        //var layer = new ol.layer.Vector({
-        //    source: new ol.source.Vector({
-        //        features: [
-        //            new ol.Feature({
-        //                geometry: new ol.geom.Point(ol.proj.fromLonLat([4.35247, 50.84673]))
-        //            })
-        //        ]
-        //    })
-        //});
-        //map.addLayer(layer);
-        //map.addEventListener("tap", event => {
-        //    console.log(event);
-        //});
-    </script>
-
-    <script>
-    window.onscroll = function () { myFunction() };
-
-        function myFunction() {
-            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            var scrolled = (winScroll / height) * 100;
-            document.getElementById("myBar").style.width = scrolled + "%";
-        }</script>
+            function myFunction() {
+                var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                var scrolled = (winScroll / height) * 100;
+                document.getElementById("myBar").style.width = scrolled + "%";
+            }</script>
 </body>
 </html>

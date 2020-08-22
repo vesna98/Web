@@ -51,11 +51,13 @@
                 
                 $('#podaci').hide();
                 $('#DIVreg').show();
+                $('#jestelog').hide();
                 console.log("nije prijavljen");
             } else {
                 $('#podaci').show();
                 $('#DIVreg').hide();
-                alert("Nemate mogucnost da se registrujete dok ste prijavljeni.");
+                $('#jestelog').show();
+                //alert("Nemate mogucnost da se registrujete dok ste prijavljeni.");
                 console.log('user ' + korisnik.Korisnickoime);
             }
             // $(function () {
@@ -70,8 +72,18 @@
                 let k4 = document.getElementById("prezime");
                 let k5 = document.getElementById("datumrodjenja");
 
-                if (!k1.checkValidity() || !k2.checkValidity() || !k3.checkValidity() || !k4.checkValidity() || !k5.checkValidity()) {
-                    alert("Molimo popunite sva polja na ispravan način.");
+                //if (!k1.checkValidity() || !k2.checkValidity() || !k3.checkValidity() || !k4.checkValidity() || !k5.checkValidity()) {
+                //    alert("Molimo popunite sva polja na ispravan način.");
+                if (!k1.checkValidity()) {
+                    alert("Korisnicko ime moze da sadrzi samo slova i cifre.[3-]");
+                } else if (!k2.checkValidity()) {
+                    alert("Lozinka moze da sadrzi samo slova i cifre.[4-]");
+                } else if (!k3.checkValidity()) {
+                    alert("Ime moze da sadrzi samo slova.[3-]");
+                } else if (!k4.checkValidity()) {
+                    alert("Prezime moze da sadrzi samo slova.[3-]");
+                } else if (!k5.checkValidity()) {
+                    alert("Datum unesite u formatu DD-MM-YYYY");
                 } else {
                     var korisnickoime = $("#korisnickoime").val();
                     var lozinka = $("#lozinka").val();
@@ -295,7 +307,7 @@
             outline: none;
             color: #ffffff;
             font-size: 15px;
-            background-color: tomato;
+            background-color: #4CAF50;
             cursor: pointer;
             border-radius: 20px;
         }
@@ -313,7 +325,7 @@
     </style>
 </head>
 <body>
-            <h1 style="text-align:center;font-size: 40px; color:#333"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
+    <h1 style="text-align:center;font-size: 40px; color:#333"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
 
     <div id="stranica">
         <div class="topnav">
@@ -327,68 +339,69 @@
 
         </div>
     </div>
+    <div id="jestelog" style="text-align:center;color:red"><h2>Prijavljeni ste</h2></div>
     <div id="DIVreg">
         <h2 style="color:#ffffff; font-weight:bold; font-family:Arial;text-align-last: center;">Registracija</h2>
         <!--<form action="" method="post">-->
-            <table class="table">
-                <tr>
-                    <td id="tekst">Korisnicko ime:</td>
-                    <td>
-                        <input type="text" id="korisnickoime" name="korisnickoime" placeholder="od 3 karakera min" pattern="[0-9a-zA-Z]{3,}" required />
-                    </td>
+        <table class="table">
+            <tr>
+                <td id="tekst">Korisnicko ime:</td>
+                <td>
+                    <input type="text" id="korisnickoime" name="korisnickoime" placeholder="od 3 karakera min" pattern="[0-9a-zA-Z]{3,}" required />
+                </td>
 
-                </tr>
+            </tr>
 
-                <tr>
-                    <td id="tekst">Lozinka:</td>
-                    <td>
-                        <input type="password" id="lozinka" name="lozinka"  placeholder="od 4 karaktera min" pattern="[0-9a-zA-Z]{4,}" required />
-                    </td>
+            <tr>
+                <td id="tekst">Lozinka:</td>
+                <td>
+                    <input type="password" id="lozinka" name="lozinka" placeholder="od 4 karaktera min" pattern="[0-9a-zA-Z]{4,}" required />
+                </td>
 
-                </tr>
+            </tr>
 
-                <tr>
-                    <td id="tekst">Ime:</td>
-                    <td>
-                        <input type="text" id="ime" name="ime" placeholder="od 3 karaktera min" pattern="[a-zA-Z]{3,}" required />
-                    </td>
+            <tr>
+                <td id="tekst">Ime:</td>
+                <td>
+                    <input type="text" id="ime" name="ime" placeholder="od 3 karaktera min" pattern="[a-zA-Z]{3,}" required />
+                </td>
 
-                </tr>
+            </tr>
 
-                <tr>
-                    <td id="tekst">Prezime:</td>
-                    <td>
-                        <input type="text" id="prezime" name="prezime" placeholder="od 3 karaktera min" pattern="[a-zA-Z]{3,}" required />
-                    </td>
+            <tr>
+                <td id="tekst">Prezime:</td>
+                <td>
+                    <input type="text" id="prezime" name="prezime" placeholder="od 3 karaktera min" pattern="[a-zA-Z]{3,}" required />
+                </td>
 
-                </tr>
+            </tr>
 
-                <tr>
-                    <td id="tekst"><label for="pol">Pol:</label></td>
-                    <td>
-                        <select name="pol" id="polovi">
-                            <option id="polovi" value="Zenski">Zenski</option>
-                            <option id="polovi" value="Muski">Muski</option>
-                        </select>
-                    </td>
-                </tr>
+            <tr>
+                <td id="tekst"><label for="pol">Pol:</label></td>
+                <td>
+                    <select name="pol" id="polovi">
+                        <option id="polovi" value="Zenski">Zenski</option>
+                        <option id="polovi" value="Muski">Muski</option>
+                    </select>
+                </td>
+            </tr>
 
-                <tr>
-                    <td id="tekst">Datum rodjenja:</td>
-                    <td>
-                        <input type="text" id="datumrodjenja" name="datumrodjenja" placeholder="DD-MM-YYYY" required pattern="\d{2}-\d{2}-\d{4}" />
-                    </td>
+            <tr>
+                <td id="tekst">Datum rodjenja:</td>
+                <td>
+                    <input type="text" id="datumrodjenja" name="datumrodjenja" placeholder="DD-MM-YYYY" required pattern="\d{2}-\d{2}-\d{4}" />
+                </td>
 
-                </tr>
+            </tr>
 
-                <tr>
+            <tr>
 
-                    <td colspan="2">
-                        <input id="btnReg" type="submit" value="Registruj se" disabled="disabled" />
-                    </td>
-                </tr>
-            </table>
-            
+                <td colspan="2">
+                    <input id="btnReg" type="submit" value="Registruj se" disabled="disabled" />
+                </td>
+            </tr>
+        </table>
+
         <!--</form>-->
     </div>
 

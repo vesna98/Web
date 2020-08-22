@@ -39,7 +39,7 @@ namespace API_PR34_2017.Controllers
 
             foreach (Korisnik user in korisnici.Values)
             {
-                if (user.Korisnickoime.Equals(username) && user.Lozinka.Equals(password))
+                if (user.Korisnickoime.Equals(username) && user.Lozinka.Equals(password) && !user.Obrisan)
                 {
                     user.Loggedin = true;
                     HttpContext.Current.Session["user"] = user;

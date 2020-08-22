@@ -38,10 +38,12 @@
                 console.log("nije prijavljen");
                 $('#podaci').hide();
                 $('#DIVlogin').show();
+                $('#jestelog').hide();
             } else {
                 $('#podaci').show();
                 $('#DIVlogin').hide();
-                alert("Vec ste prijavljeni");
+                $('#jestelog').show();
+                //alert("Vec ste prijavljeni");
             }
 
             //alert("usao");
@@ -70,7 +72,7 @@
                         sessionStorage.setItem('logovan', JSON.stringify(data));
                         alert("Uspesna prijava.")
                         var korisnik = JSON.stringify(data);
-                        alert(korisnik);
+                        console.log(korisnik);
                         window.location.href = "pocetna.html";
                     } else {
                         alert("Niste uneli dobro korisnicko ime ili sifru.");
@@ -157,7 +159,7 @@
             outline: none;
             color: #ffffff;
             font-size: 15px;
-            background-color: tomato;
+            background-color: #4CAF50;
             cursor: pointer;
             border-radius: 20px;
         }
@@ -192,7 +194,7 @@
 <body>
     <h1 style="text-align:center;font-size: 40px; color:#333"><img class="header-img" src="slike/odlican.png" alt="logo" />Karte</h1>
     <div id="stranica">
-        
+
         <div class="topnav">
 
             <a href="pocetna.html"><i class="fa fa-fw fa-home"></i>Pocetna</a>
@@ -205,6 +207,7 @@
 
         </div>
     </div>
+    <div id="jestelog" style="text-align:center;color:red"><h2>Prijavljeni ste</h2></div>
     <div id="DIVlogin">
         <h2 style="color:#ffffff; font-weight:bold; font-family:Arial;text-align-last: center;">Prijava</h2>
         <table class="table">

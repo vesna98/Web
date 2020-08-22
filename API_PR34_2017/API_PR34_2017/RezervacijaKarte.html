@@ -39,8 +39,18 @@
                         $("#lista").hide();
                         $('#rasp').show();
                         $('#oksve').hide();
+                        $('#prosla').hide();
                         //console.log('prvi zapravo');
-                    } else {
+                    } else if (jsonObj =="Manifestacija je prosla.")
+                    {
+                        //alert("Manifestacija je prosla.")
+                        $("#lista").hide();
+                        $('#rasp').hide();
+                        $('#oksve').hide();
+                        $('#prosla').show();
+                    }
+                    else {
+                        $('#prosla').hide();
                         console.log('moze se rezervisati');
                         console.log('kupljeno=' + jsonObj.Kupljeno + "   br mesta=" + jsonObj.Brojmesta);
                         slobodno = parseInt(jsonObj.Brojmesta) - parseInt(jsonObj.Kupljeno);
@@ -126,6 +136,7 @@
                 if (slobodno == 0) {
                     $('#rasp').show();
                     $('#oksve').hide();
+                    $('#prosla').hide();
                 }
                 // location.reload();
             });
@@ -184,6 +195,7 @@
                             console.log("rasprodato");
                             $('#rasp').show();
                             $('#oksve').hide();
+                            $('#prosla').hide();
                             $("#lista").hide();
                         } else {
                             console.log('moze se rezervisati');
@@ -423,6 +435,7 @@
     <!--<table id="results" style="margin-left: auto;
   margin-right: auto;"></table>-->
     <div id="rasp"><h3 style="text-align:center;font-size: 20px ; color:red">Rasprodato</h3></div>
+    <div id="prosla"><h3 style="text-align:center;font-size: 20px ; color:red">Manifestacija je prosla</h3></div>
     <div id="oksve" style="width: 40%; background-color: #333;margin-left: 5px; border-radius:15px">
     <input style="margin-left: 10px;" id="reg" type="number" min="0" placeholder="regular" pattern="[0-9]+" oninput="validity.valid||(value='');"/>
     <input id="vip" type="number" min="0" placeholder="vip" pattern="[0-9]+" oninput="validity.valid||(value='');"/>

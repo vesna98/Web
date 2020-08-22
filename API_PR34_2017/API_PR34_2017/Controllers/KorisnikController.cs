@@ -486,16 +486,17 @@ namespace API_PR34_2017.Controllers
                 }
             }
             var json = JsonConvert.SerializeObject(man);
-
-            //if (man == null)
-            //{
-            //    return Request.CreateResponse(HttpStatusCode.BadRequest, json);
-            //}
-            //else
-            //{
-
-                return Request.CreateResponse(HttpStatusCode.OK, json);
-           // }
+            if (man != null)
+            {
+                int result = DateTime.Compare(DateTime.ParseExact(man.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None) , DateTime.Now);
+                if (result <= 0)
+                {
+                    //prosla je manifestacija
+                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject("Manifestacija je prosla."));
+                }
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+          
         }
 
         [Route("ObrisiManifestaciju")]

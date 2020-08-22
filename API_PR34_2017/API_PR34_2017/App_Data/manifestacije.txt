@@ -1,5 +1,5 @@
 pro123;Green Love;Festival;1200;25-06-2021 09:00 PM;2300;Ulica Novosadskog Sajma 56;Novi Sad;21000;green.png;Neaktivno;1200;0;4000;4400;False
-pro123;EXIT 2021;Koncert;421;12-07-2021 10:00 PM;5000;Varadinska 419;Petrovaradin;21000;exitfest2021.jpg;Aktivno;2;0;6000;6400;False
+pro123;EXIT 2021;Koncert;421;12-07-2021 10:00 PM;5000;Varadinska 419;Petrovaradin;21000;exitfest2021.jpg;Aktivno;5;0;6000;6400;False
 pro123;Cannes film festival;Koncert;1241;24-07-2021 08:00 PM;3244;Batist 335;Kan;32221;cannes.jpg;Neaktivno;10;5;3000;3400;False
 pro123;Berlin film Festival;Koncert;34252;23-02-2021 09:30 PM;3142;Potzdama Platz;Berlin;10574;Berlin-Film-Festival.jpg;Neaktivno;0;4;4000;3400;True
 pro123;coachella;Festival;34212;11-04-2022 02:00 PM;242422;81-800 Avenue 51;Indio CA;92201;coachella.jpeg;Neaktivno;0;3;4000;3400;False
@@ -19,7 +19,8 @@ pro123;ahg;Koncert;4;10-01-2020 10:30 PM;3;Novosadski Sajam 87;Novi Sad;21000;th
 pro123;Zizela;Pozoriste;677;14-01-2020 08:45 PM;4;Varadinska 44;Novi Sad;21000;zizela_plakat.jpg;Neaktivno;0;0;4000;3400;False
 pro123;Zizela;Pozoriste;2;04-01-2020 10:10 PM;11;Varadinska 44;Novi Sad;21000;plakat_final.jpg;Neaktivno;0;0;4000;3400;False
 pro123;mMED;Koncert;3;14-01-2020 10:22 PM;5;Varadinska 44;Novi Sad;21000;Gogoland.jpg;Neaktivno;0;0;4000;3400;True
-pro123;Sting;Koncert;1200;11-08-2023 10:00 PM;12;Novosadski Sajam 87;Novi Sad;21000;sting.jpg;Aktivno;0;0;24;20;False
+pro123;Sting;Koncert;10;11-08-2023 10:00 PM;12;Novosadski Sajam 87;Novi Sad;21000;sting.jpg;Aktivno;10;0;24;20;False
 pro123;Labudovo jezero;Pozoriste;600;10-04-2022 09:10 PM;12;Varadinska 44;Novi Sad;21000;plakat_final.jpg;Aktivno;21;0;20;14;False
 pro123;MEDforyou;Pozoriste;4;14-07-2020 03:10 PM;690;Novosadski Sajam 87;Novi Sad;21000;zizela_plakat.jpg;Neaktivno;0;0;1380;2760;False
 pro123;mmmmmm;Pozoriste;4;14-01-2020 03:20 PM;500;Novosadski Sajam 87;Novi Sad;21000;plava.jpg;Neaktivno;0;0;1000;2000;False
+proPro;Marko Kutlic;Koncert;200;14-02-2021 07:40 PM;11;Varadinska 44;Novi Sad;21000;markokutlic.jpg;Neaktivno;0;0;22;44;False

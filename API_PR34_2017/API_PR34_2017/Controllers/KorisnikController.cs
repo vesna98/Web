@@ -1388,5 +1388,53 @@ namespace API_PR34_2017.Controllers
 
             return sb.ToString(0, stringLength);
         }
+
+        public HttpResponseMessage DodajProdavca([FromBody]Korisnik korisnik)
+        {
+
+            if (ModelState.IsValid)
+            {
+                korisnik.Rezervisanekarte = new List<string>();
+                korisnik.Sakupljenibodovi = 0;
+                korisnik.Obrisan = false;
+                korisnik.Tip = TipIme.Nepoznat;
+                korisnik.Uloga = UlogaType.Prodavac;
+
+                DateTime timestamp;
+                if (!DateTime.TryParseExact(korisnik.Datumrodjenja, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out timestamp))
+                {
+                    //Niste uneli ispravan datum rodjenja.
+                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject("Niste uneli ispravan datum rodjenja."));
+                    //return 0;   //datum nije dobar
+                    // return false;
+                }
+                Dictionary<string, Korisnik> korisnici = Data.ReadUser("~/App_Data/korisnici.txt");
+                bool postoji = false;
+                foreach (string kime in korisnici.Keys)
+                {
+                    if (kime.Equals(korisnik.Korisnickoime))
+                    {
+                        //return false;
+                        postoji = true;
+                        break;
+                    }
+                }
+                if (!postoji)
+                {
+                    Data.SaveUser(korisnik);
+                    //dodaje se ako postoji
+                   // var output = JsonConvert.SerializeObject("Uspesno ste dodali.");
+
+                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject("Uspesno ste dodali."));
+
+                    //return 1;                   //USPESNO UPISAN 1
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject("Postoji korisnik sa tim korisnickim imenom."));
+               // return 2;
+            }
+            return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject("Niste uneli ispravne podatke."));
+            //return 2;   //POSTOJI VEC
+
+        }
     }
 }

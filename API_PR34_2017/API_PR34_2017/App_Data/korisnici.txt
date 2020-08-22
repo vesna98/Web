@@ -3,3 +3,8 @@ medic;1234;Lana;Aleksic;Zenski;12-12-2000;4670;Srebrni;Kupac;True
 admin123;1234;asa;fghgh;Zenski;12-12-2000;1230;Nepoznat;Administrator;False
 admin;1234;Aleksandra;Nikolic;Zenski;12-12-2000;0;Nepoznat;Administrator;False
 pro123;1234;Aleksandar;Aleksic;Muski;12-12-2010;0;Nepoznat;Prodavac;True
+proPro;1234;Dijana;Matijevic;Zenski;08-11-1998;0;Nepoznat;Prodavac;False
+veki;1234;Vesna;Matijevic;Zenski;07-11-1998;0;Nepoznat;Prodavac;False
+matija;1234;Nikola;Matijevic;Muski;29-02-2000;0;Nepoznat;Prodavac;False
+ana;1234;Ana;Matijevic;Zenski;11-04-2000;0;Nepoznat;Prodavac;False
+nidzolino;1234;Nikola;Nikolic;Muski;23-12-1998;0;Nepoznat;Prodavac;False

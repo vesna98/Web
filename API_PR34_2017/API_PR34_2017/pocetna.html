@@ -1078,6 +1078,105 @@
                 }
                 //detaljniji prikaz manifestacija
 
+                $("#dodaj_prodavca").click(function () {
+                    $('#userPrikaz').hide();
+
+                    var span = document.getElementsByClassName("close")[0];
+                    var modal = document.getElementById("myModal");
+                    // When the user clicks on the button, open the modal
+                    // btn.onclick = function() {
+                    modal.style.display = "block";
+                    //}
+
+                    // When the user clicks on <span> (x), close the modal
+                    span.onclick = function () {
+                        modal.style.display = "none";
+                    }
+                    // When the user clicks anywhere outside of the modal, close it
+                    window.onclick = function (event) {
+                        if (event.target == modal) {
+                            modal.style.display = "none";
+                        }
+                    }
+                    //----------------------------------
+                    $("#korisnickoime").val("");
+                    $("#lozinka").val("");
+                    $("#ime").val("");
+                    $("#prezime").val("");
+                    document.getElementById('polovi').selectedIndex = 0;
+                    $("#datumrodjenja").val("");
+                
+                });
+                $("#btnReg").click(function () {
+                    let k1 = document.getElementById("korisnickoime");
+                    let k2 = document.getElementById("lozinka");
+                    let k3 = document.getElementById("ime");
+                    let k4 = document.getElementById("prezime");
+                    let k5 = document.getElementById("datumrodjenja");
+
+                    // if (!k1.checkValidity() || !k2.checkValidity() || !k3.checkValidity() || !k4.checkValidity() || !k5.checkValidity()) {
+                    //   alert("Molimo popunite sva polja na ispravan način.");
+                    if (!k1.checkValidity()) {
+                        alert("Korisnicko ime moze da sadrzi samo slova i cifre.[3-]");
+                    } else if (!k2.checkValidity()) {
+                        alert("Lozinka moze da sadrzi samo slova i cifre.[4-]");
+                    } else if (!k3.checkValidity()) {
+                        alert("Ime moze da sadrzi samo slova.[3-]");
+                    } else if (!k4.checkValidity()) {
+                        alert("Prezime moze da sadrzi samo slova.[3-]");
+                    } else if (!k5.checkValidity()) {
+                        alert("Datum unesite u formatu DD-MM-YYYY");
+                    }
+                    else {
+                        var korisnickoime = $("#korisnickoime").val();
+                        var lozinka = $("#lozinka").val();
+                        var ime = $("#ime").val();
+                        var prezime = $("#prezime").val();
+                        var pol = $("#polovi option:selected").val();//$("#pol").val();
+                        var datumrodjenja = $("#datumrodjenja").val();
+                        var obj = JSON.stringify({
+                            "korisnickoime": korisnickoime,
+                            "lozinka": lozinka,
+                            "ime": ime,
+                            "prezime": prezime,
+                            "pol": pol,
+                            "datumrodjenja": datumrodjenja
+
+                        });
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/api/Korisnik/DodajProdavca',
+                                    data: obj,
+                                    contentType: 'application/json; charset=utf-8',
+                                    dataType: 'json',
+                                    success: function (data) {
+                                        alert(JSON.parse(data));
+                                        if (JSON.parse(data) == 'Uspesno ste dodali.') {
+                                            var modal = document.getElementById("myModal");
+                                            modal.style.display = "none";
+
+                                            $("#korisnickoime").val("");
+                                            $("#lozinka").val("");
+                                            $("#ime").val("");
+                                            $("#prezime").val("");
+                                            document.getElementById('polovi').selectedIndex = 0;
+                                            $("#datumrodjenja").val("");
+                                        }
+                                        //if (data == 1) {
+                                        //    alert('Uspesno ste dodali.');
+                                        //    $(location).attr('href', 'login.html');
+                                        //} else if (data == 2) {
+                                        //    alert('Postoji korisnik sa tim korisnickim imenom.');
+                                        //} else {
+                                        //    alert('Niste uneli ispravan datum rodjenja.');
+                                        //}
+                                    }
+                                });
+
+                           }
+                });
+
                 $("#svi_korisnici").click(function () {
                     $('#userPrikaz').show();
                     var tabelica = document.getElementById('userTabela');
@@ -1159,7 +1258,7 @@
                         success: function (data) {
 
                             var lista = JSON.parse(data);
-                            alert("u json korisnci" + data);
+                            console.log("u json korisnci" + data);
                             //var korisnici = JSON.stringify(data);
                             //alert("korisnici" + korisnici);
                             for (i = 0; i < lista.length; i++) {
@@ -1226,7 +1325,7 @@
                         success: function (data) {
 
                             var lista = JSON.parse(data);
-                            alert("u json korisnci" + data);
+                            console.log("u json korisnci" + data);
                             //var korisnici = JSON.stringify(data);
                             //alert("korisnici" + korisnici);
                             for (i = 0; i < lista.length; i++) {
@@ -1293,7 +1392,7 @@
                         success: function (data) {
 
                             var lista = JSON.parse(data);
-                            alert("u json korisnci" + data);
+                            console.log("u json korisnci" + data);
                             //var korisnici = JSON.stringify(data);
                             //alert("korisnici" + korisnici);
                             for (i = 0; i < lista.length; i++) {
@@ -1359,7 +1458,7 @@
                         success: function (data) {
 
                             var lista = JSON.parse(data);
-                            alert("u json korisnci" + data);
+                            console.log("u json korisnci" + data);
                             //var korisnici = JSON.stringify(data);
                             //alert("korisnici" + korisnici);
                             for (i = 0; i < lista.length; i++) {
@@ -1425,7 +1524,7 @@
                         success: function (data) {
 
                             var lista = JSON.parse(data);
-                            alert("u json korisnci" + data);
+                            console.log("u json korisnci" + data);
                             //var korisnici = JSON.stringify(data);
                             //alert("korisnici" + korisnici);
                             for (i = 0; i < lista.length; i++) {
@@ -1572,7 +1671,7 @@
                         success: function (data) {
 
                             var lista = JSON.parse(data);
-                            alert("u json korisnci" + data);
+                            console.log("u json korisnci" + data);
                             //var korisnici = JSON.stringify(data);
                             //alert("korisnici" + korisnici);
                             for (i = 0; i < lista.length; i++) {
@@ -1638,7 +1737,7 @@
                         success: function (data) {
 
                             var lista = JSON.parse(data);
-                            alert("u json korisnci" + data);
+                            console.log("u json korisnci" + data);
                             //var korisnici = JSON.stringify(data);
                             //alert("korisnici" + korisnici);
                             for (i = 0; i < lista.length; i++) {
@@ -1705,7 +1804,7 @@
                         success: function (data) {
 
                             var lista = JSON.parse(data);
-                            alert("u json korisnci" + data);
+                            console.log("u json korisnci" + data);
                             //var korisnici = JSON.stringify(data);
                             //alert("korisnici" + korisnici);
                             for (i = 0; i < lista.length; i++) {
@@ -1764,7 +1863,7 @@
                         tabelica.deleteRow(i);
                     }
                     // document.getElementById('tabelaMani') = tabelica;
-                    alert(tipovi);
+                    console.log(tipovi);
                     var obj = JSON.stringify({
                         "filter1": tipovi
                     });
@@ -1777,7 +1876,7 @@
                         dataType: 'json',
                         success: function (data) {
                             var lista = JSON.parse(data);
-                            alert("u json korisnci" + data);
+                            console.log("u json korisnci" + data);
                             //var korisnici = JSON.stringify(data);
                             //alert("korisnici" + korisnici);
                             for (i = 0; i < lista.length; i++) {
@@ -1837,7 +1936,7 @@
                         tabelica.deleteRow(i);
                     }
                     // document.getElementById('tabelaMani') = tabelica;
-                    alert(tipovi);
+                    console.log(tipovi);
                     var obj = JSON.stringify({
                         "filter1": tipovi
                     });
@@ -1850,7 +1949,7 @@
                         dataType: 'json',
                         success: function (data) {
                             var lista = JSON.parse(data);
-                            alert("u json korisnci" + data);
+                            console.log("u json korisnci" + data);
                             //var korisnici = JSON.stringify(data);
                             //alert("korisnici" + korisnici);
                             for (i = 0; i < lista.length; i++) {
@@ -1994,17 +2093,10 @@
                                     $('#novaMani').hide();
                                     // $("#maniPrikaz").load("#tabelaMani");              //zakomentarisno,pre je bilo!!!!!!!!!!!!!!!!!!
 
-
-
-                                    /*, function (responseTxt, statusTxt, xhr) {
-                                        if (statusTxt == "success")
-                                            alert("External content loaded successfully!");
-                                        if (statusTxt == "error")
-                                            alert("Error: " + xhr.status + ": " + xhr.statusText);
-                                    });*/
                                 }
                             });
-                        }
+
+                               }
 
                     });
                 });
@@ -2469,6 +2561,43 @@
             margin: 50px auto 0 auto;
             width: 80%;
         }*/
+
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: rgba(51, 51, 51, 0.9); /*#fefefe;*/
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 50%; /* Could be more or less, depending on screen size */
+        }
+
+        /* The Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+            .close:hover,
+            .close:focus {
+                color: black;
+                text-decoration: none;
+                cursor: pointer;
+            }
     </style>
 </head>
 <body>
@@ -2501,7 +2630,82 @@
     <div id="AdminView">
         <h3 style="color:#333">Vase opcije</h3>
         <input type="submit" id="svi_korisnici" value="Prikaz svih korisnika" />
+        <input type="submit" id="dodaj_prodavca" value="Dodajte prodavca" />
+        <div id="prodavac_add">
+            <div id="myModal" class="modal">
 
+                <!-- Modal content -->
+                <div class="modal-content" style="text-align:center">
+                    <span class="close">&times;</span>
+                    <div id="DIVreg">
+                        <h2 style="color:#ffffff; font-weight:bold; font-family:Arial;text-align-last: center;">Dodavanje prodavca</h2>
+                        <!--<form action="" method="post">-->
+                        <table class="table" style="margin-left: auto;
+  margin-right: auto;">
+                            <tr>
+                                <td id="tekst" style="color:black">Korisnicko ime:</td>
+                                <td>
+                                    <input type="text" id="korisnickoime" name="korisnickoime" placeholder="od 3 karakera min" pattern="[0-9a-zA-Z]{3,}" required />
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td id="tekst" style="color:black">Lozinka:</td>
+                                <td>
+                                    <input type="password" id="lozinka" name="lozinka" placeholder="od 4 karaktera min" pattern="[0-9a-zA-Z]{4,}" required />
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td id="tekst" style="color:black">Ime:</td>
+                                <td>
+                                    <input type="text" id="ime" name="ime" placeholder="od 3 karaktera min" pattern="[a-zA-Z]{3,}" required />
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td id="tekst" style="color:black">Prezime:</td>
+                                <td>
+                                    <input type="text" id="prezime" name="prezime" placeholder="od 3 karaktera min" pattern="[a-zA-Z]{3,}" required />
+                                </td>
+
+                            </tr>
+
+                            <tr>
+                                <td id="tekst" style="color:black"><label for="pol">Pol:</label></td>
+                                <td>
+                                    <select name="pol" id="polovi">
+                                        <option id="polovi" value="Zenski">Zenski</option>
+                                        <option id="polovi" value="Muski">Muski</option>
+                                    </select>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td id="tekst" style="color:black">Datum rodjenja:</td>
+                                <td>
+                                    <input type="text" id="datumrodjenja" name="datumrodjenja" placeholder="DD-MM-YYYY" required pattern="\d{2}-\d{2}-\d{4}" />
+                                </td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td colspan="2">
+                                    <button id="btnReg" >Dodaj</button>
+                                </td>
+                            </tr>
+                        </table>
+
+                    </div>
+                </div>
+
+            </div>
+           
+        </div>
         <div id="userPrikaz" class="table-responsive">
             <div style=" display: inline-block;vertical-align: top;">
                 <h4>Filtrirajte po tipu korisnike</h4>
@@ -2529,33 +2733,34 @@
                 <input id="a_prz" type="text" placeholder="unesite prezime" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" />
                 <input id="a_korime" type="text" placeholder="unesite korisnicko ime" pattern="[0-9a-zA-Z]+" /><button type="button" id="a_pretraga">Pretrazi korisnike</button>
             </div>
-                <table id="userTabela" style=" display: inline-block;vertical-align: top;overflow: auto">
+            <table id="userTabela" style=" display: inline-block;vertical-align: top;overflow: auto">
                 <caption style="background-color:#333;color:white;margin-top:25px">Korisnici</caption>
-                    <tr>
-                        <th>Korisnicko ime</th>
-                        <th>Ime</th>
-                        <th>Prezime</th>
-                        <th>Pol</th>
-                        <th>Datum rodjenja</th>
-                        <th>Uloga</th>
-                        <th>Sakupljeni poeni</th>
-                        <th>Obrisan</th>
-                        <th>Opcije</th>
-                    </tr>
-                </table>
-                <ul style=" display: inline-block;vertical-align: top;list-style-type:none;">
-                    <li><h4>Sortiranja za korisnike</h4></li>
-                    <li style="margin-top: 5px;"><button id="ime_AZ">Sortiraj po imenu A-Z</button></li>
-                    <li style="margin-top: 5px;"><button id="ime_ZA">Sortiraj po imenu Z-A</button></li>
-                    <li style="margin-top: 5px;"><button id="prz_AZ">Sortiraj po prezimenu A-Z</button></li>
-                    <li style="margin-top: 5px;"><button id="prz_ZA">Sortiraj po prezimenu Z-A</button></li>
-                    <li style="margin-top: 5px;"><button id="korime_AZ">Sortiraj po korisnickom imenu A-Z</button></li>
-                    <li style="margin-top: 5px;"><button id="korime_ZA">Sortiraj po korisnickom imenu Z-A</button></li>
-                    <li style="margin-top: 5px;"><button id="bodoviR">Sortiraj po broju bodova rastuce</button></li>
-                    <li style="margin-top: 5px;"><button id="bodoviO">Sortiraj po broju bodova opadajuce</button></li>
-                </ul>
-            </div>
+                <tr>
+                    <th>Korisnicko ime</th>
+                    <th>Ime</th>
+                    <th>Prezime</th>
+                    <th>Pol</th>
+                    <th>Datum rodjenja</th>
+                    <th>Uloga</th>
+                    <th>Sakupljeni poeni</th>
+                    <th>Obrisan</th>
+                    <th>Opcije</th>
+                </tr>
+            </table>
+            <ul style=" display: inline-block;vertical-align: top;list-style-type:none;">
+                <li><h4>Sortiranja za korisnike</h4></li>
+                <li style="margin-top: 5px;"><button id="ime_AZ">Sortiraj po imenu A-Z</button></li>
+                <li style="margin-top: 5px;"><button id="ime_ZA">Sortiraj po imenu Z-A</button></li>
+                <li style="margin-top: 5px;"><button id="prz_AZ">Sortiraj po prezimenu A-Z</button></li>
+                <li style="margin-top: 5px;"><button id="prz_ZA">Sortiraj po prezimenu Z-A</button></li>
+                <li style="margin-top: 5px;"><button id="korime_AZ">Sortiraj po korisnickom imenu A-Z</button></li>
+                <li style="margin-top: 5px;"><button id="korime_ZA">Sortiraj po korisnickom imenu Z-A</button></li>
+                <li style="margin-top: 5px;"><button id="bodoviR">Sortiraj po broju bodova rastuce</button></li>
+                <li style="margin-top: 5px;"><button id="bodoviO">Sortiraj po broju bodova opadajuce</button></li>
+            </ul>
         </div>
+        <hr style="border: 2px solid#5b9aa0;" />
+    </div>
     <div id="ProView">
         <h3 style="color:#333">Vase opcije</h3>
         <input type="submit" id="addFest" value="Dodaj manifestaciju" />

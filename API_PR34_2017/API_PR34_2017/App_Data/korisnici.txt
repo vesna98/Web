@@ -6,6 +6,6 @@ pro123;1234;Aleksandar;Aleksic;Muski;12-12-2010;0;Nepoznat;Prodavac;True
 proPro;1234;Dijana;Matijevic;Zenski;08-11-1998;0;Nepoznat;Prodavac;False
 veki;1234;Vesna;Matijevic;Zenski;07-11-1998;0;Nepoznat;Prodavac;True
 matija;1234;Nikola;Matijevic;Muski;29-02-2000;0;Nepoznat;Prodavac;False
-ana;1234;Ana;Matijevic;Zenski;11-04-2000;0;Nepoznat;Prodavac;False
+ana;1234;Ana;Matijevic;Zenski;11-04-2000;0;Nepoznat;Prodavac;True
 nidzolino;1234;Nikola;Nikolic;Muski;23-12-1998;0;Nepoznat;Prodavac;False
-ana123;1234;srr;fdre;Zenski;12-03-2000;0;Nepoznat;Kupac;False
+ana123;1234;srr;fdre;Zenski;12-03-2000;0;Nepoznat;Kupac;True

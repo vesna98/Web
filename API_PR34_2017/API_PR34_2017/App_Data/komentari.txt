@@ -8,4 +8,4 @@ b9406;mMED;10-02-2020 10:00 PM;veca;Najbolji koncert;5;True;False
 de67d;mMED;10-02-2020 10:00 PM;veca;moglo je bolje vreme da bude,ali super;3;True;False
 9613d;mMED;10-02-2020 10:00 PM;veca;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy;5;False;True
 209d4;mMED;10-02-2020 10:00 PM;veca;ekstraaaa 10+;4;True;False
-2cbea;mMED;10-02-2020 10:00 PM;veca;prijelepo;4;False;False
+2cbea;mMED;10-02-2020 10:00 PM;veca;prijelepo;4;True;False

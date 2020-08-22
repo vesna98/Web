@@ -275,8 +275,28 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
                 {
-                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                        svi.Add(k);
+                    if (user == null || user.Uloga.ToString().Equals("Kupac"))
+                    { 
+                        //kad je kupac samo manifestacije za koje moze da rezervise
+                        int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                        if (result > 0)
+                        {
+                            //prosla je manifestacija r<=0
+                            //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
+                            if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                                svi.Add(k);
+
+                        }
+                    }else if (user.Uloga.ToString().Equals("Prodavac"))
+                    {
+                        if (k.Prodavac.Equals(user.Korisnickoime))
+                        {
+                            if (!k.Obrisan)// && k.Status.ToString().Equals("Aktivno"))  mogu da vide sve svoje manifestacije aktivne i neaktivne
+                                svi.Add(k);
+                        }
+                    }
+
+                    
                 }
                 else
                 {
@@ -440,7 +460,13 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))
                 {
-                    if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                    if (user!=null && user.Uloga.ToString().Equals("Prodavac") && k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan)
+                    {
+                        if (k.Prodavac.Equals(user.Korisnickoime))
+                        {
+                            man = k;    //moze i aktivna i neaktivna
+                        }
+                    }else if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                     {
                         man = k;
                     }
@@ -486,15 +512,15 @@ namespace API_PR34_2017.Controllers
                 }
             }
             var json = JsonConvert.SerializeObject(man);
-            if (man != null)
-            {
-                int result = DateTime.Compare(DateTime.ParseExact(man.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None) , DateTime.Now);
-                if (result <= 0)
-                {
-                    //prosla je manifestacija
-                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject("Manifestacija je prosla."));
-                }
-            }
+            //if (man != null)
+            //{
+            //    int result = DateTime.Compare(DateTime.ParseExact(man.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None) , DateTime.Now);
+            //    if (result <= 0)
+            //    {
+            //        //prosla je manifestacija
+            //        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject("Manifestacija je prosla."));
+            //    }
+            //}
             return Request.CreateResponse(HttpStatusCode.OK, json);
           
         }
@@ -613,8 +639,27 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
                 {
-                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                        svi.Add(k);
+                    if (user == null || user.Uloga.ToString().Equals("Kupac"))
+                    {
+                        //kad je kupac samo manifestacije za koje moze da rezervise
+                        int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                        if (result > 0)
+                        {
+                            //prosla je manifestacija r<=0
+                            //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
+                            if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                                svi.Add(k);
+
+                        }
+                    }
+                    else if (user.Uloga.ToString().Equals("Prodavac"))
+                    {
+                        if (k.Prodavac.Equals(user.Korisnickoime))
+                        {
+                            if (!k.Obrisan)// && k.Status.ToString().Equals("Aktivno"))  mogu da vide sve svoje manifestacije aktivne i neaktivne
+                                svi.Add(k);
+                        }
+                    }
                 }
                 else
                 {
@@ -711,8 +756,27 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
                 {
-                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                        svi.Add(k);
+                    if (user == null || user.Uloga.ToString().Equals("Kupac"))
+                    {
+                        //kad je kupac samo manifestacije za koje moze da rezervise
+                        int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                        if (result > 0)
+                        {
+                            //prosla je manifestacija r<=0
+                            //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
+                            if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                                svi.Add(k);
+
+                        }
+                    }
+                    else if (user.Uloga.ToString().Equals("Prodavac"))
+                    {
+                        if (k.Prodavac.Equals(user.Korisnickoime))
+                        {
+                            if (!k.Obrisan)// && k.Status.ToString().Equals("Aktivno"))  mogu da vide sve svoje manifestacije aktivne i neaktivne
+                                svi.Add(k);
+                        }
+                    }
                 }
                 else
                 {
@@ -847,8 +911,27 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
                 {
-                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                        svi.Add(k);
+                    if (user == null || user.Uloga.ToString().Equals("Kupac"))
+                    {
+                        //kad je kupac samo manifestacije za koje moze da rezervise
+                        int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                        if (result > 0)
+                        {
+                            //prosla je manifestacija r<=0
+                            //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
+                            if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                                svi.Add(k);
+
+                        }
+                    }
+                    else if (user.Uloga.ToString().Equals("Prodavac"))
+                    {
+                        if (k.Prodavac.Equals(user.Korisnickoime))
+                        {
+                            if (!k.Obrisan)// && k.Status.ToString().Equals("Aktivno"))  mogu da vide sve svoje manifestacije aktivne i neaktivne
+                                svi.Add(k);
+                        }
+                    }
                 }
                 else
                 {
@@ -926,8 +1009,27 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
                 {
-                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                        svi.Add(k);
+                    if (user == null || user.Uloga.ToString().Equals("Kupac"))
+                    {
+                        //kad je kupac samo manifestacije za koje moze da rezervise
+                        int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                        if (result > 0)
+                        {
+                            //prosla je manifestacija r<=0
+                            //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
+                            if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                                svi.Add(k);
+
+                        }
+                    }
+                    else if (user.Uloga.ToString().Equals("Prodavac"))
+                    {
+                        if (k.Prodavac.Equals(user.Korisnickoime))
+                        {
+                            if (!k.Obrisan)// && k.Status.ToString().Equals("Aktivno"))  mogu da vide sve svoje manifestacije aktivne i neaktivne
+                                svi.Add(k);
+                        }
+                    }
                 }
                 else
                 {
@@ -1003,8 +1105,27 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
                 {
-                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                        svi.Add(k);
+                    if (user == null || user.Uloga.ToString().Equals("Kupac"))
+                    {
+                        //kad je kupac samo manifestacije za koje moze da rezervise
+                        int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                        if (result > 0)
+                        {
+                            //prosla je manifestacija r<=0
+                            //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
+                            if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                                svi.Add(k);
+
+                        }
+                    }
+                    else if (user.Uloga.ToString().Equals("Prodavac"))
+                    {
+                        if (k.Prodavac.Equals(user.Korisnickoime))
+                        {
+                            if (!k.Obrisan)// && k.Status.ToString().Equals("Aktivno"))  mogu da vide sve svoje manifestacije aktivne i neaktivne
+                                svi.Add(k);
+                        }
+                    }
                 }
                 else
                 {
@@ -1040,8 +1161,27 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
                 {
-                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                        svi.Add(k);
+                    if (user == null || user.Uloga.ToString().Equals("Kupac"))
+                    {
+                        //kad je kupac samo manifestacije za koje moze da rezervise
+                        int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                        if (result > 0)
+                        {
+                            //prosla je manifestacija r<=0
+                            //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
+                            if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                                svi.Add(k);
+
+                        }
+                    }
+                    else if (user.Uloga.ToString().Equals("Prodavac"))
+                    {
+                        if (k.Prodavac.Equals(user.Korisnickoime))
+                        {
+                            if (!k.Obrisan)// && k.Status.ToString().Equals("Aktivno"))  mogu da vide sve svoje manifestacije aktivne i neaktivne
+                                svi.Add(k);
+                        }
+                    }
                 }
                 else
                 {
@@ -1078,8 +1218,27 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
                 {
-                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                        svi.Add(k);
+                    if (user == null || user.Uloga.ToString().Equals("Kupac"))
+                    {
+                        //kad je kupac samo manifestacije za koje moze da rezervise
+                        int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                        if (result > 0)
+                        {
+                            //prosla je manifestacija r<=0
+                            //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
+                            if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                                svi.Add(k);
+
+                        }
+                    }
+                    else if (user.Uloga.ToString().Equals("Prodavac"))
+                    {
+                        if (k.Prodavac.Equals(user.Korisnickoime))
+                        {
+                            if (!k.Obrisan)// && k.Status.ToString().Equals("Aktivno"))  mogu da vide sve svoje manifestacije aktivne i neaktivne
+                                svi.Add(k);
+                        }
+                    }
                 }
                 else
                 {
@@ -1150,8 +1309,27 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
                 {
-                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                        svi.Add(k);
+                    if (user == null || user.Uloga.ToString().Equals("Kupac"))
+                    {
+                        //kad je kupac samo manifestacije za koje moze da rezervise
+                        int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                        if (result > 0)
+                        {
+                            //prosla je manifestacija r<=0
+                            //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
+                            if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                                svi.Add(k);
+
+                        }
+                    }
+                    else if (user.Uloga.ToString().Equals("Prodavac"))
+                    {
+                        if (k.Prodavac.Equals(user.Korisnickoime))
+                        {
+                            if (!k.Obrisan)// && k.Status.ToString().Equals("Aktivno"))  mogu da vide sve svoje manifestacije aktivne i neaktivne
+                                svi.Add(k);
+                        }
+                    }
                 }
                 else
                 {
@@ -1187,8 +1365,27 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
                 {
-                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                        svi.Add(k);
+                    if (user == null || user.Uloga.ToString().Equals("Kupac"))
+                    {
+                        //kad je kupac samo manifestacije za koje moze da rezervise
+                        int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                        if (result > 0)
+                        {
+                            //prosla je manifestacija r<=0
+                            //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
+                            if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                                svi.Add(k);
+
+                        }
+                    }
+                    else if (user.Uloga.ToString().Equals("Prodavac"))
+                    {
+                        if (k.Prodavac.Equals(user.Korisnickoime))
+                        {
+                            if (!k.Obrisan)// && k.Status.ToString().Equals("Aktivno"))  mogu da vide sve svoje manifestacije aktivne i neaktivne
+                                svi.Add(k);
+                        }
+                    }
                 }
                 else
                 {
@@ -1225,8 +1422,27 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
                 {
-                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                        svi.Add(k);
+                    if (user == null || user.Uloga.ToString().Equals("Kupac"))
+                    {
+                        //kad je kupac samo manifestacije za koje moze da rezervise
+                        int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                        if (result > 0)
+                        {
+                            //prosla je manifestacija r<=0
+                            //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
+                            if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                                svi.Add(k);
+
+                        }
+                    }
+                    else if (user.Uloga.ToString().Equals("Prodavac"))
+                    {
+                        if (k.Prodavac.Equals(user.Korisnickoime))
+                        {
+                            if (!k.Obrisan)// && k.Status.ToString().Equals("Aktivno"))  mogu da vide sve svoje manifestacije aktivne i neaktivne
+                                svi.Add(k);
+                        }
+                    }
                 }
                 else
                 {
@@ -1262,8 +1478,27 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))     //ako nije administrator dodaju se samo aktivni sto nisu obrisani
                 {
-                    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                        svi.Add(k);
+                    if (user == null || user.Uloga.ToString().Equals("Kupac"))
+                    {
+                        //kad je kupac samo manifestacije za koje moze da rezervise
+                        int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                        if (result > 0)
+                        {
+                            //prosla je manifestacija r<=0
+                            //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
+                            if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                                svi.Add(k);
+
+                        }
+                    }
+                    else if (user.Uloga.ToString().Equals("Prodavac"))
+                    {
+                        if (k.Prodavac.Equals(user.Korisnickoime))
+                        {
+                            if (!k.Obrisan)// && k.Status.ToString().Equals("Aktivno"))  mogu da vide sve svoje manifestacije aktivne i neaktivne
+                                svi.Add(k);
+                        }
+                    }
                 }
                 else
                 {

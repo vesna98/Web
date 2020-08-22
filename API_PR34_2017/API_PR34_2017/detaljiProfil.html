@@ -36,19 +36,19 @@
                 alert("nije prij");
                 $('#podaci').hide();
                 $('#karte').hide();
-                $('#korisnikKarte').hide();     //prikaz karata za kupce
+                //$('#korisnikKarte').hide();     //prikaz karata za kupce
             } else {
-                if (korisnik.Uloga == 0) {//admin
+                //if (korisnik.Uloga == 0) {//admin
 
-                    $('#korisnikKarte').hide();
+                //   // $('#korisnikKarte').hide();
 
-                } else if (korisnik.Uloga == 1) {
-                    //prodavac
+                //} else if (korisnik.Uloga == 1) {
+                //    //prodavac
 
-                    $('#korisnikKarte').hide();
+                //   // $('#korisnikKarte').hide();
 
-                }
-                else if (korisnik.Uloga == 2)
+                //}
+                if (korisnik.Uloga == 2 || korisnik.Uloga == 0 || korisnik.Uloga == 1)
                 {//kupac
                     $('#karte').show();
                     $('#korisnikKarte').show();
@@ -80,16 +80,23 @@
                                 } else {
                                     lista += "<td>" + " FAN PIT " + "</td>";
                                 }
-
-                                if (jsonObj[i].Status == 0) {
-                                    lista += "<td> Rezervisana </td>";
-                                    var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
-                                    lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
-                                } else {
-                                    if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
-                                        lista += "<td> Odustanak </td>";
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                              //  if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
+                                    if (jsonObj[i].Status == 0) {
+                                        lista += "<td> Rezervisana </td>";
+                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                        if (korisnik.Uloga == 2)
+                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                    } else {
+                                        if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
+                                            lista += "<td> Odustanak </td>";
+                                            if (korisnik.Uloga == 2)
+                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                        }
                                     }
+                                // }
+                                if (korisnik.Uloga != 2) {
+                                    //ako je prodavac,admin prikazi kupca karte
+                                    lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                 }
 
                                 lista += "</tr>";
@@ -169,18 +176,24 @@
                                         } else {
                                             lista += "<td>" + " FAN PIT " + "</td>";
                                         }
-
-                                        if (jsonObj[i].Status == 0) {
-                                            lista += "<td> Rezervisana </td>";
-                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
-                                        } else {
-                                            if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
-                                                lista += "<td> Odustanak </td>";
-                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                        //if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
+                                            if (jsonObj[i].Status == 0) {
+                                                lista += "<td> Rezervisana </td>";
+                                                var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                                if (korisnik.Uloga == 2)
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                            } else {
+                                                if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
+                                                    lista += "<td> Odustanak </td>";
+                                                    if (korisnik.Uloga == 2)
+                                                    lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                                }
                                             }
+                                       // }
+                                        if (korisnik.Uloga != 2) {
+                                            //ako je prodavac,admin prikazi kupca karte
+                                            lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                         }
-
                                         lista += "</tr>";
                                         $("#tabelaKarte").append(lista);
                                         //lista += "</td>"
@@ -233,18 +246,24 @@
                                     } else {
                                         lista += "<td>" + " FAN PIT " + "</td>";
                                     }
-
-                                    if (jsonObj[i].Status == 0) {
-                                        lista += "<td> Rezervisana </td>";
-                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
-                                    } else {
-                                        if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
-                                            lista += "<td> Odustanak </td>";
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                   // if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
+                                        if (jsonObj[i].Status == 0) {
+                                            lista += "<td> Rezervisana </td>";
+                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            if (korisnik.Uloga == 2)
+                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        } else {
+                                            if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
+                                                lista += "<td> Odustanak </td>";
+                                                if (korisnik.Uloga == 2)
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            }
                                         }
+                                   // }
+                                    if (korisnik.Uloga != 2) {
+                                        //ako je prodavac,admin prikazi kupca karte
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
-
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
                                     //lista += "</td>"
@@ -295,18 +314,24 @@
                                     } else {
                                         lista += "<td>" + " FAN PIT " + "</td>";
                                     }
-
-                                    if (jsonObj[i].Status == 0) {
-                                        lista += "<td> Rezervisana </td>";
-                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
-                                    } else {
-                                        if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
-                                            lista += "<td> Odustanak </td>";
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                   // if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
+                                        if (jsonObj[i].Status == 0) {
+                                            lista += "<td> Rezervisana </td>";
+                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            if (korisnik.Uloga == 2)
+                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        } else {
+                                            if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
+                                                lista += "<td> Odustanak </td>";
+                                                if (korisnik.Uloga == 2)
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            }
                                         }
+                                   // }
+                                    if (korisnik.Uloga != 2) {
+                                        //ako je prodavac,admin prikazi kupca karte
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
-
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
                                     //lista += "</td>"
@@ -357,18 +382,24 @@
                                     } else {
                                         lista += "<td>" + " FAN PIT " + "</td>";
                                     }
-
-                                    if (jsonObj[i].Status == 0) {
-                                        lista += "<td> Rezervisana </td>";
-                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
-                                    } else {
-                                        if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
-                                            lista += "<td> Odustanak </td>";
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                    //if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
+                                        if (jsonObj[i].Status == 0) {
+                                            lista += "<td> Rezervisana </td>";
+                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            if (korisnik.Uloga == 2)
+                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        } else {
+                                            if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
+                                                lista += "<td> Odustanak </td>";
+                                                if (korisnik.Uloga == 2)
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            }
                                         }
+                                    //}
+                                    if (korisnik.Uloga != 2) {
+                                        //ako je prodavac,admin prikazi kupca karte
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
-
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
                                     //lista += "</td>"
@@ -420,18 +451,24 @@
                                     } else {
                                         lista += "<td>" + " FAN PIT " + "</td>";
                                     }
-
-                                    if (jsonObj[i].Status == 0) {
-                                        lista += "<td> Rezervisana </td>";
-                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
-                                    } else {
-                                        if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
-                                            lista += "<td> Odustanak </td>";
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                   // if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
+                                        if (jsonObj[i].Status == 0) {
+                                            lista += "<td> Rezervisana </td>";
+                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            if (korisnik.Uloga == 2)
+                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        } else {
+                                            if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
+                                                lista += "<td> Odustanak </td>";
+                                                if (korisnik.Uloga == 2)
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            }
                                         }
+                                   // }
+                                    if (korisnik.Uloga != 2) {
+                                        //ako je prodavac,admin prikazi kupca karte
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
-
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
                                     //lista += "</td>"
@@ -483,18 +520,24 @@
                                     } else {
                                         lista += "<td>" + " FAN PIT " + "</td>";
                                     }
-
-                                    if (jsonObj[i].Status == 0) {
-                                        lista += "<td> Rezervisana </td>";
-                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
-                                    } else {
-                                        if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
-                                            lista += "<td> Odustanak </td>";
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                    //if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
+                                        if (jsonObj[i].Status == 0) {
+                                            lista += "<td> Rezervisana </td>";
+                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            if (korisnik.Uloga == 2)
+                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        } else {
+                                            if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
+                                                lista += "<td> Odustanak </td>";
+                                                if (korisnik.Uloga == 2)
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            }
                                         }
+                                   // }
+                                    if (korisnik.Uloga != 2) {
+                                        //ako je prodavac,admin prikazi kupca karte
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
-
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
                                     //lista += "</td>"
@@ -545,18 +588,24 @@
                                     } else {
                                         lista += "<td>" + " FAN PIT " + "</td>";
                                     }
-
-                                    if (jsonObj[i].Status == 0) {
-                                        lista += "<td> Rezervisana </td>";
-                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
-                                    } else {
-                                        if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
-                                            lista += "<td> Odustanak </td>";
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                   // if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
+                                        if (jsonObj[i].Status == 0) {
+                                            lista += "<td> Rezervisana </td>";
+                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            if (korisnik.Uloga == 2)
+                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        } else {
+                                            if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
+                                                lista += "<td> Odustanak </td>";
+                                                if (korisnik.Uloga == 2)
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            }
                                         }
+                                   // }
+                                    if (korisnik.Uloga != 2) {
+                                        //ako je prodavac,admin prikazi kupca karte
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
-
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
                                     //lista += "</td>"
@@ -608,18 +657,24 @@
                                     } else {
                                         lista += "<td>" + " FAN PIT " + "</td>";
                                     }
-
-                                    if (jsonObj[i].Status == 0) {
-                                        lista += "<td> Rezervisana </td>";
-                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
-                                    } else {
-                                        if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
-                                            lista += "<td> Odustanak </td>";
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                    //if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
+                                        if (jsonObj[i].Status == 0) {
+                                            lista += "<td> Rezervisana </td>";
+                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            if (korisnik.Uloga == 2)
+                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        } else {
+                                            if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
+                                                lista += "<td> Odustanak </td>";
+                                                if (korisnik.Uloga == 2)
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            }
                                         }
+                                   // }
+                                    if (korisnik.Uloga != 2) {
+                                        //ako je prodavac,admin prikazi kupca karte
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
-
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
                                     //lista += "</td>"
@@ -674,18 +729,24 @@
                                     {
                                         lista += "<td>"+" FAN PIT " + "</td>";
                                     }
-
-                                    if (jsonObj[i].Status == 0) {
-                                        lista += "<td> Rezervisana </td>";
-                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
-                                    } else {
-                                        if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
-                                            lista += "<td> Odustanak </td>";
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                   // if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
+                                        if (jsonObj[i].Status == 0) {
+                                            lista += "<td> Rezervisana </td>";
+                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            if (korisnik.Uloga == 2)
+                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                        } else {
+                                            if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
+                                                lista += "<td> Odustanak </td>";
+                                                if (korisnik.Uloga == 2)
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            }
                                         }
+                                   // }
+                                    if (korisnik.Uloga != 2) {
+                                        //ako je prodavac,admin prikazi kupca karte
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
-
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
                                     //lista += "</td>"
@@ -741,18 +802,24 @@
                                 } else {
                                     lista += "<td>" + " FAN PIT " + "</td>";
                                 }
-
-                                if (jsonObj[i].Status == 0) {
-                                    lista += "<td> Rezervisana </td>";
-                                    var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
-                                    lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
-                                } else {
-                                    if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
-                                        lista += "<td> Odustanak </td>";
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                //if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
+                                    if (jsonObj[i].Status == 0) {
+                                        lista += "<td> Rezervisana </td>";
+                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                        if (korisnik.Uloga == 2)
+                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                    } else {
+                                        if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
+                                            lista += "<td> Odustanak </td>";
+                                            if (korisnik.Uloga == 2)
+                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                        }
                                     }
+                               // }
+                                if (korisnik.Uloga != 2) {
+                                    //ako je prodavac,admin prikazi kupca karte
+                                    lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                 }
-
                                 lista += "</tr>";
                                 $("#tabelaKarte").append(lista);
                             }
@@ -1314,7 +1381,7 @@
                 <th>Cena</th>
                 <th>Tip</th>
                 <th>Status</th>
-                <th>Opcije</th>
+                <th>Dodatno</th>
             </tr>
 
         </table>

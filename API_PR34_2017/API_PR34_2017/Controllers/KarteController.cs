@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Web;
 using System.Web.Http;
 
 namespace API_PR34_2017.Controllers
@@ -21,6 +22,7 @@ namespace API_PR34_2017.Controllers
         {
             string filter = (string)jsonResult["filter"];
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Karta> odabrane = new List<Karta>();
             List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
@@ -57,95 +59,47 @@ namespace API_PR34_2017.Controllers
                 }
 
 
-                if (filter.Equals("Sve") && !k.Obrisana && k.Korisnikid.Equals(korisnik))
+                if (filter.Equals("Sve") && !k.Obrisana && k.Korisnikid.Equals(user.Korisnickoime))
                 {
                     odabrane.Add(k);
                 }
-                else if (!k.Obrisana && k.Status.ToString().Equals(filter) && k.Korisnikid.Equals(korisnik))
+                else if (!k.Obrisana && k.Status.ToString().Equals(filter) && k.Korisnikid.Equals(user.Korisnickoime))
                 {
                     odabrane.Add(k);
                 }
-                //else if (filter.Equals("Odustanak") && !k.Obrisana)
-                //{
-                //    odabrane.Add(k);
-                //}
+                //***********
+                else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana") && filter.Equals("Sve"))//proveriti da li je njihova manifestacija ta koja je rezervisana
+                {
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach (Manifestacija fest in festovi)
+                    {
+                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        {
+                            odabrane.Add(k);
+                        }
+                    }
 
+                }
+                else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana") && k.Status.ToString().Equals(filter))//proveriti da li je njihova manifestacija ta koja je rezervisana
+                {
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach (Manifestacija fest in festovi)
+                    {
+                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        {
+                            odabrane.Add(k);
+                        }
+                    }
 
-                //if (filter.Equals("Sve"))
-                //{
-                //    if (result < 0)
-                //    {
-                //        //prosla manifestacija
-                //        if (!k.Status.ToString().Equals("Rezervisana") && !k.Obrisana)
-                //        {
-                //            k.Status = StatusKarte.Rezervisana;
-                //            Data.SaveKartu(k);
-                //        }
-                //    }
-                //    else if(result>0)
-                //    {
-                //        double preostaliDani = datum.Subtract(DateTime.Today).TotalDays;        //racuna dane,da li ima 7 ili vise da bi se moglo odustati
-                //        if (preostaliDani >= 7)
-                //        {
-                //            if (k.MogucOdustanak.ToString().Equals("False") && !k.Obrisana)
-                //            {
-                //                k.MogucOdustanak = true;
-                //                Data.SaveKartu(k);
-                //            }
-                //        }
-                //        else
-                //        {
-                //            if (!k.MogucOdustanak.ToString().Equals("False") && !k.Obrisana)
-                //            {
-                //                k.MogucOdustanak = false;
-                //                Data.SaveKartu(k);
-                //            }
-                //        }
-                //    }
-                //    //Data.SaveKartu(k);
-                //    odabrane.Add(k);
-                //}
-                //if (result < 0 && !filter.Equals("Sve"))
-                //{
-                //    if (!k.Status.ToString().Equals("Rezervisana") && !k.Obrisana)//stavlja na rezervisano ako nije
-                //    {
-                //        k.Status = StatusKarte.Rezervisana;
-                //        Data.SaveKartu(k);
-                //    }
-
-                //    if (filter.Equals(k.Status.ToString()) && !k.Obrisana )  //tog statusa i da nije obrisana
-                //    {
-                //       // Data.SaveKartu(k);
-                //        odabrane.Add(k);
-                //    }
-
-                //}else if(result>0 && !filter.Equals("Sve"))
-                //{
-                //    //treba da bude
-
-                //    double preostaliDani = datum.Subtract(DateTime.Today).TotalDays;        //racuna dane,da li ima 7 ili vise da bi se moglo odustati
-                //    if (preostaliDani>= 7) {
-                //        if (k.MogucOdustanak.ToString().Equals("False") && !k.Obrisana)
-                //        {
-                //            k.MogucOdustanak = true;
-                //            Data.SaveKartu(k);
-                //        }
-                //    }
-                //    else
-                //    {
-                //        if (!k.MogucOdustanak.ToString().Equals("False") && !k.Obrisana)
-                //        {
-                //            k.MogucOdustanak = false;
-                //            Data.SaveKartu(k);
-                //        }
-                //    }
-
-                //    if (filter.Equals(k.Status.ToString()) && !k.Obrisana)  //tog statusa i da nije obrisana
-                //    {
-
-                //        odabrane.Add(k);
-                //    }
-                //}
+                }
+                else if (user.Uloga.ToString().Equals("Administrator") && !k.Obrisana && filter.Equals("Sve"))
+                {
+                    odabrane.Add(k);    //dodaju se sve/svi statusi
+                }
+                else if (user.Uloga.ToString().Equals("Administrator") && !k.Obrisana && k.Status.ToString().Equals(filter))
+                {
+                    odabrane.Add(k);    //dodaju se sve/svi statusi
+                }
             }
 
             var output = JsonConvert.SerializeObject(odabrane);
@@ -159,6 +113,7 @@ namespace API_PR34_2017.Controllers
         {
             //string filter = (string)jsonResult["filter"];
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Karta> odabrane = new List<Karta>();
             List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
@@ -195,9 +150,24 @@ namespace API_PR34_2017.Controllers
                 }
 
 
-                if (!k.Obrisana && k.Korisnikid.Equals(korisnik))
+                if (!k.Obrisana && k.Korisnikid.Equals(user.Korisnickoime))
                 {
                     odabrane.Add(k);
+                }else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
+                {
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach(Manifestacija fest in festovi)
+                    {
+                        if(k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        {
+                            odabrane.Add(k);
+                        }
+                    }
+                    
+                }
+                else if (user.Uloga.ToString().Equals("Administrator") && !k.Obrisana)
+                {
+                    odabrane.Add(k);    //dodaju se sve/svi statusi
                 }
 
             }
@@ -490,6 +460,7 @@ namespace API_PR34_2017.Controllers
         {
             string filter = (string)jsonResult["filter"];
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Karta> odabrane = new List<Karta>();
             List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
@@ -525,16 +496,48 @@ namespace API_PR34_2017.Controllers
                     }
                 }
 
+                //sve regular vip fanpit
+                if (filter.Equals("Sve") && !k.Obrisana && k.Korisnikid.Equals(user.Korisnickoime))
+                {
+                    odabrane.Add(k);
+                }
+                else if (!k.Obrisana && k.Tipkarte.ToString().Equals(filter.ToUpper()) && k.Korisnikid.Equals(user.Korisnickoime))
+                {
+                    odabrane.Add(k);
+                }
+                else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana") && k.Tipkarte.ToString().Equals(filter.ToUpper()))//proveriti da li je njihova manifestacija ta koja je rezervisana
+                {
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach (Manifestacija fest in festovi)
+                    {
+                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        {
+                            odabrane.Add(k);
+                        }
+                    }
 
-                if (filter.Equals("Sve") && !k.Obrisana && k.Korisnikid.Equals(korisnik))
-                {
-                    odabrane.Add(k);
                 }
-                else if (!k.Obrisana && k.Tipkarte.ToString().Equals(filter.ToUpper()) && k.Korisnikid.Equals(korisnik))
+                else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana") && filter.Equals("Sve"))//proveriti da li je njihova manifestacija ta koja je rezervisana
                 {
-                    odabrane.Add(k);
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach (Manifestacija fest in festovi)
+                    {
+                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        {
+                            odabrane.Add(k);
+                        }
+                    }
+
                 }
-                
+                else if (user.Uloga.ToString().Equals("Administrator") && !k.Obrisana && filter.Equals("Sve"))
+                {
+                    odabrane.Add(k);    //dodaju se sve/svi statusi
+                }
+                else if (user.Uloga.ToString().Equals("Administrator") && !k.Obrisana && k.Tipkarte.ToString().Equals(filter.ToUpper()))
+                {
+                    odabrane.Add(k);    //dodaju se sve/svi statusi
+                }
+
             }
 
             var output = JsonConvert.SerializeObject(odabrane);
@@ -547,6 +550,7 @@ namespace API_PR34_2017.Controllers
         public HttpResponseMessage KupacNazivAZ(JObject jsonResult)
         {
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Karta> odabrane = new List<Karta>();
             List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
@@ -583,14 +587,26 @@ namespace API_PR34_2017.Controllers
                 }
 
 
-                if (!k.Obrisana && k.Korisnikid.Equals(korisnik))
+                if (!k.Obrisana && k.Korisnikid.Equals(user.Korisnickoime))
                 {
                     odabrane.Add(k);
                 }
-                //else if (!k.Obrisana && k.Tipkarte.ToString().Equals(filter.ToUpper()) && k.Korisnikid.Equals(korisnik))
-                //{
-                //    odabrane.Add(k);
-                //}
+                else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
+                {
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach (Manifestacija fest in festovi)
+                    {
+                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        {
+                            odabrane.Add(k);
+                        }
+                    }
+
+                }
+                else if (user.Uloga.ToString().Equals("Administrator") && !k.Obrisana)
+                {
+                    odabrane.Add(k);    //dodaju se sve/svi statusi
+                }
 
             }
 
@@ -606,6 +622,7 @@ namespace API_PR34_2017.Controllers
         public HttpResponseMessage KupacNazivZA(JObject jsonResult)
         {
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Karta> odabrane = new List<Karta>();
             List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
@@ -642,11 +659,27 @@ namespace API_PR34_2017.Controllers
                 }
 
 
-                if (!k.Obrisana && k.Korisnikid.Equals(korisnik))
+                if (!k.Obrisana && k.Korisnikid.Equals(user.Korisnickoime))
                 {
                     odabrane.Add(k);
                 }
-               
+                else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
+                {
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach (Manifestacija fest in festovi)
+                    {
+                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        {
+                            odabrane.Add(k);
+                        }
+                    }
+
+                }
+                else if (user.Uloga.ToString().Equals("Administrator") && !k.Obrisana)
+                {
+                    odabrane.Add(k);    //dodaju se sve/svi statusi
+                }
+
             }
 
             var sortirano = odabrane.OrderByDescending(i => i.Nazivmanifestacije);
@@ -661,6 +694,7 @@ namespace API_PR34_2017.Controllers
         public HttpResponseMessage KupacCenaRastuce(JObject jsonResult)
         {
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Karta> odabrane = new List<Karta>();
             List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
@@ -697,9 +731,25 @@ namespace API_PR34_2017.Controllers
                 }
 
 
-                if (!k.Obrisana && k.Korisnikid.Equals(korisnik))
+                if (!k.Obrisana && k.Korisnikid.Equals(user.Korisnickoime))
                 {
                     odabrane.Add(k);
+                }
+                else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
+                {
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach (Manifestacija fest in festovi)
+                    {
+                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        {
+                            odabrane.Add(k);
+                        }
+                    }
+
+                }
+                else if (user.Uloga.ToString().Equals("Administrator") && !k.Obrisana)
+                {
+                    odabrane.Add(k);    //dodaju se sve/svi statusi
                 }
 
             }
@@ -716,6 +766,7 @@ namespace API_PR34_2017.Controllers
         public HttpResponseMessage KupacCenaOpadajuce(JObject jsonResult)
         {
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Karta> odabrane = new List<Karta>();
             List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
@@ -752,9 +803,25 @@ namespace API_PR34_2017.Controllers
                 }
 
 
-                if (!k.Obrisana && k.Korisnikid.Equals(korisnik))
+                if (!k.Obrisana && k.Korisnikid.Equals(user.Korisnickoime))
                 {
                     odabrane.Add(k);
+                }
+                else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
+                {
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach (Manifestacija fest in festovi)
+                    {
+                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        {
+                            odabrane.Add(k);
+                        }
+                    }
+
+                }
+                else if (user.Uloga.ToString().Equals("Administrator") && !k.Obrisana)
+                {
+                    odabrane.Add(k);    //dodaju se sve/svi statusi
                 }
 
             }
@@ -771,6 +838,7 @@ namespace API_PR34_2017.Controllers
         public HttpResponseMessage KupacDatumKasnije(JObject jsonResult)
         {
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Karta> odabrane = new List<Karta>();
             List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
@@ -807,9 +875,25 @@ namespace API_PR34_2017.Controllers
                 }
 
 
-                if (!k.Obrisana && k.Korisnikid.Equals(korisnik))
+                if (!k.Obrisana && k.Korisnikid.Equals(user.Korisnickoime))
                 {
                     odabrane.Add(k);
+                }
+                else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
+                {
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach (Manifestacija fest in festovi)
+                    {
+                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        {
+                            odabrane.Add(k);
+                        }
+                    }
+
+                }
+                else if (user.Uloga.ToString().Equals("Administrator") && !k.Obrisana)
+                {
+                    odabrane.Add(k);    //dodaju se sve/svi statusi
                 }
 
             }
@@ -826,6 +910,7 @@ namespace API_PR34_2017.Controllers
         public HttpResponseMessage KupacDatumRanije(JObject jsonResult)
         {
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Karta> odabrane = new List<Karta>();
             List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
@@ -862,9 +947,25 @@ namespace API_PR34_2017.Controllers
                 }
 
 
-                if (!k.Obrisana && k.Korisnikid.Equals(korisnik))
+                if (!k.Obrisana && k.Korisnikid.Equals(user.Korisnickoime))
                 {
                     odabrane.Add(k);
+                }
+                else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
+                {
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach (Manifestacija fest in festovi)
+                    {
+                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        {
+                            odabrane.Add(k);
+                        }
+                    }
+
+                }
+                else if (user.Uloga.ToString().Equals("Administrator") && !k.Obrisana)
+                {
+                    odabrane.Add(k);    //dodaju se sve/svi statusi
                 }
 
             }
@@ -889,6 +990,7 @@ namespace API_PR34_2017.Controllers
             bool cena2 = Int32.TryParse((string)jsonResult["cenaDO"], out cenaDO);
 
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Karta> odabrane = new List<Karta>();
             List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
@@ -926,11 +1028,27 @@ namespace API_PR34_2017.Controllers
                 }
 
 
-                if (!k.Obrisana && k.Korisnikid.Equals(korisnik))
+                if (!k.Obrisana && k.Korisnikid.Equals(user.Korisnickoime))
                 {
                     odabrane.Add(k);
                 }
-                
+                else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
+                {
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach (Manifestacija fest in festovi)
+                    {
+                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        {
+                            odabrane.Add(k);
+                        }
+                    }
+
+                }
+                else if (user.Uloga.ToString().Equals("Administrator") && !k.Obrisana)
+                {
+                    odabrane.Add(k);    //dodaju se sve/svi statusi
+                }
+
             }
 
                 DateTime datOD;

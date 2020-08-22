@@ -9,3 +9,4 @@ de67d;mMED;10-02-2020 10:00 PM;veca;moglo je bolje vreme da bude,ali super;3;Tru
 9613d;mMED;10-02-2020 10:00 PM;veca;yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy;5;False;True
 209d4;mMED;10-02-2020 10:00 PM;veca;ekstraaaa 10+;4;True;False
 2cbea;mMED;10-02-2020 10:00 PM;veca;prijelepo;4;True;False
+68751;mMED;10-02-2020 10:00 PM;veca;pokidalo;4;False;False

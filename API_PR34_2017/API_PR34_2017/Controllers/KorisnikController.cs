@@ -249,7 +249,7 @@ namespace API_PR34_2017.Controllers
             Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
             foreach (Korisnik u in recnik.Values)
             {
-                if (u.Korisnickoime.Equals(filter))
+                if (u.Korisnickoime.Equals(filter) && u.Uloga.ToString().Equals("Kupac") && !u.Obrisan)   //kad je kupac brisu se karte i dodaju kod manifestacije slob mesta
                 {
                     u.Obrisan = true;
                     Data.SaveUser(u);
@@ -270,7 +270,7 @@ namespace API_PR34_2017.Controllers
                                 List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                                 foreach (Manifestacija fest in festovi)
                                 {
-                                    if (fest.Naziv.Equals(karta.Nazivmanifestacije) && fest.Datumivreme.Equals(karta.Datummanifestacije))
+                                    if (fest.Naziv.Equals(karta.Nazivmanifestacije) && fest.Datumivreme.Equals(karta.Datummanifestacije) && !fest.Obrisan)
                                     {
                                         fest.Kupljeno -= 1;
                                         Data.SaveFest(fest);
@@ -281,6 +281,35 @@ namespace API_PR34_2017.Controllers
                         }
                     }
 
+                }else if (u.Korisnickoime.Equals(filter) && u.Uloga.ToString().Equals("Prodavac") && !u.Obrisan)
+                {
+                    //ako je prodavac onda se brisu manifestacije i karte za prodavce
+                    u.Obrisan = true;
+                    Data.SaveUser(u);
+
+                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    foreach (Manifestacija fest in festovi)
+                    {
+                        if (fest.Prodavac.Equals(u.Korisnickoime))
+                        {
+                            if (!fest.Obrisan)//ako vec nije obrisan
+                            {
+                                fest.Obrisan = true;//brise fest pa treba i karte za taj
+                                Data.SaveFest(fest);
+
+                                List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
+                                foreach (Karta kart in karte)
+                                {
+                                    if(!kart.Obrisana && kart.Nazivmanifestacije.Equals(fest.Naziv) && kart.Datummanifestacije.Equals(fest.Datumivreme))
+                                    {
+                                        //ako nije obrisana brise se
+                                        kart.Obrisana = true;
+                                        Data.SaveKartu(kart);
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
                     korisnici.Add(u);
                

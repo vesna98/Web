@@ -2466,6 +2466,80 @@
                 }
             });
 
+            //osveziti i prikaz manifestacija ukoliko se prodavc obrisao
+            var tabelica = document.getElementById('tabelaMani');
+            for (var i = 1; i < tabelica.rows.length;) {
+                tabelica.deleteRow(i);
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/Korisnik/ListaManifestacije',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+
+                    var jsonObj = JSON.parse(data);
+
+                    for (i = 0; i < jsonObj.length; i++) {
+
+                        var tip;
+                        if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                            tip = "Koncert";
+                        } else if (jsonObj[i].Tipmanifestacije == 1) {
+                            tip = "Festival";
+                        } else if (jsonObj[i].Tipmanifestacije == 2) {
+                            tip = "Pozoriste";
+                        }
+
+                        var poster = jsonObj[i].Poster;
+
+                        var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                        row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                        row += "<td >" + tip + "</td>";
+                        row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                        row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                        row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                        row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                        row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                        row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                        var ocena;
+                        if (jsonObj[i].Ocena == 0) {
+                            ocena = "";
+                        } else {
+                            ocena = jsonObj[i].Ocena;
+                        }
+
+                        row += "<td >" + ocena + "</td>";
+                        var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                        var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
+                        var obrisidugme = "";
+                        var aktivirajdugme = "";
+                        if (korisnik != null) {
+                            if (korisnik.Uloga == 0) {
+                                obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                if (jsonObj[i].Status == 1) {
+
+                                    aktivirajdugme = "<br><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-aktiviraj\"  style=\"margin-top: 5px;\">Aktiviraj</button>";
+                                }
+                            }
+                            if (korisnik.Uloga == 2) {//ako je kupac
+                                obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
+                            }
+                        }
+                        row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + "</td>";
+                        row += "</tr>";
+
+                        $("#tabelaMani").append(row);
+
+
+                    }
+                },
+                error: function (data) {
+                    alert("Greska!");
+                }
+            });
+
         });
 
         

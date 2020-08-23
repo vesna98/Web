@@ -1,27 +1,27 @@
-pro123;Green Love;Festival;1200;25-06-2021 09:00 PM;2300;Ulica Novosadskog Sajma 56;Novi Sad;21000;green.png;Neaktivno;1200;0;4000;4400;False
-pro123;EXIT 2021;Koncert;421;12-07-2021 10:00 PM;5000;Varadinska 419;Petrovaradin;21000;exitfest2021.jpg;Aktivno;0;0;6000;6400;False
+pro123;Green Love;Festival;1200;25-06-2021 09:00 PM;2300;Ulica Novosadskog Sajma 56;Novi Sad;21000;green.png;Neaktivno;1200;0;4000;4400;True
+pro123;EXIT 2021;Koncert;421;12-07-2021 10:00 PM;5000;Varadinska 419;Petrovaradin;21000;exitfest2021.jpg;Aktivno;0;0;6000;6400;True
 pro123;Cannes film festival;Koncert;1241;24-07-2021 08:00 PM;3244;Batist 335;Kan;32221;cannes.jpg;Neaktivno;10;0;3000;3400;True
 pro123;Berlin film Festival;Koncert;34252;23-02-2021 09:30 PM;3142;Potzdama Platz;Berlin;10574;Berlin-Film-Festival.jpg;Neaktivno;0;4;4000;3400;True
-pro123;coachella;Festival;34212;11-04-2022 02:00 PM;242422;81-800 Avenue 51;Indio CA;92201;coachella.jpeg;Neaktivno;0;3;4000;3400;False
-pro123;Nina Badric;Koncert;3000;21-10-2021 10:10 PM;10;Sajam 23;Novo Sad;21000;Cover-imageHoli-1040x530.jpg;Neaktivno;0;0;4000;3400;False
-pro123;Tomorrowland;Festival;10000;15-07-2022 04:15 PM;1200;River Street 332;Ohio;3221;oat.jpg;Neaktivno;0;0;4000;3400;False
-pro123;Sting;Koncert;14000;24-03-2021 10:20 PM;140;Beogradska Ulica 343;Beograd;11000;sting.jpg;Neaktivno;0;0;4000;3400;False
-pro123;Gogo land;Pozoriste;400;24-03-2021 09:10 PM;8;Trg Koste Trifkovica 32;Sombor;25000;Gogoland.jpg;Neaktivno;0;0;4000;3400;False
-pro123;Labudovo jezero;Pozoriste;500;27-06-2021 10:00 PM;12;Zmaj Jovina 87;Novi Sad;21000;plakat_final.jpg;Neaktivno;0;0;4000;3400;False
-pro123;Marko Kutlic;Koncert;1500;14-02-2021 10:00 PM;14;Novosadski Sajam 87;Novi Sad;21000;markokutlic.jpg;Neaktivno;1500;0;4000;3400;False
+pro123;coachella;Festival;34212;11-04-2022 02:00 PM;242422;81-800 Avenue 51;Indio CA;92201;coachella.jpeg;Neaktivno;0;0;4000;3400;True
+pro123;Nina Badric;Koncert;3000;21-10-2021 10:10 PM;10;Sajam 23;Novo Sad;21000;Cover-imageHoli-1040x530.jpg;Neaktivno;0;0;4000;3400;True
+pro123;Tomorrowland;Festival;10000;15-07-2022 04:15 PM;1200;River Street 332;Ohio;3221;oat.jpg;Neaktivno;0;0;4000;3400;True
+pro123;Sting;Koncert;14000;24-03-2021 10:20 PM;140;Beogradska Ulica 343;Beograd;11000;sting.jpg;Neaktivno;0;0;4000;3400;True
+pro123;Gogo land;Pozoriste;400;24-03-2021 09:10 PM;8;Trg Koste Trifkovica 32;Sombor;25000;Gogoland.jpg;Neaktivno;0;0;4000;3400;True
+pro123;Labudovo jezero;Pozoriste;500;27-06-2021 10:00 PM;12;Zmaj Jovina 87;Novi Sad;21000;plakat_final.jpg;Neaktivno;0;0;4000;3400;True
+pro123;Marko Kutlic;Koncert;1500;14-02-2021 10:00 PM;14;Novosadski Sajam 87;Novi Sad;21000;markokutlic.jpg;Neaktivno;1500;0;4000;3400;True
 pro123;Hurricane;Koncert;1500;10-02-2021 09:45 PM;20;Novosadski Sajam 87;Novi Sad;21000;res_15.jpg;Aktivno;0;0;4000;3400;True
-pro123;mmm;Koncert;2133;10-02-2021 09:00 PM;23;Novosadski Sajam 87;Novi Sad;21000;res_15.jpg;Neaktivno;0;0;4000;3400;False
+pro123;mmm;Koncert;2133;10-02-2021 09:00 PM;23;Novosadski Sajam 87;Novi Sad;21000;res_15.jpg;Neaktivno;0;0;4000;3400;True
 pro123;Gazda Paja;Koncert;5463;04-02-2021 11:45 PM;43;Novosadski Sajam 87;Novi Sad;21000;gazda-paja.jpg;Aktivno;1;0;4000;3400;True
-pro123;EXIT;Festival;23242;14-07-2020 08:00 PM;5;Varadinska 44;Novi Sad;21000;exitfest2021.jpg;Neaktivno;0;0;4000;3400;False
-pro123;mMED;Koncert;42;10-02-2020 10:00 PM;22;Varadinska 44;Novi Sad;21000;markokutlic.jpg;Aktivno;-1;4;4000;3400;False
-pro123;mmm;Koncert;868;14-01-2020 11:00 AM;21;Varadinska 44;Novi Sad;21000;thumb-highxtar-coachella-508x381.jpg;Neaktivno;0;0;4000;3400;False
+pro123;EXIT;Festival;23242;14-07-2020 08:00 PM;5;Varadinska 44;Novi Sad;21000;exitfest2021.jpg;Neaktivno;0;0;4000;3400;True
+pro123;mMED;Koncert;42;10-02-2020 10:00 PM;22;Varadinska 44;Novi Sad;21000;markokutlic.jpg;Aktivno;-1;4;4000;3400;True
+pro123;mmm;Koncert;868;14-01-2020 11:00 AM;21;Varadinska 44;Novi Sad;21000;thumb-highxtar-coachella-508x381.jpg;Neaktivno;0;0;4000;3400;True
 pro123;ahg;Koncert;4;10-01-2020 10:30 PM;3;Novosadski Sajam 87;Novi Sad;21000;thumb-highxtar-coachella-508x381.jpg;Neaktivno;0;0;4000;3400;True
-pro123;Zizela;Pozoriste;677;14-01-2020 08:45 PM;4;Varadinska 44;Novi Sad;21000;zizela_plakat.jpg;Neaktivno;0;0;4000;3400;False
-pro123;Zizela;Pozoriste;2;04-01-2020 10:10 PM;11;Varadinska 44;Novi Sad;21000;plakat_final.jpg;Aktivno;0;0;4000;3400;False
+pro123;Zizela;Pozoriste;677;14-01-2020 08:45 PM;4;Varadinska 44;Novi Sad;21000;zizela_plakat.jpg;Neaktivno;0;0;4000;3400;True
+pro123;Zizela;Pozoriste;2;04-01-2020 10:10 PM;11;Varadinska 44;Novi Sad;21000;plakat_final.jpg;Aktivno;0;0;4000;3400;True
 pro123;mMED;Koncert;3;14-01-2020 10:22 PM;5;Varadinska 44;Novi Sad;21000;Gogoland.jpg;Neaktivno;0;0;4000;3400;True
-pro123;Sting;Koncert;10;11-08-2023 10:00 PM;12;Novosadski Sajam 87;Novi Sad;21000;sting.jpg;Aktivno;0;0;24;20;False
-pro123;Labudovo jezero;Pozoriste;600;10-04-2022 09:10 PM;12;Varadinska 44;Novi Sad;21000;plakat_final.jpg;Aktivno;13;0;20;14;False
-pro123;MEDforyou;Pozoriste;4;14-07-2020 03:10 PM;690;Novosadski Sajam 87;Novi Sad;21000;zizela_plakat.jpg;Neaktivno;0;0;1380;2760;False
-pro123;mmmmmm;Pozoriste;4;14-01-2020 03:20 PM;500;Novosadski Sajam 87;Novi Sad;21000;plava.jpg;Neaktivno;0;0;1000;2000;False
-proPro;Marko Kutlic;Koncert;200;14-02-2021 07:40 PM;11;Varadinska 44;Novi Sad;21000;markokutlic.jpg;Aktivno;0;0;22;44;False
-proPro;festic;Festival;10;01-10-2021 08:57 PM;23;Varadinska 44;Srbija Novi Sad;21000;oat.jpg;Neaktivno;0;0;46;92;False
+pro123;Sting;Koncert;10;11-08-2023 10:00 PM;12;Novosadski Sajam 87;Novi Sad;21000;sting.jpg;Aktivno;0;0;24;20;True
+pro123;Labudovo jezero;Pozoriste;600;10-04-2022 09:10 PM;12;Varadinska 44;Novi Sad;21000;plakat_final.jpg;Aktivno;13;0;20;14;True
+pro123;MEDforyou;Pozoriste;4;14-07-2020 03:10 PM;690;Novosadski Sajam 87;Novi Sad;21000;zizela_plakat.jpg;Neaktivno;0;0;1380;2760;True
+pro123;mmmmmm;Pozoriste;4;14-01-2020 03:20 PM;500;Novosadski Sajam 87;Novi Sad;21000;plava.jpg;Neaktivno;0;0;1000;2000;True
+proPro;Marko Kutlic;Koncert;200;14-02-2021 07:40 PM;11;Varadinska 44;Novi Sad;21000;markokutlic.jpg;Aktivno;0;0;22;44;True
+proPro;festic;Festival;10;01-10-2021 08:57 PM;23;Varadinska 44;Srbija Novi Sad;21000;oat.jpg;Neaktivno;0;0;46;92;True

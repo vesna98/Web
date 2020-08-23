@@ -253,6 +253,34 @@ namespace API_PR34_2017.Controllers
                 {
                     u.Obrisan = true;
                     Data.SaveUser(u);
+                    //brisanje i karata
+                    //int brojNovihSlobodnihKarata = 0;
+                    
+                    List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
+                    foreach (Karta karta in karte)
+                    {
+                        if (karta.Korisnikid.Equals(filter))
+                        {
+                            if (!karta.Obrisana)//ako nije vec predhodno obrisan karta obrisi
+                            {
+                                karta.Obrisana = true;
+                                Data.SaveKartu(karta);
+                                //brojNovihSlobodnihKarata++;
+                                //smanjiti broj kupljenih karata
+                                List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                                foreach (Manifestacija fest in festovi)
+                                {
+                                    if (fest.Naziv.Equals(karta.Nazivmanifestacije) && fest.Datumivreme.Equals(karta.Datummanifestacije))
+                                    {
+                                        fest.Kupljeno -= 1;
+                                        Data.SaveFest(fest);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+
                 }
                     korisnici.Add(u);
                

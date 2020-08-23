@@ -1,22 +1,22 @@
 33ef58da14;veca;REGULAR;Odustanak;12;Labudovo jezero;10-04-2022 09:10 PM;True;Vesna Prica;True
 604648e596;veca;REGULAR;Odustanak;12;Labudovo jezero;10-04-2022 09:10 PM;True;Vesna Prica;True
-00193da17b;veca;REGULAR;Odustanak;12;Labudovo jezero;10-04-2022 09:10 PM;False;Vesna Prica;True
+00193da17b;veca;REGULAR;Odustanak;12;Labudovo jezero;10-04-2022 09:10 PM;True;Vesna Prica;True
 f2cb6d5893;veca;VIP;Odustanak;48;Labudovo jezero;10-04-2022 09:10 PM;True;Vesna Prica;True
 39ff244cac;veca;FANPIT;Odustanak;24;Labudovo jezero;10-04-2022 09:10 PM;True;Vesna Prica;True
 02cc4b7915;veca;FANPIT;Odustanak;24;Labudovo jezero;10-04-2022 09:10 PM;True;Vesna Prica;True
-3074356ca2;veca;REGULAR;Rezervisana;22;mMED;10-02-2020 10:00 PM;False;Vesna Prica;False
-bde3888e1f;veca;REGULAR;Rezervisana;22;mMED;10-02-2020 10:00 PM;False;Vesna Prica;False
-823b4fb288;veca;REGULAR;Rezervisana;22;mMED;10-02-2020 10:00 PM;False;Vesna Prica;False
-67214b947a;veca;FANPIT;Rezervisana;44;mMED;10-02-2020 10:00 PM;False;Vesna Prica;False
-6e0f0d341b;veca;REGULAR;Odustanak;12;Labudovo jezero;10-04-2022 09:10 PM;False;Vesna Prica;True
+3074356ca2;veca;REGULAR;Rezervisana;22;mMED;10-02-2020 10:00 PM;True;Vesna Prica;False
+bde3888e1f;veca;REGULAR;Rezervisana;22;mMED;10-02-2020 10:00 PM;True;Vesna Prica;False
+823b4fb288;veca;REGULAR;Rezervisana;22;mMED;10-02-2020 10:00 PM;True;Vesna Prica;False
+67214b947a;veca;FANPIT;Rezervisana;44;mMED;10-02-2020 10:00 PM;True;Vesna Prica;False
+6e0f0d341b;veca;REGULAR;Odustanak;12;Labudovo jezero;10-04-2022 09:10 PM;True;Vesna Prica;True
 88968b8e7c;veca;VIP;Odustanak;20000;EXIT 2021;12-07-2021 10:00 PM;True;Vesna Prica;True
-37f1b83392;veca;FANPIT;Odustanak;10000;EXIT 2021;12-07-2021 10:00 PM;False;Vesna Prica;True
-06276064cd;veca;FANPIT;Odustanak;24;Labudovo jezero;10-04-2022 09:10 PM;False;Vesna Prica;True
-8b5ce4feb4;veca;VIP;Odustanak;20000;EXIT 2021;12-07-2021 10:00 PM;False;Vesna Prica;True
-8abdee9b1e;veca;FANPIT;Odustanak;10000;EXIT 2021;12-07-2021 10:00 PM;False;Vesna Prica;True
-85952ffaca;veca;FANPIT;Odustanak;10000;EXIT 2021;12-07-2021 10:00 PM;False;Vesna Prica;True
+37f1b83392;veca;FANPIT;Odustanak;10000;EXIT 2021;12-07-2021 10:00 PM;True;Vesna Prica;True
+06276064cd;veca;FANPIT;Odustanak;24;Labudovo jezero;10-04-2022 09:10 PM;True;Vesna Prica;True
+8b5ce4feb4;veca;VIP;Odustanak;20000;EXIT 2021;12-07-2021 10:00 PM;True;Vesna Prica;True
+8abdee9b1e;veca;FANPIT;Odustanak;10000;EXIT 2021;12-07-2021 10:00 PM;True;Vesna Prica;True
+85952ffaca;veca;FANPIT;Odustanak;10000;EXIT 2021;12-07-2021 10:00 PM;True;Vesna Prica;True
 b56a69862c;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
-87646ae75e;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
+87646ae75e;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
 f1660702d3;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
 0e7b1b2731;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
 740dc7ad23;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
@@ -24,9 +24,9 @@ f1660702d3;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;T
 f2faf09209;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
 665d5e3e8f;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
 c686afed74;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
-67a1ee997b;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
-2f5cb6ef83;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
-9eca5bc21d;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
-81dbcee655;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
-d3efeb8d28;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
-f71802fca6;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;False;Vesna Prica;True
+67a1ee997b;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
+2f5cb6ef83;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
+9eca5bc21d;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
+81dbcee655;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
+d3efeb8d28;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
+f71802fca6;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True

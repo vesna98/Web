@@ -569,6 +569,21 @@ namespace API_PR34_2017.Controllers
                 {
                     k.Obrisan = true;
                     Data.SaveFest(k);
+
+                    //kad se brise manifestacija brisu se i karte za tu manifestaciju sto su rezervisane
+                    List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
+                    foreach (Karta karta in karte)
+                    {
+                        if(karta.Nazivmanifestacije.Equals(k.Naziv) && karta.Datummanifestacije.Equals(k.Datumivreme))
+                        {
+                            if (!karta.Obrisana)
+                            {
+                                //ako vec prethodno nije obrisana
+                                karta.Obrisana = true;
+                                Data.SaveKartu(karta);      //brise karta
+                            }
+                        }
+                    }
                 }
             }
             //List<Manifestacija> svi = new List<Manifestacija>();

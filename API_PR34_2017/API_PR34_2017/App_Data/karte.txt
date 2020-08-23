@@ -30,3 +30,4 @@ c686afed74;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;T
 81dbcee655;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
 d3efeb8d28;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
 f71802fca6;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
+c76f0d02f5;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;True;Vesna Prica;True

@@ -69,6 +69,7 @@
                         var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular;
                         var obrisidugme = "";
                         var aktivirajdugme = "";
+                        var izmenidugme = "";
                         if (korisnik != null) {
                             if (korisnik.Uloga == 0) {
                                 obrisidugme = "<button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
@@ -80,8 +81,12 @@
                             if (korisnik.Uloga == 2) {//ako je kupac
                                 obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                             }
+                            if (korisnik.Uloga == 1)//uloga PRODAVAC
+                            {
+                                izmenidugme = "<br><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-izmeni\"  style=\"margin-top: 5px;\">Izmeni</button>";
+                            }
                         }
-                        row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme+ "</td>";
+                        row += "<td><button type = \"button\" id=\"" + nazivdatum_id + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + izmenidugme+ "</td>";
                         //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
                         row += "</tr>";
 
@@ -2392,7 +2397,80 @@
         });
 
 
-        //za brisanje korisnika
+        //za izmenu manifestacije
+        $(document).on('click', '.use-izmeni', function () {
+           
+                // $('#novaMani').show();
+                var span = document.getElementsByClassName("close")[2];
+                var modal = document.getElementById("myModal3");
+
+                modal.style.display = "block";
+
+                span.onclick = function () {
+                    modal.style.display = "none";
+                }
+
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+                //---------------------------------------
+            console.log("klik na izmeni");
+            var polja = (this.id).split('_');
+            console.log("nn" + polja[0] + "   xa" + polja);
+
+            var obj = JSON.stringify({
+                "naziv": polja[0],
+                "datum": polja[1]
+            });
+           
+            $.ajax({
+
+                type: "POST",
+                url: 'api/Korisnik/NadjiManifestaciju/',// + this.id,       //koristi id dugmeta sto ce biti naziv i datum sa vremenom
+                dataType: "json",
+                data: obj,
+                contentType: "application/json; charset=utf-8",
+                // async: false,
+                success: function (data) {
+                    console.log("success" + data);
+
+                    // alert('dogadjaj obrisan' + obj);
+
+                    jsonObj = JSON.parse(data);
+                    document.getElementById("_naziv").value = jsonObj.Naziv;
+                    document.getElementById('_tipovi').selectedIndex = jsonObj.Tipmanifestacije;
+                    document.getElementById("_brojmesta").value = jsonObj.Brojmesta;
+                    document.getElementById("_time").value = jsonObj.Datumivreme.split(' ')[1];
+                    document.getElementById("_datumivreme").value = jsonObj.Datumivreme.split(' ')[0];
+                    document.getElementById("_cenaregular").value = jsonObj.Cenaregular;
+                    document.getElementById("_ulicabroj").value = jsonObj.Mestoodrzavanja.Ulicabroj;
+                    document.getElementById("_grad").value = jsonObj.Mestoodrzavanja.Grad;
+                    document.getElementById("_postanskibroj").value = jsonObj.Mestoodrzavanja.Postanskibroj;
+                    //document.getElementById("_poster").value = jsonObj.Poster;
+                    //<img src="Files/" + jsonObj.Poster + width=160 ></img >
+                    //var slika = "Files/" + jsonObj.Poster;
+                    ////<img src="{slika}" width="160"></img>
+                    //var elem = document.createElement("img");
+                    //elem.setAttribute("src", slika);
+                    
+                    //elem.setAttribute("width", "160");
+                    //elem.setAttribute("alt", "nema slike");
+                    var foo = document.getElementById("fooBar");
+                    foo.innerHTML = "<img src=\"Files/" + jsonObj.Poster + "\" width=\"160\" ></img>";
+                    
+                    
+                    
+                },
+                error: function (data) {
+                    console.log("ERROR : ", data);
+                }
+            });
+               
+
+            
+        });
         $(document).on('click', '.use-ime', function () {            // kada je button (čija je class = use-address) kliknut
             //alert("pokusaj klik");
             var polje = this.id;
@@ -2960,6 +3038,81 @@
                     <tr>
                         <td colspan="2">
                             <button id="btnFest" style="border-radius:0px;background-color:#4CAF50">Dodaj</button>
+                            <!--<input type="submit" onclick="print()" value="Dodaj" id="btnFest" />-->
+                        </td>
+                    </tr>
+
+                </table>
+                <!--</div>-->
+            </div>
+        </div>
+        <div id="myModal3" class="modal">
+
+            <!-- Modal content -->
+            <div class="modal-content" style="text-align:center">
+                <span class="close">&times;</span>
+                <!--<div id="novaMani">-->
+                <h2 style="text-align:center;color:white">Izmena manifestacije</h2>
+                <table style="margin-left: auto;margin-right: auto;">
+                    <tr style="background:none">
+                        <td id="tekst" style="color:white;text-align:right;">Naziv:</td>
+                        <td><input type="text" name="naziv" id="_naziv" placeholder="unesite naziv" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" required /></td>
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Tip manifestacije:</td>
+                        <td>
+                            <select name="tipm" id="_tipovi">
+                                <option id="_tipm" value="Koncert">Koncert</option>
+                                <option id="_tipm" value="Festival">Festival</option>
+                                <option id="_tipm" value="Pozoriste">Pozoriste</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Broj mesta:</td>
+                        <td><input type="number" name="brojmesta" min="0" id="_brojmesta" placeholder="unesite broj mesta" oninput="validity.valid||(value='');" required /></td>
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Datum odrzavanja:</td>
+                        <td><input type="text" name="datumivreme" id="_datumivreme" placeholder="DD-MM-YYYY" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" required /></td>
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Vreme odrzavanja:</td>
+                        <td><input type="time" id="_time" required /></td>
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Cena regular:</td>
+                        <td><input type="number" name="cenaregular" min="0" id="_cenaregular" placeholder="unesite cenu" oninput="validity.valid||(value='');" required /></td>
+                    </tr>
+
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Ulica i broj:</td>
+                        <td><input type="text" name="ulicabroj" id="_ulicabroj" placeholder="unesite ulicu i broj" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" required /></td>
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Grad:</td>
+                        <td><input type="text" name="grad" id="_grad" placeholder="unesite grad" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" required /></td>
+
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Postanski broj:</td>
+                        <td><input type="text" name="postanskibroj" id="_postanskibroj" placeholder="unesite postanski broj" pattern="[0-9]{5}" required /></td>
+
+                    </tr>
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Originalni poster:</td>
+                        <td><span id="fooBar">&nbsp;</span></td>
+                    </tr>
+                    <tr>
+
+                        <td id="tekst" style="color:white;text-align:right;">Novi poster:</td>
+                        <td><input name="poster" type="file" id="_poster" required style="color:white;align-content:center" /></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            <button id="btnIzmeni" style="border-radius:0px;background-color:#4CAF50">Izmeni</button>
                             <!--<input type="submit" onclick="print()" value="Dodaj" id="btnFest" />-->
                         </td>
                     </tr>

@@ -31,3 +31,12 @@ c686afed74;veca;FANPIT;Odustanak;24;Sting;11-08-2023 10:00 PM;True;Vesna Prica;T
 d3efeb8d28;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
 f71802fca6;veca;VIP;Odustanak;48;Sting;11-08-2023 10:00 PM;True;Vesna Prica;True
 c76f0d02f5;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;True;Vesna Prica;True
+7312604dea;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;True;Vesna Prica;True
+af4a0e4d7f;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;False;Vesna Prica;True
+95bd8007a6;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;True;Vesna Prica;True
+3ae43e7634;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;False;Vesna Prica;True
+06fbfefcec;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;False;Vesna Prica;True
+385b2cddb5;veca;REGULAR;Odustanak;34;Manifestacija1;10-02-2022 02:07 PM;False;Vesna Prica;True
+8b8abfdb9f;veca;VIP;Odustanak;136;Manifestacija1;10-02-2022 02:07 PM;False;Vesna Prica;True
+4f9f0c7f23;veca;FANPIT;Odustanak;68;Manifestacija1;10-02-2022 02:07 PM;False;Vesna Prica;True
+09239c00c9;veca;FANPIT;Odustanak;68;Manifestacija1;10-02-2022 02:07 PM;False;Vesna Prica;True

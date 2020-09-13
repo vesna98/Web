@@ -110,7 +110,7 @@ namespace API_PR34_2017.Models
                 bool obr;
                 bool.TryParse(tokens[15], out obr);
 
-                Manifestacija p = new Manifestacija(tokens[0], tokens[1], (TypeManifestacije)Enum.Parse(typeof(TypeManifestacije), tokens[2]), int.Parse(tokens[3]), tokens[4], Double.Parse(tokens[5]), mjesto, tokens[9], double.Parse(tokens[12]), Double.Parse(tokens[13]), Double.Parse(tokens[14]), int.Parse(tokens[11]),obr, (StatusType)Enum.Parse(typeof(StatusType), tokens[10]));
+                Manifestacija p = new Manifestacija(tokens[0], tokens[1], (TypeManifestacije)Enum.Parse(typeof(TypeManifestacije), tokens[2]), int.Parse(tokens[3]), tokens[4], Double.Parse(tokens[5]), mjesto, tokens[9], double.Parse(tokens[12]), Double.Parse(tokens[13]), Double.Parse(tokens[14]), int.Parse(tokens[11]),obr, (StatusType)Enum.Parse(typeof(StatusType), tokens[10]),tokens[16]);//16 je id
                 fests.Add(p);//DODATI FESTIVAL
 
             }
@@ -308,7 +308,7 @@ namespace API_PR34_2017.Models
 
                 //string manifestacija, string kupacid, string tekst, int ocena, bool odobren,string id
                 //Id+";"+Manifestacija+";"+Kupacid+";"+Tekst+";"+Ocena+";"+Odobren.ToString()
-                Komentar p = new Komentar(tokens[1] + ";" + tokens[2] , tokens[3],tokens[4],int.Parse(tokens[5]),obr,tokens[0],obrisan);
+                Komentar p = new Komentar(tokens[1] + ";" + tokens[2] , tokens[3],tokens[4],int.Parse(tokens[5]),obr,tokens[0],obrisan,tokens[8]);
                 comments.Add(p);//dodaje karta
 
             }

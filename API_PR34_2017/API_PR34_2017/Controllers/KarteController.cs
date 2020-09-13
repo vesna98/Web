@@ -182,7 +182,17 @@ namespace API_PR34_2017.Controllers
         public HttpResponseMessage KomentarOcena(JObject jsonResult)
         {
             string ocena = (string)jsonResult["ocena"];
-            string manifestacija = (string)jsonResult["mani"];
+            string IDmanifestacija = (string)jsonResult["mani"];//zapravo id manifestacije
+            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+            //----------------------------
+            string manifestacija ="" ;
+            foreach (Manifestacija fest in festovi)
+            {
+                if (fest.IDmanifestacije.Equals(IDmanifestacija))
+                    manifestacija = fest.Naziv+";"+fest.Datumivreme;
+            }
+            //***********************************************************
+            
             string komentar = (string)jsonResult["comm"];
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA
             //manifestacija
@@ -237,7 +247,7 @@ namespace API_PR34_2017.Controllers
             }
             else
             {
-                Komentar komentarObj = new Komentar(manifestacija, korisnik, komentar, int.Parse(ocena), false,GetRandomString(5),false);
+                Komentar komentarObj = new Komentar(manifestacija, korisnik, komentar, int.Parse(ocena), false,GetRandomString(5),false,IDmanifestacija);
                 Data.SaveKomentar(komentarObj);
             }
 
@@ -249,15 +259,17 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage PrikaziKomenter(JObject jsonResult)
         {
-                string naziv = (string)jsonResult["naziv"];
-                string datum = (string)jsonResult["datum"];
-            
-            string nazivIdatum = naziv + ";" + datum;
+            //string naziv = (string)jsonResult["naziv"];
+            //string datum = (string)jsonResult["datum"];
+
+            //string nazivIdatum = naziv + ";" + datum;
+            string IDman = (string)jsonResult["id"];
             List<Komentar> komentari = Data.ReadKomentar("~/App_Data/komentari.txt");
             List<string> odabrani = new List<string>();
             foreach(Komentar commnent in komentari)
             {
-                if (commnent.Manifestacija.Equals(nazivIdatum) && commnent.Odobren)//dodati da je odobren
+                //if (commnent.Manifestacija.Equals(nazivIdatum) && commnent.Odobren)//dodati da je odobren
+                if (commnent.Siframani.Equals(IDman) && commnent.Odobren)//dodati da je odobren
                 {
                     odabrani.Add(commnent.Tekst);
                 }
@@ -282,17 +294,45 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage KomentariCekanje(JObject jsonResult)
         {
-            string naziv = (string)jsonResult["naziv"];
-            string datum = (string)jsonResult["datum"];
-            
-            string nazivIdatum = naziv + ";" + datum;
+            //string naziv = (string)jsonResult["naziv"];
+            //string datum = (string)jsonResult["datum"];
+            string IDman = (string)jsonResult["id"];
+
+           // string nazivIdatum = naziv + ";" + datum;
             List<Komentar> komentari = Data.ReadKomentar("~/App_Data/komentari.txt");
             List<Komentar> odabrani = new List<Komentar>();
             foreach (Komentar commnent in komentari)
             {
-                if (commnent.Manifestacija.Equals(nazivIdatum) && !commnent.Odobren)//dodati koji NIJE odobren
+                //if (commnent.Manifestacija.Equals(nazivIdatum) && !commnent.Odobren)//dodati koji NIJE odobren
+                if (commnent.Siframani.Equals(IDman) && !commnent.Odobren)//dodati koji NIJE odobren
                 {
                     if (!commnent.Obrisi)
+                        odabrani.Add(commnent);
+                }
+            }
+
+            var output = JsonConvert.SerializeObject(odabrani);
+
+            return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+
+        [Route("KomentariOdbijeni")]
+        [HttpPost]
+        public HttpResponseMessage KomentariOdbijeni(JObject jsonResult)
+        {
+            //string naziv = (string)jsonResult["naziv"];
+            //string datum = (string)jsonResult["datum"];
+            string IDman = (string)jsonResult["id"];
+
+            // string nazivIdatum = naziv + ";" + datum;
+            List<Komentar> komentari = Data.ReadKomentar("~/App_Data/komentari.txt");
+            List<Komentar> odabrani = new List<Komentar>();
+            foreach (Komentar commnent in komentari)
+            {
+                //if (commnent.Manifestacija.Equals(nazivIdatum) && !commnent.Odobren)//dodati koji NIJE odobren
+                if (commnent.Siframani.Equals(IDman) && !commnent.Odobren)//dodati koji NIJE odobren
+                {
+                    if (commnent.Obrisi)        //DA SU OBRISANI
                         odabrani.Add(commnent);
                 }
             }
@@ -305,16 +345,17 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage KomentariObrisan(JObject jsonResult)
         {
-            string naziv = (string)jsonResult["naziv"];
-            string datum = (string)jsonResult["datum"];
+            //string naziv = (string)jsonResult["naziv"];
+            //string datum = (string)jsonResult["datum"];
+            string idman = (string)jsonResult["idman"];
             string komID = (string)jsonResult["comm"];
   
-            string nazivIdatum = naziv + ";" + datum;
+            //string nazivIdatum = naziv + ";" + datum;
             List<Komentar> komentari = Data.ReadKomentar("~/App_Data/komentari.txt");
             List<Komentar> odabrani = new List<Komentar>();
             foreach (Komentar commnent in komentari)
             {
-                if (commnent.Manifestacija.Equals(nazivIdatum) && !commnent.Odobren)//dodati koji NIJE odobren
+                if (commnent.Siframani.Equals(idman) && !commnent.Odobren)//dodati koji NIJE odobren
                 {
                     if (commnent.Id.Equals(komID))
                     {
@@ -337,16 +378,17 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage KomentariPrihvati(JObject jsonResult)
         {
-            string naziv = (string)jsonResult["naziv"];
-            string datum = (string)jsonResult["datum"];
+            //string naziv = (string)jsonResult["naziv"];
+            //string datum = (string)jsonResult["datum"];
+            string idman = (string)jsonResult["idman"];
             string komID = (string)jsonResult["comm"];
 
-            string nazivIdatum = naziv + ";" + datum;
+           // string nazivIdatum = naziv + ";" + datum;
             List<Komentar> komentari = Data.ReadKomentar("~/App_Data/komentari.txt");
             List<Komentar> odabrani = new List<Komentar>();
             foreach (Komentar commnent in komentari)
             {
-                if (commnent.Manifestacija.Equals(nazivIdatum) && !commnent.Odobren)//dodati koji NIJE odobren
+                if (commnent.Siframani.Equals(idman) && !commnent.Odobren)//dodati koji NIJE odobren
                 {
                     //-----
                     if (commnent.Id.Equals(komID))

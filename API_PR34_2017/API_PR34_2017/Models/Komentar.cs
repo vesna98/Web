@@ -10,6 +10,7 @@ namespace API_PR34_2017.Models
         public string Kupacid { get; set; } //kupac koji je osatavio komenatr
         public string Id { get; set; } //id komentara da bi se mogao izmeniti
         public string Manifestacija { get; set; }
+        public string Siframani { get; set; }
         public string Tekst { get; set; }
         public int Ocena { get; set; }
         public bool Odobren { get; set; }
@@ -19,7 +20,7 @@ namespace API_PR34_2017.Models
 
         }
 
-        public Komentar( string manifestacija, string kupacid, string tekst, int ocena, bool odobren,string id,bool obrisi)
+        public Komentar( string manifestacija, string kupacid, string tekst, int ocena, bool odobren,string id,bool obrisi,string sifra)
         {
             Kupacid = kupacid;
             Manifestacija = manifestacija;
@@ -28,11 +29,12 @@ namespace API_PR34_2017.Models
             Odobren = odobren;
             Id = id;
             Obrisi = obrisi;
+            Siframani = sifra;
         }
 
         public override string ToString()
         {
-            return Id+";"+Manifestacija+";"+Kupacid+";"+Tekst+";"+Ocena+";"+Odobren.ToString()+";"+Obrisi.ToString();
+            return Id+";"+Manifestacija+";"+Kupacid+";"+Tekst+";"+Ocena+";"+Odobren.ToString()+";"+Obrisi.ToString()+";"+Siframani;
         }
     }
 }

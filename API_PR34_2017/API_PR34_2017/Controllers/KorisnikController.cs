@@ -336,7 +336,7 @@ namespace API_PR34_2017.Controllers
                     { 
                         //kad je kupac samo manifestacije za koje moze da rezervise
                         int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
-                        if (result > 0)
+                       // if (result > 0)
                         {
                             //prosla je manifestacija r<=0
                             //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
@@ -420,7 +420,7 @@ namespace API_PR34_2017.Controllers
             mani.Prodavac = HttpContext.Current.Request.Form["prodavac"];
             mani.Tipmanifestacije = (TypeManifestacije)Enum.Parse(typeof(TypeManifestacije), HttpContext.Current.Request.Form["tipmanifestacije"]);
 
-
+            mani.IDmanifestacije = GetRandomString(5);  //DODAT ID MANIFESTACIJE
             mani.Brojmesta = int.Parse(HttpContext.Current.Request.Form["brojmesta"]);
             mani.Cenaregular = Double.Parse(HttpContext.Current.Request.Form["cenaregular"]);
             mani.Cenavip = 4 * mani.Cenaregular; /*Double.Parse(HttpContext.Current.Request.Form["cenavip"]); */      //dodato za vip i fan pit cena
@@ -479,7 +479,7 @@ namespace API_PR34_2017.Controllers
             bool postoji = false;
             foreach (Manifestacija fest in sveManifestacije)
             {
-                if (fest.Naziv.Equals(mani.Naziv) && fest.Datumivreme.Equals(mani.Datumivreme))
+                if (fest.Naziv.Equals(mani.Naziv) && fest.Datumivreme.Equals(mani.Datumivreme))     //DA LI TREBA POPRAVITI
                 {
                     postoji = true;
                 }
@@ -504,9 +504,10 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage NadjiManifestaciju(JObject jsonResult)
         {
-            //var obj = JsonConvert.DeserializeObject<dynamic>(jsonResult.ToString());
+            /*
             string naziv = (string)jsonResult["naziv"];
-            string datum = (string)jsonResult["datum"];
+            string datum = (string)jsonResult["datum"];*/
+            string ID = (string)jsonResult["id"];
 
             //da se pronadju manifestacije i koje nisu aktivne zbog admina,da imaju detaljan prikaz
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
@@ -517,20 +518,23 @@ namespace API_PR34_2017.Controllers
             {
                 if (user == null || !user.Uloga.ToString().Equals("Administrator"))
                 {
-                    if (user!=null && user.Uloga.ToString().Equals("Prodavac") && k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan)
+                    //if (user!=null && user.Uloga.ToString().Equals("Prodavac") && k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan)
+                    if (user!=null && user.Uloga.ToString().Equals("Prodavac") && k.IDmanifestacije.Equals(ID) && !k.Obrisan)
                     {
                         if (k.Prodavac.Equals(user.Korisnickoime))
                         {
                             man = k;    //moze i aktivna i neaktivna
                         }
-                    }else if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                    //}else if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                    }else if (k.IDmanifestacije.Equals(ID) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                     {
                         man = k;
                     }
                 }
                 else
                 {//kad je admin,posto on vidi i neaktivno i aktivne         //da li moze?????????????
-                    if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan)
+                    //if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan)
+                    if (k.IDmanifestacije.Equals(ID)  && !k.Obrisan)
                     {
                         man = k;
                     }
@@ -555,14 +559,16 @@ namespace API_PR34_2017.Controllers
         public HttpResponseMessage DobaviJednuManifestaciju(JObject jsonResult)
         {
             //var obj = JsonConvert.DeserializeObject<dynamic>(jsonResult.ToString());
-            string naziv = (string)jsonResult["naziv"];
-            string datum = (string)jsonResult["datum"];
+            //string naziv = (string)jsonResult["naziv"];
+            //string datum = (string)jsonResult["datum"];
+            string idman = (string)jsonResult["idman"];
 
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
             Manifestacija man = null;
             foreach (Manifestacija k in festovi)
             {
-                if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+               // if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                if (k.IDmanifestacije.Equals(idman) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
                 {
                     if (k.Brojmesta - k.Kupljeno > 0) //samo ako ima slobosnih mesta prosledi
                         man = k;
@@ -586,15 +592,17 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage ObrisiManifestaciju(JObject jsonResult)
         {
-            //var obj = JsonConvert.DeserializeObject<dynamic>(jsonResult.ToString());
-            string naziv = (string)jsonResult["naziv"];
-            string datum = (string)jsonResult["datum"];
+            
+            //string naziv = (string)jsonResult["naziv"];
+            //string datum = (string)jsonResult["datum"];
+            string ID = (string)jsonResult["id"];
 
             List<Manifestacija> festovi1 = Data.ReadFest("~/App_Data/manifestacije.txt");
            // Manifestacija man = null;
             foreach (Manifestacija k in festovi1)
             {
-                if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan)     //da li mora biti aktivna da bi se obrisala???????
+                //if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan)     //da li mora biti aktivna da bi se obrisala???????
+                if (k.IDmanifestacije.Equals(ID) && !k.Obrisan)     //da li mora biti aktivna da bi se obrisala???????
                 {
                     k.Obrisan = true;
                     Data.SaveFest(k);
@@ -603,7 +611,8 @@ namespace API_PR34_2017.Controllers
                     List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
                     foreach (Karta karta in karte)
                     {
-                        if(karta.Nazivmanifestacije.Equals(k.Naziv) && karta.Datummanifestacije.Equals(k.Datumivreme))
+                        //if(karta.Nazivmanifestacije.Equals(k.Naziv) && karta.Datummanifestacije.Equals(k.Datumivreme))
+                        if(karta.Nazivmanifestacije.Equals(k.Naziv) && karta.Datummanifestacije.Equals(k.Datumivreme))      //POPRAVITI ZA KARTU
                         {
                             if (!karta.Obrisana)
                             {
@@ -687,15 +696,17 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage AktivirajManifestaciju(JObject jsonResult)
         {
-            //var obj = JsonConvert.DeserializeObject<dynamic>(jsonResult.ToString());
-            string naziv = (string)jsonResult["naziv"];
-            string datum = (string)jsonResult["datum"];
+            
+            //string naziv = (string)jsonResult["naziv"];
+            //string datum = (string)jsonResult["datum"];
+            string ID = (string)jsonResult["id"];
 
             List<Manifestacija> festovi1 = Data.ReadFest("~/App_Data/manifestacije.txt");
             // Manifestacija man = null;
             foreach (Manifestacija k in festovi1)
             {
-                if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Neaktivno"))     //neaktivna i da nije obrisana
+                //if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Neaktivno"))     //neaktivna i da nije obrisana
+                if (k.IDmanifestacije.Equals(ID) && !k.Obrisan && k.Status.ToString().Equals("Neaktivno"))     //neaktivna i da nije obrisana
                 {
                     //k.Obrisan = true;
                     k.Status = StatusType.Aktivno;
@@ -1601,6 +1612,7 @@ namespace API_PR34_2017.Controllers
             string manifestacija = (string)jsonResult["naziv"];
             string datum = (string)jsonResult["datum"];
             string cenareg = (string)jsonResult["cena"];
+            string IDman = (string)jsonResult["idman"];
 
             if(string.IsNullOrWhiteSpace(korime) && string.IsNullOrWhiteSpace(manifestacija) && string.IsNullOrWhiteSpace(datum) && string.IsNullOrWhiteSpace(cenareg))
             {

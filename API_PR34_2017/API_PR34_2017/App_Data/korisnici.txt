@@ -1,8 +1,8 @@
-veca;1234;Vesna;Prica;Zenski;08-11-1998;1111851,482;Zlatni;Kupac;False
+veca;1234;Vesna;Prica;Zenski;08-11-1998;1111815,306;Zlatni;Kupac;False
 medic;1234;Lana;Aleksic;Zenski;12-12-2000;4670;Srebrni;Kupac;True
 admin123;1234;Matija;Nikolic;Zenski;12-12-2000;1230;Nepoznat;Administrator;False
 admin;1234;Aleksandra;Nikolic;Zenski;12-12-2000;0;Nepoznat;Administrator;False
-pro123;1234;Aleksandar;Aleksic;Muski;12-12-2010;0;Nepoznat;Prodavac;True
+pro123;1234;Aleksandar;Aleksic;Muski;12-12-2010;0;Nepoznat;Prodavac;False
 proPro;1234;Dijana;Matijevic;Zenski;08-11-1998;0;Nepoznat;Prodavac;True
 veki;1234;Vesna;Matijevic;Zenski;07-11-1998;0;Nepoznat;Prodavac;True
 matija;1234;Nikola;Matijevic;Muski;29-02-2000;0;Nepoznat;Prodavac;False
@@ -10,3 +10,4 @@ ana;1234;Ana;Matijevic;Zenski;11-04-2000;0;Nepoznat;Prodavac;True
 nidzolino;1234;Nikola;Nikolic;Muski;23-12-1998;0;Nepoznat;Prodavac;True
 ana123;1234;srr;fdre;Zenski;12-03-2000;0;Nepoznat;Kupac;True
 p123;1234;Petar;Maric;Muski;07-11-1998;0;Nepoznat;Prodavac;False
+daki;1234;Dijana;Aleksic;Zenski;11-04-2000;106,4;Nepoznat;Kupac;False

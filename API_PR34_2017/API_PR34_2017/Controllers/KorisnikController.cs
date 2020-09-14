@@ -500,6 +500,127 @@ namespace API_PR34_2017.Controllers
             // return Request.CreateResponse(HttpStatusCode.BadRequest);
         }
 
+        [Route("IzmeniFest")]
+        [HttpPost]
+        public HttpResponseMessage IzmeniFest()//([FromBody] Object manifestacija)
+        {
+            // if (ModelState.IsValid)
+            // {
+            List<Manifestacija> sveManifestacije = new List<Manifestacija>();
+            sveManifestacije = Data.ReadFest("~/App_Data/manifestacije.txt");
+
+            Manifestacija mani = new Manifestacija();
+            string novaslika= HttpContext.Current.Request.Form["novaslika"];//provera 
+            mani.Naziv = HttpContext.Current.Request.Form["naziv"];
+            mani.Prodavac = HttpContext.Current.Request.Form["prodavac"];
+            mani.Tipmanifestacije = (TypeManifestacije)Enum.Parse(typeof(TypeManifestacije), HttpContext.Current.Request.Form["tipmanifestacije"]);
+
+            // mani.IDmanifestacije = GetRandomString(5);  //DODAT ID MANIFESTACIJE
+            string idman = HttpContext.Current.Request.Form["id"];
+            
+            mani.IDmanifestacije = idman;
+
+            mani.Brojmesta = int.Parse(HttpContext.Current.Request.Form["brojmesta"]);
+            mani.Cenaregular = Double.Parse(HttpContext.Current.Request.Form["cenaregular"]);
+            mani.Cenavip = 4 * mani.Cenaregular; /*Double.Parse(HttpContext.Current.Request.Form["cenavip"]); */      //dodato za vip i fan pit cena
+            mani.Cenafanpit = 2 * mani.Cenaregular;/* Double.Parse(HttpContext.Current.Request.Form["cenafanpit"]);*/
+            mani.Datumivreme = HttpContext.Current.Request.Form["datumivreme"];
+            Mesto mjesto = new Mesto(HttpContext.Current.Request.Form["ulicabroj"], HttpContext.Current.Request.Form["grad"], HttpContext.Current.Request.Form["postanskibroj"]);
+            var json = JsonConvert.SerializeObject("Uspesno izmenjeno.");
+            var json2 = JsonConvert.SerializeObject("Neuspesno izmenjeno.");
+            foreach (Manifestacija fest in sveManifestacije)
+            {
+                if (fest.IDmanifestacije.Equals(idman))
+                {
+                    mani.Kupljeno = fest.Kupljeno;      //podesiti broj kupljenih i status na stari,inicijalni pre izmene
+                    mani.Status = fest.Status;
+
+                    if (fest.Kupljeno > mani.Brojmesta)
+                    {
+                        //ima vise kupljenih karata nego sto je izabran novi broj mesta,to ne sme
+                        var json1 = JsonConvert.SerializeObject("Ne mozete broj mesta smanjiti na manje od broja kupljenih karata.");
+                        
+                        return Request.CreateResponse(HttpStatusCode.OK, json1);
+                    }
+                }
+            }
+
+
+            mani.Mestoodrzavanja = mjesto;
+
+            string datumVreme = mani.Datumivreme;
+            string vreme = datumVreme.Split(' ')[1];
+            string sati = vreme.Split(':')[0];
+
+            if (sati.Length == 1)
+            {
+                datumVreme = datumVreme.Split(' ')[0] + " 0" + sati + ":" + vreme.Split(':')[1] + " " + datumVreme.Split(' ')[2];
+                mani.Datumivreme = datumVreme;
+            }
+
+            //provera da li je validan datum sa tim vremenom
+            DateTime myDate;
+
+            if (!DateTime.TryParseExact(mani.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, json2);
+            }
+
+            string fileSavePath = string.Empty;
+            //string virtualDirectoryImg = "Files";
+            string fileName = string.Empty;
+            if (novaslika.Equals("ima")) {
+                if (HttpContext.Current.Request.Files.AllKeys.Any())
+                {
+                    // Get the uploaded image from the Files collection
+                    var httpPostedFile = HttpContext.Current.Request.Files["poster"];
+                    fileName = httpPostedFile.FileName;
+                    mani.Poster = fileName;         //dodaje naziv slike
+                    if (httpPostedFile != null)
+                    {
+                        // OBtient le path du fichier 
+                        fileSavePath = Path.Combine(HttpContext.Current.Server.MapPath("~/Files"), httpPostedFile.FileName);
+
+                        // Sauvegarde du fichier dans UploadedFiles sur le serveur
+                        httpPostedFile.SaveAs(fileSavePath);
+                    }
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, json2);
+                }
+            }
+            else {
+                //kad nije izmenjena slika
+                //mani.Poster= HttpContext.Current.Request.Files["poster"];
+                mani.Poster= HttpContext.Current.Request.Form["poster"];
+            }
+
+            bool postoji = false;
+            foreach (Manifestacija fest in sveManifestacije)
+            {
+                //if (fest.Naziv.Equals(mani.Naziv) && fest.Datumivreme.Equals(mani.Datumivreme))     //DA LI TREBA POPRAVITI
+                if (fest.IDmanifestacije.Equals(idman))     //DA LI TREBA POPRAVITI
+                {
+                    postoji = true;
+                }
+            }
+
+            if (postoji)
+            {
+                Data.SaveFest(mani);
+                return Request.CreateResponse(HttpStatusCode.OK, json);
+            }
+            else
+            {
+                //var output = JsonConvert.SerializeObject(svi);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, json2);
+            }
+            //}//
+
+            // return Request.CreateResponse(HttpStatusCode.BadRequest);
+        }
+
         [Route("NadjiManifestaciju")]
         [HttpPost]
         public HttpResponseMessage NadjiManifestaciju(JObject jsonResult)

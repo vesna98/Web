@@ -2,8 +2,7 @@ pro123;Green Love;Festival;1200;25-06-2021 09:00 PM;2300;Ulica Novosadskog Sajma
 pro123;EXIT 2021;Koncert;421;12-07-2021 10:00 PM;5000;Varadinska 419;Petrovaradin;21000;exitfest2021.jpg;Aktivno;0;0;6000;6400;True;dfsfaf
 pro123;Cannes film festival;Koncert;1241;24-07-2021 08:00 PM;3244;Batist 335;Kan;32221;cannes.jpg;Neaktivno;10;0;3000;3400;True;gerss
 pro123;Berlin film Festival;Koncert;34252;23-02-2021 09:30 PM;3142;Potzdama Platz;Berlin;10574;Berlin-Film-Festival.jpg;Neaktivno;0;4;4000;3400;True;dgdsgs
-pro123;coachella;Festival;34212;11-04-2022 02:00 PM;242422;81-800 Avenue 51;Indio CA;92201;coachella.jpeg;Neaktivno;0;0;4000;3400;True;fsfsf
-pro123;Nina Badric;Koncert;3000;21-10-2021 10:10 PM;10;Sajam 23;Novo Sad;21000;Cover-imageHoli-1040x530.jpg;Neaktivno;0;0;4000;3400;False;fsffa
+pro123;coachella;Festival;34212;11-04-2022 02:00 PM;242422;81-800 Avenue 51;Indio CA;92201;coachella.jpeg;Neaktivno;0;0;4000;3400;True;fsfsf765
 pro123;Tomorrowland;Festival;10000;15-07-2022 04:15 PM;1200;River Street 332;Ohio;3221;oat.jpg;Aktivno;0;0;4000;3400;False;bbbghg
 pro123;Sting;Koncert;14000;24-03-2021 10:20 PM;140;Beogradska Ulica 343;Beograd;11000;sting.jpg;Neaktivno;0;0;4000;3400;True;sfsfsa
 pro123;Gogo land;Pozoriste;400;24-03-2021 09:10 PM;8;Trg Koste Trifkovica 32;Sombor;25000;Gogoland.jpg;Neaktivno;0;0;4000;3400;True;dsbvhg
@@ -11,11 +10,8 @@ pro123;Labudovo jezero;Pozoriste;500;27-06-2021 10:00 PM;12;Zmaj Jovina 87;Novi 
 pro123;Marko Kutlic;Koncert;1500;14-02-2021 10:00 PM;14;Novosadski Sajam 87;Novi Sad;21000;markokutlic.jpg;Neaktivno;1500;0;4000;3400;False;fdgbgh7
 pro123;Hurricane;Koncert;1500;10-02-2021 09:45 PM;20;Novosadski Sajam 87;Novi Sad;21000;res_15.jpg;Aktivno;0;0;4000;3400;True;vcvdgy
 pro123;mmm;Koncert;2133;10-02-2021 09:00 PM;23;Novosadski Sajam 87;Novi Sad;21000;res_15.jpg;Neaktivno;0;0;4000;3400;True;fdgfy47
-pro123;Gazda Paja;Koncert;5463;04-02-2021 11:45 PM;43;Novosadski Sajam 87;Novi Sad;21000;gazda-paja.jpg;Aktivno;4;0;4000;3400;False;gfhg76f
-pro123;EXIT;Festival;23242;14-07-2020 08:00 PM;5;Varadinska 44;Novi Sad;21000;exitfest2021.jpg;Aktivno;0;0;4000;3400;False;zxsdd
-pro123;mMED;Koncert;42;10-02-2020 10:00 PM;22;Varadinska 44;Novi Sad;21000;markokutlic.jpg;Aktivno;-1;4;4000;3400;False;cvvhfrz
-pro123;mmm;Koncert;868;14-01-2020 11:00 AM;21;Varadinska 44;Novi Sad;21000;thumb-highxtar-coachella-508x381.jpg;Neaktivno;0;0;4000;3400;False;cxvcg
-pro123;ahg;Koncert;4;10-01-2020 10:30 PM;3;Novosadski Sajam 87;Novi Sad;21000;thumb-highxtar-coachella-508x381.jpg;Neaktivno;0;0;4000;3400;False;vbvuy3w
+pro123;Gazda Paja;Koncert;15;10-02-2021 11:45 AM;400;Novosadski Sajam 87;Novi Sad;21000;gazda-paja.jpg;Aktivno;4;0;800;1600;False;gfhg76f
+pro123;mMED;Koncert;42;10-02-2020 10:00 AM;22;Varadinska 44;Novi Sad;21000;sda.png;Aktivno;-1;0;44;88;False;cvvhfrz
 pro123;Zizela;Pozoriste;677;14-01-2020 08:45 PM;4;Varadinska 44;Novi Sad;21000;zizela_plakat.jpg;Neaktivno;0;0;4000;3400;True;nvh8t
 pro123;Zizela;Pozoriste;2;04-01-2020 10:10 PM;11;Varadinska 44;Novi Sad;21000;plakat_final.jpg;Aktivno;0;0;4000;3400;True;bvhg08
 pro123;mMED;Koncert;3;14-01-2020 10:22 PM;5;Varadinska 44;Novi Sad;21000;Gogoland.jpg;Neaktivno;0;0;4000;3400;True;hgu87564
@@ -27,5 +23,5 @@ proPro;Marko Kutlic;Koncert;200;14-02-2021 07:40 PM;11;Varadinska 44;Novi Sad;21
 proPro;festic;Festival;10;01-10-2021 08:57 PM;23;Varadinska 44;Srbija Novi Sad;21000;oat.jpg;Neaktivno;0;0;46;92;True;oioio7
 p123;Manifestacija1;Pozoriste;123;10-02-2022 02:07 PM;34;Marka Kraljevica 55;Beograd;23000;ticket.jpg;Aktivno;3;0;68;136;False;iihsu
 p123;Ksenija Knezevic;Koncert;200;04-10-2021 08:41 PM;100;Mileticev Trg;Novi Sad;21000;27.png;Neaktivno;0;0;200;400;False;f4f2a
-p123;Knez;Koncert;200;20-04-2021 07:49 PM;800;Novosadski Sajam 95;Novi Sad;21000;6548084_preview.png;Aktivno;1;0;1600;3200;False;a6529
+p123;Knez;Koncert;200;20-04-2021 07:49 AM;700;Novosadski Sajam 95;Novi Sad;21000;6548084_preview.png;Neaktivno;0;0;1400;2800;False;a6529
 p123;Edita;Koncert;400;04-04-2019 07:45 PM;100;Novosadski Sajam 95;Novi Sad;21000;tick.png;Aktivno;0;0;200;400;False;c4752

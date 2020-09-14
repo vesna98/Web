@@ -159,8 +159,9 @@ namespace API_PR34_2017.Models
             {
                 string[] tokens = lines[i].Split(';');
 
-                if (tokens[1].Equals(p.Naziv) && tokens[4].Equals(p.Datumivreme))//jednaki id
+                if (tokens[16].Equals(p.IDmanifestacije))//jednaki id
                 {
+                    //p.Kupljeno = int.Parse(tokens[11]);//cuva stari broj kupljenih karata
                     nova = p.ToString();
                     lines[i] = nova;
                     izmeni = true;

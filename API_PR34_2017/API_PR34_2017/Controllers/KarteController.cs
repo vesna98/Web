@@ -70,24 +70,42 @@ namespace API_PR34_2017.Controllers
                 //***********
                 else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana") && filter.Equals("Sve"))//proveriti da li je njihova manifestacija ta koja je rezervisana
                 {
+                    //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    //foreach (Manifestacija fest in festovi)
+                    //{
+                    //    if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                    //    {
+                    //        odabrane.Add(k);
+                    //    }
+                    //}
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                     foreach (Manifestacija fest in festovi)
                     {
-                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        if (k.IDmanifestacije.Equals(fest.IDmanifestacije))//trazimo po idju
                         {
-                            odabrane.Add(k);
+                            if (fest.Prodavac.Equals(user.Korisnickoime))
+                                odabrane.Add(k);
                         }
                     }
 
                 }
                 else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana") && k.Status.ToString().Equals(filter))//proveriti da li je njihova manifestacija ta koja je rezervisana
                 {
+                    //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    //foreach (Manifestacija fest in festovi)
+                    //{
+                    //    if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                    //    {
+                    //        odabrane.Add(k);
+                    //    }
+                    //}
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                     foreach (Manifestacija fest in festovi)
                     {
-                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        if (k.IDmanifestacije.Equals(fest.IDmanifestacije))//trazimo po idju
                         {
-                            odabrane.Add(k);
+                            if (fest.Prodavac.Equals(user.Korisnickoime))
+                                odabrane.Add(k);
                         }
                     }
 
@@ -565,12 +583,21 @@ namespace API_PR34_2017.Controllers
                 }
                 else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana") && k.Tipkarte.ToString().Equals(filter.ToUpper()))//proveriti da li je njihova manifestacija ta koja je rezervisana
                 {
+                    //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    //foreach (Manifestacija fest in festovi)
+                    //{
+                    //    if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                    //    {
+                    //        odabrane.Add(k);
+                    //    }
+                    //}
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                     foreach (Manifestacija fest in festovi)
                     {
-                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        if (k.IDmanifestacije.Equals(fest.IDmanifestacije))//trazimo po idju
                         {
-                            odabrane.Add(k);
+                            if (fest.Prodavac.Equals(user.Korisnickoime))
+                                odabrane.Add(k);
                         }
                     }
 
@@ -580,9 +607,10 @@ namespace API_PR34_2017.Controllers
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                     foreach (Manifestacija fest in festovi)
                     {
-                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        if (k.IDmanifestacije.Equals(fest.IDmanifestacije))//trazimo po idju
                         {
-                            odabrane.Add(k);
+                            if (fest.Prodavac.Equals(user.Korisnickoime))
+                                odabrane.Add(k);
                         }
                     }
 
@@ -651,12 +679,21 @@ namespace API_PR34_2017.Controllers
                 }
                 else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
                 {
+                    //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    //foreach (Manifestacija fest in festovi)
+                    //{
+                    //    if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                    //    {
+                    //        odabrane.Add(k);
+                    //    }
+                    //}
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                     foreach (Manifestacija fest in festovi)
                     {
-                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        if (k.IDmanifestacije.Equals(fest.IDmanifestacije))//trazimo po idju
                         {
-                            odabrane.Add(k);
+                            if (fest.Prodavac.Equals(user.Korisnickoime))
+                                odabrane.Add(k);
                         }
                     }
 
@@ -723,12 +760,21 @@ namespace API_PR34_2017.Controllers
                 }
                 else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
                 {
+                    //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    //foreach (Manifestacija fest in festovi)
+                    //{
+                    //    if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                    //    {
+                    //        odabrane.Add(k);
+                    //    }
+                    //}
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                     foreach (Manifestacija fest in festovi)
                     {
-                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        if (k.IDmanifestacije.Equals(fest.IDmanifestacije))//trazimo po idju
                         {
-                            odabrane.Add(k);
+                            if (fest.Prodavac.Equals(user.Korisnickoime))
+                                odabrane.Add(k);
                         }
                     }
 
@@ -795,12 +841,21 @@ namespace API_PR34_2017.Controllers
                 }
                 else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
                 {
+                    //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    //foreach (Manifestacija fest in festovi)
+                    //{
+                    //    if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                    //    {
+                    //        odabrane.Add(k);
+                    //    }
+                    //}
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                     foreach (Manifestacija fest in festovi)
                     {
-                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        if (k.IDmanifestacije.Equals(fest.IDmanifestacije))//trazimo po idju
                         {
-                            odabrane.Add(k);
+                            if (fest.Prodavac.Equals(user.Korisnickoime))
+                                odabrane.Add(k);
                         }
                     }
 
@@ -867,12 +922,21 @@ namespace API_PR34_2017.Controllers
                 }
                 else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
                 {
+                    //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    //foreach (Manifestacija fest in festovi)
+                    //{
+                    //    if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                    //    {
+                    //        odabrane.Add(k);
+                    //    }
+                    //}
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                     foreach (Manifestacija fest in festovi)
                     {
-                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        if (k.IDmanifestacije.Equals(fest.IDmanifestacije))//trazimo po idju
                         {
-                            odabrane.Add(k);
+                            if (fest.Prodavac.Equals(user.Korisnickoime))
+                                odabrane.Add(k);
                         }
                     }
 
@@ -939,12 +1003,21 @@ namespace API_PR34_2017.Controllers
                 }
                 else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
                 {
+                    //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    //foreach (Manifestacija fest in festovi)
+                    //{
+                    //    if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                    //    {
+                    //        odabrane.Add(k);
+                    //    }
+                    //}
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                     foreach (Manifestacija fest in festovi)
                     {
-                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        if (k.IDmanifestacije.Equals(fest.IDmanifestacije))//trazimo po idju
                         {
-                            odabrane.Add(k);
+                            if (fest.Prodavac.Equals(user.Korisnickoime))
+                                odabrane.Add(k);
                         }
                     }
 
@@ -1011,12 +1084,21 @@ namespace API_PR34_2017.Controllers
                 }
                 else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
                 {
+                    //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    //foreach (Manifestacija fest in festovi)
+                    //{
+                    //    if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                    //    {
+                    //        odabrane.Add(k);
+                    //    }
+                    //}
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                     foreach (Manifestacija fest in festovi)
                     {
-                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        if (k.IDmanifestacije.Equals(fest.IDmanifestacije))//trazimo po idju
                         {
-                            odabrane.Add(k);
+                            if (fest.Prodavac.Equals(user.Korisnickoime))
+                                odabrane.Add(k);
                         }
                     }
 
@@ -1092,12 +1174,21 @@ namespace API_PR34_2017.Controllers
                 }
                 else if (user.Uloga.ToString().Equals("Prodavac") && !k.Obrisana && k.Status.ToString().Equals("Rezervisana"))//proveriti da li je njihova manifestacija ta koja je rezervisana
                 {
+                    //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    //foreach (Manifestacija fest in festovi)
+                    //{
+                    //    if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                    //    {
+                    //        odabrane.Add(k);
+                    //    }
+                    //}
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                     foreach (Manifestacija fest in festovi)
                     {
-                        if (k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                        if (k.IDmanifestacije.Equals(fest.IDmanifestacije))//trazimo po idju
                         {
-                            odabrane.Add(k);
+                            if (fest.Prodavac.Equals(user.Korisnickoime))
+                                odabrane.Add(k);
                         }
                     }
 

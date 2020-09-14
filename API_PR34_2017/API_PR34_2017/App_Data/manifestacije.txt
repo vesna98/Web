@@ -10,7 +10,7 @@ pro123;Labudovo jezero;Pozoriste;500;27-06-2021 10:00 PM;12;Zmaj Jovina 87;Novi 
 pro123;Marko Kutlic;Koncert;1500;14-02-2021 10:00 PM;14;Novosadski Sajam 87;Novi Sad;21000;markokutlic.jpg;Neaktivno;1500;0;4000;3400;False;fdgbgh7
 pro123;Hurricane;Koncert;1500;10-02-2021 09:45 PM;20;Novosadski Sajam 87;Novi Sad;21000;res_15.jpg;Aktivno;0;0;4000;3400;True;vcvdgy
 pro123;mmm;Koncert;2133;10-02-2021 09:00 PM;23;Novosadski Sajam 87;Novi Sad;21000;res_15.jpg;Neaktivno;0;0;4000;3400;True;fdgfy47
-pro123;Gazda Paja;Koncert;5;10-02-2021 11:45 PM;400;Novosadski Sajam 87;Novi Sad;21000;gazda-paja.jpg;Aktivno;4;0;800;1600;False;gfhg76f
+pro123;Gazda Paja;Koncert;5;10-02-2021 11:45 PM;400;Novosadski Sajam 87;Novi Sad;21000;gazda-paja.jpg;Aktivno;5;0;800;1600;False;gfhg76f
 pro123;mMED;Koncert;42;10-02-2020 10:00 AM;22;Varadinska 44;Novi Sad;21000;sda.png;Aktivno;-1;0;44;88;False;cvvhfrz
 pro123;Zizela;Pozoriste;677;14-01-2020 08:45 PM;4;Varadinska 44;Novi Sad;21000;zizela_plakat.jpg;Neaktivno;0;0;4000;3400;True;nvh8t
 pro123;Zizela;Pozoriste;2;04-01-2020 10:10 PM;11;Varadinska 44;Novi Sad;21000;plakat_final.jpg;Aktivno;0;0;4000;3400;True;bvhg08

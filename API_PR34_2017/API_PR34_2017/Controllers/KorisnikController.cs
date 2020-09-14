@@ -766,8 +766,14 @@ namespace API_PR34_2017.Controllers
             Manifestacija man = null;
             foreach (Manifestacija k in festovi)
             {
-               // if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-                if (k.IDmanifestacije.Equals(idman) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                DateTime myDate;
+                DateTime.TryParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate);
+               int result = DateTime.Compare(myDate, DateTime.Now);
+                //if (result < 0)
+                //ako je resut <0 onda je prosla manifestacija
+
+                // if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                if (k.IDmanifestacije.Equals(idman) && !k.Obrisan && k.Status.ToString().Equals("Aktivno") && result>=0)//da nije u proslosti
                 {
                     if (k.Brojmesta - k.Kupljeno > 0) //samo ako ima slobosnih mesta prosledi
                         man = k;

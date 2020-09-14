@@ -41,3 +41,4 @@ af4a0e4d7f;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;False;Vesna Pri
 4f9f0c7f23;veca;FANPIT;Odustanak;68;Manifestacija1;10-02-2022 02:07 PM;True;Vesna Prica;True
 09239c00c9;veca;FANPIT;Odustanak;68;Manifestacija1;10-02-2022 02:07 PM;False;Vesna Prica;True
 39498b513d;daki;REGULAR;Odustanak;800;Knez;20-04-2021 07:49 PM;False;Dijana Aleksic;True
+84026e7062;veca;VIP;Odustanak;1600;Gazda Paja;10-02-2021 11:45 PM;False;Vesna Prica;True

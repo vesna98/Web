@@ -27,5 +27,5 @@ p123;Knez;Koncert;200;20-04-2021 07:49 AM;700;Novosadski Sajam 95;Novi Sad;21000
 p123;Edita;Koncert;400;04-04-2019 07:45 PM;100;Novosadski Sajam 95;Novi Sad;21000;tick.png;Aktivno;0;0;200;400;False;c4752
 pro123;bjmb;Koncert;76;10-02-2022 11:45 PM;87;Novosadski Sajam 87;Novi Sad;21000;6548084_preview.png;Neaktivno;0;0;174;348;False;3bbf6
 pro123;bambiw;Koncert;44;14-02-2021 12:32 PM;54;Novosadski Sajam 87;Novi Sad;21000;6548084_preview.png;Neaktivno;0;0;108;216;False;e4426
-pro123;jkhk;Pozoriste;70;10-02-2023 11:30 PM;68;Novosadski Sajam 87;Novi Sad;21000;df.jpg;Neaktivno;0;0;136;272;False;875d9
-pro123;xxx;Koncert;4;04-02-2021 06:40 PM;23;Novosadski Sajam 87;Novi Sad;21000;fes.jpg;Neaktivno;0;0;46;92;False;c8a94
+pro123;jkhk;Pozoriste;70;10-02-2023 11:30 PM;40;Novosadski Sajam 87;Novi Sad;21000;df.jpg;Neaktivno;0;0;80;160;False;875d9
+pro123;xxx;Koncert;49;04-02-2029 06:40 PM;30;Novosadski Sajam 87;Novi Sad;21000;fes.jpg;Neaktivno;0;0;60;120;False;c8a94

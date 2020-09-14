@@ -579,7 +579,7 @@ namespace API_PR34_2017.Controllers
             }
 
             bool prosla = false;
-            int resultProsla = 0;
+            // resultProsla=1;
 
             foreach (Manifestacija fest in sveManifestacije)
             {
@@ -587,16 +587,17 @@ namespace API_PR34_2017.Controllers
                 if (fest.IDmanifestacije.Equals(idman))     //naci po istom idju
                 {
                     //gledamo kad je originalno manifestacija bila
-                    resultProsla = DateTime.Compare(DateTime.ParseExact(fest.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                   int  resultProsla = DateTime.Compare(DateTime.ParseExact(fest.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                    if (resultProsla < 0)
+                    {
+                        prosla = true;
+                    }
                 }
                 
             }
 
             //da li je prosla manifestacija
-            if (resultProsla < 0)
-            {
-                prosla = true;
-            }
+           
 
             if (prosla)
             {
@@ -609,7 +610,7 @@ namespace API_PR34_2017.Controllers
                 if (result < 0)
                 {
                     //u proslosti zakazana manifestacija
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject("Manifestacija ne moze biti u proslosti."));        //za ispis videti
+                    return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject("Manifestacija ne moze biti u proslosti."));        //za ispis videti
                 }
             }
 
@@ -655,7 +656,7 @@ namespace API_PR34_2017.Controllers
                 {
                     postoji = true;
                     //gledamo kad je originalno manifestacija bila
-                    resultProsla = DateTime.Compare(DateTime.ParseExact(fest.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                    //resultProsla = DateTime.Compare(DateTime.ParseExact(fest.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
                 }
                 //da nije ista manifestacija,sa istim idjem,vec neka druga
                 if(!fest.IDmanifestacije.Equals(idman) && fest.Mestoodrzavanja.Grad.Equals(mani.Mestoodrzavanja.Grad) && fest.Mestoodrzavanja.Ulicabroj.Equals(mani.Mestoodrzavanja.Ulicabroj) && fest.Mestoodrzavanja.Postanskibroj.Equals(mani.Mestoodrzavanja.Postanskibroj) && fest.Datumivreme.Equals(mani.Datumivreme))

@@ -2599,7 +2599,30 @@
                     document.getElementById("_naziv").value = jsonObj.Naziv;
                     document.getElementById('_tipovi').selectedIndex = jsonObj.Tipmanifestacije;
                     document.getElementById("_brojmesta").value = jsonObj.Brojmesta;
-                    document.getElementById("_time").value = jsonObj.Datumivreme.split(' ')[1];
+
+                    var time = jsonObj.Datumivreme.split(' ')[1] + " " + jsonObj.Datumivreme.split(' ')[2];
+                    //alert(time);
+                    // var hours = Number(time.match(/^(\d+)/)[1]);
+                    var hours = parseInt(time.split(':')[0]);
+                    //alert(hours);
+                    //var minutes = Number(time.match(/:(\d+)/)[1]);
+                    var minute = time.split(':')[1];
+                    var minutes = parseInt(minute.split(' ')[0]);
+                    //alert(minutes);
+                    //var AMPM = time.match(/\s(.*)$/)[1];
+                    var AMPM = minute.split(' ')[1];
+                    //alert(AMPM);
+                    if (AMPM == "PM" && hours < 12) hours = hours + 12;
+                    if (AMPM == "AM" && hours == 12) hours = hours - 12;
+                    var sHours = hours.toString();
+                    var sMinutes = minutes.toString();
+                    if (hours < 10) sHours = "0" + sHours;
+                    if (minutes < 10) sMinutes = "0" + sMinutes;
+                    //alert(sHours + ":" + sMinutes);
+                    var vreme = sHours + ":" + sMinutes;
+
+                   // document.getElementById("_time").value = jsonObj.Datumivreme.split(' ')[1];
+                   document.getElementById("_time").value=vreme;
                     document.getElementById("_datumivreme").value = jsonObj.Datumivreme.split(' ')[0];
                     document.getElementById("_cenaregular").value = jsonObj.Cenaregular;
                     document.getElementById("_ulicabroj").value = jsonObj.Mestoodrzavanja.Ulicabroj;

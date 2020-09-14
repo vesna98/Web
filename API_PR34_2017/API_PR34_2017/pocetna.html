@@ -2177,109 +2177,120 @@
                             cache: false,
                             complete: function (data) {
                                 console.log("success dodavanje manifestacije");
-                                
-                                $('#novaMani').hide();
-                                // $("#maniPrikaz").load("#tabelaMani");              //zakomentarisno,pre je bilo!!!!!!!!!!!!!!!!!!
-
-                                var modal = document.getElementById("myModal2");
-                                modal.style.display = "none";
-
-                                $("#naziv").val("");
-                                document.getElementById('tipovi').selectedIndex = 0;
-                                $("#brojmesta").val("");
-                                $("#time").val("");
-                                $("#datumivreme").val("");
-                                $("#cenaregular").val("");
-                                $("#ulicabroj").val("");
-                                $("#grad").val("");
-                                $("#postanskibroj").val("");
-                                $("#poster").val("");
-                                //$("[type='file']").clearFiles();
-                                var tabelica = document.getElementById('tabelaMani');
-                                for (var i = 1; i < tabelica.rows.length;) {
-                                    tabelica.deleteRow(i);
+                                var poruka = "";
+                                if (JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON).length > 0)
+                                    poruka = JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON);
+                                if (poruka == "Manifestacija ne moze biti u proslosti.") {
+                                    alert(poruka);
+                                } else if (poruka == "Postoji vec manifestacija u zadatom vremenu na zadatom mestu") {
+                                    alert(poruka);
                                 }
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/api/Korisnik/ListaManifestacije',
-                                    contentType: 'application/json; charset=utf-8',
-                                    dataType: 'json',
-                                    //  data: JSON.stringify(korisnik),
-                                    success: function (data) {
-                                        console.log("success");
+                                else if (poruka == "Uspesno dodata manifestacija.") {
+                                    alert(poruka);
+                                    $('#novaMani').hide();
+                                    // $("#maniPrikaz").load("#tabelaMani");              //zakomentarisno,pre je bilo!!!!!!!!!!!!!!!!!!
 
-                                        console.log("petlja...pocinje" + data);
-
-                                        var jsonObj = JSON.parse(data);
-
-                                        for (i = 0; i < jsonObj.length; i++) {
+                                    var modal = document.getElementById("myModal2");
+                                    modal.style.display = "none";
 
 
-                                            var tip;
-                                            if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
-                                                tip = "Koncert";
-                                            } else if (jsonObj[i].Tipmanifestacije == 1) {
-                                                tip = "Festival";
-                                            } else if (jsonObj[i].Tipmanifestacije == 2) {
-                                                tip = "Pozoriste";
-                                            }
+                                    $("#naziv").val("");
+                                    document.getElementById('tipovi').selectedIndex = 0;
+                                    $("#brojmesta").val("");
+                                    $("#time").val("");
+                                    $("#datumivreme").val("");
+                                    $("#cenaregular").val("");
+                                    $("#ulicabroj").val("");
+                                    $("#grad").val("");
+                                    $("#postanskibroj").val("");
+                                    $("#poster").val("");
+                                    //$("[type='file']").clearFiles();
+                                    var tabelica = document.getElementById('tabelaMani');
+                                    for (var i = 1; i < tabelica.rows.length;) {
+                                        tabelica.deleteRow(i);
+                                    }
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/api/Korisnik/ListaManifestacije',
+                                        contentType: 'application/json; charset=utf-8',
+                                        dataType: 'json',
+                                        //  data: JSON.stringify(korisnik),
+                                        success: function (data) {
+                                            console.log("success");
 
-                                            var poster = jsonObj[i].Poster;
+                                            console.log("petlja...pocinje" + data);
+
+                                            var jsonObj = JSON.parse(data);
+
+                                            for (i = 0; i < jsonObj.length; i++) {
+
+
+                                                var tip;
+                                                if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                                    tip = "Koncert";
+                                                } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                                    tip = "Festival";
+                                                } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                                    tip = "Pozoriste";
+                                                }
+
+                                                var poster = jsonObj[i].Poster;
 
 
 
-                                            var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
-                                            row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
-                                            row += "<td >" + tip + "</td>";
-                                            row += "<td >" + jsonObj[i].Datumivreme + "</td>";
-                                            row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
-                                            row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
-                                            row += "<td >" + jsonObj[i].Cenaregular + "</td>";
-                                            row += "<td >" + jsonObj[i].Cenavip + "</td>";
-                                            row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
-                                            var ocena;
-                                            if (jsonObj[i].Ocena == 0) {
-                                                ocena = "";
-                                            } else {
-                                                ocena = jsonObj[i].Ocena;
-                                            }
+                                                var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                                                row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                                                row += "<td >" + tip + "</td>";
+                                                row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                                                row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                                                row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                                                row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                                                row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                                                row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                                                var ocena;
+                                                if (jsonObj[i].Ocena == 0) {
+                                                    ocena = "";
+                                                } else {
+                                                    ocena = jsonObj[i].Ocena;
+                                                }
 
-                                            row += "<td >" + ocena + "</td>";
-                                            var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                                            var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular + "_" + jsonObj[i].IDmanifestacije;
-                                            var obrisidugme = "";
-                                            var aktivirajdugme = "";
-                                            var izmenidugme = "";
-                                            if (korisnik != null) {
-                                                if (korisnik.Uloga == 0) {
-                                                    obrisidugme = "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
-                                                    if (jsonObj[i].Status == 1) {
-                                                        //alert("status neaktivan");
-                                                        aktivirajdugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-aktiviraj\"  style=\"margin-top: 5px;\">Aktiviraj</button>";
+                                                row += "<td >" + ocena + "</td>";
+                                                var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                                                var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular + "_" + jsonObj[i].IDmanifestacije;
+                                                var obrisidugme = "";
+                                                var aktivirajdugme = "";
+                                                var izmenidugme = "";
+                                                if (korisnik != null) {
+                                                    if (korisnik.Uloga == 0) {
+                                                        obrisidugme = "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                                        if (jsonObj[i].Status == 1) {
+                                                            //alert("status neaktivan");
+                                                            aktivirajdugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-aktiviraj\"  style=\"margin-top: 5px;\">Aktiviraj</button>";
+                                                        }
+                                                    }
+                                                    if (korisnik.Uloga == 2) {//ako je kupac
+                                                        obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
+                                                    }
+                                                    if (korisnik.Uloga == 1)//uloga PRODAVAC
+                                                    {
+                                                        izmenidugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-izmeni\"  style=\"margin-top: 5px;\">Izmeni</button>";
                                                     }
                                                 }
-                                                if (korisnik.Uloga == 2) {//ako je kupac
-                                                    obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
-                                                }
-                                                if (korisnik.Uloga == 1)//uloga PRODAVAC
-                                                {
-                                                    izmenidugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-izmeni\"  style=\"margin-top: 5px;\">Izmeni</button>";
-                                                }
+                                                row += "<td><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + izmenidugme + "</td>";
+                                                //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
+                                                row += "</tr>";
+
+                                                $("#tabelaMani").append(row);
+
+
                                             }
-                                            row += "<td><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + izmenidugme + "</td>";
-                                            //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
-                                            row += "</tr>";
-
-                                            $("#tabelaMani").append(row);
-
-
+                                        },
+                                        error: function (data) {
+                                            alert("Greska!");
                                         }
-                                    },
-                                    error: function (data) {
-                                        alert("Greska!");
-                                    }
 
-                                });
+                                    });
+                                }//kad se uspesno popuni manifestacija
 
                             }
                         });
@@ -2743,13 +2754,9 @@
                         contentType: false,
                         processData: false,
                         cache: false,
-                       // contentType: 'application/json; charset=utf-8',
-                        //dataType: 'json',
                         complete: function (data) {
-                            console.log("success dodavanje manifestacije");
-                            console.log("Uspesno izmenjeno");
+                            console.log("success izmene manifestacije");
                             
-
                             //povratna poruka
                             var poruka="";
                             if (JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON).length>0)
@@ -2762,123 +2769,107 @@
                                     alert(poruka);
                                     console.log("ne moye smanjiti");
 
+                                } else if (poruka == "Manifestacija ne moze biti u proslosti.") {
+                                    alert(poruka);
+                                } else if (poruka == "Neuspesno izmenjeno.") {
+                                    alert(poruka);
+                                } else if (poruka == "Postoji vec manifestacija u zadataom vremenu na zadatom mestu.") {
+                                    alert(poruka);
                                 }
-                                //else {
-                                //    alert("Uspesno izmenjeno.");
-                                //    var modal = document.getElementById("myModal3");
-                                //    modal.style.display = "none";
+                                else if (poruka == "Uspesno izmenjeno.") {
 
-                                //}
-                            } else {
-                                alert("Uspesno izmenjeno.");
-                            }
-                            var modal = document.getElementById("myModal3");
-                            modal.style.display = "none";
-                            $("#_poster").val("");
-
-                            //$('#novaMani').hide();
-
-                            // $("#maniPrikaz").load("#tabelaMani");              //zakomentarisno,pre je bilo!!!!!!!!!!!!!!!!!!
-
-                            //var modal = document.getElementById("myModal2");
-                            //modal.style.display = "none";
-
-                            //$("#naziv").val("");
-                            //document.getElementById('tipovi').selectedIndex = 0;
-                            //$("#brojmesta").val("");
-                            //$("#time").val("");
-                            //$("#datumivreme").val("");
-                            //$("#cenaregular").val("");
-                            //$("#ulicabroj").val("");
-                            //$("#grad").val("");
-                            //$("#postanskibroj").val("");
-                            //$("#poster").val("");
-                            ////$("[type='file']").clearFiles();
-                            var tabelica = document.getElementById('tabelaMani');
-                            for (var i = 1; i < tabelica.rows.length;) {
-                                tabelica.deleteRow(i);
-                            }
-                            $.ajax({
-                                type: 'POST',
-                                url: '/api/Korisnik/ListaManifestacije',
-                                contentType: 'application/json; charset=utf-8',
-                                dataType: 'json',
-                                //  data: JSON.stringify(korisnik),
-                                success: function (data) {
-                                    console.log("success");
-
-                                    console.log("petlja...pocinje" + data);
-
-                                    var jsonObj = JSON.parse(data);
-
-                                    for (i = 0; i < jsonObj.length; i++) {
-
-
-                                        var tip;
-                                        if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
-                                            tip = "Koncert";
-                                        } else if (jsonObj[i].Tipmanifestacije == 1) {
-                                            tip = "Festival";
-                                        } else if (jsonObj[i].Tipmanifestacije == 2) {
-                                            tip = "Pozoriste";
-                                        }
-
-                                        var poster = jsonObj[i].Poster;
-
-
-
-                                        var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
-                                        row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
-                                        row += "<td >" + tip + "</td>";
-                                        row += "<td >" + jsonObj[i].Datumivreme + "</td>";
-                                        row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
-                                        row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
-                                        row += "<td >" + jsonObj[i].Cenaregular + "</td>";
-                                        row += "<td >" + jsonObj[i].Cenavip + "</td>";
-                                        row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
-                                        var ocena;
-                                        if (jsonObj[i].Ocena == 0) {
-                                            ocena = "";
-                                        } else {
-                                            ocena = jsonObj[i].Ocena;
-                                        }
-
-                                        row += "<td >" + ocena + "</td>";
-                                        var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                                        var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular + "_" + jsonObj[i].IDmanifestacije;
-                                        var obrisidugme = "";
-                                        var aktivirajdugme = "";
-                                        var izmenidugme = "";
-                                        if (korisnik != null) {
-                                            if (korisnik.Uloga == 0) {
-                                                obrisidugme = "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
-                                                if (jsonObj[i].Status == 1) {
-                                                    //alert("status neaktivan");
-                                                    aktivirajdugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-aktiviraj\"  style=\"margin-top: 5px;\">Aktiviraj</button>";
-                                                }
-                                            }
-                                            if (korisnik.Uloga == 2) {//ako je kupac
-                                                obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
-                                            }
-                                            if (korisnik.Uloga == 1)//uloga PRODAVAC
-                                            {
-                                                izmenidugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-izmeni\"  style=\"margin-top: 5px;\">Izmeni</button>";
-                                            }
-                                        }
-                                        row += "<td><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + izmenidugme + "</td>";
-                                        //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
-                                        row += "</tr>";
-
-                                        $("#tabelaMani").append(row);
-
-
+                                    alert("Uspesno izmenjeno.");
+                                    var modal = document.getElementById("myModal3");
+                                    modal.style.display = "none";
+                                    $("#_poster").val("");
+                                    var tabelica = document.getElementById('tabelaMani');
+                                    for (var i = 1; i < tabelica.rows.length;) {
+                                        tabelica.deleteRow(i);
                                     }
-                                },
-                                error: function (data) {
-                                    alert("Greska!");
-                                }
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/api/Korisnik/ListaManifestacije',
+                                        contentType: 'application/json; charset=utf-8',
+                                        dataType: 'json',
+                                        //  data: JSON.stringify(korisnik),
+                                        success: function (data) {
+                                            console.log("success");
 
-                            });
+                                            console.log("petlja...pocinje" + data);
+
+                                            var jsonObj = JSON.parse(data);
+
+                                            for (i = 0; i < jsonObj.length; i++) {
+
+
+                                                var tip;
+                                                if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                                    tip = "Koncert";
+                                                } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                                    tip = "Festival";
+                                                } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                                    tip = "Pozoriste";
+                                                }
+
+                                                var poster = jsonObj[i].Poster;
+
+
+
+                                                var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                                                row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                                                row += "<td >" + tip + "</td>";
+                                                row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                                                row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                                                row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                                                row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                                                row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                                                row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                                                var ocena;
+                                                if (jsonObj[i].Ocena == 0) {
+                                                    ocena = "";
+                                                } else {
+                                                    ocena = jsonObj[i].Ocena;
+                                                }
+
+                                                row += "<td >" + ocena + "</td>";
+                                                var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                                                var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular + "_" + jsonObj[i].IDmanifestacije;
+                                                var obrisidugme = "";
+                                                var aktivirajdugme = "";
+                                                var izmenidugme = "";
+                                                if (korisnik != null) {
+                                                    if (korisnik.Uloga == 0) {
+                                                        obrisidugme = "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                                        if (jsonObj[i].Status == 1) {
+                                                            //alert("status neaktivan");
+                                                            aktivirajdugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-aktiviraj\"  style=\"margin-top: 5px;\">Aktiviraj</button>";
+                                                        }
+                                                    }
+                                                    if (korisnik.Uloga == 2) {//ako je kupac
+                                                        obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
+                                                    }
+                                                    if (korisnik.Uloga == 1)//uloga PRODAVAC
+                                                    {
+                                                        izmenidugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-izmeni\"  style=\"margin-top: 5px;\">Izmeni</button>";
+                                                    }
+                                                }
+                                                row += "<td><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + izmenidugme + "</td>";
+                                                //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
+                                                row += "</tr>";
+
+                                                $("#tabelaMani").append(row);
+
+
+                                            }
+                                        },
+                                        error: function (data) {
+                                            alert("Greska!");
+                                        }
+
+                                    });
+                                }
+                            }
+                           
 
                         }
                     });
@@ -2887,9 +2878,8 @@
                     //prvo obrisati
 
 
-                }
-
-                //
+                       }
+                
 
             }); 
 

@@ -448,7 +448,16 @@ namespace API_PR34_2017.Controllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest);
             }
 
-                string fileSavePath = string.Empty;
+            //ako je datum u proslosti odbiti
+            var json = JsonConvert.SerializeObject("Manifestacija ne moze biti u proslosti.");
+            int result = DateTime.Compare(myDate, DateTime.Now);
+            if (result < 0)
+            {
+                //u proslosti zakazana manifestacija
+                return Request.CreateResponse(HttpStatusCode.BadRequest,json);
+            }
+
+            string fileSavePath = string.Empty;
             //string virtualDirectoryImg = "Files";
             string fileName = string.Empty;
 
@@ -479,7 +488,8 @@ namespace API_PR34_2017.Controllers
             bool postoji = false;
             foreach (Manifestacija fest in sveManifestacije)
             {
-                if (fest.Naziv.Equals(mani.Naziv) && fest.Datumivreme.Equals(mani.Datumivreme))     //DA LI TREBA POPRAVITI
+                //if (fest.Naziv.Equals(mani.Naziv) && fest.Datumivreme.Equals(mani.Datumivreme))     //DA LI TREBA POPRAVITI
+                if (fest.Mestoodrzavanja.Grad.Equals(mani.Mestoodrzavanja.Grad) && fest.Mestoodrzavanja.Ulicabroj.Equals(mani.Mestoodrzavanja.Ulicabroj) && fest.Mestoodrzavanja.Postanskibroj.Equals(mani.Mestoodrzavanja.Postanskibroj) && fest.Datumivreme.Equals(mani.Datumivreme))     //na istoj lokaciji u isto vreme
                 {
                     postoji = true;
                 }
@@ -488,12 +498,14 @@ namespace API_PR34_2017.Controllers
             if (!postoji)
             {
                 Data.SaveFest(mani);
-                return Request.CreateResponse(HttpStatusCode.OK);
+                var json4 = JsonConvert.SerializeObject("Uspesno dodata manifestacija.");
+                return Request.CreateResponse(HttpStatusCode.OK,json4);
             }
             else
             {
                 //var output = JsonConvert.SerializeObject(svi);
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                var json2 = JsonConvert.SerializeObject("Postoji vec manifestacija u zadatom vremenu na zadatom mestu");
+                return Request.CreateResponse(HttpStatusCode.BadRequest,json2);
             }
             //}//
 
@@ -565,6 +577,13 @@ namespace API_PR34_2017.Controllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, json2);
             }
+            var json3 = JsonConvert.SerializeObject("Manifestacija ne moze biti u proslosti.");
+            int result = DateTime.Compare(myDate, DateTime.Now);
+            if (result < 0)
+            {
+                //u proslosti zakazana manifestacija
+                return Request.CreateResponse(HttpStatusCode.BadRequest, json3);        //za ispis videti
+            }
 
             string fileSavePath = string.Empty;
             //string virtualDirectoryImg = "Files";
@@ -597,19 +616,33 @@ namespace API_PR34_2017.Controllers
             }
 
             bool postoji = false;
+            bool lokacijavreme = false;
             foreach (Manifestacija fest in sveManifestacije)
             {
                 //if (fest.Naziv.Equals(mani.Naziv) && fest.Datumivreme.Equals(mani.Datumivreme))     //DA LI TREBA POPRAVITI
-                if (fest.IDmanifestacije.Equals(idman))     //DA LI TREBA POPRAVITI
+                if (fest.IDmanifestacije.Equals(idman))     //naci po istom idju
                 {
                     postoji = true;
+                }
+                //da nije ista manifestacija,sa istim idjem,vec neka druga
+                if(!fest.IDmanifestacije.Equals(idman) && fest.Mestoodrzavanja.Grad.Equals(mani.Mestoodrzavanja.Grad) && fest.Mestoodrzavanja.Ulicabroj.Equals(mani.Mestoodrzavanja.Ulicabroj) && fest.Mestoodrzavanja.Postanskibroj.Equals(mani.Mestoodrzavanja.Postanskibroj) && fest.Datumivreme.Equals(mani.Datumivreme))
+                {
+                    lokacijavreme = true;
                 }
             }
 
             if (postoji)
             {
-                Data.SaveFest(mani);
-                return Request.CreateResponse(HttpStatusCode.OK, json);
+                if (!lokacijavreme)
+                {
+                    Data.SaveFest(mani);
+                    return Request.CreateResponse(HttpStatusCode.OK, json);
+                }
+                else
+                {
+                    var json4 = JsonConvert.SerializeObject("Postoji vec manifestacija u zadataom vremenu na zadatom mestu.");
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, json4);
+                }
             }
             else
             {

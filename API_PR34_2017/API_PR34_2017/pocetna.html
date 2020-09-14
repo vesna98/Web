@@ -2748,130 +2748,132 @@
 
                     $.ajax({
 
-                        type: "POST",
-                        url: 'api/Korisnik/IzmeniFest',
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        cache: false,
-                        complete: function (data) {
-                            console.log("success izmene manifestacije");
+                            type: "POST",
+                            url: 'api/Korisnik/IzmeniFest',
+                            data: formData,
+                            contentType: false,
+                            processData: false,
+                            cache: false,
+                            complete: function (data) {
+                                console.log("success izmene manifestacije");
                             
-                            //povratna poruka
-                            var poruka="";
-                            if (JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON).length>0)
-                                    poruka = JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON);
-                            console.log(JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON));
+                                //povratna poruka
+                                var poruka="";
+                                if (JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON).length>0)
+                                        poruka = JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON);
+                                console.log(JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON));
 
-                            if (poruka != "") {
+                                if (poruka != "") {
 
-                                if (poruka == "Ne mozete broj mesta smanjiti na manje od broja kupljenih karata.") {
-                                    alert(poruka);
-                                    console.log("ne moye smanjiti");
+                                    if (poruka == "Ne mozete broj mesta smanjiti na manje od broja kupljenih karata.") {
+                                        alert(poruka);
+                                        console.log("ne moye smanjiti");
 
-                                } else if (poruka == "Manifestacija ne moze biti u proslosti.") {
-                                    alert(poruka);
-                                } else if (poruka == "Neuspesno izmenjeno.") {
-                                    alert(poruka);
-                                } else if (poruka == "Postoji vec manifestacija u zadataom vremenu na zadatom mestu.") {
-                                    alert(poruka);
-                                }
-                                else if (poruka == "Uspesno izmenjeno.") {
-
-                                    alert("Uspesno izmenjeno.");
-                                    var modal = document.getElementById("myModal3");
-                                    modal.style.display = "none";
-                                    $("#_poster").val("");
-                                    var tabelica = document.getElementById('tabelaMani');
-                                    for (var i = 1; i < tabelica.rows.length;) {
-                                        tabelica.deleteRow(i);
+                                    } else if (poruka == "Manifestacija ne moze biti u proslosti.") {
+                                        alert(poruka);
+                                    } else if (poruka == "Neuspesno izmenjeno.") {
+                                        alert(poruka);
+                                    } else if (poruka == "Postoji vec manifestacija u zadataom vremenu na zadatom mestu.") {
+                                        alert(poruka);
+                                    } else if (poruka == "Manifestacija se zavrsila,nije je moguce izmeniti.") {
+                                        alert(poruka);
                                     }
-                                    $.ajax({
-                                        type: 'POST',
-                                        url: '/api/Korisnik/ListaManifestacije',
-                                        contentType: 'application/json; charset=utf-8',
-                                        dataType: 'json',
-                                        //  data: JSON.stringify(korisnik),
-                                        success: function (data) {
-                                            console.log("success");
+                                    else if (poruka == "Uspesno izmenjeno.") {
 
-                                            console.log("petlja...pocinje" + data);
+                                        alert("Uspesno izmenjeno.");
+                                        var modal = document.getElementById("myModal3");
+                                        modal.style.display = "none";
+                                        $("#_poster").val("");
+                                        var tabelica = document.getElementById('tabelaMani');
+                                        for (var i = 1; i < tabelica.rows.length;) {
+                                            tabelica.deleteRow(i);
+                                        }
+                                        $.ajax({
+                                            type: 'POST',
+                                            url: '/api/Korisnik/ListaManifestacije',
+                                            contentType: 'application/json; charset=utf-8',
+                                            dataType: 'json',
+                                            //  data: JSON.stringify(korisnik),
+                                            success: function (data) {
+                                                console.log("success");
 
-                                            var jsonObj = JSON.parse(data);
+                                                console.log("petlja...pocinje" + data);
 
-                                            for (i = 0; i < jsonObj.length; i++) {
+                                                var jsonObj = JSON.parse(data);
 
-
-                                                var tip;
-                                                if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
-                                                    tip = "Koncert";
-                                                } else if (jsonObj[i].Tipmanifestacije == 1) {
-                                                    tip = "Festival";
-                                                } else if (jsonObj[i].Tipmanifestacije == 2) {
-                                                    tip = "Pozoriste";
-                                                }
-
-                                                var poster = jsonObj[i].Poster;
+                                                for (i = 0; i < jsonObj.length; i++) {
 
 
+                                                    var tip;
+                                                    if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
+                                                        tip = "Koncert";
+                                                    } else if (jsonObj[i].Tipmanifestacije == 1) {
+                                                        tip = "Festival";
+                                                    } else if (jsonObj[i].Tipmanifestacije == 2) {
+                                                        tip = "Pozoriste";
+                                                    }
 
-                                                var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
-                                                row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
-                                                row += "<td >" + tip + "</td>";
-                                                row += "<td >" + jsonObj[i].Datumivreme + "</td>";
-                                                row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
-                                                row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
-                                                row += "<td >" + jsonObj[i].Cenaregular + "</td>";
-                                                row += "<td >" + jsonObj[i].Cenavip + "</td>";
-                                                row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
-                                                var ocena;
-                                                if (jsonObj[i].Ocena == 0) {
-                                                    ocena = "";
-                                                } else {
-                                                    ocena = jsonObj[i].Ocena;
-                                                }
+                                                    var poster = jsonObj[i].Poster;
 
-                                                row += "<td >" + ocena + "</td>";
-                                                var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-                                                var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular + "_" + jsonObj[i].IDmanifestacije;
-                                                var obrisidugme = "";
-                                                var aktivirajdugme = "";
-                                                var izmenidugme = "";
-                                                if (korisnik != null) {
-                                                    if (korisnik.Uloga == 0) {
-                                                        obrisidugme = "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
-                                                        if (jsonObj[i].Status == 1) {
-                                                            //alert("status neaktivan");
-                                                            aktivirajdugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-aktiviraj\"  style=\"margin-top: 5px;\">Aktiviraj</button>";
+
+
+                                                    var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
+                                                    row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
+                                                    row += "<td >" + tip + "</td>";
+                                                    row += "<td >" + jsonObj[i].Datumivreme + "</td>";
+                                                    row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
+                                                    row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
+                                                    row += "<td >" + jsonObj[i].Cenaregular + "</td>";
+                                                    row += "<td >" + jsonObj[i].Cenavip + "</td>";
+                                                    row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
+                                                    var ocena;
+                                                    if (jsonObj[i].Ocena == 0) {
+                                                        ocena = "";
+                                                    } else {
+                                                        ocena = jsonObj[i].Ocena;
+                                                    }
+
+                                                    row += "<td >" + ocena + "</td>";
+                                                    var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
+                                                    var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular + "_" + jsonObj[i].IDmanifestacije;
+                                                    var obrisidugme = "";
+                                                    var aktivirajdugme = "";
+                                                    var izmenidugme = "";
+                                                    if (korisnik != null) {
+                                                        if (korisnik.Uloga == 0) {
+                                                            obrisidugme = "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                                            if (jsonObj[i].Status == 1) {
+                                                                //alert("status neaktivan");
+                                                                aktivirajdugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-aktiviraj\"  style=\"margin-top: 5px;\">Aktiviraj</button>";
+                                                            }
+                                                        }
+                                                        if (korisnik.Uloga == 2) {//ako je kupac
+                                                            obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
+                                                        }
+                                                        if (korisnik.Uloga == 1)//uloga PRODAVAC
+                                                        {
+                                                            izmenidugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-izmeni\"  style=\"margin-top: 5px;\">Izmeni</button>";
                                                         }
                                                     }
-                                                    if (korisnik.Uloga == 2) {//ako je kupac
-                                                        obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
-                                                    }
-                                                    if (korisnik.Uloga == 1)//uloga PRODAVAC
-                                                    {
-                                                        izmenidugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-izmeni\"  style=\"margin-top: 5px;\">Izmeni</button>";
-                                                    }
+                                                    row += "<td><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + izmenidugme + "</td>";
+                                                    //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
+                                                    row += "</tr>";
+
+                                                    $("#tabelaMani").append(row);
+
+
                                                 }
-                                                row += "<td><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + izmenidugme + "</td>";
-                                                //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
-                                                row += "</tr>";
-
-                                                $("#tabelaMani").append(row);
-
-
+                                            },
+                                            error: function (data) {
+                                                alert("Greska!");
                                             }
-                                        },
-                                        error: function (data) {
-                                            alert("Greska!");
-                                        }
 
-                                    });
+                                        });
+                                    }
                                 }
-                            }
                            
 
-                        }
+                            }
                     });
 
                     //refresh tabele sa manifestacijama

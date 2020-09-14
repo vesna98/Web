@@ -70,6 +70,18 @@ namespace API_PR34_2017.Controllers
                                 // return false;
                 }
                 Data.SaveUser(korisnik);
+
+                List<Karta> svekarte = new List<Karta>();
+                svekarte = Data.ReadKarte("~/App_Data/karte.txt");
+                foreach (Karta karta in svekarte)
+                {
+                    if (karta.Korisnikid.Equals(korisnik.Korisnickoime))
+                    {
+                        karta.Kupac = korisnik.Ime + " " + korisnik.Prezime;
+                        Data.SaveKartu(karta);
+                    }
+                }
+
                 //dodaje se ako postoji
                 return korisnik;
             }

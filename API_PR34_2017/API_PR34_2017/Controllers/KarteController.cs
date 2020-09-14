@@ -158,9 +158,13 @@ namespace API_PR34_2017.Controllers
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                     foreach(Manifestacija fest in festovi)
                     {
-                        if(k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme))
+                      //  if(k.Nazivmanifestacije.Equals(fest.Naziv) && k.Datummanifestacije.Equals(fest.Datumivreme) )//&& fest.Prodavac.Equals(user.Korisnickoime))//manifestacija od tog prodavca,treba dodati po sifri manifestacije
+                        if(k.IDmanifestacije.Equals(fest.IDmanifestacije))//trazimo po idju
                         {
-                            odabrane.Add(k);
+                            //k.Datummanifestacije = fest.Datumivreme;
+                            //k.Nazivmanifestacije = fest.Naziv;      //update vremena i naziva zbog mogucih izmena, TREBA I CENU
+                            if(fest.Prodavac.Equals(user.Korisnickoime))
+                                 odabrane.Add(k);
                         }
                     }
                     

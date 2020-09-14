@@ -679,7 +679,20 @@ namespace API_PR34_2017.Controllers
                 {
                     if (!lokacijavreme)
                     {
-                        Data.SaveFest(mani);
+                    //izmeniti i karte,sto se tice datuma i mesta,sve sem cene
+                    List<Karta> svekarte = new List<Karta>();
+                    svekarte = Data.ReadKarte("~/App_Data/karte.txt");
+                    foreach(Karta karta in svekarte)
+                    {
+                        if (karta.IDmanifestacije.Equals(idman))
+                        {
+                            karta.Nazivmanifestacije = mani.Naziv;
+                            karta.Datummanifestacije = mani.Datumivreme;
+                            Data.SaveKartu(karta);
+                        }
+                    }
+
+                    Data.SaveFest(mani);
                         return Request.CreateResponse(HttpStatusCode.OK, json);
                     }
                     else
@@ -1854,7 +1867,7 @@ namespace API_PR34_2017.Controllers
                 ukupanBrojRez += brojreg;
                 for(int i = 0; i < brojreg; i++)
                 {
-                    Data.SaveKartu(new Karta(manifestacija,datum,double.Parse(cenareg),kupac.Ime+" "+kupac.Prezime,kupac.Korisnickoime,StatusKarte.Odustanak,TypeKarte.REGULAR,GetRandomString(10),false,odustanak));
+                    Data.SaveKartu(new Karta(manifestacija,datum,double.Parse(cenareg),kupac.Ime+" "+kupac.Prezime,kupac.Korisnickoime,StatusKarte.Odustanak,TypeKarte.REGULAR,GetRandomString(10),false,odustanak,IDman));
                     kupac.Sakupljenibodovi +=(double.Parse(cenareg) / 1000 * 133);
                 }
             }
@@ -1864,7 +1877,7 @@ namespace API_PR34_2017.Controllers
                 ukupanBrojRez += brojvip;
                 for (int i = 0; i < brojvip; i++)
                 {
-                    Data.SaveKartu(new Karta(manifestacija, datum, 4*double.Parse(cenareg), kupac.Ime + " " + kupac.Prezime, kupac.Korisnickoime, StatusKarte.Odustanak, TypeKarte.VIP, GetRandomString(10),false,odustanak));
+                    Data.SaveKartu(new Karta(manifestacija, datum, 4*double.Parse(cenareg), kupac.Ime + " " + kupac.Prezime, kupac.Korisnickoime, StatusKarte.Odustanak, TypeKarte.VIP, GetRandomString(10),false,odustanak,IDman));
                     kupac.Sakupljenibodovi += (4*double.Parse(cenareg) / 1000 * 133);
                 }
             }
@@ -1874,7 +1887,7 @@ namespace API_PR34_2017.Controllers
                 ukupanBrojRez += brojfan;
                 for (int i = 0; i < brojfan; i++)
                 {
-                    Data.SaveKartu(new Karta(manifestacija, datum, 2*double.Parse(cenareg), kupac.Ime + " " + kupac.Prezime, kupac.Korisnickoime, StatusKarte.Odustanak, TypeKarte.FANPIT, GetRandomString(10),false,odustanak));
+                    Data.SaveKartu(new Karta(manifestacija, datum, 2*double.Parse(cenareg), kupac.Ime + " " + kupac.Prezime, kupac.Korisnickoime, StatusKarte.Odustanak, TypeKarte.FANPIT, GetRandomString(10),false,odustanak,IDman));
                     kupac.Sakupljenibodovi += (2*double.Parse(cenareg) / 1000 * 133);
                 }
             }

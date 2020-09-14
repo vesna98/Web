@@ -8,7 +8,7 @@ namespace API_PR34_2017.Models
 {
     public class Karta
     {
-        public Karta(string nazivmanifestacije, string datummanifestacije, double cena, string kupac, string korisnikid, StatusKarte status, TypeKarte tipkarte,string idkarta, bool obrisan, bool mogucodustanak)
+        public Karta(string nazivmanifestacije, string datummanifestacije, double cena, string kupac, string korisnikid, StatusKarte status, TypeKarte tipkarte,string idkarta, bool obrisan, bool mogucodustanak,string id)
         {
             Nazivmanifestacije = nazivmanifestacije;
             Datummanifestacije = datummanifestacije;
@@ -23,6 +23,7 @@ namespace API_PR34_2017.Models
             Idkarte = idkarta;
 //            MogucOdustanak = false;
             MogucOdustanak = mogucodustanak;
+            IDmanifestacije = id;
         }
 
         //internal static string GetRandomString(int stringLength)
@@ -40,6 +41,7 @@ namespace API_PR34_2017.Models
         public string Idkarte { get; set; }
         public string Nazivmanifestacije { get; set; }  //manifestacija za koju je rez
         public string Datummanifestacije { get; set; } //vrme i datum manif
+        public string IDmanifestacije { get; set; } 
         public double Cena { get; set; }
         public string Kupac { get; set; }   //ime i prezime
         public string Korisnikid { get; set; }   //username korisnika
@@ -51,7 +53,7 @@ namespace API_PR34_2017.Models
 
         public override string ToString()
         {
-            return Idkarte+";"+Korisnikid+";"+Tipkarte.ToString()+";"+Status.ToString()+";"+Cena.ToString()+";"+Nazivmanifestacije+";"+Datummanifestacije+";"+Obrisana.ToString()+";"+Kupac+";"+MogucOdustanak.ToString();
+            return Idkarte + ";" + Korisnikid + ";" + Tipkarte.ToString() + ";" + Status.ToString() + ";" + Cena.ToString() + ";" + Nazivmanifestacije + ";" + Datummanifestacije + ";" + Obrisana.ToString() + ";" + Kupac + ";" + MogucOdustanak.ToString() + ";"+IDmanifestacije;
         }
     }
     public enum StatusKarte

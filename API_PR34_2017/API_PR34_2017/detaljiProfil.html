@@ -48,10 +48,17 @@
                 //   // $('#korisnikKarte').hide();
 
                 //}
-                if (korisnik.Uloga == 2 || korisnik.Uloga == 0 || korisnik.Uloga == 1)
-                {//kupac
+              //  if (korisnik.Uloga == 2 || korisnik.Uloga == 0 || korisnik.Uloga == 1)
+                if (korisnik.Uloga == 2 || korisnik.Uloga == 0 || korisnik.Uloga == 1) {//kupac
                     $('#karte').show();
+                }
+                if (korisnik.Uloga == 0 || korisnik.Uloga == 1) {
+                    $('#korisnikKarte').hide();
+                }
+                if (korisnik.Uloga == 2) {
                     $('#korisnikKarte').show();
+                }
+                if (korisnik.Uloga == 2 || korisnik.Uloga == 0 || korisnik.Uloga == 1) {
                     //-------------------------------------------prikaz svih rez karata
                     var obj2 = JSON.stringify({
                         "korisnik": korisnik.Korisnickoime
@@ -1374,7 +1381,7 @@
 
         <button type="button" id="pretraga">Pretrazi</button>
 
-        <table id="tabelaKarte">
+        <!--<table id="tabelaKarte">
             <tr>
                 <th>Naziv</th>
                 <th>Datum</th>
@@ -1384,9 +1391,19 @@
                 <th>Dodatno</th>
             </tr>
 
-        </table>
+        </table>-->
     </div>
+    <table id="tabelaKarte">
+        <tr>
+            <th>Naziv</th>
+            <th>Datum</th>
+            <th>Cena</th>
+            <th>Tip</th>
+            <th>Status</th>
+            <th>Dodatno</th>
+        </tr>
 
+    </table>
 
     <div id="myModal" class="modal">
 
@@ -1404,7 +1421,7 @@
                 <option value="4">4</option>
                 <option value="5">5</option>
             </select><br>
-            <textarea name="comments" id="comments" maxlength="50"  placeholder="max 50 karaktera" style="font-family:sans-serif;font-size:0.8em;resize:none;height: 10em;"></textarea>
+            <textarea name="comments" id="comments" maxlength="50" placeholder="max 50 karaktera" style="font-family:sans-serif;font-size:0.8em;resize:none;height: 10em;"></textarea>
             <br><input type="submit" id="unetComm" value="Prosledi" />
             <p>Hvala Vam na saradnji</p>
         </div>

@@ -438,6 +438,10 @@ namespace API_PR34_2017.Controllers
             string filter = (string)jsonResult["filter"];
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA
 
+            //zabeleziti odustanak
+
+            Data.SaveOdustanak(DateTime.Now, korisnik);
+
             double cenaKarte=0;
 
             List<Karta> odabrane = new List<Karta>();
@@ -454,7 +458,8 @@ namespace API_PR34_2017.Controllers
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                     foreach(Manifestacija fest in festovi)
                     {
-                        if(fest.Naziv.Equals(k.Nazivmanifestacije) && fest.Datumivreme.Equals(k.Datummanifestacije))
+                        //if(fest.Naziv.Equals(k.Nazivmanifestacije) && fest.Datumivreme.Equals(k.Datummanifestacije))
+                        if(fest.IDmanifestacije.Equals(k.IDmanifestacije))
                         {
                             fest.Kupljeno -= 1;
                             Data.SaveFest(fest);
@@ -1275,6 +1280,51 @@ namespace API_PR34_2017.Controllers
             var output = JsonConvert.SerializeObject(odabrane);
             
             return Request.CreateResponse(HttpStatusCode.OK, output);
+        }
+        [Route("SumnjiviKorisnici")]
+        [HttpPost]
+        public HttpResponseMessage SumnjiviKorisnici()
+        {
+            Dictionary<string, int> mozdaSumnjivi = new Dictionary<string, int>();
+            mozdaSumnjivi= Data.ReadOdustanak("~/App_Data/odustanci.txt");
+            List<Korisnik> sumnjiviKorisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> sviKorisnici = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (string username in mozdaSumnjivi.Keys)
+            {
+                if (mozdaSumnjivi[username] >= 5)
+                {
+                    //ako ima 5 ili odustanka onda dodaj
+                    
+                    foreach (Korisnik u in sviKorisnici.Values)
+                    {
+                        if (u.Korisnickoime.Equals(username))
+                            sumnjiviKorisnici.Add(u);
+                    }
+                }
+            }
+
+            //string datum = "";
+            //DateTime myDate;
+            //foreach (string ime_datum in users.Keys)
+            //{
+            //    datum = ime_datum.Split(';')[1];
+            //    datum = datum.Split(' ')[0];
+            //    string dan = datum.Split('-')[0];
+            //    string mesec = datum.Split('-')[1];
+            //    string godina = datum.Split('-')[2];
+            //    if (dan.Length == 1)
+            //        dan = "0" + dan;
+            //    if (mesec.Length == 1)
+            //        mesec = '0' + mesec;
+
+            //    if (DateTime.TryParseExact(dan+"-"+mesec+"-"+godina, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
+            //       sumnjiviKorisnici.Add(users.Values.FirstOrDefault(x => x.Korisnickoime.Equals(ime_datum.Split(';')[0])));//trazimo prvog korisnika sa tim userid
+            //}
+            
+            
+                var json = JsonConvert.SerializeObject(sumnjiviKorisnici);
+
+                return Request.CreateResponse(HttpStatusCode.OK, json);
         }
     }
 }

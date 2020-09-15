@@ -1363,6 +1363,8 @@
                 $('#podaci').show();
                 if (korisnik.Uloga == 0) {  //admin
                     $('#AdminView').show();
+
+                    $('#tabelaSumnjivi').hide();    //prikaz sumnjivih
                     $('#userPrikaz').hide();
                     $('#ProView').hide();
                     $('#novaMani').hide();
@@ -1376,6 +1378,72 @@
                     $('#novaMani').hide();
                 }
                 //detaljniji prikaz manifestacija
+                $("#sumnjivi").click(function () {
+                    $('#tabelaSumnjivi').show();
+                    var tabelica = document.getElementById('sumnjiviTabela');
+                    for (var i = 1; i < tabelica.rows.length;) {
+                        tabelica.deleteRow(i);
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/Karte/SumnjiviKorisnici',
+                        contentType: 'application/json; charset=utf-8',
+                        dataType: 'json',
+
+                        success: function (data) {
+
+                            var lista = JSON.parse(data);
+                            console.log("u json korisnci" + data);
+                            //var korisnici = JSON.stringify(data);
+                            //alert("korisnici" + korisnici);
+                            for (i = 0; i < lista.length; i++) {
+
+                                var uloga;
+                                if (lista[i].Uloga == 0) {
+                                    uloga = "Administrator";
+                                } else if (lista[i].Uloga == 1) {
+                                    uloga = "Prodavac";
+                                } else if (lista[i].Uloga == 2) {
+                                    uloga = "Kupac";
+                                }
+                                var pol;
+                                if (lista[i].Pol == 1) {
+                                    pol = 'Zenski';
+                                } else {
+                                    pol = 'Muski';
+                                }
+                                var obrisan;
+                                if (lista[i].Obrisan == false) {
+                                    obrisan = "";
+                                } else {
+                                    obrisan = 'OBR/BLOK';
+                                }
+
+                                var row = "<tr class=\"success\">";
+                                row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                                row += "<td >" + lista[i].Ime + "</td>";
+                                row += "<td >" + lista[i].Prezime + "</td>";
+                                row += "<td >" + pol + "</td>";
+                                row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                                row += "<td >" + uloga + "</td>";
+                                row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                                row += "<td >" + obrisan + "</td>";
+                                if (obrisan == "" && uloga != "Administrator") {
+                                    row += "<td><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                } else {
+                                    row += "<td></td>";
+                                }
+                                row += "</tr>";
+                                $("#sumnjiviTabela").append(row);
+
+                            }
+                        },
+                        error: function (data) {
+                            alert("Greska!");
+                        }
+                    });
+
+                });
 
                 $("#dodaj_prodavca").click(function () {
                     $('#userPrikaz').hide();
@@ -3499,6 +3567,23 @@
         <h3 style="color:#333">Vase opcije</h3>
         <input type="submit" id="svi_korisnici" value="Prikaz svih korisnika" />
         <input type="submit" id="dodaj_prodavca" value="Dodajte prodavca" />
+        <input type="submit" id="sumnjivi" value="Sumnjivi korisnici" />
+        <div id="tabelaSumnjivi">
+            <table id="sumnjiviTabela" style=" display: inline-block;vertical-align: top;overflow: auto">
+                <caption style="background-color:#333;color:white;margin-top:25px">Sumnjivi korisnici</caption>
+                <tr>
+                    <th>Korisnicko ime</th>
+                    <th>Ime</th>
+                    <th>Prezime</th>
+                    <th>Pol</th>
+                    <th>Datum rodjenja</th>
+                    <th>Uloga</th>
+                    <th>Sakupljeni poeni</th>
+                    <th>Blokiran</th>
+                    <th>Opcije</th>
+                </tr>
+            </table>
+        </div>
         <div id="prodavac_add">
             <div id="myModal" class="modal">
 

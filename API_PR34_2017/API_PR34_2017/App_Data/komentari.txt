@@ -11,3 +11,5 @@ de67d;mMED;10-02-2020 10:00 PM;veca;moglo je bolje vreme da bude,ali super;3;Tru
 2cbea;mMED;10-02-2020 10:00 PM;veca;prijelepo;4;True;False;cvvhfrz
 68751;mMED;10-02-2020 10:00 PM;veca;pokidalo;4;True;False;cvvhfrz
 b9d34;mMED;10-02-2020 10:00 PM;veca;predobar koncert;5;False;True;cvvhfrz
+af34e;mMED;10-02-2020 10:00 AM;veca;vvvvvvvvvvv;1;False;False;cvvhfrz
+329a6;mMED;10-02-2020 10:00 AM;veca;sasa;5;False;False;cvvhfrz

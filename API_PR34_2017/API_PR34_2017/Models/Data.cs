@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -317,6 +318,76 @@ namespace API_PR34_2017.Models
             stream.Close();
 
             return comments;
+        }
+
+        public static void SaveOdustanak(DateTime vreme,string userid)
+        {
+            string putanja = HostingEnvironment.MapPath("~/App_Data/odustanci.txt");
+            string[] lines = System.IO.File.ReadAllLines(putanja);
+            
+                FileStream fs = new FileStream(putanja, FileMode.Append, FileAccess.Write);
+                StreamWriter sw = new StreamWriter(fs);
+            string dan = vreme.Day.ToString();
+            string mesec = vreme.Month.ToString();
+            
+            if (dan.Length == 1)
+                dan = "0" + dan;
+            if (mesec.Length == 1)
+                mesec = '0' + mesec;
+
+            // string str = userid + ";" + dan+ "-" + mesec + "-" + vreme.Year+" "+vreme.Hour+":"+vreme.Minute+":"+vreme.Second;
+            string str = userid + ";" + dan + "-" + mesec + "-" + vreme.Year;//+" "+vreme.Hour+":"+vreme.Minute+":"+vreme.Second;
+                sw.WriteLine(str);
+                sw.Close();
+                fs.Close();
+        }
+        public static Dictionary<string,int> ReadOdustanak(string path)
+        {
+            //Dictionary<string, Korisnik> users = new Dictionary<string, Korisnik>();
+            //Dictionary<string, Korisnik> svi = new Dictionary<string, Korisnik>();
+            //svi = ReadUser("~/App_Data/korisnici.txt");
+            path = HostingEnvironment.MapPath(path);
+            FileStream stream = new FileStream(path, FileMode.Open);
+            StreamReader sr = new StreamReader(stream);
+            string line = "";
+            DateTime trenutnoOcitan;
+            int perioDanaIzmedju = 0;
+
+            Dictionary<string, int> sumnjivi = new Dictionary<string, int>();
+
+            while ((line = sr.ReadLine()) != null)
+            {
+
+                string[] tokens = line.Split(';');
+
+               // trenutnoOcitan = DateTime.ParseExact(tokens[1], "dd-MM-yyyy h:m:s", CultureInfo.InvariantCulture, DateTimeStyles.None);
+                trenutnoOcitan = DateTime.ParseExact(tokens[1], "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None);
+                perioDanaIzmedju = (DateTime.Now.Date - trenutnoOcitan.Date).Days;
+                    if (perioDanaIzmedju <= 30)
+                    {
+                        if (sumnjivi.ContainsKey(tokens[0]))
+                        {
+                            sumnjivi[tokens[0]]++;  //uvecava value;
+                        }
+                        else
+                        {
+                            sumnjivi.Add(tokens[0], 1);
+                        }
+                    }
+
+
+                //foreach(Korisnik korisnik in svi.Values)
+                //{
+                //    if(tokens[0].Equals(korisnik.Korisnickoime))
+                //        users.Add(line, korisnik);//cela linija da bi celokupan string bio jedinstven
+                //}
+
+
+            }
+            sr.Close();
+            stream.Close();
+
+            return sumnjivi;
         }
     }
 }

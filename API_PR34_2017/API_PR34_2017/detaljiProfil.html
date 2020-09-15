@@ -83,9 +83,9 @@
                               //  if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
                                     if (jsonObj[i].Status == 0) {
                                         lista += "<td> Rezervisana </td>";
-                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                       // var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
                                         if (korisnik.Uloga == 2)
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                     } else {
                                         if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                             lista += "<td> Odustanak </td>";
@@ -179,9 +179,9 @@
                                         //if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
                                             if (jsonObj[i].Status == 0) {
                                                 lista += "<td> Rezervisana </td>";
-                                                var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                                //var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
                                                 if (korisnik.Uloga == 2)
-                                                lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                                    lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                             } else {
                                                 if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                                     lista += "<td> Odustanak </td>";
@@ -249,9 +249,9 @@
                                    // if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
                                         if (jsonObj[i].Status == 0) {
                                             lista += "<td> Rezervisana </td>";
-                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            //var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
                                             if (korisnik.Uloga == 2)
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                         } else {
                                             if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                                 lista += "<td> Odustanak </td>";
@@ -317,9 +317,9 @@
                                    // if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
                                         if (jsonObj[i].Status == 0) {
                                             lista += "<td> Rezervisana </td>";
-                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            //var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
                                             if (korisnik.Uloga == 2)
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                         } else {
                                             if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                                 lista += "<td> Odustanak </td>";
@@ -385,9 +385,9 @@
                                     //if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
                                         if (jsonObj[i].Status == 0) {
                                             lista += "<td> Rezervisana </td>";
-                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            //var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
                                             if (korisnik.Uloga == 2)
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                         } else {
                                             if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                                 lista += "<td> Odustanak </td>";
@@ -454,9 +454,9 @@
                                    // if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
                                         if (jsonObj[i].Status == 0) {
                                             lista += "<td> Rezervisana </td>";
-                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            //var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
                                             if (korisnik.Uloga == 2)
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                         } else {
                                             if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                                 lista += "<td> Odustanak </td>";
@@ -523,9 +523,9 @@
                                     //if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
                                         if (jsonObj[i].Status == 0) {
                                             lista += "<td> Rezervisana </td>";
-                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            //var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
                                             if (korisnik.Uloga == 2)
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                         } else {
                                             if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                                 lista += "<td> Odustanak </td>";
@@ -591,9 +591,9 @@
                                    // if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
                                         if (jsonObj[i].Status == 0) {
                                             lista += "<td> Rezervisana </td>";
-                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            //var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
                                             if (korisnik.Uloga == 2)
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                         } else {
                                             if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                                 lista += "<td> Odustanak </td>";
@@ -660,9 +660,9 @@
                                     //if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
                                         if (jsonObj[i].Status == 0) {
                                             lista += "<td> Rezervisana </td>";
-                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            //var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
                                             if (korisnik.Uloga == 2)
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                         } else {
                                             if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                                 lista += "<td> Odustanak </td>";
@@ -732,9 +732,9 @@
                                    // if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
                                         if (jsonObj[i].Status == 0) {
                                             lista += "<td> Rezervisana </td>";
-                                            var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                            //var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
                                             if (korisnik.Uloga == 2)
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                         } else {
                                             if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                                 lista += "<td> Odustanak </td>";
@@ -805,9 +805,9 @@
                                 //if (korisnik.Uloga == 2) {//samo kupci da imaju te opcije
                                     if (jsonObj[i].Status == 0) {
                                         lista += "<td> Rezervisana </td>";
-                                        var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
+                                        //var manifestacija = jsonObj[i].Nazivmanifestacije + ";" + jsonObj[i].Datummanifestacije;
                                         if (korisnik.Uloga == 2)
-                                        lista += "<td>" + "<button type = \"button\" id=\"" + manifestacija + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
+                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Komentarisi</button>" + "</td>";
                                     } else {
                                         if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                             lista += "<td> Odustanak </td>";
@@ -863,7 +863,7 @@
                     var kom = $("#comments").val();
                     
                     //alert("kom: " + kom + "\nocena: " + ocena + " koja mani: " + kojaMANIFESTACIJA);
-                    
+                   // alert(kojaMANIFESTACIJA);
                     var obj2 = JSON.stringify({
                         "ocena": ocena,
                         "korisnik": korisnik.Korisnickoime,

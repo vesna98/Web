@@ -21,7 +21,7 @@ pro123;MEDforyou;Pozoriste;4;14-07-2020 03:10 PM;690;Novosadski Sajam 87;Novi Sa
 pro123;mmmmmm;Pozoriste;4;14-01-2020 03:20 PM;500;Novosadski Sajam 87;Novi Sad;21000;plava.jpg;Neaktivno;0;0;1000;2000;True;gdzlo
 proPro;Marko Kutlic;Koncert;200;14-02-2021 07:40 PM;11;Varadinska 44;Novi Sad;21000;markokutlic.jpg;Aktivno;0;0;22;44;True;ojopp
 proPro;festic;Festival;10;01-10-2021 08:57 PM;23;Varadinska 44;Srbija Novi Sad;21000;oat.jpg;Neaktivno;0;0;46;92;True;oioio7
-p123;Manifestacija1;Pozoriste;123;10-02-2022 02:07 PM;34;Marka Kraljevica 55;Beograd;23000;ticket.jpg;Aktivno;1;0;68;136;False;iihsu
+p123;Manifestacija1;Pozoriste;123;10-02-2022 02:07 PM;34;Marka Kraljevica 55;Beograd;23000;ticket.jpg;Aktivno;0;0;68;136;False;iihsu
 p123;Ksenija Knezevic;Koncert;200;04-10-2021 08:41 PM;100;Mileticev Trg;Novi Sad;21000;27.png;Neaktivno;0;0;200;400;False;f4f2a
 p123;Knez;Koncert;200;20-04-2021 07:49 AM;700;Novosadski Sajam 95;Novi Sad;21000;6548084_preview.png;Neaktivno;0;0;1400;2800;False;a6529
 p123;Edita;Koncert;400;04-04-2019 07:45 PM;100;Novosadski Sajam 95;Novi Sad;21000;tick.png;Aktivno;0;0;200;400;False;c4752

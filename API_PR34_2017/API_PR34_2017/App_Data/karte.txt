@@ -25,4 +25,4 @@ fc85057a13;daki;REGULAR;Odustanak;34;Manifestacija1;10-02-2022 02:07 PM;True;Dij
 4aa7406aed;daki;REGULAR;Odustanak;34;Manifestacija1;10-02-2022 02:07 PM;True;Dijana Matijevic;True;iihsu
 c9a999a398;daki;VIP;Odustanak;136;Manifestacija1;10-02-2022 02:07 PM;True;Dijana Matijevic;True;iihsu
 dd2542aae7;daki;VIP;Odustanak;136;Manifestacija1;10-02-2022 02:07 PM;True;Dijana Matijevic;True;iihsu
-225ae1db02;daki;VIP;Odustanak;136;Manifestacija1;10-02-2022 02:07 PM;False;Dijana Matijevic;True;iihsu
+225ae1db02;daki;VIP;Odustanak;136;Manifestacija1;10-02-2022 02:07 PM;True;Dijana Matijevic;True;iihsu

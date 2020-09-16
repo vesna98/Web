@@ -10,4 +10,4 @@ ana;1234;Ana;Matijevic;Zenski;11-04-2000;0;Nepoznat;Prodavac;True
 nidzolino;1234;Nikola;Nikolic;Muski;23-12-1998;0;Nepoznat;Prodavac;True
 ana123;1234;srr;fdre;Zenski;12-03-2000;0;Nepoznat;Kupac;True
 p123;1234;Petar;Maric;Muski;07-11-1998;0;Nepoznat;Prodavac;False
-daki;1234;Dijana;Matijevic;Zenski;11-04-2000;-604,352;Nepoznat;Kupac;False
+daki;1234;Dijana;Matijevic;Zenski;11-04-2000;-604,352;Nepoznat;Kupac;True

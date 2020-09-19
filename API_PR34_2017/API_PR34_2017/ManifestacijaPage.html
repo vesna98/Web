@@ -397,6 +397,7 @@
                     },
                     error: function (data) {
                         console.log("ERROR : ", data);
+                        alert("Ne mozete da izvrsite akciju!");
                     }
                 });
             });
@@ -447,7 +448,8 @@
 
                     },
                     error: function (data) {
-                        console.log("ERROR : ", data);
+                        //console.log("ERROR : ", data);
+                        alert("Ne mozete da izvrsite akciju!");
                     }
                 });
             });
@@ -720,7 +722,7 @@
     </div>
     <table id="results" style="margin-left: auto;
   margin-right: auto;"></table>
-    <button id="prikazmape" style="border-radius:25px;margin-top: 5px;margin-bottom: 5px;">Prikazi mapu</button>
+    <button id="prikazmape" style="border-radius:25px;margin-top: 5px;margin-bottom: 5px;">Prikazi na mapi</button>
     <!--<div id="map" class="map" style="display:inline-block"></div>-->
     <div id="myModal" class="modal">
 

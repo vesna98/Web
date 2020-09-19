@@ -828,9 +828,12 @@
 
                         },
                         error: function (data) {
-                            alert("Greska!");
+                            //alert("Greska!");
+                            alert("Ne mozete da izvrsite akciju!");
+                            window.location.reload(true);
                         }
                     });
+
 
                 });
 
@@ -892,7 +895,8 @@
                             }
                         },
                         error: function (data) {
-                            alert("Greska!");
+                            // alert("Greska!");
+                            alert("Ne mozete da izvrsite akciju");
                         }
                     });
                 });
@@ -976,7 +980,7 @@
                                 sessionStorage.setItem('logovan', JSON.stringify(data));
                                 console.log(JSON.stringify(data));
                             } else {
-                                alert("Niste uneli ispravne podatke");//treba refresh sranice uraditi!!!---DOPUNI
+                                alert("Akcija nije izvrsena");//treba refresh sranice uraditi!!!---DOPUNI
                             }
                             window.location.reload(true);
                             //alert("osvezilo");

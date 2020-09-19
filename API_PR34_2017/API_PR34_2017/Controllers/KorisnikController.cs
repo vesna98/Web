@@ -244,80 +244,82 @@ namespace API_PR34_2017.Controllers
         public HttpResponseMessage ObrisiKorisnika(JObject jsonResult)
         {
             string filter = (string)jsonResult["korime"];
-
-            List<Korisnik> korisnici = new List<Korisnik>();
-            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
-            foreach (Korisnik u in recnik.Values)
-            {
-                if (u.Korisnickoime.Equals(filter) && u.Uloga.ToString().Equals("Kupac") && !u.Obrisan && !u.Blokiran)   //kad je kupac brisu se karte i dodaju kod manifestacije slob mesta
+           
+                List<Korisnik> korisnici = new List<Korisnik>();
+                Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+                foreach (Korisnik u in recnik.Values)
                 {
-                    u.Obrisan = true;
-                    Data.SaveUser(u);
-                    //brisanje i karata
-                    //int brojNovihSlobodnihKarata = 0;
-                    
-                    List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
-                    foreach (Karta karta in karte)
+                    if (u.Korisnickoime.Equals(filter) && u.Uloga.ToString().Equals("Kupac") && !u.Obrisan && !u.Blokiran)   //kad je kupac brisu se karte i dodaju kod manifestacije slob mesta
                     {
-                        if (karta.Korisnikid.Equals(filter))
+                        u.Obrisan = true;
+                        Data.SaveUser(u);
+                        //brisanje i karata
+                        //int brojNovihSlobodnihKarata = 0;
+
+                        List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
+                        foreach (Karta karta in karte)
                         {
-                            if (!karta.Obrisana)//ako nije vec predhodno obrisan karta obrisi
+                            if (karta.Korisnikid.Equals(filter))
                             {
-                                karta.Obrisana = true;
-                                Data.SaveKartu(karta);
-                                //brojNovihSlobodnihKarata++;
-                                //smanjiti broj kupljenih karata
-                                List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-                                foreach (Manifestacija fest in festovi)
+                                if (!karta.Obrisana)//ako nije vec predhodno obrisan karta obrisi
                                 {
-                                    if (fest.IDmanifestacije.Equals(karta.IDmanifestacije) && !fest.Obrisan)
+                                    karta.Obrisana = true;
+                                    Data.SaveKartu(karta);
+                                    //brojNovihSlobodnihKarata++;
+                                    //smanjiti broj kupljenih karata
+                                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                                    foreach (Manifestacija fest in festovi)
                                     {
-                                        fest.Kupljeno -= 1;
-                                        Data.SaveFest(fest);
+                                        if (fest.IDmanifestacije.Equals(karta.IDmanifestacije) && !fest.Obrisan)
+                                        {
+                                            fest.Kupljeno -= 1;
+                                            Data.SaveFest(fest);
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+                    else if (u.Korisnickoime.Equals(filter) && u.Uloga.ToString().Equals("Prodavac") && !u.Obrisan && !u.Blokiran)
+                    {
+                        //ako je prodavac onda se brisu manifestacije i karte za prodavce
+                        u.Obrisan = true;
+                        Data.SaveUser(u);
+
+                        List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                        foreach (Manifestacija fest in festovi)
+                        {
+                            if (fest.Prodavac.Equals(u.Korisnickoime))
+                            {
+                                if (!fest.Obrisan)//ako vec nije obrisan
+                                {
+                                    fest.Obrisan = true;//brise fest pa treba i karte za taj
+                                    Data.SaveFest(fest);
+
+                                    List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
+                                    foreach (Karta kart in karte)
+                                    {
+                                        if (!kart.Obrisana && kart.IDmanifestacije.Equals(fest.IDmanifestacije))
+                                        {
+                                            //ako nije obrisana brise se
+                                            kart.Obrisana = true;
+                                            Data.SaveKartu(kart);
+                                        }
                                     }
                                 }
                             }
-
                         }
                     }
-
-                }else if (u.Korisnickoime.Equals(filter) && u.Uloga.ToString().Equals("Prodavac") && !u.Obrisan && !u.Blokiran)
-                {
-                    //ako je prodavac onda se brisu manifestacije i karte za prodavce
-                    u.Obrisan = true;
-                    Data.SaveUser(u);
-
-                    List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-                    foreach (Manifestacija fest in festovi)
-                    {
-                        if (fest.Prodavac.Equals(u.Korisnickoime))
-                        {
-                            if (!fest.Obrisan)//ako vec nije obrisan
-                            {
-                                fest.Obrisan = true;//brise fest pa treba i karte za taj
-                                Data.SaveFest(fest);
-
-                                List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
-                                foreach (Karta kart in karte)
-                                {
-                                    if(!kart.Obrisana && kart.IDmanifestacije.Equals(fest.IDmanifestacije))
-                                    {
-                                        //ako nije obrisana brise se
-                                        kart.Obrisana = true;
-                                        Data.SaveKartu(kart);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
                     korisnici.Add(u);
-               
-            }
 
-            var json = JsonConvert.SerializeObject(korisnici);
+                }
 
-            return Request.CreateResponse(HttpStatusCode.OK, json);
+                var json = JsonConvert.SerializeObject(korisnici);
+
+                return Request.CreateResponse(HttpStatusCode.OK, json);
+           
         }
 
         [Route("BlokirajKorisnika")]
@@ -496,6 +498,19 @@ namespace API_PR34_2017.Controllers
         {
             // if (ModelState.IsValid)
             // {
+
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            Korisnik trenutni = recnik.Values.First(x => x.Korisnickoime.Equals(user.Korisnickoime));
+
+            if (trenutni.Blokiran)
+            {//throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound,"Ne mozete da izvrsite akciju"));
+                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Ne mozete da izvrsite akciju");
+            }
+                
+
             List<Manifestacija> sveManifestacije = new List<Manifestacija>();
             sveManifestacije = Data.ReadFest("~/App_Data/manifestacije.txt");
 
@@ -610,6 +625,18 @@ namespace API_PR34_2017.Controllers
         {
             // if (ModelState.IsValid)
             // {
+
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            Korisnik trenutni = recnik.Values.First(x => x.Korisnickoime.Equals(user.Korisnickoime));
+
+            if (trenutni.Blokiran)
+            {//throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound,"Ne mozete da izvrsite akciju"));
+                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Ne mozete da izvrsite akciju");
+            }
+
             List<Manifestacija> sveManifestacije = new List<Manifestacija>();
             sveManifestacije = Data.ReadFest("~/App_Data/manifestacije.txt");
 
@@ -1933,6 +1960,18 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public int RezervisiKarte(JObject jsonResult)
         {
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik1 = Data.ReadUser("~/App_Data/korisnici.txt");
+            Korisnik trenutni = recnik1.Values.First(x => x.Korisnickoime.Equals(user.Korisnickoime));
+
+            if (trenutni.Blokiran)
+            {//throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound,"Ne mozete da izvrsite akciju"));
+                //return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Ne mozete da izvrsite akciju");
+                return -1;
+            }
+
             string reg = (string)jsonResult["reg"];
             string vip = (string)jsonResult["vip"];
             string fan = (string)jsonResult["fan"];

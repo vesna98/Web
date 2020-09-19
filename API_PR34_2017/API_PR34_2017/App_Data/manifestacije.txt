@@ -1,4 +1,5 @@
 pro123;mMED;Koncert;42;10-02-2020 10:00 AM;22;Varadinska 44;Novi Sad;21000;sda.png;Aktivno;-1;0;44;88;False;cvvhfrz
 pro123;mMED;Koncert;3;14-01-2020 10:22 PM;5;Varadinska 44;Novi Sad;21000;Gogoland.jpg;Neaktivno;0;0;4000;3400;True;hgu87564
 p123;mMED2;Koncert;5;19-09-2020 02:50 PM;200;Novosadski Sajam 91;Novi Sad;21000;27.png;Aktivno;5;0;400;800;False;1a174
-p123;novaa;Festival;10;11-11-2023 05:40 AM;15;Novosadski Sajam 91;Novi Sad;21000;253.png;Aktivno;2;0;30;60;False;93a63
+p123;novaa;Festival;10;11-11-2023 05:40 AM;15;Novosadski Sajam 91;Novi Sad;21000;253.png;Aktivno;3;0;30;60;False;93a63
+p123;mmm;Pozoriste;36;14-11-2021 05:40 PM;400;Novosadski Sajam 91;Novi Sad;21000;80932136-ticket-sim.jpg;Neaktivno;0;0;800;1600;False;679ab

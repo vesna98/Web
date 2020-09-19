@@ -10,3 +10,4 @@ ffe1f023f1;veca;VIP;Odustanak;60;novaa;11-11-2023 05:40 AM;False;Vesna Prica;Tru
 fc91969731;daki;REGULAR;Odustanak;15;novaa;11-11-2023 05:40 AM;True;Dijana Matijevic;True;93a63
 67c21adcb4;daki;REGULAR;Odustanak;15;novaa;11-11-2023 05:40 AM;True;Dijana Matijevic;True;93a63
 c6bd37bfbb;daki;REGULAR;Odustanak;15;novaa;11-11-2023 05:40 AM;True;Dijana Matijevic;True;93a63
+8e17bc9d7a;veca;VIP;Odustanak;60;novaa;11-11-2023 05:40 AM;False;Vesna Prica;True;93a63

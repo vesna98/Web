@@ -203,6 +203,17 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage KomentarOcena(JObject jsonResult)
         {
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            Korisnik trenutni = recnik.Values.First(x => x.Korisnickoime.Equals(user.Korisnickoime));
+
+            if (trenutni.Blokiran)
+            {//throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound,"Ne mozete da izvrsite akciju"));
+                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Ne mozete da izvrsite akciju");
+            }
+
             string ocena = (string)jsonResult["ocena"];
             string IDmanifestacija = (string)jsonResult["mani"];//zapravo id manifestacije
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
@@ -367,6 +378,18 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage KomentariObrisan(JObject jsonResult)
         {
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            Korisnik trenutni = recnik.Values.First(x => x.Korisnickoime.Equals(user.Korisnickoime));
+
+            if (trenutni.Blokiran)
+            {//throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound,"Ne mozete da izvrsite akciju"));
+                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Ne mozete da izvrsite akciju");
+            }
+            //---------------------------------------zabraniti ako je blokiran da obrise komentar
+
             //string naziv = (string)jsonResult["naziv"];
             //string datum = (string)jsonResult["datum"];
             string idman = (string)jsonResult["idman"];
@@ -400,6 +423,16 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage KomentariPrihvati(JObject jsonResult)
         {
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            Korisnik trenutni = recnik.Values.First(x => x.Korisnickoime.Equals(user.Korisnickoime));
+
+            if (trenutni.Blokiran)
+            {//throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound,"Ne mozete da izvrsite akciju"));
+                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Ne mozete da izvrsite akciju");
+            }
             //string naziv = (string)jsonResult["naziv"];
             //string datum = (string)jsonResult["datum"];
             string idman = (string)jsonResult["idman"];
@@ -434,6 +467,17 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage ObrisiKartu(JObject jsonResult)
         {
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik1 = Data.ReadUser("~/App_Data/korisnici.txt");
+            Korisnik trenutni = recnik1.Values.First(x => x.Korisnickoime.Equals(user.Korisnickoime));
+
+            if (trenutni.Blokiran)
+            {//throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound,"Ne mozete da izvrsite akciju"));
+                return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Ne mozete da izvrsite akciju");
+            }
+
             string ID = (string)jsonResult["idkarte"];
             string filter = (string)jsonResult["filter"];
             string korisnik = (string)jsonResult["korisnik"];       //SESIJA

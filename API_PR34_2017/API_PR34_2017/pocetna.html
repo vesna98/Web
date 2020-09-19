@@ -258,7 +258,7 @@
                         contentType: false,
                         processData: false,
                         cache: false,
-                        complete: function (data) {
+                        success: function (data) {
                             console.log("success izmene manifestacije");
 
                             //povratna poruka
@@ -380,6 +380,12 @@
                             }
 
 
+                        },
+                        error: function (data) {
+                            alert("Ne mozete da izvrsite akciju");
+                            //alert(data);
+                            //var jsonObj = JSON.parse(data);
+                            //alert(jsonObj);
                         }
                     });
 
@@ -517,7 +523,7 @@
                     tabelica.deleteRow(i);
                 }
                 // document.getElementById('tabelaMani') = tabelica;
-                alert(tipovi);
+              //  alert(tipovi);
                 var obj = JSON.stringify({
                     "filter1": tipovi
                 });
@@ -529,7 +535,7 @@
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     success: function (data) {
-                        alert("rez fitera tipa");
+                       // alert("rez fitera tipa");
                         var jsonObj = JSON.parse(data);
 
                         for (i = 0; i < jsonObj.length; i++) {
@@ -606,7 +612,7 @@
                     tabelica.deleteRow(i);
                 }
                 // document.getElementById('tabelaMani') = tabelica;
-                alert(karte);
+               // alert(karte);
                 var obj = JSON.stringify({
                     "filter2": karte
                 });
@@ -618,7 +624,7 @@
                     contentType: 'application/json; charset=utf-8',
                     dataType: 'json',
                     success: function (data) {
-                        alert("rez fitera tipa");
+                       // alert("rez fitera tipa");
                         var jsonObj = JSON.parse(data);
 
                         for (i = 0; i < jsonObj.length; i++) {
@@ -1560,7 +1566,7 @@
                             contentType: 'application/json; charset=utf-8',
                             dataType: 'json',
                             success: function (data) {
-                                alert(JSON.parse(data));
+                                console.log(JSON.parse(data));
                                 if (JSON.parse(data) == 'Uspesno ste dodali.') {
                                     var modal = document.getElementById("myModal");
                                     modal.style.display = "none";
@@ -2520,7 +2526,8 @@
                         var locTxt = "Latitude: " + lat + " Longitude: " + lon;
                         // coords is a div in HTML below the map to display
                         //document.getElementById('coords').innerHTML = locTxt;
-                        alert(locTxt);
+                        // alert(locTxt);
+                        alert("Odabrali ste lokaciju");
                         Xkoor = lon;
                         Ykoor = lat;
                     });
@@ -2611,7 +2618,7 @@
                             contentType: false,
                             processData: false,
                             cache: false,
-                            complete: function (data) {
+                            success: function (data) {
                                 console.log("success dodavanje manifestacije");
                                 var poruka = "";
                                 if (JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON).length > 0)
@@ -2621,6 +2628,8 @@
                                 } else if (poruka == "Postoji vec manifestacija u zadatom vremenu na zadatom mestu") {
                                     alert(poruka);
                                 } else if (poruka == "Greska sa slikom") {
+                                    alert(poruka);
+                                } else if (poruka == "Nemate pravo!") {
                                     alert(poruka);
                                 }
                                 else if (poruka == "Uspesno dodata manifestacija.") {
@@ -2730,6 +2739,12 @@
                                     });
                                 }//kad se uspesno popuni manifestacija
 
+                            },
+                            error: function (data) {
+                                alert("Ne mozete da izvrsite akciju");
+                                //alert(data);
+                                //var jsonObj = JSON.parse(data);
+                                //alert(jsonObj);
                             }
                         });
 
@@ -3194,6 +3209,7 @@
                         // coords is a div in HTML below the map to display
                         //document.getElementById('coords').innerHTML = locTxt;
                         // alert(locTxt);
+                        alert("Odabrali ste lokaciju");
                         var objekat = JSON.stringify(
                             {
                                 "X": lat,
@@ -3263,6 +3279,7 @@
             //sessionStorage.setItem('dogadjaj', obj);        //cuvanje odabranog dogadjaja u sesiji i prelazak na njegov pregled
             //$(location).attr('href', 'ManifestacijaPage.html');
 
+
             var tabelica = document.getElementById('userTabela');
             for (var i = 1; i < tabelica.rows.length;) {
                 tabelica.deleteRow(i);
@@ -3276,6 +3293,9 @@
                 dataType: 'json',
                 success: function (data) {
                     var lista = JSON.parse(data);
+
+                    //if (lista == "Ne mozete da izvrsite akciju!")
+                    //    alert(lista);               
 
                     for (i = 0; i < lista.length; i++) {
 

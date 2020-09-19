@@ -63,6 +63,18 @@ namespace API_PR34_2017.Controllers
         {
             if (ModelState.IsValid)
             {
+                Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+
+                List<Korisnik> korisnici = new List<Korisnik>();
+                Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+                Korisnik trenutni = recnik.Values.First(x => x.Korisnickoime.Equals(user.Korisnickoime));
+
+                if (trenutni.Blokiran)
+                {//throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound,"Ne mozete da izvrsite akciju"));
+                    //return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Ne mozete da izvrsite akciju");
+                    return null;
+                }
+
                 DateTime timestamp;
                 if (!DateTime.TryParseExact(korisnik.Datumrodjenja, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.AdjustToUniversal, out timestamp))
                 {

@@ -77,9 +77,11 @@ namespace API_PR34_2017.Models
 
 
                 bool obr;
+                bool blok;
                 bool.TryParse(tokens[9], out obr);
+                bool.TryParse(tokens[10], out blok);
                 //                   Korisnickoime + ";" + Lozinka + ";" + Ime + ";" + Prezime + ";" + Pol.ToString() + ";" + Datumrodjenja + ";" + Sakupljenibodovi.ToString() +";"+Tip.Imetipa +";"+Uloga.ToString()+ ";"+ Obrisan.ToString()
-                Korisnik p = new Korisnik(tokens[0], tokens[1], tokens[2], tokens[3], (PolType)Enum.Parse(typeof(PolType), tokens[4]), tokens[5], double.Parse(tokens[6]), (TipIme)Enum.Parse(typeof(TipIme), tokens[7]), (UlogaType)Enum.Parse(typeof(UlogaType), tokens[8]), obr);
+                Korisnik p = new Korisnik(tokens[0], tokens[1], tokens[2], tokens[3], (PolType)Enum.Parse(typeof(PolType), tokens[4]), tokens[5], double.Parse(tokens[6]), (TipIme)Enum.Parse(typeof(TipIme), tokens[7]), (UlogaType)Enum.Parse(typeof(UlogaType), tokens[8]), obr,blok);
 
                 users.Add(p.Korisnickoime, p);
 

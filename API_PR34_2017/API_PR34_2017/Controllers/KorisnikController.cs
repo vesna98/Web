@@ -249,7 +249,7 @@ namespace API_PR34_2017.Controllers
             Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
             foreach (Korisnik u in recnik.Values)
             {
-                if (u.Korisnickoime.Equals(filter) && u.Uloga.ToString().Equals("Kupac") && !u.Obrisan)   //kad je kupac brisu se karte i dodaju kod manifestacije slob mesta
+                if (u.Korisnickoime.Equals(filter) && u.Uloga.ToString().Equals("Kupac") && !u.Obrisan && !u.Blokiran)   //kad je kupac brisu se karte i dodaju kod manifestacije slob mesta
                 {
                     u.Obrisan = true;
                     Data.SaveUser(u);
@@ -270,7 +270,7 @@ namespace API_PR34_2017.Controllers
                                 List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
                                 foreach (Manifestacija fest in festovi)
                                 {
-                                    if (fest.Naziv.Equals(karta.Nazivmanifestacije) && fest.Datumivreme.Equals(karta.Datummanifestacije) && !fest.Obrisan)
+                                    if (fest.IDmanifestacije.Equals(karta.IDmanifestacije) && !fest.Obrisan)
                                     {
                                         fest.Kupljeno -= 1;
                                         Data.SaveFest(fest);
@@ -281,7 +281,7 @@ namespace API_PR34_2017.Controllers
                         }
                     }
 
-                }else if (u.Korisnickoime.Equals(filter) && u.Uloga.ToString().Equals("Prodavac") && !u.Obrisan)
+                }else if (u.Korisnickoime.Equals(filter) && u.Uloga.ToString().Equals("Prodavac") && !u.Obrisan && !u.Blokiran)
                 {
                     //ako je prodavac onda se brisu manifestacije i karte za prodavce
                     u.Obrisan = true;
@@ -300,7 +300,7 @@ namespace API_PR34_2017.Controllers
                                 List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
                                 foreach (Karta kart in karte)
                                 {
-                                    if(!kart.Obrisana && kart.Nazivmanifestacije.Equals(fest.Naziv) && kart.Datummanifestacije.Equals(fest.Datumivreme))
+                                    if(!kart.Obrisana && kart.IDmanifestacije.Equals(fest.IDmanifestacije))
                                     {
                                         //ako nije obrisana brise se
                                         kart.Obrisana = true;
@@ -313,6 +313,91 @@ namespace API_PR34_2017.Controllers
                 }
                     korisnici.Add(u);
                
+            }
+
+            var json = JsonConvert.SerializeObject(korisnici);
+
+            return Request.CreateResponse(HttpStatusCode.OK, json);
+        }
+
+        [Route("BlokirajKorisnika")]
+        [HttpPost]
+        public HttpResponseMessage BlokirajKorisnika(JObject jsonResult)
+        {
+            string filter = (string)jsonResult["korime"];
+
+            List<Korisnik> korisnici = new List<Korisnik>();
+            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+            foreach (Korisnik u in recnik.Values)
+            {
+                if (u.Korisnickoime.Equals(filter) && u.Uloga.ToString().Equals("Kupac") && !u.Obrisan && !u.Blokiran)   //kad je kupac brisu se karte i dodaju kod manifestacije slob mesta
+                {
+                    u.Blokiran = true;
+                    Data.SaveUser(u);
+                    
+
+                //ne brisu se karte kad se blokira
+
+                    //List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
+                    //foreach (Karta karta in karte)
+                    //{
+                    //    if (karta.Korisnikid.Equals(filter))
+                    //    {
+                    //        if (!karta.Obrisana)//ako nije vec predhodno obrisan karta obrisi
+                    //        {
+                    //            karta.Obrisana = true;
+                    //            Data.SaveKartu(karta);
+                    //            //brojNovihSlobodnihKarata++;
+                    //            //smanjiti broj kupljenih karata
+                    //            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    //            foreach (Manifestacija fest in festovi)
+                    //            {
+                    //                if (fest.IDmanifestacije.Equals(karta.IDmanifestacije) && !fest.Obrisan)
+                    //                {
+                    //                    fest.Kupljeno -= 1;
+                    //                    Data.SaveFest(fest);
+                    //                }
+                    //            }
+                    //        }
+
+                    //    }
+                    //}
+
+                }
+                else if (u.Korisnickoime.Equals(filter) && u.Uloga.ToString().Equals("Prodavac") && !u.Obrisan && !u.Blokiran)
+                {
+                    //ako je prodavac onda se brisu manifestacije i karte za prodavce
+                    u.Blokiran = true;
+                    Data.SaveUser(u);
+
+                    //nece se obrisati ni karte ni manifestacije
+
+                    //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                    //foreach (Manifestacija fest in festovi)
+                    //{
+                    //    if (fest.Prodavac.Equals(u.Korisnickoime))
+                    //    {
+                    //        if (!fest.Obrisan)//ako vec nije obrisan
+                    //        {
+                    //            fest.Obrisan = true;//brise fest pa treba i karte za taj
+                    //            Data.SaveFest(fest);
+
+                    //            List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
+                    //            foreach (Karta kart in karte)
+                    //            {
+                    //                if (!kart.Obrisana && kart.Nazivmanifestacije.Equals(fest.Naziv) && kart.Datummanifestacije.Equals(fest.Datumivreme))
+                    //                {
+                    //                    //ako nije obrisana brise se
+                    //                    kart.Obrisana = true;
+                    //                    Data.SaveKartu(kart);
+                    //                }
+                    //            }
+                    //        }
+                    //    }
+                    //}
+                }
+                korisnici.Add(u);
+
             }
 
             var json = JsonConvert.SerializeObject(korisnici);
@@ -710,6 +795,14 @@ namespace API_PR34_2017.Controllers
                             //lokacija se menja
                             if(!lokacija.Geoduzina.Equals("0") && !lokacija.Geosirina.Equals("0"))
                             {
+                                Data.SaveLokacija(lokacija);
+                            }
+                            else
+                            {
+                                List<Lokacija> svelokacije = new List<Lokacija>();
+                                svelokacije = Data.ReadLokacija("~/App_Data/lokacije.txt");
+                                lokacija = svelokacije.Find(x => x.Idmanifestacije.Equals(idman));
+                                lokacija.MestoOdrzavanja = mjesto;
                                 Data.SaveLokacija(lokacija);
                             }
                         return Request.CreateResponse(HttpStatusCode.OK, json);

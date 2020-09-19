@@ -236,7 +236,7 @@
                     pozicije = sessionStorage.getItem("pozicija");
                     //alert("poz " + pozicije);
                     var pozXY = $.parseJSON(pozicije);
-                    alert(pozXY);
+                    //alert(pozXY);
                     if (pozXY != null) {
                         Xk = pozXY.Y;
                         Yk = pozXY.X;
@@ -1455,8 +1455,11 @@
                                 if (lista[i].Obrisan == false) {
                                     obrisan = "";
                                 } else {
-                                    obrisan = 'BLOKIRAN';
+                                    obrisan = 'OBRISAN';
                                 }
+                                if (lista[i].Blokiran == true) {
+                                    obrisan = "BLOKIRAN";
+                                } 
 
                                 var row = "<tr class=\"success\">";
                                 row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
@@ -1468,7 +1471,7 @@
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
                                 if (obrisan == "" && uloga != "Administrator") {
-                                    row += "<td><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                    row += "<td><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
                                 } else {
                                     row += "<td></td>";
                                 }
@@ -1616,12 +1619,17 @@
                                 } else {
                                     pol = 'Muski';
                                 }
+                                
                                 var obrisan;
                                 if (lista[i].Obrisan == false) {
                                     obrisan = "";
                                 } else {
-                                    obrisan = 'OBR/BLOK';
+                                    obrisan = 'OBRISAN';
                                 }
+                                if (lista[i].Blokiran == true) {
+                                    obrisan = "BLOKIRAN";
+                                    //alert(lista[i].Blokiran);
+                                } 
 
                                 var row = "<tr class=\"success\">";
                                 row += "<td >" + lista[i].Korisnickoime + "</td>";
@@ -1633,7 +1641,7 @@
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
                                 if (obrisan == "" && uloga != "Administrator") {
-                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
 
                                 } else {
                                     row += "<td></td>";
@@ -1688,8 +1696,12 @@
                                 if (lista[i].Obrisan == false) {
                                     obrisan = "";
                                 } else {
-                                    obrisan = 'OBR/BLOK';
+                                    obrisan = 'OBRISAN';
                                 }
+                                if (lista[i].Blokiran == true) {
+                                    obrisan = "BLOKIRAN";
+                                    //alert(lista[i].Blokiran);
+                                } 
 
                                 var row = "<tr class=\"success\">";
                                 row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
@@ -1701,7 +1713,7 @@
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
                                 if (obrisan == "" && uloga != "Administrator") {
-                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
                                 } else {
                                     row += "<td></td>";
                                 }
@@ -1755,8 +1767,12 @@
                                 if (lista[i].Obrisan == false) {
                                     obrisan = "";
                                 } else {
-                                    obrisan = 'OBR/BLOK';
+                                    obrisan = 'OBRISAN';
                                 }
+                                if (lista[i].Blokiran == true) {
+                                    obrisan = "BLOKIRAN";
+                                    //alert(lista[i].Blokiran);
+                                } 
 
                                 var row = "<tr class=\"success\">";
                                 row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
@@ -1768,7 +1784,7 @@
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
                                 if (obrisan == "" && uloga != "Administrator") {
-                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
                                 } else {
                                     row += "<td></td>";
                                 }
@@ -1822,8 +1838,12 @@
                                 if (lista[i].Obrisan == false) {
                                     obrisan = "";
                                 } else {
-                                    obrisan = 'OBR/BLOK';
+                                    obrisan = 'OBRISAN';
                                 }
+                                if (lista[i].Blokiran == true) {
+                                    obrisan = "BLOKIRAN";
+                                    //alert(lista[i].Blokiran);
+                                } 
 
                                 var row = "<tr class=\"success\">";
                                 row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
@@ -1835,7 +1855,7 @@
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
                                 if (obrisan == "" && uloga != "Administrator") {
-                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
                                 } else {
                                     row += "<td></td>";
                                 }
@@ -1888,8 +1908,12 @@
                                 if (lista[i].Obrisan == false) {
                                     obrisan = "";
                                 } else {
-                                    obrisan = 'OBR/BLOK';
+                                    obrisan = 'OBRISAN';
                                 }
+                                if (lista[i].Blokiran == true) {
+                                    obrisan = "BLOKIRAN";
+                                    //alert(lista[i].Blokiran);
+                                } 
 
                                 var row = "<tr class=\"success\">";
                                 row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
@@ -1901,7 +1925,7 @@
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
                                 if (obrisan == "" && uloga != "Administrator") {
-                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
                                 } else {
                                     row += "<td></td>";
                                 }
@@ -1954,8 +1978,12 @@
                                 if (lista[i].Obrisan == false) {
                                     obrisan = "";
                                 } else {
-                                    obrisan = 'OBR/BLOK';
+                                    obrisan = 'OBRISAN';
                                 }
+                                if (lista[i].Blokiran == true) {
+                                    obrisan = "BLOKIRAN";
+                                    //alert(lista[i].Blokiran);
+                                } 
 
                                 var row = "<tr class=\"success\">";
                                 row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
@@ -1967,7 +1995,7 @@
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
                                 if (obrisan == "" && uloga != "Administrator") {
-                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
                                 } else {
                                     row += "<td></td>";
                                 }
@@ -2034,8 +2062,12 @@
                                     if (lista[i].Obrisan == false) {
                                         obrisan = "";
                                     } else {
-                                        obrisan = 'OBR/BLOK';
+                                        obrisan = 'OBRISAN';
                                     }
+                                    if (lista[i].Blokiran == true) {
+                                        obrisan = "BLOKIRAN";
+                                      //  alert(lista[i].Blokiran);
+                                    } 
 
                                     var row = "<tr class=\"success\">";
                                     row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
@@ -2047,7 +2079,7 @@
                                     row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                     row += "<td >" + obrisan + "</td>";
                                     if (obrisan == "" && uloga != "Administrator") {
-                                        row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                        row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
                                     }
                                     else {
                                         row += "<td></td>";
@@ -2101,8 +2133,12 @@
                                 if (lista[i].Obrisan == false) {
                                     obrisan = "";
                                 } else {
-                                    obrisan = 'OBR/BLOK';
+                                    obrisan = 'OBRISAN';
                                 }
+                                if (lista[i].Blokiran == true) {
+                                    obrisan = "BLOKIRAN";
+                                    //alert(lista[i].Blokiran);
+                                } 
 
                                 var row = "<tr class=\"success\">";
                                 row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
@@ -2114,7 +2150,7 @@
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
                                 if (obrisan == "" && uloga != "Administrator") {
-                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
                                 } else {
                                     row += "<td></td>";
                                 }
@@ -2167,8 +2203,12 @@
                                 if (lista[i].Obrisan == false) {
                                     obrisan = "";
                                 } else {
-                                    obrisan = 'OBR/BLOK';
+                                    obrisan = 'OBRISAN';
                                 }
+                                if (lista[i].Blokiran == true) {
+                                    obrisan = "BLOKIRAN";
+                                    //alert(lista[i].Blokiran);
+                                } 
 
                                 var row = "<tr class=\"success\">";
                                 row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
@@ -2180,7 +2220,7 @@
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
                                 if (obrisan == "" && uloga != "Administrator") {
-                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
                                 } else {
                                     row += "<td></td>";
                                 }
@@ -2234,8 +2274,12 @@
                                 if (lista[i].Obrisan == false) {
                                     obrisan = "";
                                 } else {
-                                    obrisan = 'OBR/BLOK';
+                                    obrisan = 'OBRISAN';
                                 }
+                                if (lista[i].Blokiran == true) {
+                                    obrisan = "BLOKIRAN";
+                                    //alert(lista[i].Blokiran);
+                                } 
 
                                 var row = "<tr class=\"success\">";
                                 row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
@@ -2247,7 +2291,7 @@
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
                                 if (obrisan == "" && uloga != "Administrator") {
-                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
                                 } else {
                                     row += "<td></td>";
                                 }
@@ -2306,8 +2350,12 @@
                                 if (lista[i].Obrisan == false) {
                                     obrisan = "";
                                 } else {
-                                    obrisan = 'OBR/BLOK';
+                                    obrisan = 'OBRISAN';
                                 }
+                                if (lista[i].Blokiran == true) {
+                                    obrisan = "BLOKIRAN";
+                                    //alert(lista[i].Blokiran);
+                                } 
 
                                 var row = "<tr class=\"success\">";
                                 row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
@@ -2319,7 +2367,7 @@
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
                                 if (obrisan == "" && uloga != "Administrator") {
-                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
                                 }
                                 else {
                                     row += "<td></td>";
@@ -2379,8 +2427,12 @@
                                 if (lista[i].Obrisan == false) {
                                     obrisan = "";
                                 } else {
-                                    obrisan = 'OBR/BLOK';
+                                    obrisan = 'OBRISAN';
                                 }
+                                if (lista[i].Blokiran == true) {
+                                    obrisan = "BLOKIRAN";
+                                    //alert(lista[i].Blokiran);
+                                } 
 
                                 var row = "<tr class=\"success\">";
                                 row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
@@ -2392,7 +2444,7 @@
                                 row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                                 row += "<td >" + obrisan + "</td>";
                                 if (obrisan == "" && uloga != "Administrator") {
-                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                                    row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
                                 } else {
                                     row += "<td></td>";
                                 }
@@ -2550,7 +2602,7 @@
                         formData.append('duzina', Ykoor);
                         console.log("tip->" + tipmanifestacije);
 
-                        alert("Koordinate: " + Xkoor + "  " + Ykoor);
+                        console.log("Koordinate: " + Xkoor + "  " + Ykoor);
                         $.ajax({
 
                             type: "POST",
@@ -3245,8 +3297,12 @@
                         if (lista[i].Obrisan == false) {
                             obrisan = "";
                         } else {
-                            obrisan = 'OBR/BLOK';
+                            obrisan = 'OBRISAN';
                         }
+                        if (lista[i].Blokiran == true) {
+                            obrisan = "BLOKIRAN";
+                           // alert(lista[i].Blokiran);
+                        } 
 
                         var row = "<tr class=\"success\">";
                         row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
@@ -3258,7 +3314,7 @@
                         row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                         row += "<td >" + obrisan + "</td>";
                         if (obrisan == "" && uloga != "Administrator") {
-                            row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                            row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
 
                         } else {
                             row += "<td></td>";
@@ -3308,7 +3364,7 @@
                             pol = 'Muski';
                         }
                         var obrisan;
-                        if (lista[i].Obrisan == false) {
+                        if (lista[i].Blokiran == false) {
                             obrisan = "";
                         } else {
                             obrisan = 'BLOKIRAN';
@@ -3324,7 +3380,7 @@
                         row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
                         row += "<td >" + obrisan + "</td>";
                         if (obrisan == "" && uloga != "Administrator") {
-                            row += "<td><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
+                            row += "<td><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
                         } else {
                             row += "<td></td>";
                         }
@@ -3416,6 +3472,165 @@
 
         });
 
+        //blokiranje sumnjivih korisnika
+        $(document).on('click', '.use-block', function () {            // kada je button (čija je class = use-address) kliknut
+            //alert("pokusaj klik");
+            var polje = this.id;
+            console.log("korisnik koji je odabran" + polje);
+
+            var obj = JSON.stringify({
+                "korime": polje
+            });
+            
+
+            //ozveziti prikaz sumnjivih ako se blokirao
+            var tabelica = document.getElementById('sumnjiviTabela');
+            for (var i = 1; i < tabelica.rows.length;) {
+                tabelica.deleteRow(i);
+            }
+            $.ajax({
+                type: 'POST',
+                url: '/api/Karte/SumnjiviBlokiraj',
+                data:obj,
+                contentType: 'application/json; charset=utf-8',
+               // dataType: 'json',
+
+                success: function (data) {
+
+                    console.log('blokiran');
+                },
+                error: function (data) {
+                    alert("Greska!");
+                }
+            });
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/Karte/SumnjiviKorisnici',
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+
+                success: function (data) {
+
+                    var lista = JSON.parse(data);
+                    console.log("u json korisnci" + data);
+                    //var korisnici = JSON.stringify(data);
+                    //alert("korisnici" + korisnici);
+                    for (i = 0; i < lista.length; i++) {
+
+                        var uloga;
+                        if (lista[i].Uloga == 0) {
+                            uloga = "Administrator";
+                        } else if (lista[i].Uloga == 1) {
+                            uloga = "Prodavac";
+                        } else if (lista[i].Uloga == 2) {
+                            uloga = "Kupac";
+                        }
+                        var pol;
+                        if (lista[i].Pol == 1) {
+                            pol = 'Zenski';
+                        } else {
+                            pol = 'Muski';
+                        }
+                        var obrisan;
+                        if (lista[i].Blokiran == false) {
+                            obrisan = "";
+                        } else {
+                            obrisan = 'BLOKIRAN';
+                        }
+
+                        var row = "<tr class=\"success\">";
+                        row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                        row += "<td >" + lista[i].Ime + "</td>";
+                        row += "<td >" + lista[i].Prezime + "</td>";
+                        row += "<td >" + pol + "</td>";
+                        row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                        row += "<td >" + uloga + "</td>";
+                        row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                        row += "<td >" + obrisan + "</td>";
+                        if (obrisan == "" && uloga != "Administrator") {
+                            row += "<td><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
+                        } else {
+                            row += "<td></td>";
+                        }
+                        row += "</tr>";
+                        $("#sumnjiviTabela").append(row);
+
+                    }
+                },
+                error: function (data) {
+                    alert("Greska!");
+                }
+            });
+
+            //da se blokiraju i odabrani korisnici
+            var tabelica = document.getElementById('userTabela');
+            for (var i = 1; i < tabelica.rows.length;) {
+                tabelica.deleteRow(i);
+            }
+
+            $.ajax({
+                type: 'POST',
+                url: '/api/Korisnik/BlokirajKorisnika',
+                data: obj,
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (data) {
+                    var lista = JSON.parse(data);
+
+                    for (i = 0; i < lista.length; i++) {
+
+                        var uloga;
+                        if (lista[i].Uloga == 0) {
+                            uloga = "Administrator";
+                        } else if (lista[i].Uloga == 1) {
+                            uloga = "Prodavac";
+                        } else if (lista[i].Uloga == 2) {
+                            uloga = "Kupac";
+                        }
+                        var pol;
+                        if (lista[i].Pol == 1) {
+                            pol = 'Zenski';
+                        } else {
+                            pol = 'Muski';
+                        }
+                        var obrisan;
+                        if (lista[i].Obrisan == false) {
+                            obrisan = "";
+                        } else {
+                            obrisan = 'OBRISAN';
+                        }
+                        if (lista[i].Blokiran == true) {
+                            obrisan = "BLOKIRAN";
+                            //alert(lista[i].Blokiran);
+                        } 
+
+                        var row = "<tr class=\"success\">";
+                        row += "<td id=\"colNaz\">" + lista[i].Korisnickoime + "</td>";
+                        row += "<td >" + lista[i].Ime + "</td>";
+                        row += "<td >" + lista[i].Prezime + "</td>";
+                        row += "<td >" + pol + "</td>";
+                        row += "<td >" + lista[i].Datumrodjenja + "</td>";
+                        row += "<td >" + uloga + "</td>";
+                        row += "<td >" + lista[i].Sakupljenibodovi + "</td>";
+                        row += "<td >" + obrisan + "</td>";
+                        if (obrisan == "" && uloga != "Administrator") {
+                            row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-block\">Blokiraj</button></td>";
+
+                        } else {
+                            row += "<td></td>";
+                        }
+                        row += "</tr>";
+                        $("#userTabela").append(row);
+
+                    }
+                },
+                error: function (data) {
+                    alert("Greska!");
+                }
+            });
+
+        });
 
     </script>
 

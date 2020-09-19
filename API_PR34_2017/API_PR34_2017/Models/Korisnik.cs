@@ -32,6 +32,7 @@ namespace API_PR34_2017.Models
         public TipIme Tip { get; set; }
         public bool Obrisan { get; set; }
         public bool Loggedin { get; set; }
+        public bool Blokiran { get; set; }
 
         public Korisnik()
         {
@@ -45,7 +46,7 @@ namespace API_PR34_2017.Models
 
         }
 
-        public Korisnik(string korisnickoime, string lozinka, string ime, string prezime, PolType pol, string datumrodjenja, double sakupljenibodovi, TipIme tip, UlogaType uloga, bool obrisan)
+        public Korisnik(string korisnickoime, string lozinka, string ime, string prezime, PolType pol, string datumrodjenja, double sakupljenibodovi, TipIme tip, UlogaType uloga, bool obrisan,bool blokiran)
         {
             Korisnickoime = korisnickoime;
             Lozinka = lozinka;
@@ -58,11 +59,12 @@ namespace API_PR34_2017.Models
             Tip = tip;
             Obrisan = obrisan;
             Loggedin = false;
+            Blokiran =blokiran;
         }
 
         public override string ToString()
         {
-            return Korisnickoime + ";" + Lozinka + ";" + Ime + ";" + Prezime + ";" + Pol.ToString() + ";" + Datumrodjenja + ";" + Sakupljenibodovi.ToString() + ";" + Tip + ";" + Uloga.ToString() + ";" + Obrisan.ToString();
+            return Korisnickoime + ";" + Lozinka + ";" + Ime + ";" + Prezime + ";" + Pol.ToString() + ";" + Datumrodjenja + ";" + Sakupljenibodovi.ToString() + ";" + Tip + ";" + Uloga.ToString() + ";" + Obrisan.ToString() + ";" +Blokiran.ToString();
         }
     }
 }

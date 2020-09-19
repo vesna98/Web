@@ -1,28 +1,12 @@
-3074356ca2;veca;REGULAR;Rezervisana;22;mMED;10-02-2020 10:00 PM;False;Vesna Prica;False;cvvhfrz
-bde3888e1f;veca;REGULAR;Rezervisana;22;mMED;10-02-2020 10:00 PM;True;Vesna Prica;False;cvvhfrz
-823b4fb288;veca;REGULAR;Rezervisana;22;mMED;10-02-2020 10:00 PM;False;Vesna Prica;False;cvvhfrz
-67214b947a;veca;FANPIT;Rezervisana;44;mMED;10-02-2020 10:00 PM;False;Vesna Prica;False;cvvhfrz
-c76f0d02f5;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;True;Vesna Prica;True;gfhg76f
-7312604dea;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;True;Vesna Prica;True;gfhg76f
-af4a0e4d7f;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;True;Vesna Prica;True;gfhg76f
-95bd8007a6;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;True;Vesna Prica;True;gfhg76f
-3ae43e7634;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;True;Vesna Prica;True;gfhg76f
-06fbfefcec;veca;VIP;Odustanak;172;Gazda Paja;04-02-2021 11:45 PM;True;Vesna Prica;True;gfhg76f
-385b2cddb5;veca;REGULAR;Odustanak;34;Manifestacija1;10-02-2022 02:07 PM;True;Vesna Prica;True;iihsu
-8b8abfdb9f;veca;VIP;Odustanak;136;Manifestacija1;10-02-2022 02:07 PM;True;Vesna Prica;True;iihsu
-4f9f0c7f23;veca;FANPIT;Odustanak;68;Manifestacija1;10-02-2022 02:07 PM;True;Vesna Prica;True;iihsu
-09239c00c9;veca;FANPIT;Odustanak;68;Manifestacija1;10-02-2022 02:07 PM;True;Vesna Prica;True;iihsu
-39498b513d;daki;REGULAR;Odustanak;800;mmm;20-04-2021 07:49 AM;True;Dijana Matijevic;True;a6529
-84026e7062;veca;VIP;Odustanak;1600;Gazda Paja;10-02-2021 11:45 PM;False;Vesna Prica;True;gfhg76f
-4e20731b73;daki;VIP;Odustanak;136;Manifestacija1;10-02-2022 02:07 PM;True;Dijana Matijevic;True;iihsu
-4d94cd37ab;daki;VIP;Odustanak;136;Manifestacija1;10-02-2022 02:07 PM;True;Dijana Matijevic;True;iihsu
-b173a75259;daki;REGULAR;Odustanak;34;Manifestacija1;10-02-2022 02:07 PM;True;Dijana Matijevic;True;iihsu
-9d20848e55;daki;REGULAR;Odustanak;30;xxxXs;04-02-2029 06:40 PM;True;Dijana Matijevic;True;c8a94
-6bbc9f8edd;daki;REGULAR;Odustanak;30;xxxXs;04-02-2029 06:40 PM;True;Dijana Matijevic;True;c8a94
-a959261aaa;daki;FANPIT;Odustanak;60;xxxXs;04-02-2029 06:40 PM;True;Dijana Matijevic;True;c8a94
-fc85057a13;daki;REGULAR;Odustanak;34;Manifestacija1;10-02-2022 02:07 PM;True;Dijana Matijevic;True;iihsu
-5522580fd7;daki;REGULAR;Odustanak;34;Manifestacija1;10-02-2022 02:07 PM;True;Dijana Matijevic;True;iihsu
-4aa7406aed;daki;REGULAR;Odustanak;34;Manifestacija1;10-02-2022 02:07 PM;True;Dijana Matijevic;True;iihsu
-c9a999a398;daki;VIP;Odustanak;136;Manifestacija1;10-02-2022 02:07 PM;True;Dijana Matijevic;True;iihsu
-dd2542aae7;daki;VIP;Odustanak;136;Manifestacija1;10-02-2022 02:07 PM;True;Dijana Matijevic;True;iihsu
-225ae1db02;daki;VIP;Odustanak;136;Manifestacija1;10-02-2022 02:07 PM;True;Dijana Matijevic;True;iihsu
+74bb58f44d;daki;REGULAR;Odustanak;15;novaa;11-11-2023 05:40 AM;True;Dijana Matijevic;True;93a63
+149ac2a433;veca;FANPIT;Rezervisana;400;mMED2;19-09-2020 02:50 PM;False;Vesna Prica;True;1a174
+bf0d1e914d;veca;FANPIT;Rezervisana;400;mMED2;19-09-2020 02:50 PM;True;Vesna Prica;True;1a174
+8cd64a4489;veca;FANPIT;Rezervisana;400;mMED2;19-09-2020 02:50 PM;False;Vesna Prica;False;1a174
+8cfe98e944;veca;FANPIT;Rezervisana;400;mMED2;19-09-2020 02:50 PM;False;Vesna Prica;False;1a174
+6c8de3df66;veca;FANPIT;Rezervisana;400;mMED2;19-09-2020 02:50 PM;False;Vesna Prica;False;1a174
+ea9fe7aabc;veca;VIP;Odustanak;60;novaa;11-11-2023 05:40 AM;False;Vesna Prica;True;93a63
+ffe1f023f1;veca;VIP;Odustanak;60;novaa;11-11-2023 05:40 AM;False;Vesna Prica;True;93a63
+2e8e64dc9b;veca;VIP;Rezervisana;800;mMED2;19-09-2020 02:50 PM;False;Vesna Prica;False;1a174
+fc91969731;daki;REGULAR;Odustanak;15;novaa;11-11-2023 05:40 AM;True;Dijana Matijevic;True;93a63
+67c21adcb4;daki;REGULAR;Odustanak;15;novaa;11-11-2023 05:40 AM;True;Dijana Matijevic;True;93a63
+c6bd37bfbb;daki;REGULAR;Odustanak;15;novaa;11-11-2023 05:40 AM;True;Dijana Matijevic;True;93a63

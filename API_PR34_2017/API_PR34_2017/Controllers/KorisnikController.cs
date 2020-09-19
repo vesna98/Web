@@ -428,6 +428,12 @@ namespace API_PR34_2017.Controllers
             mani.Datumivreme = HttpContext.Current.Request.Form["datumivreme"];
             Mesto mjesto = new Mesto(HttpContext.Current.Request.Form["ulicabroj"], HttpContext.Current.Request.Form["grad"], HttpContext.Current.Request.Form["postanskibroj"]);
 
+            string sirina=(string) HttpContext.Current.Request.Form["sirina"];
+            string duzina= (string)HttpContext.Current.Request.Form["duzina"];
+            Lokacija lokacija = new Lokacija(mani.IDmanifestacije,duzina, sirina, mjesto.Grad, mjesto.Ulicabroj, mjesto.Postanskibroj);
+
+            
+
             mani.Mestoodrzavanja = mjesto;
 
             string datumVreme = mani.Datumivreme;
@@ -445,7 +451,7 @@ namespace API_PR34_2017.Controllers
             
             if (!DateTime.TryParseExact(mani.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject("Nije ispravan datum"));
             }
 
             //ako je datum u proslosti odbiti
@@ -481,7 +487,7 @@ namespace API_PR34_2017.Controllers
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.BadRequest);
+                return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject("Greska sa slikom"));
                 // return MessageOutCoreVm.SendValidationFailed("");
             }
 
@@ -498,6 +504,7 @@ namespace API_PR34_2017.Controllers
             if (!postoji)
             {
                 Data.SaveFest(mani);
+                Data.SaveLokacija(lokacija);//cuvamo lokaciju
                 var json4 = JsonConvert.SerializeObject("Uspesno dodata manifestacija.");
                 return Request.CreateResponse(HttpStatusCode.OK,json4);
             }
@@ -538,6 +545,10 @@ namespace API_PR34_2017.Controllers
             mani.Cenafanpit = 2 * mani.Cenaregular;/* Double.Parse(HttpContext.Current.Request.Form["cenafanpit"]);*/
             mani.Datumivreme = HttpContext.Current.Request.Form["datumivreme"];
             Mesto mjesto = new Mesto(HttpContext.Current.Request.Form["ulicabroj"], HttpContext.Current.Request.Form["grad"], HttpContext.Current.Request.Form["postanskibroj"]);
+            string sirina = (string)HttpContext.Current.Request.Form["sirina"];
+            string duzina = (string)HttpContext.Current.Request.Form["duzina"];
+            Lokacija lokacija = new Lokacija(mani.IDmanifestacije, duzina, sirina, mjesto.Grad, mjesto.Ulicabroj, mjesto.Postanskibroj);
+
             var json = JsonConvert.SerializeObject("Uspesno izmenjeno.");
             var json2 = JsonConvert.SerializeObject("Neuspesno izmenjeno.");
             foreach (Manifestacija fest in sveManifestacije)
@@ -641,7 +652,10 @@ namespace API_PR34_2017.Controllers
             else {
                 //kad nije izmenjena slika
                 //mani.Poster= HttpContext.Current.Request.Files["poster"];
-                mani.Poster= HttpContext.Current.Request.Form["poster"];
+                //treba onu staru proslediti;
+                string staraSlika = sveManifestacije.Find(x => x.IDmanifestacije.Equals(idman)).Poster;
+                //mani.Poster= HttpContext.Current.Request.Form["poster"];
+                mani.Poster= staraSlika;
             }
 
             bool postoji = false;
@@ -693,6 +707,11 @@ namespace API_PR34_2017.Controllers
                     }
 
                     Data.SaveFest(mani);
+                            //lokacija se menja
+                            if(!lokacija.Geoduzina.Equals("0") && !lokacija.Geosirina.Equals("0"))
+                            {
+                                Data.SaveLokacija(lokacija);
+                            }
                         return Request.CreateResponse(HttpStatusCode.OK, json);
                     }
                     else
@@ -1973,6 +1992,20 @@ namespace API_PR34_2017.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject("Niste uneli ispravne podatke."));
             //return 2;   //POSTOJI VEC
 
+        }
+        [Route("NadjiLokaciju")]
+        [HttpPost]
+        public HttpResponseMessage NadjiLokaciju(JObject jsonResult)
+        {
+            
+            string ID = (string)jsonResult["id"];
+
+            //da se pronadju manifestacije i koje nisu aktivne zbog admina,da imaju detaljan prikaz
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+            //-----------------------------------------------------------------
+            List<Lokacija> lokacije = Data.ReadLokacija("~/App_Data/lokacije.txt");
+
+            return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject(lokacije.Find(x=>x.Idmanifestacije.Equals(ID))));
         }
     }
 }

@@ -2,19 +2,39 @@
 <html>
 <head>
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/css/ol.css" type="text/css">
+    <style>
+        div#map1 {
+            height: 400px;
+            width: 400px;
+        }
+        div#map {
+            height: 400px;
+            width: 400px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/build/ol.js"></script>
+
+
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="Scripts/jquery-3.5.1.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.1/css/ol.css" type="text/css">
+
+
+    <!--<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.1/css/ol.css" type="text/css">
     <style>
         .map {
             height: 400px;
             width: 100%;
         }
     </style>
-    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.1/build/ol.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.1/build/ol.js"></script>-->
+
+
     <script src="Scripts/jquery.js"></script>
     <script>
         $(document).ready(function () {
+
             let user = sessionStorage.getItem("logovan");
             console.log('user ' + user);
             var korisnik = $.parseJSON(user);
@@ -87,10 +107,10 @@
                             }
                             if (korisnik.Uloga == 1)//uloga PRODAVAC
                             {
-                                izmenidugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije+ "\" class=\"use-izmeni\"  style=\"margin-top: 5px;\">Izmeni</button>";
+                                izmenidugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-izmeni\"  style=\"margin-top: 5px;\">Izmeni</button>";
                             }
                         }
-                        row += "<td><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + izmenidugme+ "</td>";
+                        row += "<td><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + izmenidugme + "</td>";
                         //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
                         row += "</tr>";
 
@@ -125,11 +145,11 @@
                 var korisnik = $.parseJSON(user);
                 let izm = sessionStorage.getItem("izmena");
                 console.log("izmena ;;; " + izm);
-               // console.log('user ' + user);
+                // console.log('user ' + user);
                 var polja = $.parseJSON(izm);
                 polja = polja.id;
-                console.log("ide je "+polja);
-                sessionStorage.removeItem('izmena');        //brise ovo sto je sacuvano da je odabrano za izmenu
+                console.log("ide je " + polja);
+                //brise ovo sto je sacuvano da je odabrano za izmenu
 
                 let k1 = document.getElementById('_naziv');
                 let k2 = document.getElementById('_datumivreme');
@@ -211,6 +231,22 @@
                     formData.append('postanskibroj', postanskibroj);
                     formData.append('prodavac', korisnik.Korisnickoime);
                     formData.append('id', polja);
+                    var Xk = 0;
+                    var Yk = 0;
+                    pozicije = sessionStorage.getItem("pozicija");
+                    //alert("poz " + pozicije);
+                    var pozXY = $.parseJSON(pozicije);
+                    alert(pozXY);
+                    if (pozXY != null) {
+                        Xk = pozXY.Y;
+                        Yk = pozXY.X;
+                        //alert(Xk);
+                        //alert(Yk);
+                    }
+
+                    //Yk = sessionStorage.getItem("pozicijaY");
+                    formData.append('sirina', Xk);
+                    formData.append('duzina', Yk);
                     console.log("tip->" + tipmanifestacije);
 
 
@@ -247,10 +283,13 @@
                                     alert(poruka);
                                 }
                                 else if (poruka == "Uspesno izmenjeno.") {
-
+                                    sessionStorage.removeItem('izmena');
+                                    sessionStorage.removeItem('pozicijaX');
+                                    sessionStorage.removeItem('pozicijaY');
                                     alert("Uspesno izmenjeno.");
                                     var modal = document.getElementById("myModal3");
                                     modal.style.display = "none";
+                                    document.getElementById('map').innerHTML = "";
                                     $("#_poster").val("");
                                     var tabelica = document.getElementById('tabelaMani');
                                     for (var i = 1; i < tabelica.rows.length;) {
@@ -435,7 +474,7 @@
                                 var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular + "_" + jsonObj[i].IDmanifestacije;
                                 var obrisidugme = "";
                                 var aktivirajdugme = "";
-                                
+
                                 var izmenidugme = "";
                                 if (korisnik != null) {
                                     if (korisnik.Uloga == 0) {
@@ -466,7 +505,7 @@
                         }
                     });
 
-                     }
+                }
             });
 
             $("#filter_tip").click(function () {
@@ -870,7 +909,7 @@
                             var izmenidugme = "";
                             if (korisnik != null) {
                                 if (korisnik.Uloga == 0) {
-                                    obrisidugme = "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije+ "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
+                                    obrisidugme = "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
                                     if (jsonObj[i].Status == 1) {
                                         //alert("status neaktivan");
                                         aktivirajdugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-aktiviraj\"  style=\"margin-top: 5px;\">Aktiviraj</button>";
@@ -1213,7 +1252,7 @@
                                 }
                                 if (korisnik.Uloga == 1)//uloga PRODAVAC
                                 {
-                                    izmenidugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije+ "\" class=\"use-izmeni\"  style=\"margin-top: 5px;\">Izmeni</button>";
+                                    izmenidugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-izmeni\"  style=\"margin-top: 5px;\">Izmeni</button>";
                                 }
                             }
                             row += "<td><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + izmenidugme + "</td>";
@@ -1472,7 +1511,7 @@
                     $("#prezime").val("");
                     document.getElementById('polovi').selectedIndex = 0;
                     $("#datumrodjenja").val("");
-                
+
                 });
                 $("#btnReg").click(function () {
                     let k1 = document.getElementById("korisnickoime");
@@ -1511,37 +1550,37 @@
 
                         });
 
-                                $.ajax({
-                                    type: 'POST',
-                                    url: '/api/Korisnik/DodajProdavca',
-                                    data: obj,
-                                    contentType: 'application/json; charset=utf-8',
-                                    dataType: 'json',
-                                    success: function (data) {
-                                        alert(JSON.parse(data));
-                                        if (JSON.parse(data) == 'Uspesno ste dodali.') {
-                                            var modal = document.getElementById("myModal");
-                                            modal.style.display = "none";
+                        $.ajax({
+                            type: 'POST',
+                            url: '/api/Korisnik/DodajProdavca',
+                            data: obj,
+                            contentType: 'application/json; charset=utf-8',
+                            dataType: 'json',
+                            success: function (data) {
+                                alert(JSON.parse(data));
+                                if (JSON.parse(data) == 'Uspesno ste dodali.') {
+                                    var modal = document.getElementById("myModal");
+                                    modal.style.display = "none";
 
-                                            $("#korisnickoime").val("");
-                                            $("#lozinka").val("");
-                                            $("#ime").val("");
-                                            $("#prezime").val("");
-                                            document.getElementById('polovi').selectedIndex = 0;
-                                            $("#datumrodjenja").val("");
-                                        }
-                                        //if (data == 1) {
-                                        //    alert('Uspesno ste dodali.');
-                                        //    $(location).attr('href', 'login.html');
-                                        //} else if (data == 2) {
-                                        //    alert('Postoji korisnik sa tim korisnickim imenom.');
-                                        //} else {
-                                        //    alert('Niste uneli ispravan datum rodjenja.');
-                                        //}
-                                    }
-                                });
+                                    $("#korisnickoime").val("");
+                                    $("#lozinka").val("");
+                                    $("#ime").val("");
+                                    $("#prezime").val("");
+                                    document.getElementById('polovi').selectedIndex = 0;
+                                    $("#datumrodjenja").val("");
+                                }
+                                //if (data == 1) {
+                                //    alert('Uspesno ste dodali.');
+                                //    $(location).attr('href', 'login.html');
+                                //} else if (data == 2) {
+                                //    alert('Postoji korisnik sa tim korisnickim imenom.');
+                                //} else {
+                                //    alert('Niste uneli ispravan datum rodjenja.');
+                                //}
+                            }
+                        });
 
-                           }
+                    }
                 });
 
                 $("#svi_korisnici").click(function () {
@@ -1595,7 +1634,7 @@
                                 row += "<td >" + obrisan + "</td>";
                                 if (obrisan == "" && uloga != "Administrator") {
                                     row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
-       
+
                                 } else {
                                     row += "<td></td>";
                                 }
@@ -2368,8 +2407,11 @@
                     });
                 });
 
+                var Xkoor = 0;
+                var Ykoor = 0;
+
                 $("#addFest").click(function () {
-                   // $('#novaMani').show();
+                    // $('#novaMani').show();
                     var span = document.getElementsByClassName("close")[1];
                     var modal = document.getElementById("myModal2");
 
@@ -2377,14 +2419,16 @@
 
                     span.onclick = function () {
                         modal.style.display = "none";
+                        document.getElementById('map1').innerHTML = "";
                     }
 
                     window.onclick = function (event) {
                         if (event.target == modal) {
                             modal.style.display = "none";
+                            document.getElementById('map1').innerHTML = "";
                         }
                     }
-                //---------------------------------------
+                    //---------------------------------------
                     $("#naziv").val("");
                     document.getElementById('tipovi').selectedIndex = 0;
                     $("#brojmesta").val("");
@@ -2395,8 +2439,40 @@
                     $("#grad").val("");
                     $("#postanskibroj").val("");
                     $("#poster").val("");
-                   // $("[type='file']").clearFiles();
-                  
+                    // $("[type='file']").clearFiles();
+
+                    //poziva mapa
+
+
+                    var map = new ol.Map({
+                        target: 'map1',
+                        layers: [
+                            new ol.layer.Tile({
+                                source: new ol.source.OSM()
+                            })
+                        ],
+                        view: new ol.View({
+                            center: ol.proj.fromLonLat([37.41, 8.82]),
+                            zoom: 4
+                        })
+                    });
+
+
+                    map.on('click', function (evt) {
+                        console.info(evt.pixel);
+                        console.info(map.getPixelFromCoordinate(evt.coordinate));
+                        console.info(ol.proj.toLonLat(evt.coordinate));
+                        var coords = ol.proj.toLonLat(evt.coordinate);
+                        var lat = coords[1];
+                        var lon = coords[0];
+                        var locTxt = "Latitude: " + lat + " Longitude: " + lon;
+                        // coords is a div in HTML below the map to display
+                        //document.getElementById('coords').innerHTML = locTxt;
+                        alert(locTxt);
+                        Xkoor = lon;
+                        Ykoor = lat;
+                    });
+
                 });
 
                 $("#btnFest").click(function () {
@@ -2428,6 +2504,8 @@
                         alert("Postanski broj mora da bude petocifreni broj");
                     } else if (!$('#poster').val()) {
                         alert("Odaberite sliku za poster");
+                    } else if (Xkoor == 0 || Ykoor == 0) {
+                        alert('Niste oznacili lokaciju na mapi');
                     }
                     else {
                         var naziv = $("#naziv").val();
@@ -2436,7 +2514,7 @@
                         var vreme = $("#time").val();
                         var datumivreme = $("#datumivreme").val();
                         var cenaregular = $("#cenaregular").val();
-                       
+
                         var ulicabroj = $("#ulicabroj").val();
                         var grad = $("#grad").val();
                         var postanskibroj = $("#postanskibroj").val();
@@ -2468,9 +2546,11 @@
                         formData.append('grad', grad);
                         formData.append('postanskibroj', postanskibroj);
                         formData.append('prodavac', korisnik.Korisnickoime);
+                        formData.append('sirina', Xkoor);
+                        formData.append('duzina', Ykoor);
                         console.log("tip->" + tipmanifestacije);
 
-
+                        alert("Koordinate: " + Xkoor + "  " + Ykoor);
                         $.ajax({
 
                             type: "POST",
@@ -2487,6 +2567,8 @@
                                 if (poruka == "Manifestacija ne moze biti u proslosti.") {
                                     alert(poruka);
                                 } else if (poruka == "Postoji vec manifestacija u zadatom vremenu na zadatom mestu") {
+                                    alert(poruka);
+                                } else if (poruka == "Greska sa slikom") {
                                     alert(poruka);
                                 }
                                 else if (poruka == "Uspesno dodata manifestacija.") {
@@ -2601,9 +2683,9 @@
 
                         //refresh tabele sa manifestacijama
                         //prvo obrisati
-                        
 
-                           }
+
+                    }
 
                     //
 
@@ -2659,6 +2741,7 @@
                 "id": polja
             });
             sessionStorage.setItem('dogadjaj', obj);        //cuvanje odabranog dogadjaja u sesiji i prelazak na njegov pregled
+          
             $(location).attr('href', 'ManifestacijaPage.html');
 
         });
@@ -2869,36 +2952,78 @@
 
         //za izmenu manifestacije
         $(document).on('click', '.use-izmeni', function () {
-           
-                // $('#novaMani').show();
-                var span = document.getElementsByClassName("close")[2];
-                var modal = document.getElementById("myModal3");
 
-                modal.style.display = "block";
+            // $('#novaMani').show();
+            var span = document.getElementsByClassName("close")[2];
+            var modal = document.getElementById("myModal3");
 
-                span.onclick = function () {
+            modal.style.display = "block";
+
+            span.onclick = function () {
+                modal.style.display = "none";
+                //brise mapu
+                document.getElementById('map').innerHTML = "";
+            }
+
+            window.onclick = function (event) {
+                if (event.target == modal) {
                     modal.style.display = "none";
+                    //brise mapu
+                    document.getElementById('map').innerHTML = "";
                 }
-
-                window.onclick = function (event) {
-                    if (event.target == modal) {
-                        modal.style.display = "none";
-                    }
-                }
-                //---------------------------------------
+            }
+            //---------------------------------------
             console.log("klik na izmeni");
             var polja = this.id;                //preuzima ID MANIFESTACIJE
-           // var polja = (this.id).split('_');
-           // console.log("nn" + polja[0] + "   xa" + polja);
+            // var polja = (this.id).split('_');
+            // console.log("nn" + polja[0] + "   xa" + polja);
 
             var obj = JSON.stringify({
                 //"naziv": polja[0],
                 //"datum": polja[1]
                 "id": polja
             });
-           //       cuva se id te manifestacije za izmenu
+            //       cuva se id te manifestacije za izmenu
             sessionStorage.setItem('izmena', obj);
-           
+
+             //document.getElementById('map').style.display = "inline-block";
+
+            //var map = document.getElementById('map');
+            //map.getMap().updateSize();
+            //map.Get
+            //map.updateSize();
+
+
+            ////poziva mapa
+            ////izvuci tacke
+            
+            //    var map = new ol.Map({
+            //        target: 'map',
+            //        layers: [
+            //            new ol.layer.Tile({
+            //                source: new ol.source.OSM()
+            //            })
+            //        ],
+            //        view: new ol.View({
+            //            center: center: fromLonLat([Xx, Yy]),
+            //            zoom: 4
+            //        })
+            //    });
+             
+
+            //map.on('click', function (evt) {
+            //    console.info(evt.pixel);
+            //    console.info(map.getPixelFromCoordinate(evt.coordinate));
+            //    console.info(ol.proj.toLonLat(evt.coordinate));
+            //    var coords = ol.proj.toLonLat(evt.coordinate);
+            //    var lat = coords[1];
+            //    var lon = coords[0];
+            //    var locTxt = "Latitude: " + lat + " Longitude: " + lon;
+            //    // coords is a div in HTML below the map to display
+            //    //document.getElementById('coords').innerHTML = locTxt;
+            //    alert(locTxt);
+            //});
+
             $.ajax({
 
                 type: "POST",
@@ -2938,8 +3063,8 @@
                     //alert(sHours + ":" + sMinutes);
                     var vreme = sHours + ":" + sMinutes;
 
-                   // document.getElementById("_time").value = jsonObj.Datumivreme.split(' ')[1];
-                   document.getElementById("_time").value=vreme;
+                    // document.getElementById("_time").value = jsonObj.Datumivreme.split(' ')[1];
+                    document.getElementById("_time").value = vreme;
                     document.getElementById("_datumivreme").value = jsonObj.Datumivreme.split(' ')[0];
                     document.getElementById("_cenaregular").value = jsonObj.Cenaregular;
                     document.getElementById("_ulicabroj").value = jsonObj.Mestoodrzavanja.Ulicabroj;
@@ -2951,247 +3076,128 @@
                     ////<img src="{slika}" width="160"></img>
                     //var elem = document.createElement("img");
                     //elem.setAttribute("src", slika);
-                    
+
                     //elem.setAttribute("width", "160");
                     //elem.setAttribute("alt", "nema slike");
                     var foo = document.getElementById("fooBar");
                     foo.innerHTML = "<img src=\"Files/" + jsonObj.Poster + "\" width=\"160\" ></img>";
+
+
                     
-                    
+
+
+
+                },
+                error: function (data) {
+                    console.log("ERROR : ", data);
+                }
+            });
+
+            //poziva mapa
+            //izvuci tacke
+            var Xx;
+            var Yy;
+            //pozvati ajax da se nadju koordinate
+            $.ajax({
+
+                type: "POST",
+                url: 'api/Korisnik/NadjiLokaciju',// + this.id,       //koristi id dugmeta sto ce biti naziv i datum sa vremenom
+                dataType: "json",
+                data: obj,
+                contentType: "application/json; charset=utf-8",
+                // async: false,
+                success: function (data) {
+                    console.log("success" + data);
+
+                    // alert('dogadjaj obrisan' + obj);
+
+                    jsonObj = JSON.parse(data);
+                    //document.getElementById("_naziv").value = jsonObj.Naziv;
+                    Yy = jsonObj.Geoduzina;     //latitute
+                    Xx = jsonObj.Geosirina;
+                    //alert(Xx + " koo" + Yy);
+                    //alert(Xx);
+                    //alert(Yy);
+                    var map = new ol.Map({
+                        target: 'map',
+                        layers: [
+                            new ol.layer.Tile({
+                                source: new ol.source.OSM()
+                            })
+                        ],
+                        view: new ol.View({
+                            center: ol.proj.fromLonLat([Xx, Yy]),
+                            zoom: 8
+                        })
+                    });
+
+                    map.on('click', function (evt) {
+                        console.info(evt.pixel);
+                        console.info(map.getPixelFromCoordinate(evt.coordinate));
+                        console.info(ol.proj.toLonLat(evt.coordinate));
+                        var coords = ol.proj.toLonLat(evt.coordinate);
+                        var lat = coords[1];
+                        var lon = coords[0];
+                        var locTxt = "Latitude: " + lat + " Longitude: " + lon;
+                        // coords is a div in HTML below the map to display
+                        //document.getElementById('coords').innerHTML = locTxt;
+                        // alert(locTxt);
+                        var objekat = JSON.stringify(
+                            {
+                                "X": lat,
+                                "Y": lon
+                            });
+                       // alert(objekat);
+                        sessionStorage.setItem('pozicija', objekat);
+                        //sessionStorage.setItem('pozicijaY', lat);
+                    });
                     
                 },
                 error: function (data) {
                     console.log("ERROR : ", data);
                 }
             });
-            //$("#btnIzmeni").click(function () {
-            //    let user = sessionStorage.getItem("logovan");
-            //    console.log('user ' + user);
-            //    var korisnik = $.parseJSON(user);
-
-            //    let k1 = document.getElementById('_naziv');
-            //    let k2 = document.getElementById('_datumivreme');
-            //    let k3 = document.getElementById('_ulicabroj');
-            //    let k4 = document.getElementById('_grad');
-            //    let k5 = document.getElementById('_postanskibroj');
-            //    let k6 = document.getElementById('_brojmesta');
-            //    let k7 = document.getElementById('_vreme');
-            //    let k8 = document.getElementById('_cenaregular');
-
-            //    if (!k1.checkValidity()) {
-            //        alert("Ponovo unesite naziv. Naziv sme da sadrzi slova i cifre.")
-            //    } else if ($("#_brojmesta").val() == '') {
-            //        alert('Unesite broj mesta.');
-            //    } else if (!k2.checkValidity()) {
-            //        alert('Datum mora biti u formatu DD-MM-YYYY');
-            //    } else if ($("#_time").val() == '') {
-            //        alert('Unesite vreme.');
-            //    } else if ($("#_cenaregular").val() == '') {
-            //        alert('Uneiste cenu karte.');
-            //    }
-            //    else if (!k3.checkValidity()) {
-            //        alert("Unesite ispravno ulicu i broj.");
-            //    } else if (!k4.checkValidity()) {
-            //        alert('Ponovo unesite grad/drzavu. Dozvoljena su samo slova.');
-            //    } else if (!k5.checkValidity()) {
-            //        alert("Postanski broj mora da bude petocifreni broj");
-            //    }
-            //    //} else if (!$('#poster').val()) {
-            //    //    alert("Odaberite sliku za poster");
-            //    //}
-            //    else {
-            //        var naziv = $("#_naziv").val();
-            //        var tipmanifestacije = $("#_tipovi option:selected").val();
-            //        var brojmesta = $("#_brojmesta").val();
-            //        var vreme = $("#_time").val();
-            //        var datumivreme = $("#_datumivreme").val();
-            //        var cenaregular = $("#_cenaregular").val();
-
-            //        var ulicabroj = $("#_ulicabroj").val();
-            //        var grad = $("#_grad").val();
-            //        var postanskibroj = $("#_postanskibroj").val();
-            //        // var poster = $("#poster").val();
-            //        var logoImg;
-            //        var novaSlika;
-            //        var formData = new FormData();
-            //        if ($('#_poster').get(0).files.length === 0) {
-            //            console.log("NIJE IZABRANA NOVA SLIKA");
-            //            var logoImg = jsonObj.Poster;
-            //            novaSlika = "nema";
-            //        } else {
-            //           logoImg = $("#_poster").get(0).files[0];
-            //            //var formData = new FormData();
-            //            novaSlika = 'ima';
-            //        }
-            //        formData.append('poster', logoImg);
-
-            //        //namestanje vremena da bude sa pm am
-            //        t = document.getElementById('_time').value
-            //        var [h, m] = t.split(":");
-
-            //        // datumivreme += " " + (h % 12 + 12 * (h % 12 == 0)) + ":" + m;//, h >= 12 ? 'PM' : 'AM';
-            //        datumivreme += " " + (h % 12 + 12 * (h % 12 == 0)) + ":" + m;//, h >= 12 ? 'PM' : 'AM';
-            //        if (h >= 12) {
-            //            datumivreme += " PM";
-            //        } else {
-            //            datumivreme += " AM";
-            //        }
-            //        console.log(datumivreme);
-
-            //        formData.append('novaslika', novaSlika);
-            //        formData.append('naziv', naziv);
-            //        formData.append('tipmanifestacije', tipmanifestacije);
-            //        formData.append('brojmesta', brojmesta);
-            //        formData.append('datumivreme', datumivreme);
-            //        formData.append('cenaregular', cenaregular);
-            //        formData.append('ulicabroj', ulicabroj);
-            //        formData.append('grad', grad);
-            //        formData.append('postanskibroj', postanskibroj);
-            //        formData.append('prodavac', korisnik.Korisnickoime);
-            //        formData.append('id', polja);
-            //        console.log("tip->" + tipmanifestacije);
 
 
-            //        $.ajax({
+            /*
+            alert(Xx);
+            alert(Yy);
+            var map = new ol.Map({
+                target: 'map',
+                layers: [
+                    new ol.layer.Tile({
+                        source: new ol.source.OSM()
+                    })
+                ],
+                view: new ol.View({
+                    center: ol.proj.fromLonLat([Xx, Yy]),
+                    zoom: 5
+                })
+            });*/
 
-            //                type: "POST",
-            //                url: 'api/Korisnik/IzmeniFest',
-            //                data: formData,
-            //                contentType: false,
-            //                processData: false,
-            //                cache: false,
-            //                complete: function (data) {
-            //                    console.log("success izmene manifestacije");
-                            
-            //                    //povratna poruka
-            //                    var poruka="";
-            //                    if (JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON).length>0)
-            //                            poruka = JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON);
-            //                    //console.log(JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON));
-            //                    console.log(poruka);
-            //                    if (poruka != "") {
-
-            //                        if (poruka == "Ne mozete broj mesta smanjiti na manje od broja kupljenih karata.") {
-            //                            alert(poruka);
-            //                            console.log("ne moye smanjiti");
-
-            //                        } else if (poruka == "Manifestacija se zavrsila,nije je moguce izmeniti.") {
-            //                            alert(poruka);
-            //                        } else if (poruka == "Manifestacija ne moze biti u proslosti.") {
-            //                            alert(poruka);
-            //                        } else if (poruka == "Neuspesno izmenjeno.") {
-            //                            alert(poruka);
-            //                        } else if (poruka == "Postoji vec manifestacija u zadataom vremenu na zadatom mestu.") {
-            //                            alert(poruka);
-            //                        } 
-            //                        else if (poruka == "Uspesno izmenjeno.") {
-
-            //                            alert("Uspesno izmenjeno.");
-            //                            var modal = document.getElementById("myModal3");
-            //                            modal.style.display = "none";
-            //                            $("#_poster").val("");
-            //                            var tabelica = document.getElementById('tabelaMani');
-            //                            for (var i = 1; i < tabelica.rows.length;) {
-            //                                tabelica.deleteRow(i);
-            //                            }
-            //                            $.ajax({
-            //                                type: 'POST',
-            //                                url: '/api/Korisnik/ListaManifestacije',
-            //                                contentType: 'application/json; charset=utf-8',
-            //                                dataType: 'json',
-            //                                //  data: JSON.stringify(korisnik),
-            //                                success: function (data) {
-            //                                    console.log("success");
-
-            //                                    console.log("petlja...pocinje" + data);
-
-            //                                    var jsonObj = JSON.parse(data);
-
-            //                                    for (i = 0; i < jsonObj.length; i++) {
-
-
-            //                                        var tip;
-            //                                        if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
-            //                                            tip = "Koncert";
-            //                                        } else if (jsonObj[i].Tipmanifestacije == 1) {
-            //                                            tip = "Festival";
-            //                                        } else if (jsonObj[i].Tipmanifestacije == 2) {
-            //                                            tip = "Pozoriste";
-            //                                        }
-
-            //                                        var poster = jsonObj[i].Poster;
-
-
-
-            //                                        var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
-            //                                        row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
-            //                                        row += "<td >" + tip + "</td>";
-            //                                        row += "<td >" + jsonObj[i].Datumivreme + "</td>";
-            //                                        row += "<td >" + jsonObj[i].Mestoodrzavanja.Ulicabroj + " " + jsonObj[i].Mestoodrzavanja.Grad + " " + jsonObj[i].Mestoodrzavanja.Postanskibroj + "</td>";
-            //                                        row += "<td valign=\"middle\" align=\"center\" ><img src=\"Files/" + poster + "\" width=\"100\" ></img></td>";
-            //                                        row += "<td >" + jsonObj[i].Cenaregular + "</td>";
-            //                                        row += "<td >" + jsonObj[i].Cenavip + "</td>";
-            //                                        row += "<td >" + jsonObj[i].Cenafanpit + "</td>";
-            //                                        var ocena;
-            //                                        if (jsonObj[i].Ocena == 0) {
-            //                                            ocena = "";
-            //                                        } else {
-            //                                            ocena = jsonObj[i].Ocena;
-            //                                        }
-
-            //                                        row += "<td >" + ocena + "</td>";
-            //                                        var nazivdatum_id = jsonObj[i].Naziv + "_" + jsonObj[i].Datumivreme;
-            //                                        var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular + "_" + jsonObj[i].IDmanifestacije;
-            //                                        var obrisidugme = "";
-            //                                        var aktivirajdugme = "";
-            //                                        var izmenidugme = "";
-            //                                        if (korisnik != null) {
-            //                                            if (korisnik.Uloga == 0) {
-            //                                                obrisidugme = "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
-            //                                                if (jsonObj[i].Status == 1) {
-            //                                                    //alert("status neaktivan");
-            //                                                    aktivirajdugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-aktiviraj\"  style=\"margin-top: 5px;\">Aktiviraj</button>";
-            //                                                }
-            //                                            }
-            //                                            if (korisnik.Uloga == 2) {//ako je kupac
-            //                                                obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
-            //                                            }
-            //                                            if (korisnik.Uloga == 1)//uloga PRODAVAC
-            //                                            {
-            //                                                izmenidugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-izmeni\"  style=\"margin-top: 5px;\">Izmeni</button>";
-            //                                            }
-            //                                        }
-            //                                        row += "<td><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + izmenidugme + "</td>";
-            //                                        //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
-            //                                        row += "</tr>";
-
-            //                                        $("#tabelaMani").append(row);
-
-
-            //                                    }
-            //                                },
-            //                                error: function (data) {
-            //                                    alert("Greska!");
-            //                                }
-
-            //                            });
-            //                        }
-            //                    }
-                           
-
-            //                }
+            //map.on('click', function (evt) {
+            //    console.info(evt.pixel);
+            //    console.info(map.getPixelFromCoordinate(evt.coordinate));
+            //    console.info(ol.proj.toLonLat(evt.coordinate));
+            //    var coords = ol.proj.toLonLat(evt.coordinate);
+            //    var lat = coords[1];
+            //    var lon = coords[0];
+            //    var locTxt = "Latitude: " + lat + " Longitude: " + lon;
+            //    // coords is a div in HTML below the map to display
+            //    //document.getElementById('coords').innerHTML = locTxt;
+            //   // alert(locTxt);
+            //    var objekat = JSON.stringify(
+            //        {
+            //            "X": lat,
+            //            "Y": lon
             //        });
+            //    alert(objekat);
+            //    sessionStorage.setItem('pozicija', objekat);
+            //    //sessionStorage.setItem('pozicijaY', lat);
+            //});
 
-            //        //refresh tabele sa manifestacijama
-            //        //prvo obrisati
 
 
-            //           }
-                
-
-            //}); 
-
-            
         });
 
         $(document).on('click', '.use-ime', function () {            // kada je button (čija je class = use-address) kliknut
@@ -3253,7 +3259,7 @@
                         row += "<td >" + obrisan + "</td>";
                         if (obrisan == "" && uloga != "Administrator") {
                             row += "<td><button type = \"button\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Obrisi</button><br><button type = \"button\" style=\"margin-top:5px\" id=\"" + lista[i].Korisnickoime + "\" class=\"use-ime\">Blokiraj</button></td>";
-                            
+
                         } else {
                             row += "<td></td>";
                         }
@@ -3332,7 +3338,7 @@
                 }
             });
 
-        //});
+            //});
 
             //osveziti i prikaz manifestacija ukoliko se prodavc obrisao
             var tabelica = document.getElementById('tabelaMani');
@@ -3409,9 +3415,14 @@
             });
 
         });
-        
-        
+
+
     </script>
+
+
+
+
+
 
     <title></title>
     <style>
@@ -3489,7 +3500,8 @@
             background: #fafafa;
             text-align: center;
         }
-        #tabelaMani{
+
+        #tabelaMani {
             z-index: 2;
             /*left:50%;
             top:50%;
@@ -3513,6 +3525,7 @@
             color: #fafafa;
             text-transform: uppercase;
         }
+
         #userPrikaz th {
             /*background: #ba68c8;*/
             background: rgba(51, 51, 51, 1);
@@ -3523,6 +3536,7 @@
         #tabelaMani tr:nth-child(odd) {
             background: #eeeeee;
         }
+
         #userPrikaz tr:nth-child(odd) {
             background: #eeeeee;
         }
@@ -3843,6 +3857,10 @@
                         <td><input name="poster" type="file" id="poster" required style="color:white;align-content:center" /></td>
                     </tr>
                     <tr>
+                        <td id="tekst" style="color:white;text-align:right;">Mapa:</td>
+                        <td><div id="map1" class="map1"></div></td>
+                    </tr>
+                    <tr>
                         <td colspan="2">
                             <button id="btnFest" style="border-radius:0px;background-color:#4CAF50">Dodaj</button>
                             <!--<input type="submit" onclick="print()" value="Dodaj" id="btnFest" />-->
@@ -3916,7 +3934,31 @@
                         <td id="tekst" style="color:white;text-align:right;">Novi poster:</td>
                         <td><input name="poster" type="file" id="_poster" required style="color:white;align-content:center" /></td>
                     </tr>
-
+                    <tr>
+                        <td id="tekst" style="color:white;text-align:right;">
+                            Mapa:
+                        </td>
+                        <!--<td><div id="map" class="map"></div></td>-->
+                        <td>
+                            <div id="map" class="map"></div>
+                            <!--<script type="text/javascript">
+                                var map = new ol.Map({
+                                    target: 'map',
+                                    layers: [
+                                        new ol.layer.Tile({
+                                            source: new ol.source.OSM()
+                                        })
+                                    ],
+                                    view: new ol.View({
+                                        center: ol.proj.fromLonLat([37.41, 8.82]),
+                                        zoom: 4
+                                    })
+                                });
+                                //map.getMap().updateSize();
+                               // map.updateSize();
+                            </script>-->
+                        </td>
+                    </tr>
                     <tr>
                         <td colspan="2">
                             <button id="btnIzmeni" style="border-radius:0px;background-color:#4CAF50">Izmeni</button>
@@ -3930,8 +3972,8 @@
         </div>
         <hr style="border: 2px solid#5b9aa0;" />
     </div>
-       
-        
+
+
     <div style=" display: inline-block;vertical-align: top;">
         <h4>Filtrirajte po tipu manifestacije</h4>
         <select class="f_tip">
@@ -3948,217 +3990,235 @@
             <option id="fkarta" value="Nerasprodate">Nerasprodate</option>
 
         </select><button type="button" id="filter_karta">Filtriraj po raspolozivosti karte</button>
-        </div>
-        <!--<p id="#resultas" style="color:black"></p>-->
-        <h4>Sortiranja</h4>
-        <button type="button" id="sort_nazAZ" style="margin-bottom:5px">Sortiraj po nazivu A-Z</button>
-        <button type="button" id="sort_nazZA" style="margin-bottom:5px">Sortiraj po nazivu Z-A</button>
-        <button type="button" id="sort_datum1" style="margin-bottom:5px">Sortiraj po datumu od najskorijeg</button>
-        <button type="button" id="sort_datum2" style="margin-bottom:5px">Sortiraj po datumu od najkasnijeg</button>
-        <button type="button" id="sort_cenaR" style="margin-bottom:5px">Sortiraj po ceni rastuce</button>
-        <button type="button" id="sort_cenaO" style="margin-bottom:5px">Sortiraj po ceni opadajuce</button>
-        <button type="button" id="sort_mestoAZ" style="margin-bottom:5px">Sortiraj po mestu A-Z</button>
-        <button type="button" id="sort_mestoZA" style="margin-bottom:5px">Sortiraj po mestu Z-A</button>
-        <h4>Pretraga</h4>
-        <div class="container">
-            <form>
+    </div>
+    <!--<p id="#resultas" style="color:black"></p>-->
+    <h4>Sortiranja</h4>
+    <button type="button" id="sort_nazAZ" style="margin-bottom:5px">Sortiraj po nazivu A-Z</button>
+    <button type="button" id="sort_nazZA" style="margin-bottom:5px">Sortiraj po nazivu Z-A</button>
+    <button type="button" id="sort_datum1" style="margin-bottom:5px">Sortiraj po datumu od najskorijeg</button>
+    <button type="button" id="sort_datum2" style="margin-bottom:5px">Sortiraj po datumu od najkasnijeg</button>
+    <button type="button" id="sort_cenaR" style="margin-bottom:5px">Sortiraj po ceni rastuce</button>
+    <button type="button" id="sort_cenaO" style="margin-bottom:5px">Sortiraj po ceni opadajuce</button>
+    <button type="button" id="sort_mestoAZ" style="margin-bottom:5px">Sortiraj po mestu A-Z</button>
+    <button type="button" id="sort_mestoZA" style="margin-bottom:5px">Sortiraj po mestu Z-A</button>
+    <h4>Pretraga</h4>
+    <div class="container">
+        <form>
 
-                <div class="wrapper">
+            <div class="wrapper">
 
-                    <div class="search-container">
-                        <input type="text" id="find_naziv" placeholder="naziv manifestacije" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" />
-                        <input type="text" id="find_mesto" placeholder="mesto(drzava ili grad)" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" />
-                        <input type="text" id="find_datumOD" placeholder="od datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
-                        <input type="text" id="find_datumDO" placeholder="do datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
-                        <input type="number" min="0" id="find_cenaOD" placeholder="cena regular od" pattern="[0-9]+" oninput="validity.valid||(value='');" />
-                        <input type="number" min="0" id="find_cenaDO" placeholder="cena regular do" pattern="[0-9]+" oninput="validity.valid||(value='');" />
+                <div class="search-container">
+                    <input type="text" id="find_naziv" placeholder="naziv manifestacije" pattern="^[0-9a-zA-Z]+( [0-9a-zA-Z]+)*$" />
+                    <input type="text" id="find_mesto" placeholder="mesto(drzava ili grad)" pattern="^[a-zA-Z]+( [a-zA-Z]+)*$" />
+                    <input type="text" id="find_datumOD" placeholder="od datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
+                    <input type="text" id="find_datumDO" placeholder="do datum dd-mm-yyyy" pattern="^([0-2][0-9]|(3)[0-1])-(((0)[0-9])|((1)[0-2]))-\d{4}$" />
+                    <input type="number" min="0" id="find_cenaOD" placeholder="cena regular od" pattern="[0-9]+" oninput="validity.valid||(value='');" />
+                    <input type="number" min="0" id="find_cenaDO" placeholder="cena regular do" pattern="[0-9]+" oninput="validity.valid||(value='');" />
 
 
-                        <!--<div class="input-daterange input-group" id="datepicker">
-                            <input type="text" class="input-sm form-control" name="start" />
-                            <span class="input-group-addon">to</span>
-                            <input type="text" class="input-sm form-control" name="end" />
-                        </div>-->
-                        <button type="button" id="pretraga">Pretrazi</button>
-                    </div>
+                    <!--<div class="input-daterange input-group" id="datepicker">
+                        <input type="text" class="input-sm form-control" name="start" />
+                        <span class="input-group-addon">to</span>
+                        <input type="text" class="input-sm form-control" name="end" />
+                    </div>-->
+                    <button type="button" id="pretraga">Pretrazi</button>
                 </div>
+            </div>
 
 
-            </form>
+        </form>
 
 
-        </div>
-        <div id="maniPrikaz" class="table-responsive">
-            <h2 style="text-align:center">Manifestacije</h2>
-            <table id="tabelaMani" style="margin-left: auto;
+    </div>
+    <div id="maniPrikaz" class="table-responsive">
+        <h2 style="text-align:center">Manifestacije</h2>
+        <table id="tabelaMani" style="margin-left: auto;
   margin-right: auto;">
-                <tr>
-                    <th>Naziv</th>
-                    <th>Tip</th>
-                    <th>Datum i vreme</th>
-                    <th>Mesto</th>
-                    <th>Poster</th>
-                    <th>Cena regular</th>
-                    <th>Cena vip</th>
-                    <th>Cena fan pit</th>
-                    <th>Ocena</th>
-                    <th>Detaljnije</th>
-                </tr>
-            </table>
-        </div>
+            <tr>
+                <th>Naziv</th>
+                <th>Tip</th>
+                <th>Datum i vreme</th>
+                <th>Mesto</th>
+                <th>Poster</th>
+                <th>Cena regular</th>
+                <th>Cena vip</th>
+                <th>Cena fan pit</th>
+                <th>Ocena</th>
+                <th>Detaljnije</th>
+            </tr>
+        </table>
+    </div>
 
-        <!--<h2>My Map</h2>
-        <div id="map" class="map"></div>-->
-        <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-        <script type="text/javascript">
-            var map = new ol.Map({
-                target: 'map',
-                layers: [
-                    new ol.layer.Tile({
-                        source: new ol.source.OSM()
-                    })
-                ],
-                view: new ol.View({
-                    center: ol.proj.fromLonLat([37.41, 8.82]),
-                    zoom: 4
+    <!--<script type="text/javascript">
+        var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
                 })
-            });     //radilo
-
-            //var baseMapLayer = new ol.layer.Tile({
-            //    source: new ol.source.OSM()
-            //});
-            //var map = new ol.Map({
-            //    target: 'map',
-            //    layers: [baseMapLayer],
-            //    view: new ol.View({
-            //        center: ol.proj.fromLonLat([-74.0061, 40.712]),
-            //        zoom: 7 //Initial Zoom Level
-            //    })
-            //});
-            ////Adding a marker on the map
-            //var marker = new ol.Feature({
-            //    geometry: new ol.geom.Point(
-            //        ol.proj.fromLonLat([-74.006, 40.7127])
-            //    ),  // Cordinates of New York's Town Hall
-            //});
-            //var vectorSource = new ol.source.Vector({
-            //    features: [marker]
-            //});
-            //var markerVectorLayer = new ol.layer.Vector({
-            //    source: vectorSource,
-            //});
-            //map.addLayer(markerVectorLayer);
-            self.map.on("singleclick", function (evt) {
-                setPinOnMap(evt);
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([37.41, 8.82]),
+                zoom: 4
             })
+        });
+    </script>-->
+
+    <!--<h2>My Map</h2>
+    <div id="map" class="map"></div>-->
+    <!--<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+    <script type="text/javascript">
+        var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                    source: new ol.source.OSM()
+                })
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([37.41, 8.82]),
+                zoom: 4
+            })
+        });     //radilo
+
+        //var baseMapLayer = new ol.layer.Tile({
+        //    source: new ol.source.OSM()
+        //});
+        //var map = new ol.Map({
+        //    target: 'map',
+        //    layers: [baseMapLayer],
+        //    view: new ol.View({
+        //        center: ol.proj.fromLonLat([-74.0061, 40.712]),
+        //        zoom: 7 //Initial Zoom Level
+        //    })
+        //});
+        ////Adding a marker on the map
+        //var marker = new ol.Feature({
+        //    geometry: new ol.geom.Point(
+        //        ol.proj.fromLonLat([-74.006, 40.7127])
+        //    ),  // Cordinates of New York's Town Hall
+        //});
+        //var vectorSource = new ol.source.Vector({
+        //    features: [marker]
+        //});
+        //var markerVectorLayer = new ol.layer.Vector({
+        //    source: vectorSource,
+        //});
+        //map.addLayer(markerVectorLayer);
+        self.map.on("singleclick", function (evt) {
+            setPinOnMap(evt);
+        })
 
 
-            function setPinOnMap(evt) {
-                var self = this;
+        function setPinOnMap(evt) {
+            var self = this;
 
-                var latLong = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
-                var lat = latLong[1];
-                var long = latLong[0];
+            var latLong = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
+            var lat = latLong[1];
+            var long = latLong[0];
 
-                self.params.options.mapClick({ lat: lat, long: long });
+            self.params.options.mapClick({ lat: lat, long: long });
 
-                if (self.dinamicPinLayer !== undefined) {
-                    console.log("moove")
-                    self.iconGeometry.setCoordinates(evt.coordinate);
-                    //or create another pin
-                } else {
-                    self.iconGeometry = new ol.geom.Point(evt.coordinate);
-                    var iconFeature = new ol.Feature({
-                        geometry: self.iconGeometry,
-                        name: 'Null Island',
-                        population: 4000,
-                        rainfall: 500
-                    });
-                    var iconStyle = new ol.style.Style({
-                        image: new ol.style.Icon(({
-                            anchor: [0.5, 46],
-                            anchorXUnits: 'fraction',
-                            anchorYUnits: 'pixels',
-                            size: [48, 48],
-                            opacity: 1,
-                            src: '/resources/cloud/controls/cloudMap/img/redmarker_small.png'
-                        }))
-                    });
+            if (self.dinamicPinLayer !== undefined) {
+                console.log("moove")
+                self.iconGeometry.setCoordinates(evt.coordinate);
+                //or create another pin
+            } else {
+                self.iconGeometry = new ol.geom.Point(evt.coordinate);
+                var iconFeature = new ol.Feature({
+                    geometry: self.iconGeometry,
+                    name: 'Null Island',
+                    population: 4000,
+                    rainfall: 500
+                });
+                var iconStyle = new ol.style.Style({
+                    image: new ol.style.Icon(({
+                        anchor: [0.5, 46],
+                        anchorXUnits: 'fraction',
+                        anchorYUnits: 'pixels',
+                        size: [48, 48],
+                        opacity: 1,
+                        src: '/resources/cloud/controls/cloudMap/img/redmarker_small.png'
+                    }))
+                });
 
-                    iconFeature.setStyle(iconStyle);
+                iconFeature.setStyle(iconStyle);
 
-                    var vectorSource = new ol.source.Vector({
-                        features: [iconFeature]
-                    });
-                    self.dinamicPinLayer = new ol.layer.Vector({
-                        source: vectorSource
-                    });
-                    self.map.addLayer(self.dinamicPinLayer);
-                }
-
-
+                var vectorSource = new ol.source.Vector({
+                    features: [iconFeature]
+                });
+                self.dinamicPinLayer = new ol.layer.Vector({
+                    source: vectorSource
+                });
+                self.map.addLayer(self.dinamicPinLayer);
             }
-            //map = new OpenLayers.Map("map");
-            //map.addLayer(new OpenLayers.Layer.OSM());
-
-            //var lonLat = new OpenLayers.LonLat(-0.1279688, 51.5077286)
-            //    .transform(
-            //        new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-            //        map.getProjectionObject() // to Spherical Mercator Projection
-            //    );
-
-            //var zoom = 16;
-
-            //var markers = new OpenLayers.Layer.Markers("Markers");
-            //map.addLayer(markers);
-
-            //markers.addMarker(new OpenLayers.Marker(lonLat));
-
-            //map.setCenter(lonLat, zoom);
-
-            //var newLonLat = new OpenLayers.LonLat(lon, lat);
-            //var newPx = map.getLayerPxFromLonLat(newLonLat);
-            //markers.moveTo(newPx);
-            //jhjh
 
 
-            //var marker = new ol.Feature({
-            //    geometry: new ol.geom.Point(
-            //        ol.proj.fromLonLat([-74.006, 40.7127])
-            //    ),  // Cordinates of New York's Town Hall
-            //});
+        }
+        //map = new OpenLayers.Map("map");
+        //map.addLayer(new OpenLayers.Layer.OSM());
 
-            //var vectorSource = new ol.source.Vector({
-            //    features: [marker]
-            //});
+        //var lonLat = new OpenLayers.LonLat(-0.1279688, 51.5077286)
+        //    .transform(
+        //        new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
+        //        map.getProjectionObject() // to Spherical Mercator Projection
+        //    );
 
-            //var markerVectorLayer = new ol.layer.Vector({
-            //    source: vectorSource,
-            //});
-            //map.addLayer(markerVectorLayer);
-            //var layer = new ol.layer.Vector({
-            //    source: new ol.source.Vector({
-            //        features: [
-            //            new ol.Feature({
-            //                geometry: new ol.geom.Point(ol.proj.fromLonLat([4.35247, 50.84673]))
-            //            })
-            //        ]
-            //    })
-            //});
-            //map.addLayer(layer);
-            //map.addEventListener("tap", event => {
-            //    console.log(event);
-            //});
-        </script>
+        //var zoom = 16;
 
-        <script>
-            window.onscroll = function () { myFunction() };
+        //var markers = new OpenLayers.Layer.Markers("Markers");
+        //map.addLayer(markers);
 
-            function myFunction() {
-                var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-                var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-                var scrolled = (winScroll / height) * 100;
-                document.getElementById("myBar").style.width = scrolled + "%";
-            }</script>
+        //markers.addMarker(new OpenLayers.Marker(lonLat));
+
+        //map.setCenter(lonLat, zoom);
+
+        //var newLonLat = new OpenLayers.LonLat(lon, lat);
+        //var newPx = map.getLayerPxFromLonLat(newLonLat);
+        //markers.moveTo(newPx);
+        //jhjh
+
+
+        //var marker = new ol.Feature({
+        //    geometry: new ol.geom.Point(
+        //        ol.proj.fromLonLat([-74.006, 40.7127])
+        //    ),  // Cordinates of New York's Town Hall
+        //});
+
+        //var vectorSource = new ol.source.Vector({
+        //    features: [marker]
+        //});
+
+        //var markerVectorLayer = new ol.layer.Vector({
+        //    source: vectorSource,
+        //});
+        //map.addLayer(markerVectorLayer);
+        //var layer = new ol.layer.Vector({
+        //    source: new ol.source.Vector({
+        //        features: [
+        //            new ol.Feature({
+        //                geometry: new ol.geom.Point(ol.proj.fromLonLat([4.35247, 50.84673]))
+        //            })
+        //        ]
+        //    })
+        //});
+        //map.addLayer(layer);
+        //map.addEventListener("tap", event => {
+        //    console.log(event);
+        //});
+    </script>
+
+    <script>
+        window.onscroll = function () { myFunction() };
+
+        function myFunction() {
+            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            var scrolled = (winScroll / height) * 100;
+            document.getElementById("myBar").style.width = scrolled + "%";
+        }</script>-->
+
+
 </body>
+
 </html>

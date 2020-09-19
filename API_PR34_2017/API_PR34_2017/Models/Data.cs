@@ -389,5 +389,70 @@ namespace API_PR34_2017.Models
 
             return sumnjivi;
         }
+
+        public static void SaveLokacija(Lokacija p)
+        {
+            string putanja = HostingEnvironment.MapPath("~/App_Data/lokacije.txt");
+            string[] lines = System.IO.File.ReadAllLines(putanja);
+
+            bool izmeni = false;
+            string nova = "";
+
+            for (int i = 0; i < lines.Count(); i++)
+            {
+                string[] tokens = lines[i].Split(';');
+
+                if (tokens[0].Equals(p.Idmanifestacije))//jednaki id
+                {
+                    nova = p.ToString();
+                    lines[i] = nova;
+                    izmeni = true;
+                    break;
+                }
+
+            }
+
+            if (izmeni)//menja postojeca
+            {
+                System.IO.File.WriteAllLines(putanja, lines);
+            }
+            else
+            {
+                //dopisuje
+                FileStream fs = new FileStream(putanja, FileMode.Append, FileAccess.Write);
+                StreamWriter sw = new StreamWriter(fs);
+                string str = p.ToString();
+                sw.WriteLine(str);
+                sw.Close();
+                fs.Close();
+            }
+        }
+        public static List<Lokacija> ReadLokacija(string path)
+        {
+            List<Lokacija> lokacije = new List<Lokacija>();
+            path = HostingEnvironment.MapPath(path);
+            FileStream stream = new FileStream(path, FileMode.Open);
+            StreamReader sr = new StreamReader(stream);
+            string line = "";
+            while ((line = sr.ReadLine()) != null)
+            {
+
+                string[] tokens = line.Split(';');
+
+                //bool obr;
+                //bool.TryParse(tokens[6], out obr);
+                //bool obrisan;
+                //bool.TryParse(tokens[7], out obrisan);
+
+                //Idmanifestacije+";"+Geoduzina.ToString() + ";" +Geosirina.ToString() + ";" +MestoOdrzavanja.Grad + ";" +MestoOdrzavanja.Ulicabroj + ";" +MestoOdrzavanja.Postanskibroj;
+                Lokacija p = new Lokacija(tokens[0], tokens[1], tokens[2], tokens[3], tokens[4], tokens[5]);
+                lokacije.Add(p);//dodaje karta
+
+            }
+            sr.Close();
+            stream.Close();
+
+            return lokacije;
+        }
     }
 }

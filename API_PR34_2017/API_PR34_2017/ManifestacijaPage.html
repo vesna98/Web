@@ -4,6 +4,18 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="Scripts/jquery-3.5.1.js"></script>
     <meta charset="utf-8" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/css/ol.css" type="text/css">
+    <style>
+        .map {
+            height: 400px;
+            width: 400px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.4.3/build/ol.js"></script>
+
+
+
     <title></title>
     <script>
         $(document).ready(function () {
@@ -65,6 +77,7 @@
                         status = "Neaktivno";
                     }
                     row += "<tr ><th>Status</th><td >" + status + "</td ></tr>";
+                    //row += "<tr ><th>Status</th><td ><div id=\"map\" class=\"map\"></div></td ></tr>";
                     //komentare dodati
 
 
@@ -89,70 +102,114 @@
                 }
             });
 
+            //mape
+            //var Xx;
+            //var Yy;
+            ////pozvati ajax da se nadju koordinate
+            //$.ajax({
+
+            //    type: "POST",
+            //    url: 'api/Korisnik/NadjiLokaciju',// + this.id,       //koristi id dugmeta sto ce biti naziv i datum sa vremenom
+            //    dataType: "json",
+            //    data: obj,
+            //    contentType: "application/json; charset=utf-8",
+            //    // async: false,
+            //    success: function (data) {
+            //        console.log("success" + data);
+
+            //        // alert('dogadjaj obrisan' + obj);
+
+            //        jsonObj = JSON.parse(data);
+            //        //document.getElementById("_naziv").value = jsonObj.Naziv;
+            //        Yy = jsonObj.Geoduzina;     //latitute
+            //        Xx = jsonObj.Geosirina;
+            //        //alert(Xx + " koo" + Yy);
+            //        //alert(Xx);
+            //        //alert(Yy);
+            //        var map = new ol.Map({
+            //            target: 'map',
+            //            layers: [
+            //                new ol.layer.Tile({
+            //                    source: new ol.source.OSM()
+            //                })
+            //            ],
+            //            view: new ol.View({
+            //                center: ol.proj.fromLonLat([Xx, Yy]),
+            //                zoom: 8
+            //            })
+            //        });
+
+            //    },
+            //    error: function (data) {
+            //        console.log("ERROR : ", data);
+            //    }
+            //});
+            ////-----------------
+
             //setTimeout(prikazkom, 2000);        //osvezavanje svake dve sekunde??????
             //function prikazkom() {
-                $("#comm").click(function () {
-                    var span = document.getElementsByClassName("close")[0];
-                    var modal = document.getElementById("myModal");
-                    // When the user clicks on the button, open the modal
-                    // btn.onclick = function() {
-                    modal.style.display = "block";
-                    //}
+            $("#comm").click(function () {
+                var span = document.getElementsByClassName("close")[0];
+                var modal = document.getElementById("myModal");
+                // When the user clicks on the button, open the modal
+                // btn.onclick = function() {
+                modal.style.display = "block";
+                //}
 
-                    // When the user clicks on <span> (x), close the modal
-                    span.onclick = function () {
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function () {
+                    modal.style.display = "none";
+                }
+
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function (event) {
+                    if (event.target == modal) {
                         modal.style.display = "none";
                     }
+                }
 
-                    // When the user clicks anywhere outside of the modal, close it
-                    window.onclick = function (event) {
-                        if (event.target == modal) {
-                            modal.style.display = "none";
+                //---------------------------------------------
+                let obj = sessionStorage.getItem("dogadjaj");
+                var jsonObj;
+                var tabelica = document.getElementById('komentari');
+                for (var i = 0; i < tabelica.rows.length;) {
+                    tabelica.deleteRow(i);
+                }
+                $.ajax({
+
+                    type: "POST",
+                    url: 'api/Karte/PrikaziKomentar',
+                    dataType: "json",
+                    data: obj,
+                    contentType: "application/json; charset=utf-8",
+                    // async: false,
+                    success: function (data) {
+                        //alert("success" + data);
+
+
+                        jsonObj = JSON.parse(data);
+                        for (i = 0; i < jsonObj.length; i++) {
+
+                            var row = "<tr ><td>" + jsonObj[i] + "</td></tr>";
+                            $("#komentari").append(row);
                         }
-                    }
-
-                    //---------------------------------------------
-                    let obj = sessionStorage.getItem("dogadjaj");
-                    var jsonObj;
-                    var tabelica = document.getElementById('komentari');
-                    for (var i = 0; i < tabelica.rows.length;) {
-                        tabelica.deleteRow(i);
-                    }
-                    $.ajax({
-
-                        type: "POST",
-                        url: 'api/Karte/PrikaziKomentar',
-                        dataType: "json",
-                        data: obj,
-                        contentType: "application/json; charset=utf-8",
-                        // async: false,
-                        success: function (data) {
-                            //alert("success" + data);
-
-
-                            jsonObj = JSON.parse(data);
-                            for (i = 0; i < jsonObj.length; i++) {
-
-                                var row = "<tr ><td>" + jsonObj[i] + "</td></tr>";
-                                $("#komentari").append(row);
-                            }
-                            if (jsonObj.length == 0) {
-                                //nema komentara
-                                document.getElementById('nema').innerHTML = '<p style=\"color:red;\">Nema komentara</p>';
-                                $("#nema").show();
-                            } else {
-                                $("#nema").hide();
-                            }
-
-                        },
-                        error: function (data) {
-                            console.log("ERROR : ", data);
+                        if (jsonObj.length == 0) {
+                            //nema komentara
+                            document.getElementById('nema').innerHTML = '<p style=\"color:red;\">Nema komentara</p>';
+                            $("#nema").show();
+                        } else {
+                            $("#nema").hide();
                         }
-                    });
+
+                    },
+                    error: function (data) {
+                        console.log("ERROR : ", data);
+                    }
                 });
-                //});
+            });
+            //});
 
-           // }
+            // }
             var user = JSON.parse(korisnik);
             //ako su prodavni ili admini
             if (user == null) {
@@ -161,7 +218,7 @@
                 if (user.Uloga == 0 || user.Uloga == 1) {
                     $("#divnacekanju").show();
                 } else {
-                    //ako su kupci 
+                    //ako su kupci
                     $("#divnacekanju").hide();
                 }
             }
@@ -170,9 +227,9 @@
             $("#nacekanju").click(function () {
                 var span = document.getElementsByClassName("close")[1];
                 var modal = document.getElementById("myModal2");
-                
+
                 modal.style.display = "block";
-                
+
                 span.onclick = function () {
                     modal.style.display = "none";
                 }
@@ -207,10 +264,10 @@
                             var dugme = "";
                             if (user.Uloga == 1) {
                                 dugme = "<td><button style=\"border-radius: 25px;\" class=\"prihvati\" id=" + "\"" + jsonObj[i].Id + "\"" + ">Prihvati</button></td>";
-                                dugme += "<td><button style=\"border-radius: 25px;\" class=\"odbij\" id=" + "\"" + jsonObj[i].Id+ "\"" + ">Odbaci</button></td>";
+                                dugme += "<td><button style=\"border-radius: 25px;\" class=\"odbij\" id=" + "\"" + jsonObj[i].Id + "\"" + ">Odbaci</button></td>";
                             }
                             var row = "<tr ><td>" + jsonObj[i].Tekst + "</td>" + dugme + "</tr>";
-                            
+
                             $("#komentari2").append(row);
                         }
                         if (jsonObj.length == 0) {
@@ -226,7 +283,7 @@
                         console.log("ERROR : ", data);
                     }
                 });
-            //});
+                //});
             });
             $("#odbijeni").click(function () {
                 var span = document.getElementsByClassName("close")[2];
@@ -315,7 +372,7 @@
                     contentType: "application/json; charset=utf-8",
                     // async: false,
                     success: function (data) {
-                        
+
                         jsonObj = JSON.parse(data);
                         for (i = 0; i < jsonObj.length; i++) {
                             var dugme = "";
@@ -334,7 +391,7 @@
                         } else {
                             $("#nema2").hide();
                         }
-                        
+
                         //setTimeout(prikazkom, 2000);
 
                     },
@@ -368,7 +425,7 @@
                     contentType: "application/json; charset=utf-8",
                     // async: false,
                     success: function (data) {
-                  
+
                         jsonObj = JSON.parse(data);
                         for (i = 0; i < jsonObj.length; i++) {
                             var dugme = "";
@@ -393,6 +450,68 @@
                         console.log("ERROR : ", data);
                     }
                 });
+            });
+
+            $("#prikazmape").click(function () {
+                var span = document.getElementsByClassName("close")[3];
+                var modal = document.getElementById("myModal4");
+
+                modal.style.display = "block";
+
+                span.onclick = function () {
+                    modal.style.display = "none";
+                    document.getElementById('map').innerHTML = "";
+                }
+
+                window.onclick = function (event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                        document.getElementById('map').innerHTML = "";
+                    }
+                }
+                let obj = sessionStorage.getItem("dogadjaj");
+                var Xx;
+                var Yy;
+                //pozvati ajax da se nadju koordinate
+                $.ajax({
+
+                    type: "POST",
+                    url: 'api/Korisnik/NadjiLokaciju',// + this.id,       //koristi id dugmeta sto ce biti naziv i datum sa vremenom
+                    dataType: "json",
+                    data: obj,
+                    contentType: "application/json; charset=utf-8",
+                    // async: false,
+                    success: function (data) {
+                        console.log("success" + data);
+
+                        // alert('dogadjaj obrisan' + obj);
+
+                        jsonObj = JSON.parse(data);
+                        //document.getElementById("_naziv").value = jsonObj.Naziv;
+                        Yy = jsonObj.Geoduzina;     //latitute
+                        Xx = jsonObj.Geosirina;
+                        //alert(Xx + " koo" + Yy);
+                        //alert(Xx);
+                        //alert(Yy);
+                        var map = new ol.Map({
+                            target: 'map',
+                            layers: [
+                                new ol.layer.Tile({
+                                    source: new ol.source.OSM()
+                                })
+                            ],
+                            view: new ol.View({
+                                center: ol.proj.fromLonLat([Xx, Yy]),
+                                zoom: 8
+                            })
+                        });
+
+                    },
+                    error: function (data) {
+                        console.log("ERROR : ", data);
+                    }
+                });
+            //-----------------
             });
         });
         $(document).on('click', '.use-address', function () {            // kada je button (čija je class = use-address) kliknut
@@ -433,7 +552,8 @@
                 background-color: #4CAF50;
                 color: #ffffff;
             }
-         button:hover {
+
+        button:hover {
             background-color: #4CAF50;
             color: #ffffff;
         }
@@ -476,18 +596,20 @@
             color: #fafafa;
             text-transform: uppercase;
         }
+
         #komentari {
             border-radius: 25px;
-            
         }
-        #komentari tr:nth-child(odd) {
-            background: grey;
-            color: white;
-        }
-        #komentari tr:nth-child(even) {
-            background: #ffffff;
-            color: black;
-        }
+
+            #komentari tr:nth-child(odd) {
+                background: grey;
+                color: white;
+            }
+
+            #komentari tr:nth-child(even) {
+                background: #ffffff;
+                color: black;
+            }
 
 
         tr:nth-child(odd) {
@@ -589,6 +711,7 @@
         <button type="button" class="use-address"><i class="fa fa-fw fa-home"></i>Nazad na pocetnu</button>
     </div>
     <h3 style="text-align:center;font-size: 20px ; color:#333">Vasa odabrana manifestacija</h3>
+
     <button id="comm" style="border-radius:25px;">Prikazi komentare</button>
     <div id="divnacekanju">
         <button id="nacekanju" style="border-radius:25px;margin-top: 5px;margin-bottom: 5px;">Prikazi komentare na cekanju</button><br />
@@ -597,6 +720,8 @@
     </div>
     <table id="results" style="margin-left: auto;
   margin-right: auto;"></table>
+    <button id="prikazmape" style="border-radius:25px;margin-top: 5px;margin-bottom: 5px;">Prikazi mapu</button>
+    <!--<div id="map" class="map" style="display:inline-block"></div>-->
     <div id="myModal" class="modal">
 
         <!-- Modal content -->
@@ -632,6 +757,19 @@
             <table id="komentari3" style="margin-left: auto;
   margin-right: auto;"></table>
             <div id="nema3"></div>
+            <!--<p>Hvala Vam na poverenju</p>-->
+        </div>
+
+    </div>
+    <div id="myModal4" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content" style="text-align:center">
+            <span class="close">&times;</span>
+            <h2 style="text-align:center; color:#333">Geografska Lokacija</h2>
+
+            <div id="map" class="map"style="margin-left: auto;
+  margin-right: auto;"></div>
             <!--<p>Hvala Vam na poverenju</p>-->
         </div>
 

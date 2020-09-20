@@ -292,9 +292,6 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage PrikaziKomenter(JObject jsonResult)
         {
-            //string naziv = (string)jsonResult["naziv"];
-            //string datum = (string)jsonResult["datum"];
-
             //string nazivIdatum = naziv + ";" + datum;
             string IDman = (string)jsonResult["id"];
             List<Komentar> komentari = Data.ReadKomentar("~/App_Data/komentari.txt");
@@ -327,8 +324,6 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage KomentariCekanje(JObject jsonResult)
         {
-            //string naziv = (string)jsonResult["naziv"];
-            //string datum = (string)jsonResult["datum"];
             string IDman = (string)jsonResult["id"];
 
            // string nazivIdatum = naziv + ";" + datum;
@@ -353,8 +348,6 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage KomentariOdbijeni(JObject jsonResult)
         {
-            //string naziv = (string)jsonResult["naziv"];
-            //string datum = (string)jsonResult["datum"];
             string IDman = (string)jsonResult["id"];
 
             // string nazivIdatum = naziv + ";" + datum;
@@ -1351,25 +1344,6 @@ namespace API_PR34_2017.Controllers
                 }
             }
 
-            //string datum = "";
-            //DateTime myDate;
-            //foreach (string ime_datum in users.Keys)
-            //{
-            //    datum = ime_datum.Split(';')[1];
-            //    datum = datum.Split(' ')[0];
-            //    string dan = datum.Split('-')[0];
-            //    string mesec = datum.Split('-')[1];
-            //    string godina = datum.Split('-')[2];
-            //    if (dan.Length == 1)
-            //        dan = "0" + dan;
-            //    if (mesec.Length == 1)
-            //        mesec = '0' + mesec;
-
-            //    if (DateTime.TryParseExact(dan+"-"+mesec+"-"+godina, "dd-MM-yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate))
-            //       sumnjiviKorisnici.Add(users.Values.FirstOrDefault(x => x.Korisnickoime.Equals(ime_datum.Split(';')[0])));//trazimo prvog korisnika sa tim userid
-            //}
-            
-            
                 var json = JsonConvert.SerializeObject(sumnjiviKorisnici);
 
                 return Request.CreateResponse(HttpStatusCode.OK, json);
@@ -1392,34 +1366,33 @@ namespace API_PR34_2017.Controllers
                     //brisanje i karata
                     //int brojNovihSlobodnihKarata = 0;
 
-                    //List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
-                    //foreach (Karta karta in karte)
-                    //{
-                    //    if (karta.Korisnikid.Equals(filter))
-                    //    {
-                    //        if (!karta.Obrisana)//ako nije vec predhodno obrisan karta obrisi
-                    //        {
-                    //            karta.Obrisana = true;
-                    //            Data.SaveKartu(karta);
-                    //            //brojNovihSlobodnihKarata++;
-                    //            //smanjiti broj kupljenih karata
-                    //            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-                    //            foreach (Manifestacija fest in festovi)
-                    //            {
-                    //                if (fest.Naziv.Equals(karta.Nazivmanifestacije) && fest.Datumivreme.Equals(karta.Datummanifestacije) && !fest.Obrisan)
-                    //                {
-                    //                    fest.Kupljeno -= 1;
-                    //                    Data.SaveFest(fest);
-                    //                }
-                    //            }
-                    //        }
+                    List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
+                    foreach (Karta karta in karte)
+                    {
+                        if (karta.Korisnikid.Equals(filter))
+                        {
+                            if (!karta.Obrisana)//ako nije vec predhodno obrisan karta obrisi
+                            {
+                                karta.Obrisana = true;
+                                Data.SaveKartu(karta);
+                                //brojNovihSlobodnihKarata++;
+                                //smanjiti broj kupljenih karata
+                                List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                                foreach (Manifestacija fest in festovi)
+                                {
+                                    if (fest.IDmanifestacije.Equals(karta.IDmanifestacije) && !fest.Obrisan)
+                                    {
+                                        fest.Kupljeno -= 1;
+                                        Data.SaveFest(fest);
+                                    }
+                                }
+                            }
 
-                    //    }
-                    //}
+                        }
+                    }
 
                 }
                 
-               // korisnici.Add(u);
 
             }
             

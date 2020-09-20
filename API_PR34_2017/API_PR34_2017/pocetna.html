@@ -263,9 +263,13 @@
 
                             //povratna poruka
                             var poruka = "";
-                            if (JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON).length > 0)
-                                poruka = JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON);
-                            //console.log(JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON));
+                            //alert(data);
+                            //alert("druga"+JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON));
+                            //if (JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON).length > 0)
+                            //    poruka = JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON);
+                            console.log(JSON.parse(data));
+                            if (data.length > 0)
+                                poruka = JSON.parse(data);
                             console.log(poruka);
                             if (poruka != "") {
 
@@ -2621,8 +2625,12 @@
                             success: function (data) {
                                 console.log("success dodavanje manifestacije");
                                 var poruka = "";
-                                if (JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON).length > 0)
-                                    poruka = JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON);
+                                //if (JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON).length > 0)
+                                //    poruka = JSON.parse(JSON.parse(JSON.stringify(data)).responseJSON);
+                                console.log(JSON.parse(data));
+                                if (data.length > 0)
+                                    poruka = JSON.parse(data);
+                                console.log(poruka);
                                 if (poruka == "Manifestacija ne moze biti u proslosti.") {
                                     alert(poruka);
                                 } else if (poruka == "Postoji vec manifestacija u zadatom vremenu na zadatom mestu") {

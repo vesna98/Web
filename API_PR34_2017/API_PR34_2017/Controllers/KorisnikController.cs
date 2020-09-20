@@ -219,12 +219,9 @@ namespace API_PR34_2017.Controllers
             Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
             foreach (Korisnik u in recnik.Values)
             {
-                //if (u.Uloga.ToString().Equals(filter) && !filter.Equals("Sve"))
-                //    korisnici.Add(u);
-                //if (filter.Equals("Sve"))
-                //{
+                
                     korisnici.Add(u);
-               // }
+               
             }
 
             if (!string.IsNullOrWhiteSpace(korime))
@@ -336,34 +333,34 @@ namespace API_PR34_2017.Controllers
                 {
                     u.Blokiran = true;
                     Data.SaveUser(u);
-                    
 
-                //ne brisu se karte kad se blokira
 
-                    //List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
-                    //foreach (Karta karta in karte)
-                    //{
-                    //    if (karta.Korisnikid.Equals(filter))
-                    //    {
-                    //        if (!karta.Obrisana)//ako nije vec predhodno obrisan karta obrisi
-                    //        {
-                    //            karta.Obrisana = true;
-                    //            Data.SaveKartu(karta);
-                    //            //brojNovihSlobodnihKarata++;
-                    //            //smanjiti broj kupljenih karata
-                    //            List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-                    //            foreach (Manifestacija fest in festovi)
-                    //            {
-                    //                if (fest.IDmanifestacije.Equals(karta.IDmanifestacije) && !fest.Obrisan)
-                    //                {
-                    //                    fest.Kupljeno -= 1;
-                    //                    Data.SaveFest(fest);
-                    //                }
-                    //            }
-                    //        }
+                    //ipak se brisu karte kad se blokira
 
-                    //    }
-                    //}
+                    List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
+                    foreach (Karta karta in karte)
+                    {
+                        if (karta.Korisnikid.Equals(filter))
+                        {
+                            if (!karta.Obrisana)//ako nije vec predhodno obrisan karta obrisi
+                            {
+                                karta.Obrisana = true;
+                                Data.SaveKartu(karta);
+                                //brojNovihSlobodnihKarata++;
+                                //smanjiti broj kupljenih karata
+                                List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
+                                foreach (Manifestacija fest in festovi)
+                                {
+                                    if (fest.IDmanifestacije.Equals(karta.IDmanifestacije) && !fest.Obrisan)
+                                    {
+                                        fest.Kupljeno -= 1;
+                                        Data.SaveFest(fest);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
 
                 }
                 else if (u.Korisnickoime.Equals(filter) && u.Uloga.ToString().Equals("Prodavac") && !u.Obrisan && !u.Blokiran)
@@ -496,8 +493,6 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage DodajFest()//([FromBody] Object manifestacija)
         {
-            // if (ModelState.IsValid)
-            // {
 
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
@@ -582,13 +577,12 @@ namespace API_PR34_2017.Controllers
                     httpPostedFile.SaveAs(fileSavePath);
                 }
 
-                // return Request.CreateResponse(HttpStatusCode.OK);
-                // return MessageOutCoreVm.SendSucces(virtualDirectoryImg + '/' + fileName);
+               
             }
             else
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject("Greska sa slikom"));
-                // return MessageOutCoreVm.SendValidationFailed("");
+                
             }
 
             bool postoji = false;
@@ -614,18 +608,13 @@ namespace API_PR34_2017.Controllers
                 var json2 = JsonConvert.SerializeObject("Postoji vec manifestacija u zadatom vremenu na zadatom mestu");
                 return Request.CreateResponse(HttpStatusCode.BadRequest,json2);
             }
-            //}//
-
-            // return Request.CreateResponse(HttpStatusCode.BadRequest);
+            
         }
 
         [Route("IzmeniFest")]
         [HttpPost]
-        public HttpResponseMessage IzmeniFest()//([FromBody] Object manifestacija)
+        public HttpResponseMessage IzmeniFest()
         {
-            // if (ModelState.IsValid)
-            // {
-
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Korisnik> korisnici = new List<Korisnik>();
@@ -772,17 +761,15 @@ namespace API_PR34_2017.Controllers
 
             bool postoji = false;
             bool lokacijavreme = false;
-            //bool prosla = false;
-            //int resultProsla=0;
+           
             
             foreach (Manifestacija fest in sveManifestacije)
             {
-                //if (fest.Naziv.Equals(mani.Naziv) && fest.Datumivreme.Equals(mani.Datumivreme))     //DA LI TREBA POPRAVITI
+                
                 if (fest.IDmanifestacije.Equals(idman))     //naci po istom idju
                 {
                     postoji = true;
-                    //gledamo kad je originalno manifestacija bila
-                    //resultProsla = DateTime.Compare(DateTime.ParseExact(fest.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
+                    
                 }
                 //da nije ista manifestacija,sa istim idjem,vec neka druga
                 if(!fest.IDmanifestacije.Equals(idman) && fest.Mestoodrzavanja.Grad.Equals(mani.Mestoodrzavanja.Grad) && fest.Mestoodrzavanja.Ulicabroj.Equals(mani.Mestoodrzavanja.Ulicabroj) && fest.Mestoodrzavanja.Postanskibroj.Equals(mani.Mestoodrzavanja.Postanskibroj) && fest.Datumivreme.Equals(mani.Datumivreme))
@@ -845,10 +832,7 @@ namespace API_PR34_2017.Controllers
                     //var output = JsonConvert.SerializeObject(svi);
                     return Request.CreateResponse(HttpStatusCode.BadRequest, json2);
                 }
-           // }
-            //}//
-
-            // return Request.CreateResponse(HttpStatusCode.BadRequest);
+           
         }
 
         [Route("NadjiManifestaciju")]
@@ -909,9 +893,7 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage DobaviJednuManifestaciju(JObject jsonResult)
         {
-            //var obj = JsonConvert.DeserializeObject<dynamic>(jsonResult.ToString());
-            //string naziv = (string)jsonResult["naziv"];
-            //string datum = (string)jsonResult["datum"];
+            
             string idman = (string)jsonResult["idman"];
 
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
@@ -921,10 +903,7 @@ namespace API_PR34_2017.Controllers
                 DateTime myDate;
                 DateTime.TryParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None, out myDate);
                int result = DateTime.Compare(myDate, DateTime.Now);
-                //if (result < 0)
-                //ako je resut <0 onda je prosla manifestacija
-
-                // if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Aktivno"))
+                
                 if (k.IDmanifestacije.Equals(idman) && !k.Obrisan && k.Status.ToString().Equals("Aktivno") && result>=0)//da nije u proslosti
                 {
                     if (k.Brojmesta - k.Kupljeno > 0) //samo ako ima slobosnih mesta prosledi
@@ -932,15 +911,7 @@ namespace API_PR34_2017.Controllers
                 }
             }
             var json = JsonConvert.SerializeObject(man);
-            //if (man != null)
-            //{
-            //    int result = DateTime.Compare(DateTime.ParseExact(man.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None) , DateTime.Now);
-            //    if (result <= 0)
-            //    {
-            //        //prosla je manifestacija
-            //        return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject("Manifestacija je prosla."));
-            //    }
-            //}
+            
             return Request.CreateResponse(HttpStatusCode.OK, json);
           
         }
@@ -950,8 +921,6 @@ namespace API_PR34_2017.Controllers
         public HttpResponseMessage ObrisiManifestaciju(JObject jsonResult)
         {
             
-            //string naziv = (string)jsonResult["naziv"];
-            //string datum = (string)jsonResult["datum"];
             string ID = (string)jsonResult["id"];
 
             List<Manifestacija> festovi1 = Data.ReadFest("~/App_Data/manifestacije.txt");
@@ -981,13 +950,7 @@ namespace API_PR34_2017.Controllers
                     }
                 }
             }
-            //List<Manifestacija> svi = new List<Manifestacija>();
-            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-            //foreach (Manifestacija k in festovi)
-            //{
-            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-            //        svi.Add(k);
-            //}
+            
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -1054,12 +1017,10 @@ namespace API_PR34_2017.Controllers
         public HttpResponseMessage AktivirajManifestaciju(JObject jsonResult)
         {
             
-            //string naziv = (string)jsonResult["naziv"];
-            //string datum = (string)jsonResult["datum"];
             string ID = (string)jsonResult["id"];
 
             List<Manifestacija> festovi1 = Data.ReadFest("~/App_Data/manifestacije.txt");
-            // Manifestacija man = null;
+            
             foreach (Manifestacija k in festovi1)
             {
                 //if (k.Naziv.Equals(naziv) && k.Datumivreme.Equals(datum) && !k.Obrisan && k.Status.ToString().Equals("Neaktivno"))     //neaktivna i da nije obrisana
@@ -1180,14 +1141,7 @@ namespace API_PR34_2017.Controllers
             bool oba = false;
             if (dat1 && dat2)
                 oba = true;
-
-            //List<Manifestacija> svi = new List<Manifestacija>();
-            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-            //foreach (Manifestacija k in festovi)
-            //{
-            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-            //        svi.Add(k);
-            //}
+            
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -1286,10 +1240,7 @@ namespace API_PR34_2017.Controllers
             {
                 svi = svi.FindAll(u => u.Mestoodrzavanja.Grad.ToUpper().Contains(mesto.ToUpper()));
             }
-            //else if(!string.IsNullOrWhiteSpace(mesto.Trim()) && string.IsNullOrWhiteSpace(naziv.Trim()))//ima mesto nema naziv
-            //{
-            //    filteredSvi =svi.FindAll(u => u.Mestoodrzavanja.Grad.ToUpper().Contains(mesto.ToUpper()));
-            //}
+            
 
             Dictionary<Manifestacija, DateTime> recnik = new Dictionary<Manifestacija, DateTime>();
             for (int i = 0; i < svi.Count(); i++)
@@ -1335,14 +1286,7 @@ namespace API_PR34_2017.Controllers
         public HttpResponseMessage TipoviFilter(JObject jsonResult)
         {
             string filter = (string)jsonResult["filter1"];
-
-            //List<Manifestacija> svi = new List<Manifestacija>();
-            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-            //foreach (Manifestacija k in festovi)
-            //{
-            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-            //        svi.Add(k);
-            //}
+            
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -1434,13 +1378,6 @@ namespace API_PR34_2017.Controllers
         {
             string filter = (string)jsonResult["filter2"];
 
-            //List<Manifestacija> svi = new List<Manifestacija>();
-            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-            //foreach (Manifestacija k in festovi)
-            //{
-            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-            //        svi.Add(k);
-            //}
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -1530,13 +1467,6 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage SortNazivAZ()
         {
-            //List<Manifestacija> svi = new List<Manifestacija>();
-            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-            //foreach (Manifestacija k in festovi)
-            //{
-            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-            //        svi.Add(k);
-            //}
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -1586,13 +1516,6 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage SortNazivZA()
         {
-            //List<Manifestacija> svi = new List<Manifestacija>();
-            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-            //foreach (Manifestacija k in festovi)
-            //{
-            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-            //        svi.Add(k);
-            //}
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -1643,13 +1566,6 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage DatumKasnije()//([FromBody]JToken jtoken)
         {
-            //List<Manifestacija> svi = new List<Manifestacija>();
-            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-            //foreach (Manifestacija k in festovi)
-            //{
-            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-            //        svi.Add(k);
-            //}
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -1734,13 +1650,6 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage SortMestoAZ()
         {
-            //List<Manifestacija> svi = new List<Manifestacija>();
-            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-            //foreach (Manifestacija k in festovi)
-            //{
-            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-            //        svi.Add(k);
-            //}
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -1790,13 +1699,6 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage SortMestoZA()
         {
-            //List<Manifestacija> svi = new List<Manifestacija>();
-            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-            //foreach (Manifestacija k in festovi)
-            //{
-            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-            //        svi.Add(k);
-            //}
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -1847,13 +1749,6 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage SortCenaRastuce()
         {
-            //List<Manifestacija> svi = new List<Manifestacija>();
-            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-            //foreach (Manifestacija k in festovi)
-            //{
-            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-            //        svi.Add(k);
-            //}
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Manifestacija> svi = new List<Manifestacija>();
@@ -1903,13 +1798,6 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage SortCenaOpadajuce()
         {
-            //List<Manifestacija> svi = new List<Manifestacija>();
-            //List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-            //foreach (Manifestacija k in festovi)
-            //{
-            //    if (!k.Obrisan && k.Status.ToString().Equals("Aktivno"))
-            //        svi.Add(k);
-            //}
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Manifestacija> svi = new List<Manifestacija>();

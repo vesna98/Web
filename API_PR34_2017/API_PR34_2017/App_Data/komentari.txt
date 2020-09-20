@@ -12,4 +12,9 @@ de67d;mMED;10-02-2020 10:00 PM;veca;moglo je bolje vreme da bude,ali super;3;Tru
 68751;mMED;10-02-2020 10:00 PM;veca;pokidalo;4;True;False;cvvhfrz
 b9d34;mMED;10-02-2020 10:00 PM;veca;predobar koncert;5;False;True;cvvhfrz
 af34e;mMED;10-02-2020 10:00 AM;veca;vvvvvvvvvvv;1;False;False;cvvhfrz
-329a6;mMED;10-02-2020 10:00 AM;veca;sasa;5;False;False;cvvhfrz
+329a6;mMED;10-02-2020 10:00 AM;veca;sasa;5;False;True;cvvhfrz
+d29f1;mMED2;19-09-2020 02:50 PM;veca;ok;3;True;False;1a174
+267c4;mMED2;19-09-2020 02:50 PM;veca;hbjhjh;0;False;True;1a174
+1e48f;mMED2;19-09-2020 02:50 PM;veca;;5;False;True;1a174
+19e68;mMED2;19-09-2020 02:50 PM;veca;bhbjh;0;False;False;1a174
+7f51a;mMED2;19-09-2020 02:50 PM;veca;odlicno;5;True;False;1a174

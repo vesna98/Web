@@ -1,10 +1,6 @@
-pro123;mMED;Koncert;42;10-02-2020 10:00 AM;22;Varadinska 44;Novi Sad;21000;sda.png;Aktivno;-1;1;44;88;True;cvvhfrz
-pro123;mMED;Koncert;3;14-01-2020 10:22 PM;5;Varadinska 44;Novi Sad;21000;Gogoland.jpg;Neaktivno;0;0;4000;3400;True;hgu87564
-p123;mMED2;Koncert;5;19-09-2020 02:50 PM;200;Novosadski Sajam 91;Novi Sad;21000;27.png;Aktivno;5;4;400;800;True;1a174
-p123;novaa;Festival;10;11-11-2023 05:40 AM;15;Novosadski Sajam 91;Novi Sad;21000;253.png;Aktivno;3;0;30;60;True;93a63
-p123;mmm;Pozoriste;36;14-11-2021 05:40 PM;405;Novosadski Sajam 91;Novi Sad;21000;80932136-ticket-sim.jpg;Aktivno;0;0;810;1620;False;679ab
-p123;nov;Pozoriste;2;20-09-2020 01:49 AM;1;Novosadski Sajam 91;Novi Sad;21000;ticket.jpg;Neaktivno;0;0;2;4;False;46c88
-p123;nov;Pozoriste;2;20-09-2020 01:50 AM;1;Novosadski Sajam 91;Novi Sad;21000;ticket.jpg;Neaktivno;0;0;2;4;False;b8407
-p123;aaaa;Koncert;2;20-09-2020 01:52 AM;10;Novosadski Sajam 92;Novi Sad;21000;tick.png;Neaktivno;0;0;20;40;False;7c21f
-p123;jhgjh;Koncert;4;20-09-2020 02:40 AM;2;Varadinska 44;Novi Sad;21000;unnamed.jpg;Neaktivno;0;0;4;8;False;e39ee
-p123;srer;Pozoriste;2;10-02-2022 02:56 AM;2;Novosadski Sajam 92;Novi Sad;21000;253.png;Aktivno;0;0;4;8;False;983c0
+p123;Marko Kutlic;Koncert;10;14-11-2020 04:00 PM;103;Novosadski Sajam 92;Novi Sad;21000;markokutlic.jpg;Aktivno;3;0;206;412;False;24bd4
+p123;Labudovo jezero;Pozoriste;200;10-10-2021 08:00 PM;1000;Zmaj Jovina 2;Novi Sad;21000;plakat_final.jpg;Aktivno;1;0;2000;4000;False;68c5b
+pro123;EXIT;Festival;1400;08-07-2021 08:00 PM;5000;Varadinska 44;Petrovaradin;21000;exitfest2021.jpg;Neaktivno;0;0;10000;20000;True;f4975
+pro123;Zizela;Pozoriste;300;14-07-2021 06:10 PM;1200;Zmaj Jovina 2;Novi Sad;21000;zizela_plakat.jpg;Neaktivno;0;0;2400;4800;True;afc62
+ppp;aaa;Pozoriste;10;20-09-2020 03:20 PM;1000;Novosadski Sajam 87;Novi Sad;21000;tick.png;Aktivno;4;0;2000;4000;True;05938
+pro;Hurricane;Koncert;240;10-03-2022 08:30 PM;800;Berlinar Platz;Berlin;31000;res_15.jpg;Aktivno;0;0;1600;3200;True;aa37e

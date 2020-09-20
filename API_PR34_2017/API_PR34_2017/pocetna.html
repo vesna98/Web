@@ -2647,7 +2647,8 @@
 
                                     var modal = document.getElementById("myModal2");
                                     modal.style.display = "none";
-
+                                    //dodati za mapu
+                                    document.getElementById('map1').innerHTML = "";
 
                                     $("#naziv").val("");
                                     document.getElementById('tipovi').selectedIndex = 0;
@@ -3276,7 +3277,7 @@
 
         });
 
-        $(document).on('click', '.use-ime', function () {            // kada je button (čija je class = use-address) kliknut
+        $(document).on('click', '.use-ime', function () {            // BRISANJE KORISNIKA
             //alert("pokusaj klik");
             var polje = this.id;
             console.log("korisnik koji je odabran" + polje);
@@ -3429,17 +3430,21 @@
             for (var i = 1; i < tabelica.rows.length;) {
                 tabelica.deleteRow(i);
             }
-
             $.ajax({
                 type: 'POST',
                 url: '/api/Korisnik/ListaManifestacije',
                 contentType: 'application/json; charset=utf-8',
                 dataType: 'json',
+                //  data: JSON.stringify(korisnik),
                 success: function (data) {
+                    console.log("success");
+
+                    console.log("petlja...pocinje" + data);
 
                     var jsonObj = JSON.parse(data);
 
                     for (i = 0; i < jsonObj.length; i++) {
+
 
                         var tip;
                         if (jsonObj[i].Tipmanifestacije == 0) {// Zlatni, Srebrni, Bronzani,Nepoznat
@@ -3451,6 +3456,8 @@
                         }
 
                         var poster = jsonObj[i].Poster;
+
+
 
                         var row = "<tr id=\"nesto" + i + "\"class=\"success\">";
                         row += "<td id=\"colNaz\">" + jsonObj[i].Naziv + "</td>";
@@ -3473,19 +3480,25 @@
                         var rezkarte = nazivdatum_id + "_" + jsonObj[i].Cenaregular + "_" + jsonObj[i].IDmanifestacije;
                         var obrisidugme = "";
                         var aktivirajdugme = "";
+                        var izmenidugme = "";
                         if (korisnik != null) {
                             if (korisnik.Uloga == 0) {
                                 obrisidugme = "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
                                 if (jsonObj[i].Status == 1) {
-
+                                    //alert("status neaktivan");
                                     aktivirajdugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-aktiviraj\"  style=\"margin-top: 5px;\">Aktiviraj</button>";
                                 }
                             }
                             if (korisnik.Uloga == 2) {//ako je kupac
                                 obrisidugme = "<button type = \"button\" id=\"" + rezkarte + "\" class=\"use-rez\"  style=\"margin-top: 5px;\">Rezervacija</button>";
                             }
+                            if (korisnik.Uloga == 1)//uloga PRODAVAC
+                            {
+                                izmenidugme = "<br><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-izmeni\"  style=\"margin-top: 5px;\">Izmeni</button>";
+                            }
                         }
-                        row += "<td><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + "</td>";
+                        row += "<td><button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-address\">Detaljniji prikaz</button><br>" + obrisidugme + aktivirajdugme + izmenidugme + "</td>";
+                        //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
                         row += "</tr>";
 
                         $("#tabelaMani").append(row);
@@ -3496,6 +3509,7 @@
                 error: function (data) {
                     alert("Greska!");
                 }
+
             });
 
         });
@@ -4181,25 +4195,10 @@
                         <td id="tekst" style="color:white;text-align:right;">
                             Mapa:
                         </td>
-                        <!--<td><div id="map" class="map"></div></td>-->
+                        
                         <td>
                             <div id="map" class="map"></div>
-                            <!--<script type="text/javascript">
-                                var map = new ol.Map({
-                                    target: 'map',
-                                    layers: [
-                                        new ol.layer.Tile({
-                                            source: new ol.source.OSM()
-                                        })
-                                    ],
-                                    view: new ol.View({
-                                        center: ol.proj.fromLonLat([37.41, 8.82]),
-                                        zoom: 4
-                                    })
-                                });
-                                //map.getMap().updateSize();
-                               // map.updateSize();
-                            </script>-->
+                            
                         </td>
                     </tr>
                     <tr>
@@ -4292,174 +4291,11 @@
         </table>
     </div>
 
-    <!--<script type="text/javascript">
-        var map = new ol.Map({
-            target: 'map',
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
-                })
-            ],
-            view: new ol.View({
-                center: ol.proj.fromLonLat([37.41, 8.82]),
-                zoom: 4
-            })
-        });
-    </script>-->
+   
 
-    <!--<h2>My Map</h2>
-    <div id="map" class="map"></div>-->
-    <!--<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-    <script type="text/javascript">
-        var map = new ol.Map({
-            target: 'map',
-            layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
-                })
-            ],
-            view: new ol.View({
-                center: ol.proj.fromLonLat([37.41, 8.82]),
-                zoom: 4
-            })
-        });     //radilo
+    
 
-        //var baseMapLayer = new ol.layer.Tile({
-        //    source: new ol.source.OSM()
-        //});
-        //var map = new ol.Map({
-        //    target: 'map',
-        //    layers: [baseMapLayer],
-        //    view: new ol.View({
-        //        center: ol.proj.fromLonLat([-74.0061, 40.712]),
-        //        zoom: 7 //Initial Zoom Level
-        //    })
-        //});
-        ////Adding a marker on the map
-        //var marker = new ol.Feature({
-        //    geometry: new ol.geom.Point(
-        //        ol.proj.fromLonLat([-74.006, 40.7127])
-        //    ),  // Cordinates of New York's Town Hall
-        //});
-        //var vectorSource = new ol.source.Vector({
-        //    features: [marker]
-        //});
-        //var markerVectorLayer = new ol.layer.Vector({
-        //    source: vectorSource,
-        //});
-        //map.addLayer(markerVectorLayer);
-        self.map.on("singleclick", function (evt) {
-            setPinOnMap(evt);
-        })
-
-
-        function setPinOnMap(evt) {
-            var self = this;
-
-            var latLong = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
-            var lat = latLong[1];
-            var long = latLong[0];
-
-            self.params.options.mapClick({ lat: lat, long: long });
-
-            if (self.dinamicPinLayer !== undefined) {
-                console.log("moove")
-                self.iconGeometry.setCoordinates(evt.coordinate);
-                //or create another pin
-            } else {
-                self.iconGeometry = new ol.geom.Point(evt.coordinate);
-                var iconFeature = new ol.Feature({
-                    geometry: self.iconGeometry,
-                    name: 'Null Island',
-                    population: 4000,
-                    rainfall: 500
-                });
-                var iconStyle = new ol.style.Style({
-                    image: new ol.style.Icon(({
-                        anchor: [0.5, 46],
-                        anchorXUnits: 'fraction',
-                        anchorYUnits: 'pixels',
-                        size: [48, 48],
-                        opacity: 1,
-                        src: '/resources/cloud/controls/cloudMap/img/redmarker_small.png'
-                    }))
-                });
-
-                iconFeature.setStyle(iconStyle);
-
-                var vectorSource = new ol.source.Vector({
-                    features: [iconFeature]
-                });
-                self.dinamicPinLayer = new ol.layer.Vector({
-                    source: vectorSource
-                });
-                self.map.addLayer(self.dinamicPinLayer);
-            }
-
-
-        }
-        //map = new OpenLayers.Map("map");
-        //map.addLayer(new OpenLayers.Layer.OSM());
-
-        //var lonLat = new OpenLayers.LonLat(-0.1279688, 51.5077286)
-        //    .transform(
-        //        new OpenLayers.Projection("EPSG:4326"), // transform from WGS 1984
-        //        map.getProjectionObject() // to Spherical Mercator Projection
-        //    );
-
-        //var zoom = 16;
-
-        //var markers = new OpenLayers.Layer.Markers("Markers");
-        //map.addLayer(markers);
-
-        //markers.addMarker(new OpenLayers.Marker(lonLat));
-
-        //map.setCenter(lonLat, zoom);
-
-        //var newLonLat = new OpenLayers.LonLat(lon, lat);
-        //var newPx = map.getLayerPxFromLonLat(newLonLat);
-        //markers.moveTo(newPx);
-        //jhjh
-
-
-        //var marker = new ol.Feature({
-        //    geometry: new ol.geom.Point(
-        //        ol.proj.fromLonLat([-74.006, 40.7127])
-        //    ),  // Cordinates of New York's Town Hall
-        //});
-
-        //var vectorSource = new ol.source.Vector({
-        //    features: [marker]
-        //});
-
-        //var markerVectorLayer = new ol.layer.Vector({
-        //    source: vectorSource,
-        //});
-        //map.addLayer(markerVectorLayer);
-        //var layer = new ol.layer.Vector({
-        //    source: new ol.source.Vector({
-        //        features: [
-        //            new ol.Feature({
-        //                geometry: new ol.geom.Point(ol.proj.fromLonLat([4.35247, 50.84673]))
-        //            })
-        //        ]
-        //    })
-        //});
-        //map.addLayer(layer);
-        //map.addEventListener("tap", event => {
-        //    console.log(event);
-        //});
-    </script>
-
-    <script>
-        window.onscroll = function () { myFunction() };
-
-        function myFunction() {
-            var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-            var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            var scrolled = (winScroll / height) * 100;
-            document.getElementById("myBar").style.width = scrolled + "%";
-        }</script>-->
+    
 
 
 </body>

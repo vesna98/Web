@@ -1,27 +1,12 @@
-74bb58f44d;daki;REGULAR;Odustanak;15;novaa;11-11-2023 05:40 AM;True;Dijana Matijevic;True;93a63
-149ac2a433;veca;FANPIT;Rezervisana;400;mMED2;19-09-2020 02:50 PM;True;Vesna Prica;True;1a174
-bf0d1e914d;veca;FANPIT;Rezervisana;400;mMED2;19-09-2020 02:50 PM;True;Vesna Prica;True;1a174
-8cd64a4489;veca;FANPIT;Rezervisana;400;mMED2;19-09-2020 02:50 PM;True;Vesna Prica;False;1a174
-8cfe98e944;veca;FANPIT;Rezervisana;400;mMED2;19-09-2020 02:50 PM;True;Vesna Prica;False;1a174
-6c8de3df66;veca;FANPIT;Rezervisana;400;mMED2;19-09-2020 02:50 PM;True;Vesna Prica;False;1a174
-ea9fe7aabc;veca;VIP;Odustanak;60;novaa;11-11-2023 05:40 AM;True;Vesna Prica;True;93a63
-ffe1f023f1;veca;VIP;Odustanak;60;novaa;11-11-2023 05:40 AM;True;Vesna Prica;True;93a63
-2e8e64dc9b;veca;VIP;Rezervisana;800;mMED2;19-09-2020 02:50 PM;True;Vesna Prica;False;1a174
-fc91969731;daki;REGULAR;Odustanak;15;novaa;11-11-2023 05:40 AM;True;Dijana Matijevic;True;93a63
-67c21adcb4;daki;REGULAR;Odustanak;15;novaa;11-11-2023 05:40 AM;True;Dijana Matijevic;True;93a63
-c6bd37bfbb;daki;REGULAR;Odustanak;15;novaa;11-11-2023 05:40 AM;True;Dijana Matijevic;True;93a63
-8e17bc9d7a;veca;VIP;Odustanak;60;novaa;11-11-2023 05:40 AM;True;Vesna Prica;True;93a63
-8c95c9f1b6;veca;REGULAR;Odustanak;400;mmm;14-11-2021 05:40 PM;True;Vesna Prica;True;679ab
-515b8562a7;veca;REGULAR;Odustanak;400;mmm;14-11-2021 05:40 PM;True;Vesna Prica;True;679ab
-8d3094b664;veca;VIP;Odustanak;1600;mmm;14-11-2021 05:40 PM;True;Vesna Prica;True;679ab
-5e00b84864;veca;FANPIT;Odustanak;800;mmm;14-11-2021 05:40 PM;True;Vesna Prica;True;679ab
-18a3741967;aaa;FANPIT;Odustanak;810;mmm;14-11-2021 05:40 PM;True;Ana Nikolic;True;679ab
-389b0c1f16;aaa;FANPIT;Odustanak;810;mmm;14-11-2021 05:40 PM;True;Ana Nikolic;True;679ab
-75945f579f;aaa;FANPIT;Odustanak;810;mmm;14-11-2021 05:40 PM;True;Ana Nikolic;True;679ab
-c55c269a45;aaa;FANPIT;Odustanak;810;mmm;14-11-2021 05:40 PM;True;Ana Nikolic;True;679ab
-95917d0a9b;aaa;VIP;Odustanak;1620;mmm;14-11-2021 05:40 PM;True;Ana Nikolic;True;679ab
-ec418e8e5a;aaa;VIP;Odustanak;1620;mmm;14-11-2021 05:40 PM;True;Ana Nikolic;True;679ab
-79911091d7;aaa;VIP;Odustanak;1620;mmm;14-11-2021 05:40 PM;True;Ana Nikolic;True;679ab
-ae445f7ac7;aaa;VIP;Odustanak;1620;mmm;14-11-2021 05:40 PM;True;Ana Nikolic;True;679ab
-f465adaaf8;aaa;VIP;Odustanak;8;srer;10-02-2022 02:56 AM;True;Ana Nikolic;True;983c0
-5b6a6bb6ca;aaa;FANPIT;Odustanak;4;srer;10-02-2022 02:56 AM;True;Ana Nikolic;True;983c0
+bb767559dc;sss;REGULAR;Rezervisana;1000;aaa;20-09-2020 03:20 PM;True;Sandra sss;True;05938
+6d6901d4ba;sss;REGULAR;Rezervisana;1000;aaa;20-09-2020 03:20 PM;True;Sandra sss;True;05938
+7c06fc70a1;sss;VIP;Rezervisana;4000;aaa;20-09-2020 03:20 PM;True;Sandra sss;True;05938
+c1b5cdb8c0;sss;FANPIT;Rezervisana;2000;aaa;20-09-2020 03:20 PM;True;Sandra sss;True;05938
+fbed398983;sss;VIP;Odustanak;400;Marko Kutlic;14-11-2020 04:00 PM;False;Sandra sss;True;24bd4
+00ad374f45;sss;VIP;Odustanak;400;Marko Kutlic;14-11-2020 04:00 PM;True;Sandra sss;True;24bd4
+6730e11fcb;sss;VIP;Odustanak;400;Marko Kutlic;14-11-2020 04:00 PM;False;Sandra sss;True;24bd4
+94567f7b3e;sss;FANPIT;Odustanak;200;Marko Kutlic;14-11-2020 04:00 PM;False;Sandra sss;True;24bd4
+40c7b2ce48;sss;VIP;Odustanak;4000;Labudovo jezero;10-10-2021 08:00 PM;True;Sandra sss;True;68c5b
+9da18762a7;sss;VIP;Odustanak;4000;Labudovo jezero;10-10-2021 08:00 PM;False;Sandra sss;True;68c5b
+cbd23c64d9;sss;REGULAR;Odustanak;800;Hurricane;10-03-2022 08:30 PM;True;Sandra sss;True;aa37e
+2012b5a824;sss;VIP;Odustanak;3200;Hurricane;10-03-2022 08:30 PM;True;Sandra sss;True;aa37e

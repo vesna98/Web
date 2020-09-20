@@ -56,6 +56,9 @@
                     var obj2 = JSON.stringify({
                         "korisnik": korisnik.Korisnickoime
                     });
+
+                   // window.location.reload(true);
+
                     $.ajax({
                         type: 'POST',
                         url: '/api/Karte/SveKarte',
@@ -90,13 +93,20 @@
                                         if (jsonObj[i].MogucOdustanak == 1) {   //moguce je odustati
                                             lista += "<td> Odustanak </td>";
                                             if (korisnik.Uloga == 2)
-                                            lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                                lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                        } else {
+                                            lista += "<td>Nije moguce odustati</td>";
+                                            lista += "<td>&nbsp;</td>";
                                         }
                                     }
                                 // }
                                 if (korisnik.Uloga != 2) {
                                     //ako je prodavac,admin prikazi kupca karte
-                                    lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                    var dodatno = "";
+                                    if (korisnik.Uloga == 0 && jsonObj[i].Status != 0) {
+                                        dodatno = "<br><button style=\"margin-left: 10px;margin-top: 10px;\" type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Obrisi</button>"
+                                    }
+                                    lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + dodatno + "</td>";
                                 }
 
                                 lista += "</tr>";
@@ -187,12 +197,20 @@
                                                     lista += "<td> Odustanak </td>";
                                                     if (korisnik.Uloga == 2)
                                                     lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                                } else {
+                                                    lista += "<td>Nije moguce odustati</td>";
+                                                    lista += "<td>&nbsp;</td>";
                                                 }
                                             }
                                        // }
                                         if (korisnik.Uloga != 2) {
                                             //ako je prodavac,admin prikazi kupca karte
-                                            lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                            //lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                            var dodatno = "";
+                                            if (korisnik.Uloga == 0 && jsonObj[i].Status != 0) {
+                                                dodatno = "<br><button style=\"margin-left: 10px;margin-top: 10px;\" type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Obrisi</button>"
+                                            }
+                                            lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + dodatno + "</td>";
                                         }
                                         lista += "</tr>";
                                         $("#tabelaKarte").append(lista);
@@ -257,12 +275,20 @@
                                                 lista += "<td> Odustanak </td>";
                                                 if (korisnik.Uloga == 2)
                                                 lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            } else {
+                                                lista += "<td>Nije moguce odustati</td>";
+                                                lista += "<td>&nbsp;</td>";
                                             }
                                         }
                                    // }
                                     if (korisnik.Uloga != 2) {
                                         //ako je prodavac,admin prikazi kupca karte
-                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                        var dodatno = "";
+                                        if (korisnik.Uloga == 0 && jsonObj[i].Status != 0) {
+                                            dodatno = "<br><button style=\"margin-left: 10px;margin-top: 10px;\" type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Obrisi</button>"
+                                        }
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + dodatno + "</td>";
+                                       // lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
@@ -325,12 +351,20 @@
                                                 lista += "<td> Odustanak </td>";
                                                 if (korisnik.Uloga == 2)
                                                 lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            } else {
+                                                lista += "<td>Nije moguce odustati</td>";
+                                                lista += "<td>&nbsp;</td>";
                                             }
                                         }
                                    // }
                                     if (korisnik.Uloga != 2) {
                                         //ako je prodavac,admin prikazi kupca karte
-                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                        //lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                        var dodatno = "";
+                                        if (korisnik.Uloga == 0 && jsonObj[i].Status != 0) {
+                                            dodatno = "<br><button style=\"margin-left: 10px;margin-top: 10px;\" type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Obrisi</button>"
+                                        }
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + dodatno + "</td>";
                                     }
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
@@ -393,12 +427,20 @@
                                                 lista += "<td> Odustanak </td>";
                                                 if (korisnik.Uloga == 2)
                                                 lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            } else {
+                                                lista += "<td>Nije moguce odustati</td>";
+                                                lista += "<td>&nbsp;</td>";
                                             }
                                         }
                                     //}
                                     if (korisnik.Uloga != 2) {
                                         //ako je prodavac,admin prikazi kupca karte
-                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                       // lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                        var dodatno = "";
+                                        if (korisnik.Uloga == 0 && jsonObj[i].Status != 0) {
+                                            dodatno = "<br><button style=\"margin-left: 10px;margin-top: 10px;\" type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Obrisi</button>"
+                                        }
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + dodatno + "</td>";
                                     }
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
@@ -462,12 +504,20 @@
                                                 lista += "<td> Odustanak </td>";
                                                 if (korisnik.Uloga == 2)
                                                 lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            } else {
+                                                lista += "<td>Nije moguce odustati</td>";
+                                                lista += "<td>&nbsp;</td>";
                                             }
                                         }
                                    // }
                                     if (korisnik.Uloga != 2) {
                                         //ako je prodavac,admin prikazi kupca karte
-                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                        var dodatno = "";
+                                        if (korisnik.Uloga == 0 && jsonObj[i].Status != 0) {
+                                            dodatno = "<br><button style=\"margin-left: 10px;margin-top: 10px;\" type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Obrisi</button>"
+                                        }
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + dodatno + "</td>";
+                                        //lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
@@ -531,12 +581,20 @@
                                                 lista += "<td> Odustanak </td>";
                                                 if (korisnik.Uloga == 2)
                                                 lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            } else {
+                                                lista += "<td>Nije moguce odustati</td>";
+                                                lista += "<td>&nbsp;</td>";
                                             }
                                         }
                                    // }
                                     if (korisnik.Uloga != 2) {
+                                        var dodatno = "";
+                                        if (korisnik.Uloga == 0 && jsonObj[i].Status != 0) {
+                                            dodatno = "<br><button style=\"margin-left: 10px;margin-top: 10px;\" type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Obrisi</button>"
+                                        }
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + dodatno + "</td>";
                                         //ako je prodavac,admin prikazi kupca karte
-                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                        //lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
@@ -599,12 +657,20 @@
                                                 lista += "<td> Odustanak </td>";
                                                 if (korisnik.Uloga == 2)
                                                 lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            } else {
+                                                lista += "<td>Nije moguce odustati</td>";
+                                                lista += "<td>&nbsp;</td>";
                                             }
                                         }
                                    // }
                                     if (korisnik.Uloga != 2) {
+                                        var dodatno = "";
+                                        if (korisnik.Uloga == 0 && jsonObj[i].Status != 0) {
+                                            dodatno = "<br><button style=\"margin-left: 10px;margin-top: 10px;\" type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Obrisi</button>"
+                                        }
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + dodatno + "</td>";
                                         //ako je prodavac,admin prikazi kupca karte
-                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                        //lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
@@ -668,12 +734,20 @@
                                                 lista += "<td> Odustanak </td>";
                                                 if (korisnik.Uloga == 2)
                                                 lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            } else {
+                                                lista += "<td>Nije moguce odustati</td>";
+                                                lista += "<td>&nbsp;</td>";
                                             }
                                         }
                                    // }
                                     if (korisnik.Uloga != 2) {
                                         //ako je prodavac,admin prikazi kupca karte
-                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                        var dodatno = "";
+                                        if (korisnik.Uloga == 0 && jsonObj[i].Status != 0) {
+                                            dodatno = "<br><button style=\"margin-left: 10px;margin-top: 10px;\" type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Obrisi</button>"
+                                        }
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + dodatno + "</td>";
+                                        //lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
@@ -740,12 +814,20 @@
                                                 lista += "<td> Odustanak </td>";
                                                 if (korisnik.Uloga == 2)
                                                 lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                            } else {
+                                                lista += "<td>Nije moguce odustati</td>";
+                                                lista += "<td>&nbsp;</td>";
                                             }
                                         }
                                    // }
                                     if (korisnik.Uloga != 2) {
                                         //ako je prodavac,admin prikazi kupca karte
-                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                        var dodatno = "";
+                                        if (korisnik.Uloga == 0 && jsonObj[i].Status != 0) {
+                                            dodatno = "<br><button style=\"margin-left: 10px;margin-top: 10px;\" type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Obrisi</button>"
+                                        }
+                                        lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + dodatno + "</td>";
+                                        //lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
                                     }
                                     lista += "</tr>";
                                     $("#tabelaKarte").append(lista);
@@ -813,12 +895,20 @@
                                             lista += "<td> Odustanak </td>";
                                             if (korisnik.Uloga == 2)
                                             lista += "<td>" + "<button type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Odustani</button>" + "</td>";
+                                        } else {
+                                            lista += "<td>Nije moguce odustati</td>";
+                                            lista += "<td>&nbsp;</td>";
                                         }
                                     }
                                // }
                                 if (korisnik.Uloga != 2) {
                                     //ako je prodavac,admin prikazi kupca karte
-                                    lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                    //lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + "</td>";
+                                    var dodatno = "";
+                                    if (korisnik.Uloga == 0 && jsonObj[i].Status != 0) {
+                                        dodatno = "<br><button style=\"margin-left: 10px;margin-top: 10px;\" type = \"button\" id=\"" + jsonObj[i].Idkarte + "\" class=\"odustani\">Obrisi</button>"
+                                    }
+                                    lista += "<td> KUPAC: " + jsonObj[i].Kupac + " - " + jsonObj[i].Korisnikid + dodatno + "</td>";
                                 }
                                 lista += "</tr>";
                                 $("#tabelaKarte").append(lista);

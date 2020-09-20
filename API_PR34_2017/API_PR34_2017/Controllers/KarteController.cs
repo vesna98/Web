@@ -479,11 +479,11 @@ namespace API_PR34_2017.Controllers
 
             Data.SaveOdustanak(DateTime.Now, korisnik);
 
-            double cenaKarte=0;
+            double cenaKarte = 0;
 
             List<Karta> odabrane = new List<Karta>();
             List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
-            foreach(Karta k in karte)
+            foreach (Karta k in karte)
             {
                 if (k.Idkarte.Equals(ID))
                 {
@@ -493,10 +493,10 @@ namespace API_PR34_2017.Controllers
 
                     //treba smanjiti broj kupljenih 
                     List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
-                    foreach(Manifestacija fest in festovi)
+                    foreach (Manifestacija fest in festovi)
                     {
                         //if(fest.Naziv.Equals(k.Nazivmanifestacije) && fest.Datumivreme.Equals(k.Datummanifestacije))
-                        if(fest.IDmanifestacije.Equals(k.IDmanifestacije))
+                        if (fest.IDmanifestacije.Equals(k.IDmanifestacije))
                         {
                             fest.Kupljeno -= 1;
                             Data.SaveFest(fest);
@@ -508,23 +508,28 @@ namespace API_PR34_2017.Controllers
                 }
             }
             //broj_izgubljenih_bodova = cena_jedne_karte/1000 * 133 * 4
-            double brojIzgubljenihBodova = cenaKarte / 1000 * 133 * 4;
-            Korisnik kupac = new Korisnik();
-            Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
-            foreach (Korisnik u in recnik.Values)
-            {
-                if (u.Korisnickoime.Equals(korisnik))
-                {
-                    kupac = u;
-                }
-            }
-            kupac.Sakupljenibodovi = kupac.Sakupljenibodovi - brojIzgubljenihBodova;
-            if (kupac.Sakupljenibodovi < 0)
-            {
-                kupac.Sakupljenibodovi = 0;
-            }
-            Data.SaveUser(kupac);
 
+            //smanjiti jedino ako sam kupac otkaze
+            if (trenutni.Uloga.ToString().Equals("Kupac"))
+            {
+
+                double brojIzgubljenihBodova = cenaKarte / 1000 * 133 * 4;
+                Korisnik kupac = new Korisnik();
+                Dictionary<string, Korisnik> recnik = Data.ReadUser("~/App_Data/korisnici.txt");
+                foreach (Korisnik u in recnik.Values)
+                {
+                    if (u.Korisnickoime.Equals(korisnik))
+                    {
+                        kupac = u;
+                    }
+                }
+                kupac.Sakupljenibodovi = kupac.Sakupljenibodovi - brojIzgubljenihBodova;
+                if (kupac.Sakupljenibodovi < 0)
+                {
+                    kupac.Sakupljenibodovi = 0;
+                }
+                Data.SaveUser(kupac);
+            }
             ///kopirano od gore
             DateTime sad = DateTime.Now;
             int result;
@@ -559,7 +564,7 @@ namespace API_PR34_2017.Controllers
                 }
 
 
-                if (filter.Equals("Sve") && !k.Obrisana && k.Korisnikid.Equals(korisnik))
+                if (filter.Equals("Sve") && !k.Obrisana && ((trenutni.Uloga.ToString().Equals("Administrator")) ||  (k.Korisnikid.Equals(korisnik)) ))
                 {
                     odabrane.Add(k);
                 }

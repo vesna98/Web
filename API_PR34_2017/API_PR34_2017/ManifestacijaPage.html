@@ -58,7 +58,7 @@
                     var ostalo = parseFloat(jsonObj.Brojmesta) - parseFloat(jsonObj.Kupljeno);
                     row += "<tr ><th>Preostali broj karata</th><td>" + ostalo + "</td></tr>";
                     row += "<tr ><th>Datum i vreme</th><td >" + jsonObj.Datumivreme + "</td></tr>";
-                    row += "<tr ><th>Mesto</th><td >" + jsonObj.Mestoodrzavanja.Ulicabroj + " " + jsonObj.Mestoodrzavanja.Grad + " " + jsonObj.Mestoodrzavanja.Postanskibroj + "</td ></tr>";
+                    row += "<tr ><th>Mesto</th><td >" + jsonObj.Mestoodrzavanja.Ulicabroj + " " + jsonObj.Mestoodrzavanja.Grad + " " + jsonObj.Mestoodrzavanja.Postanskibroj + "<br><button id=\"prikazmape\" class=\"prikazmape\" style=\"border - radius: 25px; margin - top: 5px; margin - bottom: 5px;\">Prikazi na mapi</button> </td ></tr>";
                     row += "<tr><th>Poster</th><td valign=\"middle\" align=\"center\" ><div class=\"zoom\"><img src=\"Files/" + poster + "\" width=\"160\" ></img></div></td ></tr>";
                     row += "<tr ><th>Cena</th><td >" + jsonObj.Cenaregular + "</td ></tr>";
                     row += "<tr ><th>Cena vip</th><td >" + jsonObj.Cenavip + "</td ></tr>";
@@ -454,7 +454,8 @@
                 });
             });
 
-            $("#prikazmape").click(function () {
+           // $("#prikazmape").click(function () {
+            $(document).on('click', '.prikazmape', function () {
                 var span = document.getElementsByClassName("close")[3];
                 var modal = document.getElementById("myModal4");
 
@@ -722,8 +723,8 @@
     </div>
     <table id="results" style="margin-left: auto;
   margin-right: auto;"></table>
-    <button id="prikazmape" style="border-radius:25px;margin-top: 5px;margin-bottom: 5px;">Prikazi na mapi</button>
-    <!--<div id="map" class="map" style="display:inline-block"></div>-->
+    <!--<button id="prikazmape" style="border-radius:25px;margin-top: 5px;margin-bottom: 5px;">Prikazi na mapi</button>-->
+    
     <div id="myModal" class="modal">
 
         <!-- Modal content -->

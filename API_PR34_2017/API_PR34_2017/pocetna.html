@@ -3426,10 +3426,15 @@
             //});
 
             //osveziti i prikaz manifestacija ukoliko se prodavc obrisao
+            let user = sessionStorage.getItem("logovan");
+            console.log('user ' + user);
+            var korisnik = $.parseJSON(user);
+
             var tabelica = document.getElementById('tabelaMani');
             for (var i = 1; i < tabelica.rows.length;) {
                 tabelica.deleteRow(i);
             }
+           // alert("pozvalo se");
             $.ajax({
                 type: 'POST',
                 url: '/api/Korisnik/ListaManifestacije',
@@ -3438,7 +3443,7 @@
                 //  data: JSON.stringify(korisnik),
                 success: function (data) {
                     console.log("success");
-
+                    //alert("ucitava");
                     console.log("petlja...pocinje" + data);
 
                     var jsonObj = JSON.parse(data);
@@ -3481,6 +3486,7 @@
                         var obrisidugme = "";
                         var aktivirajdugme = "";
                         var izmenidugme = "";
+                        console.log("iz liste"+korisnik);
                         if (korisnik != null) {
                             if (korisnik.Uloga == 0) {
                                 obrisidugme = "<button type = \"button\" id=\"" + jsonObj[i].IDmanifestacije + "\" class=\"use-obrisi\"  style=\"margin-top: 5px;\">Obrisi</button>";
@@ -3501,9 +3507,9 @@
                         //row += "<td><input type=\"submit\" id=\"dugme" + i + "\" onclick=\"return detalji(" + tip+ ");\" value=\"Detaljan prikaz\"/></td>";
                         row += "</tr>";
 
+                        // $("#tabelaMani").append(row);
+                        //alert(row);
                         $("#tabelaMani").append(row);
-
-
                     }
                 },
                 error: function (data) {

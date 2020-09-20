@@ -4,3 +4,4 @@ pro123;EXIT;Festival;1400;08-07-2021 08:00 PM;5000;Varadinska 44;Petrovaradin;21
 pro123;Zizela;Pozoriste;300;14-07-2021 06:10 PM;1200;Zmaj Jovina 2;Novi Sad;21000;zizela_plakat.jpg;Neaktivno;0;0;2400;4800;True;afc62
 ppp;aaa;Pozoriste;10;20-09-2020 03:20 PM;1000;Novosadski Sajam 87;Novi Sad;21000;tick.png;Aktivno;4;0;2000;4000;True;05938
 pro;Hurricane;Koncert;240;10-03-2022 08:30 PM;800;Berlinar Platz;Berlin;31000;res_15.jpg;Aktivno;0;0;1600;3200;True;aa37e
+xxx;eeee;Koncert;1;10-02-2022 04:32 PM;1;Novosadski Sajam 87;Novi Sad;21000;df.jpg;Aktivno;0;0;2;4;True;98749

@@ -7,3 +7,4 @@ p123;1234;Petar;Maric;Muski;07-11-1998;0;Nepoznat;Prodavac;False;True
 ppp;1234;Prodavac;Prokic;Muski;29-02-2000;0;Nepoznat;Prodavac;True;False
 sss;1234;Sandra;sss;Zenski;07-11-1998;2633,4;Nepoznat;Kupac;False;False
 pro;1234;Dijana;Matijevic;Zenski;07-11-1998;0;Nepoznat;Prodavac;True;False
+xxx;1234;cccc;ccc;Muski;11-12-2000;0;Nepoznat;Prodavac;True;False

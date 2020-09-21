@@ -25,8 +25,8 @@ namespace API_PR34_2017.Models
         [Required]
         public string Datumrodjenja { get; set; }
         public UlogaType Uloga { get; set; }
-        public List<string> Rezervisanekarte { get; set; } //ako je KUPAC sifra karte , bilo koji status
-        public List<string> Manifestacije { get; set; } //ako je Prodavac, naziv manifestacije
+        public List<Karta> Rezervisanekarte { get; set; } = new List<Karta>();//ako je KUPAC sifra karte , bilo koji status
+        public List<Manifestacija> Manifestacije { get; set; } = new List<Manifestacija>();// = Data.ReadFest("~/App_Data/manifestacije.txt").FindAll(x=>x.Prodavac.Equals(ko)); //ako je Prodavac, id manifestacije
         public double Sakupljenibodovi { get; set; }       //za KUPAC
         // public TipKorisnika Tip { get; set; }
         public TipIme Tip { get; set; }
@@ -60,6 +60,8 @@ namespace API_PR34_2017.Models
             Obrisan = obrisan;
             Loggedin = false;
             Blokiran =blokiran;
+            Manifestacije = Data.ReadFest("~/App_Data/manifestacije.txt").FindAll(x => x.Prodavac.Equals(korisnickoime) && !x.Obrisan);
+            Rezervisanekarte= Data.ReadKarte("~/App_Data/karte.txt").FindAll(x=>x.Korisnikid.Equals(korisnickoime) && !x.Obrisana);
         }
 
         public override string ToString()

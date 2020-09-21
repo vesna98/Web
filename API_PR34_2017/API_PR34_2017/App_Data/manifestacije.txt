@@ -1,7 +1,10 @@
-p123;Marko Kutlic;Koncert;10;14-11-2020 04:00 PM;103;Novosadski Sajam 92;Novi Sad;21000;markokutlic.jpg;Aktivno;3;0;206;412;False;24bd4
-p123;Labudovo jezero;Pozoriste;200;10-10-2021 08:00 PM;1000;Zmaj Jovina 2;Novi Sad;21000;plakat_final.jpg;Aktivno;1;0;2000;4000;False;68c5b
+p123;Marko Kutlic;Koncert;10;14-11-2020 04:00 PM;103;Novosadski Sajam 92;Novi Sad;21000;markokutlic.jpg;Aktivno;2;0;206;412;False;24bd4
+p123;Labudovo jezero;Pozoriste;200;10-10-2021 08:00 PM;1000;Zmaj Jovina 2;Novi Sad;21000;plakat_final.jpg;Aktivno;2;0;2000;4000;False;68c5b
 pro123;EXIT;Festival;1400;08-07-2021 08:00 PM;5000;Varadinska 44;Petrovaradin;21000;exitfest2021.jpg;Neaktivno;0;0;10000;20000;True;f4975
 pro123;Zizela;Pozoriste;300;14-07-2021 06:10 PM;1200;Zmaj Jovina 2;Novi Sad;21000;zizela_plakat.jpg;Neaktivno;0;0;2400;4800;True;afc62
 ppp;aaa;Pozoriste;10;20-09-2020 03:20 PM;1000;Novosadski Sajam 87;Novi Sad;21000;tick.png;Aktivno;4;0;2000;4000;True;05938
 pro;Hurricane;Koncert;240;10-03-2022 08:30 PM;800;Berlinar Platz;Berlin;31000;res_15.jpg;Aktivno;0;0;1600;3200;True;aa37e
 xxx;eeee;Koncert;1;10-02-2022 04:32 PM;1;Novosadski Sajam 87;Novi Sad;21000;df.jpg;Aktivno;0;0;2;4;True;98749
+daki;Zizela;Pozoriste;100;21-09-2020 02:15 AM;500;Trg Koste Trifkovica 5;Sombor;25000;zizela_plakat.jpg;Aktivno;6;0;1000;2000;False;948fd
+daki;ere;Koncert;1;21-09-2020 02:15 AM;10;Trg Koste Trifkovica 5;Sombor;21000;27.png;Neaktivno;0;0;20;40;True;ab7d5
+daki;Gogoland;Pozoriste;200;10-02-2022 08:30 PM;1400;Trg Koste Trifkovica 5;Sombor;25000;Gogoland.jpg;Aktivno;1;0;2800;5600;False;41cae

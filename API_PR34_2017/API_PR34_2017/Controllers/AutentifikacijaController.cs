@@ -19,7 +19,7 @@ namespace API_PR34_2017.Controllers
             
             if (ModelState.IsValid)
             {
-                korisnik.Rezervisanekarte = new List<string>();
+                korisnik.Rezervisanekarte = new List<Karta>();
                 korisnik.Sakupljenibodovi = 0;
                 korisnik.Obrisan = false;
                 korisnik.Tip = TipIme.Nepoznat;

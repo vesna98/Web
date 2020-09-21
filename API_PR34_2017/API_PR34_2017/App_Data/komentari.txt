@@ -1,0 +1,4 @@
+9eb38;Zizela;21-09-2020 02:15 AM;veki;Odlicno;5;False;False;948fd
+f3c8b;Zizela;21-09-2020 02:15 AM;veki;P r e d i v n o. Svaka cast,prezadovoljni smo!;5;True;False;948fd
+26886;Zizela;21-09-2020 02:15 AM;veki;Lepo ;4;False;False;948fd
+45787;Zizela;21-09-2020 02:15 AM;veki;lose;1;False;False;948fd

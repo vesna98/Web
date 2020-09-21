@@ -1343,7 +1343,7 @@ namespace API_PR34_2017.Controllers
                     
                     foreach (Korisnik u in sviKorisnici.Values)
                     {
-                        if (u.Korisnickoime.Equals(username) && !u.Obrisan)//koji nisu obrisani takodje da se ne prikazu
+                        if (u.Korisnickoime.Equals(username) && !u.Obrisan && u.Uloga.ToString().Equals("Kupac"))//koji nisu obrisani takodje da se ne prikazu
                             sumnjiviKorisnici.Add(u);
                     }
                 }

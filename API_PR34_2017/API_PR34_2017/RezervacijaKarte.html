@@ -99,10 +99,12 @@
 
                         //$("#lista").hide();
                         var jsonObj = JSON.parse(data);
-                        if (jsonObj == -1) {
+                        //if (jsonObj == -1) {
+                        if (jsonObj == "Ne mozete izvrsiti akciju") {
                             // alert("Greska")
                             alert("Ne mozete izvrsiti akciju");
-                        } else if (jsonObj == 2) {
+                        } //else if (jsonObj == 2) {
+                        else if (jsonObj == "Ne postoji mogucnost rezervisanja za odabranu manifestaciju" ) {
                             alert("Ne postoji mogucnost rezervisanja za odabranu manifestaciju");
                         } else {
                             if (polja[0] == "") {
@@ -120,7 +122,8 @@
                     },
                     error: function (data) {
                         $("#lista").hide();
-                        alert("Greska!");
+                       // alert("Greska!");
+                        alert("Ne mozete izvrsiti akciju");
                     }
                 });
 

@@ -477,7 +477,8 @@ namespace API_PR34_2017.Controllers
 
                         if (myDate == ii)
                         {
-                            konacna.Add(m);
+                            if (!konacna.Contains(m))
+                                konacna.Add(m);
                         }
                     }
                 }
@@ -491,7 +492,7 @@ namespace API_PR34_2017.Controllers
 
         [Route("DodajFest")]
         [HttpPost]
-        public HttpResponseMessage DodajFest()//([FromBody] Object manifestacija)
+        public HttpResponseMessage DodajFest()
         {
 
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
@@ -597,6 +598,8 @@ namespace API_PR34_2017.Controllers
 
             if (!postoji)
             {
+                //if(user.Uloga.ToString().Equals("Prodavac") && !user.Manifestacije.Contains(mani))
+                //    user.Manifestacije.Add(mani);
                 Data.SaveFest(mani);
                 Data.SaveLokacija(lokacija);//cuvamo lokaciju
                 var json4 = JsonConvert.SerializeObject("Uspesno dodata manifestacija.");
@@ -920,7 +923,7 @@ namespace API_PR34_2017.Controllers
         [HttpPost]
         public HttpResponseMessage ObrisiManifestaciju(JObject jsonResult)
         {
-            
+            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
             string ID = (string)jsonResult["id"];
 
             List<Manifestacija> festovi1 = Data.ReadFest("~/App_Data/manifestacije.txt");
@@ -932,6 +935,9 @@ namespace API_PR34_2017.Controllers
                 {
                     k.Obrisan = true;
                     Data.SaveFest(k);
+
+                    //if (user.Uloga.ToString().Equals("Prodavac") && user.Manifestacije.Contains(k))
+                    //    user.Manifestacije.Remove(k);
 
                     //kad se brise manifestacija brisu se i karte za tu manifestaciju sto su rezervisane
                     List<Karta> karte = Data.ReadKarte("~/App_Data/karte.txt");
@@ -951,7 +957,7 @@ namespace API_PR34_2017.Controllers
                 }
             }
             
-            Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
+            //Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
             List<Manifestacija> svi = new List<Manifestacija>();
             List<Manifestacija> festovi = Data.ReadFest("~/App_Data/manifestacije.txt");
@@ -1044,7 +1050,7 @@ namespace API_PR34_2017.Controllers
                     {
                         //kad je kupac samo manifestacije za koje moze da rezervise
                         int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
-                        if (result > 0)
+                        //if (result > 0)
                         {
                             //prosla je manifestacija r<=0
                             //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
@@ -1154,7 +1160,7 @@ namespace API_PR34_2017.Controllers
                     {
                         //kad je kupac samo manifestacije za koje moze da rezervise
                         int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
-                        if (result > 0)
+                        //if (result > 0)
                         {
                             //prosla je manifestacija r<=0
                             //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
@@ -1270,7 +1276,8 @@ namespace API_PR34_2017.Controllers
 
                         if (myDate == ii)
                         {
-                            konacna.Add(m);
+                            if (!konacna.Contains(m))
+                                konacna.Add(m);
                         }
                     }
                 }
@@ -1299,7 +1306,7 @@ namespace API_PR34_2017.Controllers
                     {
                         //kad je kupac samo manifestacije za koje moze da rezervise
                         int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
-                        if (result > 0)
+                       // if (result > 0)
                         {
                             //prosla je manifestacija r<=0
                             //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
@@ -1361,7 +1368,8 @@ namespace API_PR34_2017.Controllers
 
                         if (myDate == ii)
                         {
-                            konacna.Add(m);
+                            if (!konacna.Contains(m))
+                                konacna.Add(m);
                         }
                     }
                 }
@@ -1390,7 +1398,7 @@ namespace API_PR34_2017.Controllers
                     {
                         //kad je kupac samo manifestacije za koje moze da rezervise
                         int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
-                        if (result > 0)
+                        //if (result > 0)
                         {
                             //prosla je manifestacija r<=0
                             //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
@@ -1452,7 +1460,8 @@ namespace API_PR34_2017.Controllers
 
                         if (myDate == ii)
                         {
-                            konacna.Add(m);
+                            if (!konacna.Contains(m))
+                                konacna.Add(m);
                         }
                     }
                 }
@@ -1479,7 +1488,7 @@ namespace API_PR34_2017.Controllers
                     {
                         //kad je kupac samo manifestacije za koje moze da rezervise
                         int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
-                        if (result > 0)
+                        //if (result > 0)
                         {
                             //prosla je manifestacija r<=0
                             //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
@@ -1528,7 +1537,7 @@ namespace API_PR34_2017.Controllers
                     {
                         //kad je kupac samo manifestacije za koje moze da rezervise
                         int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
-                        if (result > 0)
+                        //if (result > 0)
                         {
                             //prosla je manifestacija r<=0
                             //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
@@ -1578,7 +1587,7 @@ namespace API_PR34_2017.Controllers
                     {
                         //kad je kupac samo manifestacije za koje moze da rezervise
                         int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
-                        if (result > 0)
+                        //if (result > 0)
                         {
                             //prosla je manifestacija r<=0
                             //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
@@ -1634,6 +1643,7 @@ namespace API_PR34_2017.Controllers
 
                         if (myDate == ii)
                         {
+                            if(!konacna.Contains(m))
                             konacna.Add(m);
                         }
                     }
@@ -1662,7 +1672,7 @@ namespace API_PR34_2017.Controllers
                     {
                         //kad je kupac samo manifestacije za koje moze da rezervise
                         int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
-                        if (result > 0)
+                        //if (result > 0)
                         {
                             //prosla je manifestacija r<=0
                             //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
@@ -1711,7 +1721,7 @@ namespace API_PR34_2017.Controllers
                     {
                         //kad je kupac samo manifestacije za koje moze da rezervise
                         int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
-                        if (result > 0)
+                       // if (result > 0)
                         {
                             //prosla je manifestacija r<=0
                             //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
@@ -1761,7 +1771,7 @@ namespace API_PR34_2017.Controllers
                     {
                         //kad je kupac samo manifestacije za koje moze da rezervise
                         int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
-                        if (result > 0)
+                        //if (result > 0)
                         {
                             //prosla je manifestacija r<=0
                             //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
@@ -1810,7 +1820,7 @@ namespace API_PR34_2017.Controllers
                     {
                         //kad je kupac samo manifestacije za koje moze da rezervise
                         int result = DateTime.Compare(DateTime.ParseExact(k.Datumivreme, "dd-MM-yyyy hh:mm tt", CultureInfo.InvariantCulture, DateTimeStyles.None), DateTime.Now);
-                        if (result > 0)
+                       // if (result > 0)
                         {
                             //prosla je manifestacija r<=0
                             //prikazuju se samo manifestacije kod kojih se mogu kupiti karte
@@ -1846,7 +1856,7 @@ namespace API_PR34_2017.Controllers
 
         [Route("RezervisiKarte")]
         [HttpPost]
-        public int RezervisiKarte(JObject jsonResult)
+        public HttpResponseMessage RezervisiKarte(JObject jsonResult)
         {
             Korisnik user = (Korisnik)HttpContext.Current.Session["user"];
 
@@ -1857,7 +1867,8 @@ namespace API_PR34_2017.Controllers
             if (trenutni.Blokiran)
             {//throw new HttpResponseException(Request.CreateErrorResponse(HttpStatusCode.NotFound,"Ne mozete da izvrsite akciju"));
                 //return Request.CreateErrorResponse(HttpStatusCode.Forbidden, "Ne mozete da izvrsite akciju");
-                return -1;
+                //return -1;
+                return Request.CreateResponse(HttpStatusCode.Forbidden, JsonConvert.SerializeObject("Ne mozete izvrsiti akciju"));
             }
 
             string reg = (string)jsonResult["reg"];
@@ -1873,7 +1884,10 @@ namespace API_PR34_2017.Controllers
 
             if(string.IsNullOrWhiteSpace(korime) && string.IsNullOrWhiteSpace(manifestacija) && string.IsNullOrWhiteSpace(datum) && string.IsNullOrWhiteSpace(cenareg))
             {
-                return 1;
+                //return 1;
+                return Request.CreateResponse(HttpStatusCode.BadRequest, JsonConvert.SerializeObject("Ne mozete izvrsiti akciju"));
+
+
             }
             //broj_bodova = cena_jedne_karte/1000 * 133
             //string ime;
@@ -1944,14 +1958,20 @@ namespace API_PR34_2017.Controllers
             }
             if (m == null)
             {
-                return 2;//tad ce prijaviti gresku da nema manifestacije
+               // return 2;//tad ce prijaviti gresku da nema manifestacije
+                //JsonConvert.SerializeObject(sortirano);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject("Ne postoji mogucnost rezervisanja za odabranu manifestaciju"));
+                //"Ne postoji mogucnost rezervisanja za odabranu manifestaciju"
             }
 
             m.Kupljeno += ukupanBrojRez;
             Data.SaveFest(m);
             //cuva se podatak o kupcu
             Data.SaveUser(kupac);
-            return 0;
+           // return 0;
+            return Request.CreateResponse(HttpStatusCode.OK, JsonConvert.SerializeObject("Uspesno rezervisano."));
         }
 
         internal static string GetRandomString(int stringLength)
@@ -1971,7 +1991,8 @@ namespace API_PR34_2017.Controllers
 
             if (ModelState.IsValid)
             {
-                korisnik.Rezervisanekarte = new List<string>();
+                //korisnik.Rezervisanekarte = new List<Karta>();
+                //korisnik.Rezervisanekarte = new List<Karta>();
                 korisnik.Sakupljenibodovi = 0;
                 korisnik.Obrisan = false;
                 korisnik.Tip = TipIme.Nepoznat;

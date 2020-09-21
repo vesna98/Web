@@ -2,11 +2,26 @@ bb767559dc;sss;REGULAR;Rezervisana;1000;aaa;20-09-2020 03:20 PM;True;Sandra sss;
 6d6901d4ba;sss;REGULAR;Rezervisana;1000;aaa;20-09-2020 03:20 PM;True;Sandra sss;True;05938
 7c06fc70a1;sss;VIP;Rezervisana;4000;aaa;20-09-2020 03:20 PM;True;Sandra sss;True;05938
 c1b5cdb8c0;sss;FANPIT;Rezervisana;2000;aaa;20-09-2020 03:20 PM;True;Sandra sss;True;05938
-fbed398983;sss;VIP;Odustanak;400;Marko Kutlic;14-11-2020 04:00 PM;False;Sandra sss;True;24bd4
+fbed398983;sss;VIP;Odustanak;400;Marko Kutlic;14-11-2020 04:00 PM;True;Sandra sss;True;24bd4
 00ad374f45;sss;VIP;Odustanak;400;Marko Kutlic;14-11-2020 04:00 PM;True;Sandra sss;True;24bd4
-6730e11fcb;sss;VIP;Odustanak;400;Marko Kutlic;14-11-2020 04:00 PM;False;Sandra sss;True;24bd4
-94567f7b3e;sss;FANPIT;Odustanak;200;Marko Kutlic;14-11-2020 04:00 PM;False;Sandra sss;True;24bd4
+6730e11fcb;sss;VIP;Odustanak;400;Marko Kutlic;14-11-2020 04:00 PM;True;Sandra sss;True;24bd4
+94567f7b3e;sss;FANPIT;Odustanak;200;Marko Kutlic;14-11-2020 04:00 PM;True;Sandra sss;True;24bd4
 40c7b2ce48;sss;VIP;Odustanak;4000;Labudovo jezero;10-10-2021 08:00 PM;True;Sandra sss;True;68c5b
-9da18762a7;sss;VIP;Odustanak;4000;Labudovo jezero;10-10-2021 08:00 PM;False;Sandra sss;True;68c5b
+9da18762a7;sss;VIP;Odustanak;4000;Labudovo jezero;10-10-2021 08:00 PM;True;Sandra sss;True;68c5b
 cbd23c64d9;sss;REGULAR;Odustanak;800;Hurricane;10-03-2022 08:30 PM;True;Sandra sss;True;aa37e
 2012b5a824;sss;VIP;Odustanak;3200;Hurricane;10-03-2022 08:30 PM;True;Sandra sss;True;aa37e
+4f95c5fe87;sss;FANPIT;Odustanak;206;Marko Kutlic;14-11-2020 04:00 PM;True;Sandra sss;True;24bd4
+a6e2496f93;sss;FANPIT;Odustanak;206;Marko Kutlic;14-11-2020 04:00 PM;True;Sandra sss;True;24bd4
+f169d4661e;sss;VIP;Odustanak;412;Marko Kutlic;14-11-2020 04:00 PM;True;Sandra sss;True;24bd4
+5df566db65;veki;VIP;Odustanak;412;Marko Kutlic;14-11-2020 04:00 PM;False;Vesna Prica;True;24bd4
+db9f6697d1;veki;VIP;Odustanak;412;Marko Kutlic;14-11-2020 04:00 PM;True;Vesna Prica;True;24bd4
+48b98826b9;veki;VIP;Odustanak;412;Marko Kutlic;14-11-2020 04:00 PM;False;Vesna Prica;True;24bd4
+cb624c97e9;veki;REGULAR;Odustanak;1000;Labudovo jezero;10-10-2021 08:00 PM;False;Vesna Prica;True;68c5b
+c9384017b1;veki;REGULAR;Rezervisana;500;Zizela;21-09-2020 02:15 AM;False;Vesna Prica;False;948fd
+1b63a71e54;veki;VIP;Rezervisana;2000;Zizela;21-09-2020 02:15 AM;False;Vesna Prica;False;948fd
+e758d34e71;veki;VIP;Rezervisana;2000;Zizela;21-09-2020 02:15 AM;False;Vesna Prica;False;948fd
+de48015925;veki;FANPIT;Rezervisana;1000;Zizela;21-09-2020 02:15 AM;False;Vesna Prica;False;948fd
+87b3ea00e9;veki;FANPIT;Rezervisana;1000;Zizela;21-09-2020 02:15 AM;False;Vesna Prica;False;948fd
+c3a558a5a6;veki;FANPIT;Rezervisana;1000;Zizela;21-09-2020 02:15 AM;False;Vesna Prica;False;948fd
+dc5014fa16;taki;REGULAR;Odustanak;1000;Labudovo jezero;10-10-2021 08:00 PM;False;Tamara Nikolic;True;68c5b
+0984fda2de;taki;VIP;Odustanak;5600;Gogoland;10-02-2022 08:30 PM;False;Tamara Nikolic;True;41cae

@@ -5,6 +5,10 @@ admin;1234;Aleksandra;Nikolic;Zenski;12-12-2000;0;Nepoznat;Administrator;False;F
 pro123;1234;Aleksandar;Aleksic;Muski;12-12-2010;0;Nepoznat;Prodavac;True;False
 p123;1234;Petar;Maric;Muski;07-11-1998;0;Nepoznat;Prodavac;False;True
 ppp;1234;Prodavac;Prokic;Muski;29-02-2000;0;Nepoznat;Prodavac;True;False
-sss;1234;Sandra;sss;Zenski;07-11-1998;2633,4;Nepoznat;Kupac;False;False
+sss;1234;Sandra;sss;Zenski;07-11-1998;2742,992;Nepoznat;Kupac;False;True
 pro;1234;Dijana;Matijevic;Zenski;07-11-1998;0;Nepoznat;Prodavac;True;False
 xxx;1234;cccc;ccc;Muski;11-12-2000;0;Nepoznat;Prodavac;True;False
+veki;1234;Vesna;Prica;Zenski;07-11-1998;1130,5;Nepoznat;Kupac;False;False
+daki;1234;Dijana;Matijevic;Zenski;12-03-2000;0;Nepoznat;Prodavac;False;False
+taki;1234;Tamara;Nikolic;Zenski;18-10-1998;877,8;Nepoznat;Kupac;False;False
+xzy;1234;Vedrana;Nikolic;Zenski;07-11-1998;0;Nepoznat;Prodavac;False;False

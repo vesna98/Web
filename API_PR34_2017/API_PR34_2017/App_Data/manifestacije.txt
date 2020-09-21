@@ -7,4 +7,4 @@ pro;Hurricane;Koncert;240;10-03-2022 08:30 PM;800;Berlinar Platz;Berlin;31000;re
 xxx;eeee;Koncert;1;10-02-2022 04:32 PM;1;Novosadski Sajam 87;Novi Sad;21000;df.jpg;Aktivno;0;0;2;4;True;98749
 daki;Zizela;Pozoriste;100;21-09-2020 02:15 AM;500;Trg Koste Trifkovica 5;Sombor;25000;zizela_plakat.jpg;Aktivno;6;0;1000;2000;False;948fd
 daki;ere;Koncert;1;21-09-2020 02:15 AM;10;Trg Koste Trifkovica 5;Sombor;21000;27.png;Neaktivno;0;0;20;40;True;ab7d5
-daki;Gogoland;Pozoriste;200;10-02-2022 08:30 PM;1400;Trg Koste Trifkovica 5;Sombor;25000;Gogoland.jpg;Aktivno;1;0;2800;5600;False;41cae
+daki;Gogoland;Pozoriste;5;10-02-2022 08:30 PM;1400;Trg Koste Trifkovica 5;Sombor;25000;Gogoland.jpg;Aktivno;1;0;2800;5600;False;41cae
